@@ -101,7 +101,17 @@ brew install --cask bige-ops
 
 1. Download [`bige-ops-*-macos-aarch64.dmg`](https://github.com/simondelamarre/bige-ops-releases/releases/latest)  
 2. Open the DMG → drag **bige-ops** to Applications  
-3. First launch: right-click → **Open** (builds are not notarized yet)
+3. First launch (not Apple-notarized yet):
+
+```bash
+xattr -cr /Applications/bige-ops.app
+codesign --force --deep --sign - /Applications/bige-ops.app
+open /Applications/bige-ops.app
+```
+
+Prefer Homebrew — the cask does this automatically.
+
+> The “Source code” zip/tar on the Release page are GitHub auto-links for **this** public repo (README only). They are **not** the private application source and cannot be removed.
 
 ### Linux
 
