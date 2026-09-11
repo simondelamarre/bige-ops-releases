@@ -174,12 +174,19 @@ sequenceDiagram
 
     <h2>Ce qui part / ne part jamais</h2>
     <p>
-      <strong>Poussé :</strong> <code>project.yaml</code>, terraform sans tfvars,
-      oks, scripts app, layout Visual, <code>.env.example</code>, SECRETS.md.
+      <strong>Poussé (config-history) :</strong> <code>project.yaml</code>,
+      terraform sans tfvars, oks, scripts app, layout Visual,
+      <code>.env.example</code>, SECRETS.md.
       <strong>Exclu :</strong> credentials, PEM, <code>.env</code>, tfvars,
       kubeconfigs, state, inventory, sources app clonées.
       Voir aussi le bloc sécurité sur la
       <a href="index.html">landing</a>.
+    </p>
+    <p>
+      <strong>Repos applicatifs :</strong> clonés au deploy, jamais
+      commités automatiquement par bige-ops. Dockerfile dans le repo ou
+      override dans la stack — détail
+      <a href="repos-vms-docker.html">repos · VMs · Dockerfiles</a>.
     </p>
 
     <h2>Défauts &amp; versions à venir</h2>
@@ -207,6 +214,7 @@ sequenceDiagram
           <ul>
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
             <li><a href="expert-config.html">Mode expert · diffs</a></li>
             <li><a href="vms.html">VMs</a></li>
             <li><a href="oks.html">OKS &amp; pods</a></li>

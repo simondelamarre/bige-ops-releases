@@ -22,3 +22,5 @@ flowchart LR
 HTML : [github-config.html](https://simondelamarre.github.io/bige-ops-releases/github-config.html)
 
 Mode expert (fichiers, diffs, commits) : [expert-config.html](https://simondelamarre.github.io/bige-ops-releases/expert-config.html)
+
+Repos app · VMs · Dockerfiles : [repos-vms-docker.html](https://simondelamarre.github.io/bige-ops-releases/repos-vms-docker.html)

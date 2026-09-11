@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Repos, VMs &amp; Dockerfiles — bige-ops</title>
+  <meta name="description" content="Config-history vs repo app, VMs Outscale, Dockerfile dans le repo ou override. Commits = stack only." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="vms.html">VMs</a> · <a href="github-config.html">GitHub config</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Beta démo</span>
+    </div>
+    <h1>Repos, VMs &amp; Dockerfiles</h1>
+    <p class="lead">
+      Trois pièces à ne pas mélanger : le <strong>repo qui versionne la stack</strong>
+      (config-history), les <strong>repos applicatifs</strong> (code + Dockerfile),
+      et les <strong>VMs Outscale</strong> où tourne Docker Compose après deploy.
+    </p>
+
+    <div class="callout">
+      <strong>Commits bige-ops = stack seulement.</strong>
+      Pour le moment, l’app <strong>ne commit / ne push pas</strong> sur les
+      repos applicatifs. Seul le repo qui gère la stack (config-history
+      GitHub) est synchronisé. Si un problème de build/deploy survient, il
+      vient en général d’un <strong>mauvais setup Dockerfile</strong> dans
+      un repo app pris en charge (chemin, nom, contexte de build) — pas
+      d’un commit fantôme de l’outil sur votre monorepo.
+    </div>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart TB
+  CH[Config-history GitHub] -->|commits / push via app| Stack[Simulation · project.yaml]
+  Stack -->|apply| VM[VM Outscale]
+  AppRepo[Repo applicatif] -->|clone au deploy| VM
+  AppRepo -.->|Dockerfile dans le repo| Build[docker compose build]
+  Override[Override dockerfile path] -.->|service_config.git.dockerfile| Build
+  Build --> VM
+      </pre>
+      <figcaption>Stack versionnée d’un côté · code + Dockerfile de l’autre · runtime sur la VM.</figcaption>
+    </figure>
+
+    <h2>Deux familles de repositories</h2>
+    <table>
+      <thead>
+        <tr><th>Repo</th><th>Rôle</th><th>bige-ops y commit ?</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Config-history</strong> (<code>*-infra</code>)</td>
+          <td>Blueprint simulation : <code>project.yaml</code>, TF généré, specs, layout</td>
+          <td><strong>Oui</strong> — sync depuis l’app (GitHub)</td>
+        </tr>
+        <tr>
+          <td><strong>Repo applicatif</strong></td>
+          <td>Code métier (api, web, worker…) cloné au <code>deploy</code></td>
+          <td><strong>Non</strong> (pour le moment)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Détail branches / promote / rollback Git :
+      <a href="github-config.html">GitHub config-history</a>.
+      Autres forges que GitHub : WIP.
+    </p>
+
+    <h2>VMs : où ça tourne</h2>
+    <p>
+      Après <code>apply</code>, les VMs (mono-VM <code>*-all</code>, multi-VM
+      app / data, ou nœuds OKS) portent le runtime. <code>deploy</code>
+      pousse compose / scripts / coffre vers la VM publique et
+      <strong>clone le(s) repo(s) app</strong> déclarés dans la simulation,
+      puis <code>docker compose build</code> / up.
+    </p>
+    <p>
+      Les bases (mongo, postgres…) sont sur la même machine (mono-VM) ou
+      sur des VMs data (multi-VM) — voir <a href="vms.html">VMs</a> et
+      <a href="bases.html">bases</a>. Le Dockerfile concerne surtout les
+      services <strong>app</strong> (api, web, worker, customs git).
+    </p>
+
+    <h2>Dockerfile : dans le repo <em>ou</em> override</h2>
+    <p>
+      Deux façons, exclusives côté intention :
+    </p>
+    <ul>
+      <li>
+        <strong>Dans le repo</strong> — le fichier
+        <code>Dockerfile</code> (ou chemin relatif au monorepo) vit dans
+        le dépôt applicatif. Au deploy, compose build utilise ce contexte.
+        C’est le cas nominal « repo pris en charge ».
+      </li>
+      <li>
+        <strong>Override</strong> — dans la simulation,
+        <code>service_config.&lt;svc&gt;.git.dockerfile</code> pointe un
+        nom / chemin (ex. <code>Dockerfile</code>, <code>Dockerfile.dev</code>,
+        sous-dossier monorepo). Utile pour un preset ou un fichier hors
+        racine. Ce n’est <strong>pas</strong> un commit automatique dans
+        le repo app : c’est une instruction de build dans la stack.
+      </li>
+    </ul>
+    <p>
+      Alternative sans git : image catalogue
+      (<code>service_config.*.image</code>) — pas de build Dockerfile.
+    </p>
+<pre>service_config:
+  api:
+    git:
+      repo: https://github.com/org/monorepo.git
+      ref: main
+      path: apps/api          # contexte
+      dockerfile: Dockerfile # dans le repo, ou override de nom
+</pre>
+
+    <h2>Si ça casse au deploy</h2>
+    <p>
+      Les échecs fréquents viennent d’un
+      <strong>mauvais setup Dockerfile</strong> sur un repo app pris en
+      charge : mauvais <code>path</code> / <code>dockerfile</code>,
+      contexte de build incomplet, secrets de build manquants, image de
+      base inaccessible — pas d’un push de bige-ops sur votre monorepo
+      (il n’en fait pas).
+    </p>
+    <p>
+      Checklist courte : Visual / expert → vérifier
+      <code>git.repo</code> · <code>ref</code> · <code>path</code> ·
+      <code>dockerfile</code> → préflight → logs deploy sur la VM.
+      Optionnel : l’agent peut proposer une <em>PR</em> Dockerfile sur
+      le repo app — <strong>vous</strong> mergez ; ce n’est pas le sync
+      stack automatique.
+    </p>
+
+    <p>
+      Suite :
+      <a href="vms.html">VMs</a> ·
+      <a href="github-config.html">config-history</a> ·
+      <a href="expert-config.html">mode expert</a> ·
+      <a href="oks.html">OKS</a>.
+    </p>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Doc</h3>
+          <ul>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+            <li><a href="vms.html">VMs</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Produit</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">Beta démo · commits = stack · Dockerfile = repo ou override</p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+  </script>
+</body>
+</html>

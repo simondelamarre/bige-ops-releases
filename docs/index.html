@@ -625,6 +625,38 @@
     </section>
 
     <section class="block">
+      <h2>Repos · VMs · Docker</h2>
+      <p class="title">Stack versionnée d’un côté — code &amp; Dockerfile de l’autre.</p>
+      <p>
+        Le repo <a class="term" href="#g-config-history">config-history</a>
+        versionne la <strong>simulation</strong>. Les
+        <a class="term" href="#g-app-repo">repos applicatifs</a> portent le
+        code ; au <a class="term" href="#g-deploy">deploy</a> ils sont
+        clonés sur la <a class="term" href="#g-iaas">VM</a> pour
+        <code>docker compose build</code>.
+      </p>
+      <p>
+        <strong>Dockerfile</strong> : soit <em>dans le repo</em> app, soit
+        <a class="term" href="#g-dockerfile"><strong>override</strong></a>
+        via <code>service_config.*.git.dockerfile</code> (chemin / nom).
+        Pour le moment, bige-ops <strong>ne commit pas</strong> sur les
+        repos autres que ceux qui gèrent la stack. Un problème de build
+        vient en général d’un <strong>mauvais setup Dockerfile</strong>
+        dans un repo pris en charge — pas d’un push fantôme sur votre
+        monorepo.
+      </p>
+      <p>
+        Détail :
+        <a href="repos-vms-docker.html">repos · VMs · Dockerfiles</a>.
+      </p>
+      <p class="keywords">
+        <a class="term" href="#g-app-repo">repo app</a> ·
+        <a class="term" href="#g-dockerfile">Dockerfile</a> ·
+        override · VM · deploy · stack only commits
+      </p>
+    </section>
+
+    <section class="block">
       <h2>Assistant IA</h2>
       <p class="title">Chat managé — simuler, décider, deploy ou promote.</p>
       <p>
@@ -757,7 +789,8 @@
         <a href="bases-complexes.html">bases complexes</a>,
         <a href="oos.html">OOS &amp; backups</a>
         (formulaires réplicas / nœuds / buckets → maj setup directe),
-        <a href="expert-config.html">mode expert · diffs &amp; commits</a>.
+        <a href="expert-config.html">mode expert · diffs &amp; commits</a>,
+        <a href="repos-vms-docker.html">repos · VMs · Docker</a>.
       </p>
     </section>
 
@@ -784,7 +817,11 @@
         <dt id="g-deploy">Deploy / Apply</dt>
         <dd>Pousser la stack sur votre compte Outscale (plan puis apply). Credentials requis. Distinct du push Git config-history.</dd>
         <dt id="g-config-history">Config-history</dt>
-        <dd>Repo GitHub privé (pour l’instant) : projet→repo, simulation→branche sim/…, promote→main. Deploy via l’app + sync GitHub ; autres Git = WIP. Rollback Git manuel sur GitHub si besoin. Voir github-config.html.</dd>
+        <dd>Repo GitHub privé (pour l’instant) : projet→repo, simulation→branche sim/…, promote→main. Deploy via l’app + sync GitHub ; autres Git = WIP. Rollback Git manuel sur GitHub si besoin. Voir github-config.html. <strong>Seul repo où bige-ops commit</strong> pour la stack.</dd>
+        <dt id="g-app-repo">Repo applicatif</dt>
+        <dd>Dépôt du code métier (api/web/worker…). Cloné au deploy sur la VM. bige-ops <strong>n’y commit pas</strong> pour le moment. Voir <a href="repos-vms-docker.html">repos-vms-docker.html</a>.</dd>
+        <dt id="g-dockerfile">Dockerfile</dt>
+        <dd>Build des services app : fichier dans le repo <em>ou</em> override <code>service_config.*.git.dockerfile</code>. Les pannes de deploy viennent souvent d’un mauvais path/contexte Dockerfile sur un repo pris en charge.</dd>
         <dt id="g-promote">Promote</dt>
         <dd>Draft → live. Côté Git : main. Snapshot pré-promote pour rollback config puis plan/apply.</dd>
         <dt id="g-oks">OKS</dt>
@@ -813,6 +850,7 @@
           <ul>
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
             <li><a href="expert-config.html">Mode expert · diffs</a></li>
             <li><a href="vms.html">VMs</a></li>
             <li><a href="oks.html">OKS &amp; pods</a></li>
