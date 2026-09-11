@@ -643,7 +643,8 @@
         repos autres que ceux qui gèrent la stack. Un problème de build
         vient en général d’un <strong>mauvais setup Dockerfile</strong>
         dans un repo pris en charge — pas d’un push fantôme sur votre
-        monorepo.
+        monorepo. La <strong>review lecture / écriture sous container
+        Docker</strong> est en <strong>WIP</strong>.
       </p>
       <p>
         Détail :
@@ -821,7 +822,7 @@
         <dt id="g-app-repo">Repo applicatif</dt>
         <dd>Dépôt du code métier (api/web/worker…). Cloné au deploy sur la VM. bige-ops <strong>n’y commit pas</strong> pour le moment. Voir <a href="repos-vms-docker.html">repos-vms-docker.html</a>.</dd>
         <dt id="g-dockerfile">Dockerfile</dt>
-        <dd>Build des services app : fichier dans le repo <em>ou</em> override <code>service_config.*.git.dockerfile</code>. Les pannes de deploy viennent souvent d’un mauvais path/contexte Dockerfile sur un repo pris en charge.</dd>
+        <dd>Build des services app : fichier dans le repo <em>ou</em> override <code>service_config.*.git.dockerfile</code>. Les pannes de deploy viennent souvent d’un mauvais path/contexte Dockerfile sur un repo pris en charge. Review lecture/écriture <em>sous</em> container Docker : <strong>WIP</strong>.</dd>
         <dt id="g-promote">Promote</dt>
         <dd>Draft → live. Côté Git : main. Snapshot pré-promote pour rollback config puis plan/apply.</dd>
         <dt id="g-oks">OKS</dt>
