@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>VMs — bige-ops</title>
-  <meta name="description" content="VMs Outscale : single-vm, multi-vm, sizing, volumes. Starter kit — le scale reste le vôtre." />
+  <title>VMs &amp; VPS — bige-ops</title>
+  <meta name="description" content="VM Outscale (= VPS catalogue) : mono-VM, multi-VM, sizing, volumes. Starter kit — le scale reste le vôtre." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -12,17 +12,26 @@
 </head>
 <body>
   <main>
-    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a> · <a href="index.html#g-vm">Glossaire</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
       <span class="brand-badge">Beta démo</span>
     </div>
-    <h1>VMs Outscale</h1>
+    <h1>VMs Outscale <span style="font-weight:500;color:var(--mist)">(VPS)</span></h1>
     <p class="lead">
-      Composer une topologie machine (type Tina, disques, réseau), estimer,
-      générer Terraform, apply sur <em>votre</em> compte.
+      Composer une topologie compute (type Tina, disques, réseau), estimer,
+      générer Terraform, <strong>apply</strong> sur <em>votre</em> compte.
       Le patch OS et le scale horizontal fins restent de votre côté.
     </p>
+
+    <div class="callout">
+      <strong>VM = terme produit. VPS = libellé catalogue Outscale.</strong>
+      Chez Outscale on parle souvent de
+      <a href="index.html#g-vps"><strong>VPS</strong></a>
+      (Virtual Private Server). Dans bige-ops on dit
+      <a href="index.html#g-vm"><strong>VM</strong></a>
+      — même famille IaaS (instance Tina). Pas un second produit.
+    </div>
 
     <figure class="diagram">
       <pre class="mermaid">
@@ -39,11 +48,14 @@ flowchart TB
       <figcaption>Le formulaire met à jour le setup tout de suite — pas d’interview en boucle.</figcaption>
     </figure>
 
-    <h2>Single-vm vs multi-vm</h2>
+    <h2>Mono-VM vs multi-VM</h2>
     <p>
-      En <strong>single-vm</strong>, apps et souvent la data partagent une machine :
-      simple pour démarrer, limites de blast radius évidentes.
-      En <strong>multi-vm</strong>, vous séparez les rôles (app, worker, data…)
+      En <a href="index.html#g-mono-vm"><strong>mono-VM</strong></a>
+      (topology code <code>single-vm</code>), apps et souvent la data
+      partagent <strong>une</strong> VM (<code>*-all</code>) : simple pour
+      démarrer, un seul blast radius.
+      En <a href="index.html#g-multi-vm"><strong>multi-VM</strong></a>
+      (<code>multi-vm</code>), vous séparez les rôles (app, worker, data…)
       sur plusieurs VMs dans le même Net — toujours via le layout, toujours
       avec estimate sur le sizing choisi.
     </p>
@@ -51,22 +63,26 @@ flowchart TB
     <figure class="diagram">
       <pre class="mermaid">
 flowchart LR
-  subgraph single [single-vm]
-    V1[VM app+data]
+  subgraph mono [mono-VM / single-vm]
+    V1[VM *-all app+data]
   end
-  subgraph multi [multi-vm]
+  subgraph multi [multi-VM]
     A[VM app]
     W[VM worker]
     D[VM data]
   end
       </pre>
+      <figcaption>Prose FR : mono-VM / multi-VM · IDs code : single-vm / multi-vm.</figcaption>
     </figure>
 
     <h2>Ce que le formulaire pilote</h2>
     <p>
-      Type d’instance, volumes attachés, placement réseau, liens EIP / LBU
-      selon le canvas. Chaque changement réécrit la simulation ;
-      <code>generate</code> materialize le Terraform. Vous relisez, vous apply.
+      Type d’instance Tina, volumes attachés, placement réseau, liens EIP / LBU
+      selon le canvas. Chaque changement réécrit la
+      <a href="index.html#g-simulation">simulation</a> ;
+      <code>generate</code> materialize le Terraform. Vous relisez, vous
+      <a href="index.html#g-apply">apply</a>, puis
+      <a href="index.html#g-deploy">deploy</a> les apps.
     </p>
 
     <h2>Kickoff ≠ babysitting</h2>
@@ -82,8 +98,9 @@ flowchart LR
       <a href="oks.html">OKS &amp; pods</a>.
       Data et backups objet : <a href="bases.html">bases</a>,
       <a href="oos.html">OOS</a>.
-      Repos app + Dockerfile (dans le repo ou override) :
+      Repos app + Dockerfile :
       <a href="repos-vms-docker.html">repos · VMs · Docker</a>.
+      Vocabulaire : <a href="index.html#glossaire">glossaire</a>.
     </p>
 
     <footer class="site-footer">
@@ -92,12 +109,12 @@ flowchart LR
           <h3>Doc</h3>
           <ul>
             <li><a href="perimetre.html">Périmètre</a></li>
-            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config-history</a></li>
             <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
-            <li><a href="vms.html">VMs</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
             <li><a href="oks.html">OKS &amp; pods</a></li>
             <li><a href="bases.html">Bases de données</a></li>
-            <li><a href="bases-complexes.html">Bases complexes</a></li>
             <li><a href="oos.html">OOS &amp; backups</a></li>
           </ul>
         </div>
@@ -109,7 +126,7 @@ flowchart LR
           </ul>
         </div>
       </div>
-      <p class="meta">Beta démo · kickoff starter kit — scale = vous gérez</p>
+      <p class="meta">Beta démo · VM = produit · VPS = catalogue Outscale</p>
     </footer>
   </main>
   <script type="module">

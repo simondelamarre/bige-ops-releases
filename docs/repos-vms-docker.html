@@ -80,17 +80,21 @@ flowchart TB
       Autres forges que GitHub : WIP.
     </p>
 
-    <h2>VMs : où ça tourne</h2>
+    <h2>VMs (= VPS catalogue) : où ça tourne</h2>
     <p>
-      Après <code>apply</code>, les VMs (mono-VM <code>*-all</code>, multi-VM
-      app / data, ou nœuds OKS) portent le runtime. <code>deploy</code>
-      pousse compose / scripts / coffre vers la VM publique et
+      Après <a href="index.html#g-apply"><code>apply</code></a>, les
+      <a href="index.html#g-vm">VMs</a> (Outscale parle aussi de
+      <a href="index.html#g-vps">VPS</a>) portent le runtime —
+      <a href="index.html#g-mono-vm">mono-VM</a> <code>*-all</code>,
+      <a href="index.html#g-multi-vm">multi-VM</a> app / data, ou nœuds OKS.
+      <a href="index.html#g-deploy"><code>deploy</code></a> pousse compose /
+      scripts / coffre vers la VM publique et
       <strong>clone le(s) repo(s) app</strong> déclarés dans la simulation,
       puis <code>docker compose build</code> / up.
     </p>
     <p>
-      Les bases (mongo, postgres…) sont sur la même machine (mono-VM) ou
-      sur des VMs data (multi-VM) — voir <a href="vms.html">VMs</a> et
+      Les bases (mongo, postgres…) sont sur la même VM (mono-VM) ou
+      sur des VMs data (multi-VM) — voir <a href="vms.html">VMs · VPS</a> et
       <a href="bases.html">bases</a>. Le Dockerfile concerne surtout les
       services <strong>app</strong> (api, web, worker, customs git).
     </p>

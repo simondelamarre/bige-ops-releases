@@ -30,11 +30,12 @@ flowchart LR
   A[Idée] --> B[Simulation]
   B --> C[Estimate]
   C --> D[Generate]
-  D --> E[Apply / deploy]
-  E --> F[Vous opérez le scale]
-  style F fill:#1a1f27,stroke:#5ec4b4,color:#f3f5f8
+  D --> E[Apply infra]
+  E --> F[Deploy apps]
+  F --> G[Vous opérez le scale]
+  style G fill:#1a1f27,stroke:#5ec4b4,color:#f3f5f8
       </pre>
-      <figcaption>Le kit s’arrête là où commence le jugement de run.</figcaption>
+      <figcaption>Apply = infra · Deploy = apps · puis vous opérez le run.</figcaption>
     </figure>
 
     <div class="callout">
@@ -70,12 +71,11 @@ flowchart TB
 
     <h2>Ce qu’on couvre (kickoff)</h2>
     <p>
-      Simulations et layouts (VMs, OKS, services), estimation catalogue,
-      génération Terraform / specs OKS / YAML apps, plan·apply·deploy sur
-      <em>votre</em> compte, presets via formulaires Visual (réplicas,
-      nodepools, types DB), inventory + reverse pour repartir d’un existant,
-      buckets <a href="oos.html">OOS</a> pour stocker / démarrer les backups.
-    </p>
+      Simulations et layouts (<a href="vms.html">VMs</a> / VPS catalogue, OKS,
+      services), estimation catalogue, génération Terraform / specs OKS /
+      YAML apps, plan · apply · deploy sur <em>votre</em> compte, presets
+      Visual, inventory + reverse, buckets
+      <a href="oos.html">OOS</a>.
 
     <h2>Ce qu’on ne remplace pas</h2>
     <p>

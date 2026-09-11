@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <title>bige-ops — Outscale IaaS, VMs, OKS Kubernetes managé</title>
-  <meta name="description" content="Ops Outscale souverain local-first : starter kit, chat IA managé (Mistral à venir), multi-compte, reverse inventory. IaaS, OKS, Terraform. Gratuit." />
+  <title>bige-ops — Outscale IaaS, VMs (VPS), OKS Kubernetes managé</title>
+  <meta name="description" content="Ops Outscale souverain local-first : starter kit, VMs (=VPS catalogue), OKS, OOS, CLI. Gratuit." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -481,6 +481,8 @@
         <a class="term" href="#g-simulation">simulation</a> ·
         <a class="term" href="#g-estimate">estimate</a> ·
         <a class="term" href="#g-projection">projection</a> ·
+        <a class="term" href="#g-vm">VM</a> ·
+        <a class="term" href="#g-vps">VPS</a> ·
         Outscale
       </p>
     </section>
@@ -489,9 +491,11 @@
       <h2>Visual · Flow</h2>
       <p class="title">Vue flow interactive — droit au but sur les setups.</p>
       <p>
-        Le <strong>canvas flow</strong> (Visual) est la vue interactive de la stack :
-        VMs, OKS, volumes, OOS, liens réseau — vous voyez la topologie,
-        vous cliquez le nœud, vous corrigez le setup dans l’inspector.
+        Le canvas flow (Visual) est la vue interactive de la
+        <a class="term" href="#g-simulation">simulation</a> :
+        <a class="term" href="#g-vm">VMs</a>, OKS, volumes, OOS, liens réseau —
+        vous voyez la topologie, vous cliquez le nœud, vous corrigez le setup
+        dans l’inspector.
         Pas besoin de chercher le bon fichier : le flow vous mène
         <strong>au problème</strong>, puis à la config à jour.
       </p>
@@ -580,7 +584,7 @@
         la stack live) vivent côté <strong>Outscale</strong> après deploy —
         c’est le cloud qui les détient, pas nous.
         Pour travailler en local, vous pouvez enregistrer credentials /
-        valeurs de coffre <strong>sur votre machine</strong>
+        valeurs de coffre <strong>sur votre poste</strong>
         (fichiers locaux). Si vous avez déjà un vault d’entreprise, vous
         restez libre de l’utiliser en dehors de bige-ops : l’app n’impose
         pas le sien.
@@ -588,7 +592,7 @@
       <p>
         <strong>Vos secrets → votre responsabilité</strong> :
         sécurisez le poste (chiffrement disque, session lock), gérez qui a
-        accès à la machine. On ne stocke pas vos clés “quelque part pour vous”.
+        accès au poste. On ne stocke pas vos clés “quelque part pour vous”.
       </p>
       <p class="keywords">
         no SaaS vault · local credentials ·
@@ -653,7 +657,8 @@
       <p class="keywords">
         <a class="term" href="#g-app-repo">repo app</a> ·
         <a class="term" href="#g-dockerfile">Dockerfile</a> ·
-        override · VM · deploy · stack only commits
+        <a class="term" href="#g-vm">VM</a> ·
+        override · deploy · commits config-history only
       </p>
     </section>
 
@@ -713,27 +718,30 @@
 
     <section class="block">
       <h2>Outscale</h2>
-      <p class="title">Cloud souverain — IaaS &amp; PaaS, VMs, VPS, OKS managé.</p>
+      <p class="title">Cloud souverain — IaaS &amp; PaaS, VMs (VPS), OKS managé.</p>
       <p>
         <strong>Outscale</strong> : cloud français
         <a class="term" href="#g-souverain"><strong>souverain</strong></a>,
         <a class="term" href="#g-secnumcloud"><strong>SecNumCloud</strong></a>,
         <a class="term" href="#g-iaas"><strong>IaaS</strong></a>
-        (VM, VPS, volumes, réseau) et
+        (<a class="term" href="#g-vm">VMs</a> — aussi appelées
+        <a class="term" href="#g-vps">VPS</a> au catalogue — volumes, réseau)
+        et
         <a class="term" href="#g-paas"><strong>PaaS</strong></a>
         avec <a class="term" href="#g-oks"><strong>OKS</strong></a> —
         <strong>Kubernetes managé</strong> (kube / K8s).
-        bige-ops est pensé pour ce terrain : projection locale, deploy sur
-        <em>votre</em> compte — y compris région SecNumCloud.
+        bige-ops est pensé pour ce terrain : projection locale, apply / deploy
+        sur <em>votre</em> compte — y compris région SecNumCloud.
       </p>
       <p class="keywords">
         Outscale ·
         <a class="term" href="#g-souverain">cloud souverain</a> ·
         <a class="term" href="#g-secnumcloud">SecNumCloud</a> ·
         <a class="term" href="#g-iaas">IaaS</a> ·
-        <a class="term" href="#g-paas">PaaS</a> ·
+        <a class="term" href="#g-vm">VM</a> ·
+        <a class="term" href="#g-vps">VPS</a> ·
         <a class="term" href="#g-oks">OKS</a> ·
-        Kubernetes managé · kube · K8s
+        Kubernetes managé
       </p>
     </section>
 
@@ -793,7 +801,7 @@
       <p>
         Les détails :
         <a href="perimetre.html">périmètre</a>,
-        <a href="vms.html">VMs</a>,
+        <a href="vms.html">VMs · VPS</a>,
         <a href="oks.html">OKS &amp; pods</a>,
         <a href="cli.html">CLI · app · OKS</a>,
         <a href="bases.html">bases de données</a>,
@@ -807,52 +815,72 @@
 
     <section class="block glossary" id="glossaire" aria-labelledby="glossaire-title">
       <h2 id="glossaire-title">Glossaire</h2>
-      <p class="title">Définitions (liens depuis la page).</p>
+      <p class="title">Vocabulaire fédéré (liens depuis la page).</p>
+      <p class="keywords" style="margin-top:0">
+        Projet → simulation → generate → apply → deploy.
+        VM (= VPS catalogue) · mono-VM / multi-VM · OKS · OOS.
+      </p>
       <dl>
         <dt id="g-visual">Visual / Flow</dt>
-        <dd>Canvas interactif de la topologie (Vue Flow). Clic nœud → inspector → maj setup directe. Pour aller au problème et le corriger dans le flow, sans perdre le schéma mental.</dd>
+        <dd>Canvas interactif de la topologie. Clic nœud → inspector → maj simulation. Du symptôme au setup, sans perdre le schéma mental.</dd>
         <dt id="g-projection">Projection</dt>
         <dd>Mode sans credentials Outscale : vous composez des simulations et lisez une estimation catalogue. Inventory / plan / apply restent bloqués jusqu’au login.</dd>
+        <dt id="g-projet">Projet</dt>
+        <dd>Conteneur ops lié à un compte Outscale : crée ou lie le <a href="#g-config-history">config-history</a>. Contient plusieurs <a href="#g-simulation">simulations</a>. ≠ simulation.</dd>
         <dt id="g-simulation">Simulation</dt>
-        <dd>Variante de stack versionnable (layout + coût projeté). Drafts en parallèle du live ; promote ou apply pour aligner la prod. Editable aussi en <a href="#g-expert">mode expert</a> (fichiers) et versionnée via <a href="#g-diff-commit">diffs / commits</a>.</dd>
+        <dd>Variante versionnable (layout + coût projeté). Drafts en parallèle du live ; <a href="#g-promote">promote</a> pour aligner le live déclaratif ; <a href="#g-apply">apply</a> / <a href="#g-deploy">deploy</a> pour le cloud. Editable en <a href="#g-expert">mode expert</a>.</dd>
+        <dt id="g-stack">Stack (live)</dt>
+        <dd>Topologie / layout d’une simulation, ou l’état <strong>live</strong> après promote (<code>main</code>). Ne pas dire « stack » pour projet ni pour repo app.</dd>
         <dt id="g-estimate">Estimate</dt>
         <dd>Projection € HT/mois depuis le catalogue public embarqué. Indicatif — pas un devis Outscale, pas de feed pricing temps réel.</dd>
+        <dt id="g-vm">VM</dt>
+        <dd>Instance compute Outscale (type Tina, disques, réseau). Terme <strong>produit</strong> bige-ops. Unité du layout IaaS dans Visual. Voir <a href="vms.html">vms.html</a>.</dd>
+        <dt id="g-vps">VPS</dt>
+        <dd>Virtual Private Server — libellé <strong>catalogue / marketing Outscale</strong> pour une machine virtuelle. Dans bige-ops on dit <a href="#g-vm">VM</a>. Pas un second produit.</dd>
+        <dt id="g-mono-vm">Mono-VM</dt>
+        <dd>Topologie où apps (et souvent les bases) partagent <strong>une</strong> VM (<code>*-all</code>). Alias code : <code>single-vm</code>. Simple pour démarrer ; destroy = un seul blast radius.</dd>
+        <dt id="g-multi-vm">Multi-VM</dt>
+        <dd>Plusieurs VMs dans le même Net, rôles séparés (app, worker, data…). Alias code : <code>multi-vm</code>. La DB « dédiée » = rôle data + volume.</dd>
         <dt id="g-expert">Mode expert</dt>
-        <dd>Édition directe des fichiers de config de la simulation (Workspace : arbre + éditeur). Complète le Visual / Flow quand il faut peaufiner YAML, Terraform ou specs. Voir <a href="expert-config.html">expert-config.html</a>.</dd>
+        <dd>Édition directe des fichiers de la simulation (Workspace). Complète le Visual. Voir <a href="expert-config.html">expert-config.html</a>.</dd>
         <dt id="g-diff-commit">Diffs &amp; commits</dt>
-        <dd>Revue des changements locaux puis commit / push sur le config-history (<code>sim/…</code> ou <code>main</code>). Feuille de route UI : <a href="expert-config.html">expert-config.html</a>. Distinct du plan Terraform avant apply.</dd>
+        <dd>Revue des changements puis commit / push sur le config-history. Feuille de route : <a href="expert-config.html">expert-config.html</a>. Distinct du plan Terraform.</dd>
         <dt id="g-secnumcloud">SecNumCloud</dt>
         <dd>Qualification ANSSI pour le cloud de confiance. Outscale propose une région SecNumCloud ; bige-ops cible aussi ce terrain.</dd>
         <dt id="g-souverain">Cloud souverain</dt>
         <dd>Cloud français / données et contrôle sous juridiction nationale. Outscale + SecNumCloud ; l’outil reste local-first, sans coffre SaaS à nous.</dd>
-        <dt id="g-deploy">Deploy / Apply</dt>
-        <dd>Pousser la stack sur votre compte Outscale (plan puis apply). Credentials requis. Distinct du push Git config-history.</dd>
+        <dt id="g-apply">Apply</dt>
+        <dd>Provisionner / réconcilier l’<strong>infra</strong> (Terraform, oks-cli, OOS…) sur votre compte. Précédé de <code>plan</code>. ≠ deploy apps. Credentials requis.</dd>
+        <dt id="g-deploy">Deploy</dt>
+        <dd>Pousser les <strong>apps</strong> (clone repo app, compose / kubectl) vers le runtime déjà provisionné. Lit la vérité live / <code>main</code>. Distinct du push Git config-history.</dd>
         <dt id="g-config-history">Config-history</dt>
-        <dd>Repo GitHub privé (pour l’instant) : projet→repo, simulation→branche sim/…, promote→main. Deploy via l’app + sync GitHub ; autres Git = WIP. Rollback Git manuel sur GitHub si besoin. Voir github-config.html. <strong>Seul repo où bige-ops commit</strong> pour la stack.</dd>
+        <dd>Repo GitHub privé : projet→repo, simulation→branche <code>sim/…</code>, promote→<code>main</code>. Sync via l’app ; autres Git = WIP. Rollback Git manuel sur GitHub. <strong>Seul repo où bige-ops commit</strong> pour l’infra. Voir github-config.html.</dd>
         <dt id="g-app-repo">Repo applicatif</dt>
-        <dd>Dépôt du code métier (api/web/worker…). Cloné au deploy sur la VM. bige-ops <strong>n’y commit pas</strong> pour le moment. Voir <a href="repos-vms-docker.html">repos-vms-docker.html</a>.</dd>
+        <dd>Code métier (api/web/worker…). Cloné au deploy sur la VM. bige-ops <strong>n’y commit pas</strong> pour le moment. Voir <a href="repos-vms-docker.html">repos-vms-docker.html</a>.</dd>
         <dt id="g-dockerfile">Dockerfile</dt>
-        <dd>Build des services app : fichier dans le repo <em>ou</em> override <code>service_config.*.git.dockerfile</code>. Les pannes de deploy viennent souvent d’un mauvais path/contexte Dockerfile sur un repo pris en charge. Review lecture/écriture <em>sous</em> container Docker : <strong>WIP</strong>.</dd>
+        <dd>Build des services app : fichier dans le repo <em>ou</em> override <code>service_config.*.git.dockerfile</code>. Pannes de deploy → souvent mauvais path/contexte. Review lecture/écriture <em>sous</em> container : <strong>WIP</strong>.</dd>
         <dt id="g-promote">Promote</dt>
-        <dd>Draft → live. Côté Git : main. Snapshot pré-promote pour rollback config puis plan/apply.</dd>
+        <dd>Simulation draft → live. Côté Git : <code>main</code>. Snapshot pré-promote pour rollback config puis plan / apply.</dd>
         <dt id="g-oks">OKS</dt>
-        <dd>Outscale Kubernetes Service — Kubernetes managé (control plane géré). Vous travaillez clusters / workloads ; Outscale opère le plan de contrôle. Apply via <code>oks-cli</code>, deploy apps via <code>kubectl</code> — depuis l’app ou la CLI <code>bige-ops</code>.</dd>
+        <dd>Outscale Kubernetes Service — Kubernetes managé. Apply cluster via oks-cli ; deploy workloads via kubectl. Voir <a href="oks.html">oks.html</a> · <a href="cli.html">cli.html</a>.</dd>
         <dt id="g-cli">CLI bige-ops</dt>
-        <dd>Même moteur que l’app desktop (validate, generate, plan, apply, deploy). Chemin nominal = GUI ; CLI pour scripts / CI / terminal. OKS : délègue à oks-cli + kubectl. Voir <a href="cli.html">cli.html</a>.</dd>
+        <dd>Même moteur que l’app (validate, generate, plan, apply, deploy). Chemin nominal = GUI. Voir <a href="cli.html">cli.html</a>.</dd>
         <dt id="g-iaas">IaaS</dt>
-        <dd>Infrastructure as a Service : VMs / VPS, volumes, réseau, IP… Vous composez la machine ; le cloud fournit le compute.</dd>
+        <dd>Infrastructure as a Service : <a href="#g-vm">VMs</a> (parfois appelées <a href="#g-vps">VPS</a> chez Outscale), volumes, réseau, IP…</dd>
         <dt id="g-paas">PaaS</dt>
         <dd>Platform as a Service : couches managées (ex. OKS). Moins d’ops bas niveau, plus de focus apps / clusters.</dd>
         <dt id="g-multi-tenant">Multi-tenant</dt>
-        <dd>Plusieurs comptes / projets Outscale sur le même poste : bascule dev, prod, client, SecNumCloud sans rejouer tout le setup.</dd>
+        <dd>Plusieurs comptes / projets Outscale sur le même <strong>poste</strong> : bascule dev, prod, client, SecNumCloud.</dd>
         <dt id="g-inventory">Inventory</dt>
-        <dd>Liste live des ressources sur votre compte Outscale (VMs, volumes, réseau, OKS…). Base de la rétro et du resync.</dd>
+        <dd>Liste live des ressources sur votre compte (VMs, volumes, réseau, OKS…). Base de la rétro et du resync.</dd>
         <dt id="g-reverse">Reverse engineering</dt>
-        <dd>Partir de l’inventory cloud, reconstruire une config exploitable, puis optimiser (sizing, €, Terraform / specs régénérés).</dd>
+        <dd>Partir de l’inventory, reconstruire une config exploitable, puis optimiser (sizing, €, materialization).</dd>
         <dt id="g-terraform">Terraform</dt>
-        <dd>Artefact généré depuis la simulation — pas l’interface principale. Materialization pour apply sur votre compte.</dd>
+        <dd>Artefact généré depuis la simulation — pas l’interface principale. Materialization pour apply.</dd>
         <dt id="g-materialization">Materialization</dt>
-        <dd>Ce que <code>generate</code> écrit sur disque : Terraform, specs OKS, YAML apps. La vérité produit reste la simulation ; ces fichiers sont la couche d’apply.</dd>
+        <dd>Ce que <code>generate</code> écrit : Terraform, specs OKS, YAML apps. La vérité produit reste la simulation.</dd>
+        <dt id="g-oos">OOS</dt>
+        <dd>Outscale Object Storage (S3-compatible). Indestructible via bige-ops. Voir <a href="oos.html">oos.html</a>.</dd>
       </dl>
     </section>
 
@@ -866,7 +894,7 @@
             <li><a href="github-config.html">GitHub config</a></li>
             <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
             <li><a href="expert-config.html">Mode expert · diffs</a></li>
-            <li><a href="vms.html">VMs</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
             <li><a href="oks.html">OKS &amp; pods</a></li>
             <li><a href="bases.html">Bases de données</a></li>
             <li><a href="bases-complexes.html">Bases complexes</a></li>

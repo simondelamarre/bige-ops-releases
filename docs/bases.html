@@ -51,11 +51,13 @@ flowchart TB
 
     <h2>1 · Coloc vs VM dédiée</h2>
     <p>
-      En stack <strong>single-vm</strong> / multi-vm simple, la DB est souvent
+      En <a href="index.html#g-mono-vm"><strong>mono-VM</strong></a>
+      (code <code>single-vm</code>) / multi-VM simple, la DB est souvent
       <strong>colocalisée</strong> avec l’app : un seul blast radius, estimate
       bas, parfait pour projeter. Dès que vous isolez le risque data, vous
-      passez une <strong>VM dédiée</strong> (rôle data dans multi-vm) :
-      sizing machine + <strong>volume</strong> attaché pour la persistance.
+      passez une <strong>VM dédiée</strong> (rôle data en
+      <a href="index.html#g-multi-vm">multi-VM</a>) :
+      sizing + <strong>volume</strong> attaché pour la persistance.
       Le canvas / inspector lie le service DB à la VM et au volume ;
       Save réécrit <code>project.yaml</code> sans re-interview.
     </p>
@@ -104,10 +106,11 @@ flowchart LR
     <p>
       <strong>Pas de backup = tu auras un problème.</strong>
       À la destruction, bige-ops affiche les risques selon le setup :
-      en <em>mono-VM</em>, app + bases partagent le même disque (on ne peut pas
-      « geler » la DB seule sans bloquer toute la machine) — le filet, c’est
-      le dump → OOS. En multi-VM / OKS, destroy d’une VM data / des pods =
-      perte live ; OOS reste indestructible via l’outil.
+      en <a href="index.html#g-mono-vm"><em>mono-VM</em></a>, app + bases
+      partagent le même disque (on ne peut pas « geler » la DB seule sans
+      bloquer toute la VM) — le filet, c’est le dump → OOS. En
+      <a href="index.html#g-multi-vm">multi-VM</a> / OKS, destroy d’une VM
+      data / des pods = perte live ; OOS reste indestructible via l’outil.
     </p>
 
     <figure class="diagram">
