@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>bige-ops — Outscale, plus simple à démarrer</title>
-  <meta name="description" content="Simulez, décidez, déployez sur Outscale. App desktop gratuite, 100 % locale." />
+  <title>bige-ops — Outscale IaaS, VMs, OKS Kubernetes managé</title>
+  <meta name="description" content="App desktop gratuite pour Outscale : simulez IaaS, VMs, VPS, OKS Kubernetes managé, estimez le prix, déployez. 100 % local." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -69,35 +69,63 @@
       display: block;
       width: 100%;
       aspect-ratio: 16 / 9;
-      margin: 0 0 2.25rem;
+      margin: 0 0 2.5rem;
       background: #000;
       border: 1px solid var(--ink-700);
       object-fit: contain;
     }
 
-    h1 {
+    .block {
+      margin: 0 0 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--ink-700);
+    }
+
+    .block:last-of-type {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .block h2 {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-bright);
+      margin: 0 0 0.65rem;
+    }
+
+    .block h1,
+    .block .title {
       font-family: var(--font-display);
       font-weight: 600;
       letter-spacing: -0.025em;
-      line-height: 1.15;
-      font-size: clamp(1.875rem, 4.5vw, 2.25rem);
-      margin: 0 0 0.85rem;
-      max-width: 22ch;
+      line-height: 1.2;
+      font-size: clamp(1.5rem, 3.5vw, 1.85rem);
+      margin: 0 0 0.75rem;
       color: var(--white);
     }
 
-    p {
-      margin: 0 0 1rem;
+    .block p {
+      margin: 0 0 0.75rem;
       color: var(--mist);
       font-size: 1.05rem;
-      max-width: 40rem;
+      max-width: 42rem;
     }
 
-    .solution {
+    .block p:last-child { margin-bottom: 0; }
+
+    .block strong {
       color: var(--white);
-      font-size: 1.1rem;
-      font-weight: 500;
-      margin: 1.5rem 0 1.25rem;
+      font-weight: 600;
+    }
+
+    .keywords {
+      margin: 0.85rem 0 0;
+      color: var(--mist);
+      font-size: 0.95rem;
+      line-height: 1.7;
     }
 
     .actions {
@@ -135,6 +163,7 @@
     .brew {
       margin: 0;
       font-size: 0.875rem;
+      color: var(--mist);
     }
 
     code {
@@ -175,29 +204,57 @@
       aria-label="Démo bige-ops — bientôt disponible"
     ></video>
 
-    <h1>Outscale est excellent. On vous aide à y aller plus vite.</h1>
-    <p>
-      Cloud souverain, SecNumCloud, catalogue clair : Outscale a tout pour construire.
-      Ce qui manque souvent au démarrage, c’est un espace pour simuler le layout,
-      lire le €, et trancher avant de déployer.
-    </p>
+    <section class="block">
+      <h2>Outscale</h2>
+      <h1>Cloud IaaS &amp; PaaS souverain — VMs, VPS, Kubernetes managé.</h1>
+      <p>
+        <strong>Outscale</strong> : cloud français, <strong>SecNumCloud</strong>,
+        <strong>IaaS</strong> (machines virtuelles, VPS, volumes, réseau) et
+        <strong>PaaS</strong> avec <strong>OKS</strong> —
+        <strong>Kubernetes managé</strong> (kube / K8s) pour vos workloads.
+      </p>
+      <p class="keywords">
+        Outscale · IaaS · PaaS · VM · VPS · OKS · Kubernetes managé · kube · K8s ·
+        SecNumCloud · cloud souverain
+      </p>
+    </section>
 
-    <p class="solution">
-      bige-ops est une app desktop gratuite, 100&nbsp;% locale.
-      Composez, estimez, décidez — puis déployez sur <em>votre</em> compte Outscale.
-    </p>
+    <section class="block">
+      <h2>bige-ops</h2>
+      <p class="title">Simuler, estimer, décider — puis déployer.</p>
+      <p>
+        App desktop <strong>gratuite</strong>, 100&nbsp;% <strong>locale</strong>.
+        Vous composez un layout <strong>IaaS</strong> (VMs / VPS, stockage, réseau)
+        et / ou <strong>OKS</strong> (<strong>Kubernetes managé</strong>),
+        vous lisez le <strong>prix</strong> catalogue, vous validez l’architecture —
+        puis vous déployez sur <strong>votre</strong> compte Outscale.
+      </p>
+      <p>
+        Moins de friction ops : simulation de coûts, assistance aux décisions,
+        génération des artefacts (Terraform, specs OKS, YAML) quand vous êtes prêt.
+      </p>
+      <p class="keywords">
+        simulation · pricing · estimate · deploy · ops · Terraform · OKS ·
+        layout · desktop · free · local
+      </p>
+    </section>
 
-    <div class="actions">
-      <a class="primary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger macOS</a>
-      <a class="secondary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Linux</a>
-    </div>
-    <p class="brew">
-      <code>brew tap simondelamarre/bige-ops &amp;&amp; brew install --cask bige-ops</code>
-    </p>
+    <section class="block">
+      <h2>Télécharger</h2>
+      <div class="actions">
+        <a class="primary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger macOS</a>
+        <a class="secondary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Linux</a>
+      </div>
+      <p class="brew">
+        <code>brew tap simondelamarre/bige-ops &amp;&amp; brew install --cask bige-ops</code>
+      </p>
+    </section>
 
     <footer>
       Gratuit · 100&nbsp;% local ·
       <a href="https://www.outscale.com/">Outscale</a>
+      ·
+      <a href="https://www.outscale.com/fr/secnumcloud/">SecNumCloud</a>
       ·
       <a href="https://github.com/simondelamarre/bige-ops-releases">GitHub</a>
     </footer>
