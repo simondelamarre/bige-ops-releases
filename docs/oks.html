@@ -87,6 +87,9 @@ flowchart TB
       (<code>service_config.*.replicas</code>) dans l’inspector réécrit le
       setup sans questionnaire. Défauts typiques : data / worker ≈ 1,
       api / web ≈ 2. Puis <code>deploy</code> applique via kubectl.
+      Réplicas ≠ exposition réseau : pour
+      <strong>ouvrir ou non</strong> un pod / Service, voir
+      <a href="reseau.html">réseau · ouvrir ou non</a>.
     </p>
 
 <pre>service_config:

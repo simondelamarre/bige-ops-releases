@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Réseau · ouvrir ou non — bige-ops</title>
+  <meta name="description" content="Principes d’exposition : pod, VM, partie d’un layout VMs — règles projet + Security Groups Outscale." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="vms.html">VMs</a> · <a href="oks.html">OKS</a> · <a href="index.html#agent-keys">Agent</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Beta démo</span>
+    </div>
+    <h1>Réseau · ouvrir ou non</h1>
+    <p class="lead">
+      Ouvrir un <strong>pod</strong>, une <strong>VM</strong>, ou seulement
+      une face d’un layout multi-VM — ce n’est pas un toggle marketing.
+      Deux sources de vérité : les <strong>règles de votre projet</strong>
+      (simulation / YAML) et les <strong>règles Outscale</strong>
+      (Net, Security Groups, LBU).
+    </p>
+
+    <div class="callout">
+      <strong>Principe court.</strong>
+      Exposer le minimum : entrée publique (LBU / HTTP) si besoin ;
+      data et admin en privé (VPC / SG). Pas de <code>0.0.0.0/0</code>
+      sur SSH ou ports admin « parce que pratique ».
+    </div>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  NET[Internet] --> LBU[LBU / face publique]
+  LBU --> APP[VM app / pods front]
+  APP --> DATA[VM data / pods DB]
+  DATA -.->|pas d’EIP| X[fermé]
+      </pre>
+      <figcaption>Schéma type multi-VM / node-app : public sur le LBU, data privée.</figcaption>
+    </figure>
+
+    <h2>Ce qu’on ouvre (ou pas)</h2>
+    <ul>
+      <li>
+        <strong>Face publique d’un layout VMs</strong> —
+        souvent la VM app (+ LBU). Ports app derrière le load balancer ;
+        pas toute la machine ouverte au monde.
+      </li>
+      <li>
+        <strong>VM data / bases</strong> —
+        subnet privée, SG VPC only. Pas d’EIP « pour dépanner ».
+      </li>
+      <li>
+        <strong>Pod OKS</strong> —
+        Service / Ingress selon le besoin ; réplicas ≠ exposition.
+        Admin kube : CIDR restreint (<code>OKS_ADMIN_CIDR</code>), pas le monde.
+      </li>
+      <li>
+        <strong>SSH / deploy</strong> —
+        sur la face app si nécessaire ; jamais sur mongo/redis « ouverts ».
+      </li>
+    </ul>
+
+    <h2>Règles projet + règles Outscale</h2>
+    <p>
+      Dans bige-ops, le layout (mono-VM, multi-VM, OKS) et les liens
+      Visual / YAML disent <em>quoi</em> exposer. Outscale applique le
+      <em>comment</em> : Net, subnets, Security Groups, routes, LBU.
+      Inventaire et reverse engineering montrent l’existant ; un apply
+      ne réécrit pas magiquement votre contrat réseau.
+    </p>
+    <p>
+      Doc produit Outscale (référence) :
+    </p>
+    <ul>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Nets.html">About Nets</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Security-Groups.html">About Security Groups</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/Adding-Rules-to-a-Security-Group.html">Adding rules to a Security Group</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Security-Groups-in-LBU.html">Security Groups in LBU</a></li>
+    </ul>
+
+    <h2>Layouts « pas simples » à maintenir</h2>
+    <p>
+      Multi-VM + LBU + SG + pods : ça dérive vite (ports orphelins,
+      clés partout, setups parallèles). L’
+      <a href="index.html#agent-keys"><strong>agent LLM</strong></a>
+      travaille avec <strong>vos clés API perso</strong> (locales) pour
+      <strong>lire</strong> la simulation, la <strong>maintenir</strong>
+      dans les clous, et éviter la cascade de clés / setups hors règles
+      projet + Outscale — pas pour remplacer votre politique sécurité.
+    </p>
+
+    <p class="doc-nav" style="margin-top:2rem">
+      <a href="vms.html">VMs · VPS</a> ·
+      <a href="oks.html">OKS &amp; pods</a> ·
+      <a href="index.html#oks-warn">OKS · attention contrat</a> ·
+      <a href="perimetre.html">Périmètre</a>
+    </p>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark" });
+  </script>
+</body>
+</html>

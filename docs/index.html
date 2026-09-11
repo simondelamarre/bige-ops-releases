@@ -668,27 +668,37 @@
       </p>
     </section>
 
-    <section class="block">
+    <section class="block" id="agent-keys">
       <h2>Assistant IA</h2>
-      <p class="title">Chat managé — simuler, décider, deploy ou promote.</p>
+      <p class="title">Vos clés API perso — l’agent lit et maintient le layout.</p>
       <p>
-        Un co-pilote en mode <strong>chat</strong> sur votre simulation :
-        composer la stack, comparer les coûts, trancher — puis
+        Un co-pilote en <strong>chat</strong> sur votre simulation :
+        composer, estimer, trancher — puis
         <a class="term" href="#g-deploy"><strong>deploy</strong></a> ou
-        <a class="term" href="#g-promote"><strong>promote</strong></a> en un geste.
-        Les clés LLM sont <strong>managées</strong> (pas vos clés à coller
-        dans l’app). L’agent travaille la <strong>config</strong>, pas le coffre —
-        vos secrets restent locaux.
+        <a class="term" href="#g-promote"><strong>promote</strong></a>.
+        Les agents LLM tournent avec <strong>vos clés API personnelles</strong>
+        (ex. Anthropic) : elles restent <strong>locales</strong> sur votre
+        machine — pas un coffre SaaS bige-ops.
+      </p>
+      <p>
+        Un layout multi-VM / OKS / réseau, ce n’est
+        <strong>pas simple à maintenir</strong> à la main. L’agent sert à
+        <strong>comprendre</strong> la topologie, la
+        <strong>maintenir</strong> dans vos règles projet, et
+        <strong>éviter la cascade</strong> de clés orphelines et de setups
+        parallèles — toujours selon vos règles + celles
+        <a href="reseau.html">réseau / Outscale</a>.
+        Il travaille la <strong>config</strong>, pas le coffre secrets cloud.
       </p>
       <p>
         <strong>Mistral à venir</strong> — stack IA alignée cloud
         <a class="term" href="#g-souverain"><strong>souverain</strong></a> / SecNumCloud.
       </p>
       <p class="keywords">
-        AI chat · managed LLM keys · Mistral à venir ·
-        <a class="term" href="#g-souverain">souverain</a> ·
-        <a class="term" href="#g-deploy">deploy</a> ·
-        <a class="term" href="#g-promote">promote</a>
+        AI chat · clés API perso · local-first ·
+        <a class="term" href="#g-agent">agent</a> ·
+        <a href="reseau.html">réseau</a> ·
+        <a class="term" href="#g-souverain">souverain</a>
       </p>
     </section>
 
@@ -751,6 +761,28 @@
         <a class="term" href="#g-vps">VPS</a> ·
         <a class="term" href="#g-oks">OKS</a> ·
         Kubernetes managé
+      </p>
+    </section>
+
+    <section class="block" id="reseau">
+      <h2>Réseau · ouvrir ou non</h2>
+      <p class="title">Pod, VM, face d’un layout — règles projet + Outscale.</p>
+      <p>
+        Ouvrir un <a class="term" href="#g-oks">pod</a>, une
+        <a class="term" href="#g-vm">VM</a>, ou seulement la face publique
+        d’un <a class="term" href="#g-multi-vm">multi-VM</a> :
+        ce n’est pas un bouton magique. Les liens réseau (LBU, EIP, SG)
+        suivent les <strong>règles de votre projet</strong> et les
+        <strong>principes Outscale</strong> (Net, Security Groups).
+        Data privée, entrée publique minimale — détail et liens doc :
+        <a href="reseau.html">réseau · ouvrir ou non</a>.
+      </p>
+      <p class="keywords">
+        <a class="term" href="#g-reseau">réseau</a> ·
+        Security Groups · LBU ·
+        <a class="term" href="#g-vm">VM</a> ·
+        pods ·
+        <a href="reseau.html">principes</a>
       </p>
     </section>
 
@@ -844,6 +876,7 @@
         <a href="savoir.html">sait / ne sait pas</a>
         (pricing, capacités, canal experts Outscale),
         <a href="vms.html">VMs · VPS</a>,
+        <a href="reseau.html">réseau · ouvrir ou non</a>,
         <a href="oks.html">OKS &amp; pods</a>,
         <a href="cli.html">CLI · app · OKS</a>,
         <a href="bases.html">bases de données</a>,
@@ -925,6 +958,10 @@
         <dd>Ce que <code>generate</code> écrit : Terraform, specs OKS, YAML apps. La vérité produit reste la simulation.</dd>
         <dt id="g-oos">OOS</dt>
         <dd>Outscale Object Storage (S3-compatible). Indestructible via bige-ops. Voir <a href="oos.html">oos.html</a>.</dd>
+        <dt id="g-reseau">Réseau / exposition</dt>
+        <dd>Décider d’ouvrir (ou non) un pod, une VM, ou une face de layout : règles projet + Net / Security Groups Outscale. Voir <a href="reseau.html">reseau.html</a>.</dd>
+        <dt id="g-agent">Agent LLM</dt>
+        <dd>Co-pilote chat : travaille avec <strong>vos clés API perso</strong> (locales) pour comprendre / maintenir le layout et éviter cascades de keys &amp; setups — selon vos règles. Voir <a href="#agent-keys">Assistant IA</a>.</dd>
       </dl>
     </section>
 
@@ -940,7 +977,9 @@
             <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
             <li><a href="expert-config.html">Mode expert · diffs</a></li>
             <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
             <li><a href="oks.html">OKS &amp; pods</a></li>
+            <li><a href="#agent-keys">Assistant IA · clés perso</a></li>
             <li><a href="bases.html">Bases de données</a></li>
             <li><a href="bases-complexes.html">Bases complexes</a></li>
             <li><a href="oos.html">OOS &amp; backups</a></li>
