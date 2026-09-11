@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ce que bige-ops sait — et ce qu’il ne sait pas toujours</title>
+  <meta name="description" content="Pricing indicatif, capacités Outscale évolutives (ex. NVMe), invitation aux experts Outscale à écrire sur GitHub." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a> · <a href="index.html#g-estimate">Estimate</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Beta démo</span>
+    </div>
+    <h1>Ce que bige-ops sait — et ce qu’il ne sait pas toujours</h1>
+    <p class="lead">
+      Un starter kit embarque un <strong>instantané</strong> du monde Outscale
+      (catalogue, topologies, materialization). Ce n’est
+      <strong>pas</strong> la vérité commerciale ni le catalogue live.
+      Les <strong>experts</strong>, ce sont les équipes Outscale —
+      pas nous.
+    </p>
+
+    <div class="callout">
+      <strong>Commerciaux &amp; tech Outscale : écrivez sur GitHub.</strong>
+      Avancées d’offre, déceptions, remarques sur l’outil, l’usage ou le
+      pricing — ouvrez une
+      <a href="https://github.com/simondelamarre/bige-ops-releases/issues">issue</a>
+      ou une discussion / PR sur
+      <a href="https://github.com/simondelamarre/bige-ops-releases">bige-ops-releases</a>.
+      Pour le moment c’est le canal direct. Vous corrigez la carte ; on
+      ajuste le kit.
+    </div>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart TB
+  Cat[Catalogue public embarqué] --> Est[Estimate € HT]
+  Cap[Capacités connues du kit] --> Sim[Simulation / Visual]
+  Live[Offre Outscale live · négo · régions] -.->|peut diverger| Est
+  Live -.->|peut évoluer demain| Cap
+  Experts[Experts Outscale] -->|issues / PR GitHub| Kit[bige-ops docs + catalogue]
+      </pre>
+      <figcaption>Le kit sait un snapshot. Le live et la négo restent chez Outscale.</figcaption>
+    </figure>
+
+    <h2>Ce que le kit sait (aujourd’hui)</h2>
+    <ul>
+      <li>
+        <strong>Estimate</strong> à partir d’un
+        <strong>catalogue public</strong> embarqué (indicatif € HT/mois).
+      </li>
+      <li>
+        Topologies produit : <a href="vms.html">mono-VM / multi-VM</a>,
+        <a href="oks.html">OKS</a>, volumes BSU types connus du kit
+        (ex. gp2 / io1), <a href="oos.html">OOS</a>, layouts Visual.
+      </li>
+      <li>
+        Materialization : Terraform / specs / YAML — apply / deploy sur
+        <em>votre</em> compte.
+      </li>
+      <li>
+        Limites assumées du kickoff :
+        <a href="perimetre.html">périmètre</a>.
+      </li>
+    </ul>
+
+    <h2>Ce qu’il ne sait pas toujours</h2>
+    <ul>
+      <li>
+        <strong>Pricing commercial</strong> — devis, remises, options
+        tenant, facture réelle. Pas de feed live. Estimate ≠ quote.
+      </li>
+      <li>
+        <strong>Capacités d’offre qui bougent</strong> — régions,
+        types d’instance, stockage, SKUs SecNumCloud vs public.
+        Le kit peut être en retard ou simplifier.
+      </li>
+      <li>
+        <strong>Votre négo</strong> et le discours commercial terrain —
+        hors scope outil.
+      </li>
+    </ul>
+
+    <h2>Exemple : NVMe</h2>
+    <p>
+      Selon notre lecture actuelle du terrain / catalogue embarqué,
+      bige-ops <strong>ne modélise pas de NVMe</strong> — y compris sur
+      <a href="index.html#g-secnumcloud">SecNumCloud</a>.
+      Ce n’est pas une promesse « Outscale n’aura jamais de NVMe » :
+      <strong>ça pourrait changer demain</strong>. Quand l’offre évolue,
+      le kit doit être mis à jour — idéalement signalé par ceux qui
+      connaissent le catalogue pour de vrai.
+    </p>
+    <p>
+      Même logique pour d’autres capacités (nouveaux types Tina, volumes,
+      régions, quotas) : si le Visual / l’estimate ne proposent pas X,
+      ce n’est pas forcément « X n’existe pas » — parfois « le snapshot
+      du kit ne le sait pas encore ».
+    </p>
+
+    <h2>Canal GitHub (pour le moment)</h2>
+    <p>
+      Pas de portail partenaire dédié. Pour les
+      <strong>commerciaux</strong> et <strong>tech Outscale</strong> :
+    </p>
+    <ul>
+      <li>
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues/new">Nouvelle issue</a>
+        — avancée d’offre, erreur de pricing, capability manquante,
+        remarque d’usage, déception produit.
+      </li>
+      <li>
+        PR sur la doc / le message landing si vous voulez corriger un
+        libellé (VPS, SKU, région…).
+      </li>
+    </ul>
+    <p>
+      Soyez francs : progrès <em>et</em> déceptions. L’outil sert le
+      kickoff ; la vérité offre / prix reste la vôtre.
+    </p>
+
+    <table>
+      <thead>
+        <tr><th>Sujet</th><th>bige-ops</th><th>Experts Outscale</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Estimate € HT</td>
+          <td>Catalogue embarqué, indicatif</td>
+          <td>Devis, négo, bill</td>
+        </tr>
+        <tr>
+          <td>NVMe / nouveaux SKUs</td>
+          <td>Absents du modèle actuel</td>
+          <td>Signaler si / quand disponible</td>
+        </tr>
+        <tr>
+          <td>SecNumCloud</td>
+          <td>Cible produit ; snapshot capacités</td>
+          <td>Réalité région / catalogue</td>
+        </tr>
+        <tr>
+          <td>Message landing / docs</td>
+          <td>Kickoff starter kit</td>
+          <td>Corriger via GitHub</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      Suite :
+      <a href="index.html#pricing">Pricing (landing)</a> ·
+      <a href="perimetre.html">périmètre</a> ·
+      <a href="vms.html">VMs · VPS</a> ·
+      <a href="https://github.com/simondelamarre/bige-ops-releases">GitHub</a>.
+    </p>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Doc</h3>
+          <ul>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config-history</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Produit</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="https://github.com/simondelamarre/bige-ops-releases/issues">Issues GitHub</a></li>
+            <li><a href="https://www.outscale.com/">Outscale</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">Beta démo · snapshot ≠ offre live · experts = Outscale</p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+  </script>
+</body>
+</html>

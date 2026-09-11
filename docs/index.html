@@ -540,7 +540,7 @@
       </p>
     </section>
 
-    <section class="block">
+    <section class="block" id="pricing">
       <h2>Pricing</h2>
       <p class="title">Estimations indicatives — pas un devis Outscale.</p>
       <p>
@@ -557,16 +557,22 @@
         bige-ops <strong>n’est pas connecté en temps réel</strong> au
         pricing cloud : le catalogue <strong>peut évoluer</strong>,
         décaler, ou différer de ce que vous facture Outscale.
+        Même logique pour les <strong>capacités</strong> (ex. NVMe) :
+        le kit porte un snapshot — pas la vérité offre de demain.
       </p>
       <p>
         <strong>À retenir :</strong>
         <a class="term" href="#g-estimate">estimate</a> = aide à la décision.
         Devis / bill = Outscale (et votre commercial).
+        Détail + canal experts :
+        <a href="savoir.html">ce que bige-ops sait / ne sait pas</a>.
       </p>
       <p class="keywords">
         <a class="term" href="#g-estimate">estimate</a> ·
         catalogue public · indicative · not a quote ·
-        no live pricing feed · tenant · nego
+        no live pricing feed ·
+        <a class="term" href="#g-capabilities">capacités</a> ·
+        tenant · nego
       </p>
     </section>
 
@@ -801,6 +807,8 @@
       <p>
         Les détails :
         <a href="perimetre.html">périmètre</a>,
+        <a href="savoir.html">sait / ne sait pas</a>
+        (pricing, capacités, canal experts Outscale),
         <a href="vms.html">VMs · VPS</a>,
         <a href="oks.html">OKS &amp; pods</a>,
         <a href="cli.html">CLI · app · OKS</a>,
@@ -832,7 +840,9 @@
         <dt id="g-stack">Stack (live)</dt>
         <dd>Topologie / layout d’une simulation, ou l’état <strong>live</strong> après promote (<code>main</code>). Ne pas dire « stack » pour projet ni pour repo app.</dd>
         <dt id="g-estimate">Estimate</dt>
-        <dd>Projection € HT/mois depuis le catalogue public embarqué. Indicatif — pas un devis Outscale, pas de feed pricing temps réel.</dd>
+        <dd>Projection € HT/mois depuis le catalogue public embarqué. Indicatif — pas un devis Outscale, pas de feed pricing temps réel. Voir <a href="savoir.html">sait / ne sait pas</a>.</dd>
+        <dt id="g-capabilities">Capacités (snapshot)</dt>
+        <dd>Ce que le kit modélise aujourd’hui (types Tina, volumes, régions connues…). L’offre Outscale peut évoluer (ex. NVMe absent du modèle actuel, y compris SecNumCloud — peut changer demain). Les experts Outscale signalent via GitHub.</dd>
         <dt id="g-vm">VM</dt>
         <dd>Instance compute Outscale (type Tina, disques, réseau). Terme <strong>produit</strong> bige-ops. Unité du layout IaaS dans Visual. Voir <a href="vms.html">vms.html</a>.</dd>
         <dt id="g-vps">VPS</dt>
@@ -890,6 +900,7 @@
           <h3>Doc</h3>
           <ul>
             <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
             <li><a href="cli.html">CLI · app · OKS</a></li>
             <li><a href="github-config.html">GitHub config</a></li>
             <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
