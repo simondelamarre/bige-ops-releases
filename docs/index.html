@@ -22,7 +22,6 @@
     }
 
     * { box-sizing: border-box; }
-
     html { color-scheme: dark; }
 
     body {
@@ -35,7 +34,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Same atmosphere DNA as the desktop app — quiet, not decorative. */
     .bg {
       pointer-events: none;
       position: fixed;
@@ -50,122 +48,75 @@
     main {
       max-width: 820px;
       margin: 0 auto;
-      padding: clamp(2.5rem, 6vw, 4.5rem) 1.35rem 4.5rem;
+      padding: clamp(2.5rem, 6vw, 4rem) 1.35rem 4rem;
     }
 
     .brand {
       font-family: "Space Grotesk", sans-serif;
-      font-size: clamp(1.75rem, 5vw, 2.35rem);
+      font-size: clamp(1.75rem, 5vw, 2.25rem);
       font-weight: 700;
       letter-spacing: -0.03em;
-      margin: 0 0 2.75rem;
-      color: var(--fg);
+      margin: 0 0 2.5rem;
     }
 
-    h1, h2 {
+    h1 {
       font-family: "Space Grotesk", sans-serif;
       font-weight: 600;
       letter-spacing: -0.02em;
       line-height: 1.2;
+      font-size: clamp(1.75rem, 4.2vw, 2.35rem);
+      margin: 0 0 0.85rem;
+      max-width: 18ch;
     }
 
-    h1 {
-      font-size: clamp(1.85rem, 4.5vw, 2.55rem);
+    p {
       margin: 0 0 1rem;
-      max-width: 16ch;
-    }
-
-    .lead {
-      margin: 0;
       color: var(--muted);
-      font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+      font-size: 1.08rem;
       max-width: 38rem;
     }
 
-    h2 {
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin: 2.75rem 0 0.85rem;
-      border: 0;
-      padding: 0;
-    }
-
     .solution {
-      margin: 0 0 1.5rem;
       color: var(--fg);
-      font-size: clamp(1.1rem, 2.4vw, 1.3rem);
+      font-size: 1.15rem;
       font-weight: 500;
-      line-height: 1.45;
-      max-width: 36rem;
-    }
-
-    .steps {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem 0.65rem;
-      margin: 0 0 2rem;
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 0.92rem;
-      font-weight: 500;
-      color: var(--muted);
-    }
-
-    .steps span { color: var(--fg); }
-    .steps i {
-      font-style: normal;
-      color: #3a4354;
-      margin: 0 0.15rem;
+      margin: 2rem 0 1.25rem;
     }
 
     .actions {
       display: flex;
       flex-wrap: wrap;
       gap: 0.65rem;
-      margin: 0 0 0.9rem;
+      margin: 0 0 0.85rem;
     }
 
     .actions a {
       display: inline-flex;
-      align-items: center;
       font-family: "Space Grotesk", sans-serif;
       font-weight: 600;
-      padding: 0.75rem 1.2rem;
+      padding: 0.7rem 1.15rem;
       text-decoration: none;
       font-size: 0.95rem;
-      letter-spacing: -0.01em;
-      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      transition: background 0.2s ease, border-color 0.2s ease;
     }
 
     .actions a.primary {
       background: var(--accent);
       color: #06110f;
-      border: 1px solid transparent;
     }
 
-    .actions a.primary:hover {
-      background: #6fd4c4;
-      transform: translateY(-1px);
-    }
+    .actions a.primary:hover { background: #6fd4c4; }
 
     .actions a.secondary {
-      background: transparent;
       color: var(--fg);
       border: 1px solid var(--line);
     }
 
-    .actions a.secondary:hover {
-      border-color: #4a5568;
-      transform: translateY(-1px);
-    }
+    .actions a.secondary:hover { border-color: #4a5568; }
 
     .brew {
-      margin: 0 0 0;
+      margin: 0 0 2.5rem;
       font-size: 0.88rem;
-      color: var(--muted);
-      word-break: break-all;
     }
 
     code {
@@ -177,26 +128,18 @@
       border: 1px solid var(--line);
     }
 
-    .video-block { margin-top: 0.35rem; }
-
-    .video-wrap {
+    /* Native video player — cover until a real file is wired */
+    video.player {
+      display: block;
       width: 100%;
       aspect-ratio: 16 / 9;
       background: #000;
       border: 1px solid var(--line);
-      overflow: hidden;
-    }
-
-    .video-wrap video {
-      display: block;
-      width: 100%;
-      height: 100%;
       object-fit: contain;
-      background: #000;
     }
 
     footer {
-      margin-top: 3.5rem;
+      margin-top: 2.5rem;
       font-size: 0.85rem;
       color: #6b7382;
     }
@@ -207,85 +150,44 @@
       border-bottom: 1px solid var(--line);
     }
 
-    footer a:hover { color: var(--accent); border-color: var(--accent); }
-
-    /* Presence, not noise */
-    .in {
-      opacity: 0;
-      transform: translateY(12px);
-      animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-
-    .in-1 { animation-delay: 0.05s; }
-    .in-2 { animation-delay: 0.16s; }
-    .in-3 { animation-delay: 0.28s; }
-    .in-4 { animation-delay: 0.4s; }
-    .in-5 { animation-delay: 0.52s; }
-
-    @keyframes rise {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .in {
-        opacity: 1;
-        transform: none;
-        animation: none;
-      }
-      .actions a { transition: none; }
-      .actions a:hover { transform: none; }
-    }
+    footer a:hover { color: var(--accent); }
   </style>
 </head>
 <body>
   <div class="bg" aria-hidden="true"></div>
   <main>
-    <p class="brand in in-1">bige-ops</p>
+    <p class="brand">bige-ops</p>
 
-    <h2 class="in in-2">Le problème</h2>
-    <h1 class="in in-2">Le cloud Outscale ne devrait pas commencer dans un tableur.</h1>
-    <p class="lead in in-2">
+    <h1>Le cloud Outscale ne devrait pas commencer dans un tableur.</h1>
+    <p>
       Terraform à vide. SKUs Tina à coller. Un prix qu’on découvre trop tard.
       Déployer devient un projet avant même d’avoir une architecture.
     </p>
 
-    <h2 class="in in-3">La solution</h2>
-    <p class="solution in in-3">
-      Une app desktop gratuite. Vous composez le layout, vous voyez le €,
-      vous déployez sur votre compte Outscale. En local. En trois gestes.
-    </p>
-    <p class="steps in in-3" aria-label="Trois gestes">
-      <span>Layout</span><i>→</i>
-      <span>Estimate</span><i>→</i>
-      <span>Deploy</span>
+    <p class="solution">
+      App desktop gratuite : layout, prix, déploiement sur votre compte Outscale.
+      En local. En trois gestes.
     </p>
 
-    <div class="actions in in-4">
+    <div class="actions">
       <a class="primary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger macOS</a>
       <a class="secondary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Linux</a>
     </div>
-    <p class="brew in in-4">
+    <p class="brew">
       <code>brew tap simondelamarre/bige-ops &amp;&amp; brew install --cask bige-ops</code>
     </p>
 
-    <h2 class="in in-5">En image</h2>
-    <div class="video-block in in-5">
-      <div class="video-wrap">
-        <video
-          controls
-          playsinline
-          preload="metadata"
-          poster="bige-ops-three-clicks.png"
-        >
-          <source src="demo.mp4" type="video/mp4" />
-        </video>
-      </div>
-    </div>
+    <!-- Vrai player HTML5. Cover = poster. Quand la vidéo est prête : ajouter src="demo.mp4". -->
+    <video
+      class="player"
+      controls
+      playsinline
+      preload="none"
+      poster="bige-ops-three-clicks.png"
+      aria-label="Démo bige-ops — bientôt disponible"
+    ></video>
 
-    <footer class="in in-5">
+    <footer>
       Gratuit · 100&nbsp;% local ·
       <a href="https://github.com/simondelamarre/bige-ops-releases">GitHub</a>
     </footer>
