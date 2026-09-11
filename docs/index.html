@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>bige-ops — free Outscale desktop</title>
+  <meta name="description" content="Free desktop app for Outscale. Design the stack, see the €, deploy when ready. Fully local." />
+  <style>
+    :root {
+      --bg: #111;
+      --fg: #e8e8e8;
+      --muted: #9a9a9a;
+      --line: #2a2a2a;
+      --link: #7eb8a8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.5;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 1.25rem 4rem;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin: 0 0 0.5rem;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 2.5rem 0 0.75rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line);
+    }
+
+    p { margin: 0 0 1rem; color: var(--muted); }
+
+    a { color: var(--link); }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: 1.5rem 0;
+    }
+
+    .actions a {
+      display: inline-block;
+      padding: 0.55rem 1rem;
+      border: 1px solid var(--line);
+      color: var(--fg);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .actions a:hover {
+      border-color: var(--muted);
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.85rem;
+      background: #1a1a1a;
+      padding: 0.15rem 0.4rem;
+      border: 1px solid var(--line);
+    }
+
+    .brew {
+      margin: 0.5rem 0 1.5rem;
+      font-size: 0.9rem;
+      word-break: break-all;
+    }
+
+    .video-wrap {
+      width: 100%;
+      max-width: 720px;
+      margin: 1.5rem auto;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border: 1px solid var(--line);
+    }
+
+    .video-wrap video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+    }
+
+    ul {
+      margin: 0 0 1rem;
+      padding-left: 1.2rem;
+      color: var(--muted);
+    }
+
+    li { margin-bottom: 0.35rem; }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>bige-ops</h1>
+    <p>
+      Free desktop app for
+      <a href="https://www.outscale.com/">Outscale</a>.
+      Design the stack · see the € · deploy when you’re ready.
+      Fully local.
+    </p>
+
+    <div class="actions">
+      <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Download macOS</a>
+      <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Download Linux</a>
+    </div>
+
+    <p class="brew">
+      <code>brew tap simondelamarre/bige-ops &amp;&amp; brew install --cask bige-ops</code>
+    </p>
+
+    <div class="video-wrap">
+      <!-- Drop a demo.mp4 next to this file when ready; poster shows until then. -->
+      <video
+        controls
+        playsinline
+        preload="metadata"
+        poster="bige-ops-three-clicks.png"
+      >
+        <source src="demo.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <h2>Quick start</h2>
+    <ul>
+      <li>Install the app (download or Homebrew).</li>
+      <li>Open a layout, check the estimate, deploy on your Outscale account.</li>
+      <li>Regions: <code>eu-west-2</code>, <code>cloudgouv-eu-west-1</code> (SecNumCloud).</li>
+    </ul>
+
+    <h2>Docs</h2>
+    <ul>
+      <li>App is free. Your Outscale bill stays yours.</li>
+      <li>Runs on your machine — no hosted control plane.</li>
+      <li>Same engine in the GUI and the CLI.</li>
+      <li>More detail:
+        <a href="https://github.com/simondelamarre/bige-ops-releases">GitHub README</a>.
+      </li>
+    </ul>
+
+    <footer>
+      LESS IS MORE ·
+      <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">latest release</a>
+    </footer>
+  </main>
+</body>
+</html>
