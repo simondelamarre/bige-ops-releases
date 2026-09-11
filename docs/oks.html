@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OKS &amp; pods — bige-ops</title>
+  <meta name="description" content="OKS Kubernetes managé Outscale : nodepools, réplicas pods, generate. bige-ops aide à démarrer." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
+    <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+    <h1>OKS &amp; pods</h1>
+
+    <div class="callout">
+      <strong>Kubernetes managé Outscale (OKS).</strong> Vous dimensionnez
+      cluster + workloads ; Outscale opère le control plane. bige-ops génère
+      specs et manifests — pas votre SRE à la place.
+    </div>
+
+    <h2>Cluster &amp; nodepools</h2>
+    <ul>
+      <li>Topologie <strong>oks</strong> : cluster + nodepools (type Tina, count)</li>
+      <li>Formulaire Visual / CLI → maj directe de la simulation (pas d’interview en boucle)</li>
+      <li><code>apply --target oks</code> via <code>oks-cli</code> embarqué</li>
+    </ul>
+
+    <h2>Pods / Deployments</h2>
+    <ul>
+      <li>Services (api, web, worker, DB…) → Deployments + Services sous <code>oks/apps/</code></li>
+      <li><strong>Réplicas</strong> : champ formulaire par service (<code>service_config.*.replicas</code>) → rewrite du setup, puis generate</li>
+      <li><code>deploy</code> applique les manifests sur le cluster (kubectl)</li>
+    </ul>
+
+    <h2>Limites assumées</h2>
+    <ul>
+      <li>Policies réseau avancées, mesh, opérateurs custom : hors starter kit</li>
+      <li>Vous validez les YAML générés avant prod</li>
+      <li>Kubeconfig sensible reste local (pas dans le config-history)</li>
+    </ul>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Doc</h3>
+          <ul>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="vms.html">VMs</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Produit</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">Beta démo · on aide à démarrer, on ne fait pas tout</p>
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VMs — bige-ops</title>
+  <meta name="description" content="Gérer les VMs Outscale avec bige-ops : layout, sizing, generate Terraform. On aide à démarrer." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
+    <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+    <h1>VMs Outscale</h1>
+
+    <div class="callout">
+      <strong>On démarre la topologie.</strong> Type Tina, subnets, volumes,
+      EIP, LBU — depuis Visual ou CLI. Le run fin (patch OS, monitoring avancé)
+      reste le vôtre.
+    </div>
+
+    <h2>Ce que bige-ops fait</h2>
+    <ul>
+      <li>Stacks <strong>single-vm</strong> / <strong>multi-vm</strong> dans une simulation</li>
+      <li>Inspector : type d’instance, disques, réseau — formulaire → maj du setup tout de suite</li>
+      <li><code>generate</code> → Terraform (materialization), puis plan / apply sur votre compte</li>
+      <li>Estimate catalogue sur le sizing choisi (indicatif)</li>
+    </ul>
+
+    <h2>Ce que vous assumez</h2>
+    <ul>
+      <li>Images OMI / SSH / hardening</li>
+      <li>Choix prod vs projection, apply réel</li>
+      <li>Ops quotidien une fois la VM live</li>
+    </ul>
+
+    <h2>Flux typique</h2>
+    <p>
+      Visual → drop VM / stack → formulaire sizing → Save + generate →
+      Workspace plan/apply. Ou CLI <code>bige-ops add stack --topology multi-vm</code>.
+    </p>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Doc</h3>
+          <ul>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="vms.html">VMs</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Produit</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">Beta démo · on aide à démarrer, on ne fait pas tout</p>
+    </footer>
+  </main>
+</body>
+</html>

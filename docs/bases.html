@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bases de données — bige-ops</title>
+  <meta name="description" content="Presets DB Outscale : Postgres, Mongo, Redis… réplicas et nœuds via formulaire, maj setup directe." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
+    <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+    <h1>Bases de données</h1>
+
+    <div class="callout">
+      <strong>Presets par type.</strong> Vous choisissez Postgres, Mongo, Redis…
+      Le formulaire applique réplicas / sizing / nœuds gérés et
+      <em>met à jour le setup tout de suite</em> — sans questionnaire en boucle.
+      Le DBA fin et le backup stratégie restent les vôtres.
+    </div>
+
+    <h2>Types &amp; presets</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Preset typique</th>
+          <th>Via formulaire</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Postgres</strong></td>
+          <td>Image catalogue, volume data</td>
+          <td>Taille, attache VM / pod, réplicas OKS</td>
+        </tr>
+        <tr>
+          <td><strong>MongoDB</strong></td>
+          <td>Service data colocalisé ou pod</td>
+          <td>Réplicas Deployment (OKS), ressources</td>
+        </tr>
+        <tr>
+          <td><strong>Redis</strong></td>
+          <td>Cache léger</td>
+          <td>Réplicas, coloc VM app ou OKS</td>
+        </tr>
+        <tr>
+          <td><strong>Custom</strong></td>
+          <td>Image + port</td>
+          <td>Mêmes champs sizing / réplicas</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Formulaire → setup, sans plus de questions</h2>
+    <p>
+      Dans Visual (inspector) : vous changez un champ (réplicas, type de nœud
+      nodepool, GiB volume…). La simulation / <code>project.yaml</code> est
+      mis à jour <strong>directement</strong>. Save + generate materialize
+      Terraform / manifests. Pas d’assistant qui redemande dix fois la même chose.
+    </p>
+    <ul>
+      <li><strong>OKS</strong> : réplicas pods = <code>service_config.*.replicas</code></li>
+      <li><strong>Nodepools</strong> : count + node-type gérés sur le cluster</li>
+      <li><strong>VMs</strong> : DB souvent colocalisée / liée — sizing machine + volume</li>
+    </ul>
+
+    <h2>Hors scope (volontaire)</h2>
+    <ul>
+      <li>Tuning SQL / indexes / sharding avancé</li>
+      <li>Opérateurs K8s spécialisés non générés par défaut</li>
+      <li>Garantir la HA prod sans relecture humaine</li>
+    </ul>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Doc</h3>
+          <ul>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="vms.html">VMs</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Produit</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">Beta démo · on aide à démarrer, on ne fait pas tout</p>
+    </footer>
+  </main>
+</body>
+</html>
