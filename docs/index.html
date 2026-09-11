@@ -55,7 +55,7 @@
       align-items: baseline;
       flex-wrap: wrap;
       gap: 0.65rem 0.85rem;
-      margin: 0 0 1.5rem;
+      margin: 0 0 0.55rem;
     }
 
     .brand {
@@ -81,6 +81,15 @@
       padding: 0.2rem 0.45rem;
       line-height: 1.2;
       align-self: center;
+    }
+
+    .baseline {
+      margin: 0 0 1.5rem;
+      max-width: 36rem;
+      font-size: clamp(1.05rem, 2.4vw, 1.2rem);
+      font-weight: 500;
+      color: var(--mist);
+      line-height: 1.4;
     }
 
     /* Floating player — border + sober shadow only */
@@ -274,6 +283,9 @@
       <p class="brand">bige<span class="ops">-ops</span></p>
       <span class="brand-badge">Beta démo</span>
     </div>
+    <p class="baseline">
+      Les basics et les standards — quand t’as pas la tune de te payer un DevOps.
+    </p>
 
     <div class="player-shell">
       <video
