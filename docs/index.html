@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>bige-ops — Outscale IaaS, VMs, OKS Kubernetes managé</title>
-  <meta name="description" content="App desktop gratuite pour Outscale : simulez IaaS, VMs, VPS, OKS Kubernetes managé, estimez le prix, déployez. 100 % local." />
+  <meta name="description" content="Starter kit Outscale : simulez IaaS, VMs, VPS, OKS Kubernetes managé, estimez, générez Terraform et CLI kube. Gratuit, 100 % local." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -38,6 +38,7 @@
       color: var(--white);
       line-height: 1.55;
       -webkit-font-smoothing: antialiased;
+      padding-bottom: 4.5rem;
     }
 
     .bg {
@@ -53,79 +54,36 @@
     main {
       max-width: 820px;
       margin: 0 auto;
-      padding: clamp(2.5rem, 6vw, 4rem) 1.35rem 4rem;
+      padding: clamp(2rem, 5vw, 3.5rem) 1.35rem 3rem;
     }
 
+    /* Same mark as the app: bige + green -ops, hero scale */
     .brand {
       font-family: var(--font-display);
-      font-size: 1.125rem;
+      font-size: clamp(2rem, 6vw, 2.75rem);
       font-weight: 600;
-      letter-spacing: -0.025em;
+      letter-spacing: -0.03em;
+      line-height: 1;
       margin: 0 0 1.5rem;
       color: var(--white);
     }
+
+    .brand .ops { color: var(--accent-bright); }
 
     video.player {
       display: block;
       width: 100%;
       aspect-ratio: 16 / 9;
-      margin: 0 0 2.5rem;
+      margin: 0 0 1.25rem;
       background: #000;
       border: 1px solid var(--ink-700);
       object-fit: contain;
     }
 
-    .block {
-      margin: 0 0 2rem;
+    .download-inline {
+      margin: 0 0 2.5rem;
       padding-bottom: 2rem;
       border-bottom: 1px solid var(--ink-700);
-    }
-
-    .block:last-of-type {
-      border-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .block h2 {
-      font-family: var(--font-display);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent-bright);
-      margin: 0 0 0.65rem;
-    }
-
-    .block h1,
-    .block .title {
-      font-family: var(--font-display);
-      font-weight: 600;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
-      font-size: clamp(1.5rem, 3.5vw, 1.85rem);
-      margin: 0 0 0.75rem;
-      color: var(--white);
-    }
-
-    .block p {
-      margin: 0 0 0.75rem;
-      color: var(--mist);
-      font-size: 1.05rem;
-      max-width: 42rem;
-    }
-
-    .block p:last-child { margin-bottom: 0; }
-
-    .block strong {
-      color: var(--white);
-      font-weight: 600;
-    }
-
-    .keywords {
-      margin: 0.85rem 0 0;
-      color: var(--mist);
-      font-size: 0.95rem;
-      line-height: 1.7;
     }
 
     .actions {
@@ -137,11 +95,13 @@
 
     .actions a {
       display: inline-flex;
+      align-items: center;
+      justify-content: center;
       font-family: var(--font-display);
       font-weight: 600;
-      padding: 0.7rem 1.15rem;
+      padding: 0.8rem 1.25rem;
       text-decoration: none;
-      font-size: 0.95rem;
+      font-size: 1rem;
       letter-spacing: -0.01em;
       transition: background 0.15s ease, border-color 0.15s ease;
     }
@@ -175,6 +135,60 @@
       border: 1px solid var(--ink-700);
     }
 
+    .block {
+      margin: 0 0 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--ink-700);
+    }
+
+    .block:last-of-type {
+      border-bottom: 0;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    .block h2 {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-bright);
+      margin: 0 0 0.65rem;
+    }
+
+    .block h1,
+    .block .title {
+      font-family: var(--font-display);
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      font-size: clamp(1.45rem, 3.5vw, 1.85rem);
+      margin: 0 0 0.75rem;
+      color: var(--white);
+    }
+
+    .block p {
+      margin: 0 0 0.75rem;
+      color: var(--mist);
+      font-size: 1.05rem;
+      max-width: 42rem;
+    }
+
+    .block p:last-child { margin-bottom: 0; }
+
+    .block strong {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    .keywords {
+      margin: 0.85rem 0 0;
+      color: var(--mist);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
     footer {
       margin-top: 2.5rem;
       font-size: 0.85rem;
@@ -188,12 +202,56 @@
     }
 
     footer a:hover { color: var(--accent-bright); }
+
+    /* Sticky download — appears when inline CTAs leave the viewport */
+    .download-sticky {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 50;
+      display: none;
+      justify-content: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+      background: rgba(11, 13, 16, 0.92);
+      border-top: 1px solid var(--ink-700);
+      backdrop-filter: blur(10px);
+    }
+
+    .download-sticky.is-visible { display: flex; }
+
+    .download-sticky a {
+      display: inline-flex;
+      font-family: var(--font-display);
+      font-weight: 600;
+      padding: 0.7rem 1.15rem;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .download-sticky a.primary {
+      background: var(--accent);
+      color: var(--ink-950);
+    }
+
+    .download-sticky a.primary:hover { background: var(--accent-bright); }
+
+    .download-sticky a.secondary {
+      color: var(--white);
+      border: 1px solid var(--ink-600);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .download-sticky { backdrop-filter: none; background: var(--ink-950); }
+    }
   </style>
 </head>
 <body>
   <div class="bg" aria-hidden="true"></div>
   <main>
-    <p class="brand">bige-ops</p>
+    <p class="brand">bige<span class="ops">-ops</span></p>
 
     <video
       class="player"
@@ -204,14 +262,38 @@
       aria-label="Démo bige-ops — bientôt disponible"
     ></video>
 
+    <div id="download" class="download-inline">
+      <div class="actions">
+        <a class="primary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger macOS</a>
+        <a class="secondary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger Linux</a>
+      </div>
+      <p class="brew">
+        <code>brew tap simondelamarre/bige-ops &amp;&amp; brew install --cask bige-ops</code>
+      </p>
+    </div>
+
+    <section class="block">
+      <h2>Zero → Hero</h2>
+      <h1>Le starter kit pour bien commencer sur Outscale.</h1>
+      <p>
+        Estimations catalogue, layouts prêts à l’emploi, simulations de stack —
+        de <strong>zéro</strong> à une architecture déployable.
+        Couche <strong>sécurité</strong> incluse dans les parcours :
+        vous validez le design et le € avant d’engager le cloud.
+      </p>
+      <p class="keywords">
+        starter kit · zero to hero · simulation · estimate · pricing ·
+        configs prêtes · sécurité · Outscale
+      </p>
+    </section>
+
     <section class="block">
       <h2>Outscale</h2>
-      <h1>Cloud IaaS &amp; PaaS souverain — VMs, VPS, Kubernetes managé.</h1>
+      <p class="title">IaaS &amp; PaaS — VMs, VPS, OKS Kubernetes managé.</p>
       <p>
         <strong>Outscale</strong> : cloud français, <strong>SecNumCloud</strong>,
-        <strong>IaaS</strong> (machines virtuelles, VPS, volumes, réseau) et
-        <strong>PaaS</strong> avec <strong>OKS</strong> —
-        <strong>Kubernetes managé</strong> (kube / K8s) pour vos workloads.
+        <strong>IaaS</strong> (VM, VPS, volumes, réseau) et <strong>PaaS</strong>
+        avec <strong>OKS</strong> — <strong>Kubernetes managé</strong> (kube / K8s).
       </p>
       <p class="keywords">
         Outscale · IaaS · PaaS · VM · VPS · OKS · Kubernetes managé · kube · K8s ·
@@ -220,33 +302,28 @@
     </section>
 
     <section class="block">
-      <h2>bige-ops</h2>
-      <p class="title">Simuler, estimer, décider — puis déployer.</p>
+      <h2>CLI Kubernetes</h2>
+      <p class="title">Pilotez OKS comme un pro — kube à portée de main.</p>
       <p>
-        App desktop <strong>gratuite</strong>, 100&nbsp;% <strong>locale</strong>.
-        Vous composez un layout <strong>IaaS</strong> (VMs / VPS, stockage, réseau)
-        et / ou <strong>OKS</strong> (<strong>Kubernetes managé</strong>),
-        vous lisez le <strong>prix</strong> catalogue, vous validez l’architecture —
-        puis vous déployez sur <strong>votre</strong> compte Outscale.
-      </p>
-      <p>
-        Moins de friction ops : simulation de coûts, assistance aux décisions,
-        génération des artefacts (Terraform, specs OKS, YAML) quand vous êtes prêt.
+        Même moteur en GUI et en <strong>CLI</strong> : clusters
+        <strong>OKS</strong>, contextes <strong>kubectl</strong>, workflows kube.
+        Vous simulez le cluster managé, vous validez, vous enchaînez sur le terrain.
       </p>
       <p class="keywords">
-        simulation · pricing · estimate · deploy · ops · Terraform · OKS ·
-        layout · desktop · free · local
+        CLI · kubectl · OKS · Kubernetes · kube · K8s · cluster managé · ops
       </p>
     </section>
 
     <section class="block">
-      <h2>Télécharger</h2>
-      <div class="actions">
-        <a class="primary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger macOS</a>
-        <a class="secondary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Linux</a>
-      </div>
-      <p class="brew">
-        <code>brew tap simondelamarre/bige-ops &amp;&amp; brew install --cask bige-ops</code>
+      <h2>Terraform</h2>
+      <p class="title">Des layouts pour tout forger — IaaS et OKS.</p>
+      <p>
+        Composez le layout, <strong>générez Terraform</strong> et les specs
+        (OKS, YAML apps) : materialization prête à appliquer sur votre compte.
+        VMs, réseau, volumes, Kubernetes managé — une forge ops, pas un tableur.
+      </p>
+      <p class="keywords">
+        Terraform · IaC · layout · generate · forge · IaaS · OKS · YAML · deploy
       </p>
     </section>
 
@@ -259,5 +336,28 @@
       <a href="https://github.com/simondelamarre/bige-ops-releases">GitHub</a>
     </footer>
   </main>
+
+  <div id="download-sticky" class="download-sticky" aria-hidden="true">
+    <a class="primary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger macOS</a>
+    <a class="secondary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Linux</a>
+  </div>
+
+  <script>
+    (function () {
+      var inline = document.getElementById("download");
+      var sticky = document.getElementById("download-sticky");
+      if (!inline || !sticky || !("IntersectionObserver" in window)) return;
+
+      var observer = new IntersectionObserver(
+        function (entries) {
+          var visible = entries[0] && entries[0].isIntersecting;
+          sticky.classList.toggle("is-visible", !visible);
+          sticky.setAttribute("aria-hidden", visible ? "true" : "false");
+        },
+        { threshold: 0, rootMargin: "0px" }
+      );
+      observer.observe(inline);
+    })();
+  </script>
 </body>
 </html>
