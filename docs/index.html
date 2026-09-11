@@ -738,18 +738,27 @@
     </section>
 
     <section class="block">
-      <h2>CLI Kubernetes</h2>
-      <p class="title">Pilotez OKS comme un pro — kube à portée de main.</p>
+      <h2>CLI · OKS</h2>
+      <p class="title">App d’abord — même moteur en terminal ; kube sous le capot.</p>
       <p>
-        Même moteur en GUI et en <strong>CLI</strong> : clusters
-        <a class="term" href="#g-oks"><strong>OKS</strong></a>,
-        contextes <strong>kubectl</strong>, workflows kube.
-        Vous simulez le cluster managé, vous validez, vous enchaînez sur le terrain.
+        Le kickoff se fait dans l’<strong>app</strong>. La
+        <a class="term" href="#g-cli"><strong>CLI <code>bige-ops</code></strong></a>
+        est le <strong>même moteur</strong> (l’UI l’appelle). Pour
+        <a class="term" href="#g-oks"><strong>OKS</strong></a>, oui on
+        utilise des CLI kube : <code>oks-cli</code> pour le cluster,
+        <code>kubectl</code> pour les Deployments — via
+        <code>apply --target oks</code> / <code>deploy</code>, ou à la
+        main une fois le kubeconfig là.
+      </p>
+      <p>
+        Ce n’est <strong>pas</strong> un produit « tout en kubectl ».
+        Détail : <a href="cli.html">CLI · app · OKS</a> ·
+        <a href="oks.html">OKS &amp; pods</a>.
       </p>
       <p class="keywords">
-        CLI · kubectl ·
-        <a class="term" href="#g-oks">OKS</a> ·
-        Kubernetes · kube · K8s · cluster managé
+        <a class="term" href="#g-cli">CLI</a> ·
+        app · oks-cli · kubectl ·
+        <a class="term" href="#g-oks">OKS</a>
       </p>
     </section>
 
@@ -786,6 +795,7 @@
         <a href="perimetre.html">périmètre</a>,
         <a href="vms.html">VMs</a>,
         <a href="oks.html">OKS &amp; pods</a>,
+        <a href="cli.html">CLI · app · OKS</a>,
         <a href="bases.html">bases de données</a>,
         <a href="bases-complexes.html">bases complexes</a>,
         <a href="oos.html">OOS &amp; backups</a>
@@ -826,7 +836,9 @@
         <dt id="g-promote">Promote</dt>
         <dd>Draft → live. Côté Git : main. Snapshot pré-promote pour rollback config puis plan/apply.</dd>
         <dt id="g-oks">OKS</dt>
-        <dd>Outscale Kubernetes Service — Kubernetes managé (control plane géré). Vous travaillez clusters / workloads ; Outscale opère le plan de contrôle.</dd>
+        <dd>Outscale Kubernetes Service — Kubernetes managé (control plane géré). Vous travaillez clusters / workloads ; Outscale opère le plan de contrôle. Apply via <code>oks-cli</code>, deploy apps via <code>kubectl</code> — depuis l’app ou la CLI <code>bige-ops</code>.</dd>
+        <dt id="g-cli">CLI bige-ops</dt>
+        <dd>Même moteur que l’app desktop (validate, generate, plan, apply, deploy). Chemin nominal = GUI ; CLI pour scripts / CI / terminal. OKS : délègue à oks-cli + kubectl. Voir <a href="cli.html">cli.html</a>.</dd>
         <dt id="g-iaas">IaaS</dt>
         <dd>Infrastructure as a Service : VMs / VPS, volumes, réseau, IP… Vous composez la machine ; le cloud fournit le compute.</dd>
         <dt id="g-paas">PaaS</dt>
@@ -850,6 +862,7 @@
           <h3>Doc</h3>
           <ul>
             <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
             <li><a href="github-config.html">GitHub config</a></li>
             <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
             <li><a href="expert-config.html">Mode expert · diffs</a></li>

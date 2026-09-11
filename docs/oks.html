@@ -41,11 +41,28 @@ flowchart TB
       <figcaption>Réplicas = scale de pods Deployment, pas un replica-set Mongo géré.</figcaption>
     </figure>
 
+    <h2>App, CLI bige-ops, oks-cli, kubectl</h2>
+    <p>
+      Chemin nominal : <strong>app desktop</strong> (Visual / Workspace).
+      Sous le capot (ou en terminal) : la CLI <code>bige-ops</code> — même
+      moteur. Pour OKS spécifiquement :
+    </p>
+    <ul>
+      <li><code>apply --target oks</code> → <strong>oks-cli</strong> (cluster / nodepools / kubeconfig)</li>
+      <li><code>deploy</code> → <strong>kubectl apply</strong> sur <code>oks/apps/</code></li>
+    </ul>
+    <p>
+      Donc <strong>oui, on utilise la CLI pour OKS</strong> — pas comme
+      produit terminal-first, mais comme outils kube branchés par
+      bige-ops. Détail : <a href="cli.html">CLI · app · OKS</a>.
+    </p>
+
     <h2>Cluster et nœuds</h2>
     <p>
       Une topologie <strong>oks</strong> déclare le cluster, la version kube,
       le profil control plane et les <strong>nodepools</strong>
-      (type Tina + count). Le formulaire Visual / CLI met à jour la simulation
+      (type Tina + count). Le formulaire Visual (ou
+      <code>bige-ops add …</code>) met à jour la simulation
       immédiatement ; <code>apply --target oks</code> passe par
       <code>oks-cli</code> embarqué.
     </p>
@@ -77,6 +94,7 @@ flowchart TB
       Côté machines hors kube : <a href="vms.html">VMs</a>.
       Data + objet : <a href="bases.html">bases</a>,
       <a href="oos.html">OOS</a>.
+      CLI vs app : <a href="cli.html">CLI · app · OKS</a>.
     </p>
 
     <footer class="site-footer">
