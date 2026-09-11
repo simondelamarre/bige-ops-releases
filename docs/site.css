@@ -33,7 +33,13 @@ main {
   padding: clamp(2rem, 5vw, 3.5rem) 1.35rem 3rem;
 }
 
-a { color: var(--accent-bright); }
+a { color: #5ec4b4; }
+a:visited { color: #9bb8d4; }
+a:hover { color: #7ed4c6; }
+a:focus-visible {
+  outline: 2px solid #5ec4b4;
+  outline-offset: 2px;
+}
 
 .doc-nav {
   font-size: 0.9rem;
@@ -42,12 +48,14 @@ a { color: var(--accent-bright); }
 }
 
 .doc-nav a {
-  color: var(--mist);
-  text-decoration: none;
-  border-bottom: 1px solid var(--ink-700);
+  color: #5ec4b4;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  border-bottom: 0;
 }
 
-.doc-nav a:hover { color: var(--accent-bright); }
+.doc-nav a:visited { color: #9bb8d4; }
+.doc-nav a:hover { color: #7ed4c6; }
 
 .brand {
   font-family: var(--font-display);
@@ -174,15 +182,14 @@ th {
 .site-footer li { margin: 0 0 0.35rem; font-size: 0.9rem; }
 
 .site-footer a {
-  color: var(--mist);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
+  color: #5ec4b4;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  border-bottom: 0;
 }
 
-.site-footer a:hover {
-  color: var(--accent-bright);
-  border-bottom-color: var(--accent-bright);
-}
+.site-footer a:visited { color: #9bb8d4; }
+.site-footer a:hover { color: #7ed4c6; }
 
 .site-footer .meta {
   color: var(--ink-600);
