@@ -754,6 +754,37 @@
       </p>
     </section>
 
+    <section class="block" id="oks-warn">
+      <h2>OKS · point d’attention</h2>
+      <p class="title">Simuler OKS ≠ avoir OKS sur votre contrat.</p>
+      <div class="callout callout-warn">
+        <strong>On estime des fourchettes</strong> (catalogue embarqué) —
+        cool pour projeter. En revanche, votre compte Outscale
+        <strong>n’offre pas forcément</strong> la création d’un Kubernetes
+        managé, ni toutes les régions, ni
+        <a class="term" href="#g-secnumcloud">SecNumCloud</a>.
+        Compte EU / FR ≠ SecNumCloud automatique ; OKS peut être
+        activé… ou pas. On ne lit pas votre contrat : au
+        <a class="term" href="#g-deploy">deploy</a> / apply, le tenant
+        connecté peut « bypass » ce que la simulation laisse croire.
+        On ne le découvre vraiment qu’au <strong>dry run</strong>
+        (plan / apply) via les <strong>codes d’erreur API</strong> Outscale.
+        <br /><br />
+        Bref : <strong>vous pouvez simuler</strong> — on ne peut
+        <strong>pas garantir</strong> votre contrat Outscale.
+        Besoin d’activer OKS / SecNumCloud ?
+        <a href="https://www.outscale.com/fr/contactez-nous/">Contact commercial Outscale</a>
+        ·
+        <a href="mailto:sales@outscale.com">sales@outscale.com</a>.
+      </div>
+      <p class="keywords">
+        <a class="term" href="#g-oks">OKS</a> ·
+        contrat tenant · dry run ·
+        <a class="term" href="#g-secnumcloud">SecNumCloud</a> ·
+        estimate ≠ entitlement
+      </p>
+    </section>
+
     <section class="block">
       <h2>CLI · OKS</h2>
       <p class="title">App d’abord — même moteur en terminal ; kube sous le capot.</p>
@@ -875,7 +906,7 @@
         <dt id="g-promote">Promote</dt>
         <dd>Simulation draft → live. Côté Git : <code>main</code>. Snapshot pré-promote pour rollback config puis plan / apply.</dd>
         <dt id="g-oks">OKS</dt>
-        <dd>Outscale Kubernetes Service — Kubernetes managé. Apply cluster via oks-cli ; deploy workloads via kubectl. Voir <a href="oks.html">oks.html</a> · <a href="cli.html">cli.html</a>.</dd>
+        <dd>Outscale Kubernetes Service — Kubernetes managé. Apply via oks-cli ; deploy via kubectl. <strong>Simuler ≠ entitlement</strong> : votre contrat peut ne pas inclure OKS / SecNumCloud / toutes les régions — on le voit au dry run (erreurs API). Voir <a href="#oks-warn">point d’attention</a> · <a href="oks.html">oks.html</a>.</dd>
         <dt id="g-cli">CLI bige-ops</dt>
         <dd>Même moteur que l’app (validate, generate, plan, apply, deploy). Chemin nominal = GUI. Voir <a href="cli.html">cli.html</a>.</dd>
         <dt id="g-iaas">IaaS</dt>
