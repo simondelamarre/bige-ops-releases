@@ -509,6 +509,34 @@
     </section>
 
     <section class="block">
+      <h2>Mode expert</h2>
+      <p class="title">Édition des fichiers de config — quand le flow ne suffit pas.</p>
+      <p>
+        Le canvas couvre le setup du quotidien. En
+        <a class="term" href="#g-expert"><strong>mode expert</strong></a>,
+        vous ouvrez les <strong>fichiers de la simulation</strong>
+        (<code>project.yaml</code>, Terraform généré, specs OKS, scripts)
+        dans le <strong>Workspace</strong> : arbre + éditeur, Save local, puis
+        validate / generate / plan. C’est le chemin ops pour peaufiner,
+        débloquer un cas limite, ou reprendre une materialization à la main.
+      </p>
+      <p>
+        <strong>Diffs &amp; commits</strong> : versionner ces changements sur
+        votre GitHub config-history (branches <code>sim/…</code>,
+        <code>main</code>) avec une revue claire avant push — contrat produit
+        et feuille de route des interfaces :
+        <a href="expert-config.html">mode expert · diffs &amp; commits</a>.
+      </p>
+      <p class="keywords">
+        <a class="term" href="#g-expert">expert</a> ·
+        fichiers · Workspace ·
+        <a class="term" href="#g-diff-commit">diff</a> ·
+        <a class="term" href="#g-diff-commit">commit</a> ·
+        <a class="term" href="#g-config-history">config-history</a>
+      </p>
+    </section>
+
+    <section class="block">
       <h2>Pricing</h2>
       <p class="title">Estimations indicatives — pas un devis Outscale.</p>
       <p>
@@ -724,7 +752,8 @@
         <a href="bases.html">bases de données</a>,
         <a href="bases-complexes.html">bases complexes</a>,
         <a href="oos.html">OOS &amp; backups</a>
-        (formulaires réplicas / nœuds / buckets → maj setup directe).
+        (formulaires réplicas / nœuds / buckets → maj setup directe),
+        <a href="expert-config.html">mode expert · diffs &amp; commits</a>.
       </p>
     </section>
 
@@ -737,9 +766,13 @@
         <dt id="g-projection">Projection</dt>
         <dd>Mode sans credentials Outscale : vous composez des simulations et lisez une estimation catalogue. Inventory / plan / apply restent bloqués jusqu’au login.</dd>
         <dt id="g-simulation">Simulation</dt>
-        <dd>Variante de stack versionnable (layout + coût projeté). Drafts en parallèle du live ; promote ou apply pour aligner la prod.</dd>
+        <dd>Variante de stack versionnable (layout + coût projeté). Drafts en parallèle du live ; promote ou apply pour aligner la prod. Editable aussi en <a href="#g-expert">mode expert</a> (fichiers) et versionnée via <a href="#g-diff-commit">diffs / commits</a>.</dd>
         <dt id="g-estimate">Estimate</dt>
         <dd>Projection € HT/mois depuis le catalogue public embarqué. Indicatif — pas un devis Outscale, pas de feed pricing temps réel.</dd>
+        <dt id="g-expert">Mode expert</dt>
+        <dd>Édition directe des fichiers de config de la simulation (Workspace : arbre + éditeur). Complète le Visual / Flow quand il faut peaufiner YAML, Terraform ou specs. Voir <a href="expert-config.html">expert-config.html</a>.</dd>
+        <dt id="g-diff-commit">Diffs &amp; commits</dt>
+        <dd>Revue des changements locaux puis commit / push sur le config-history (<code>sim/…</code> ou <code>main</code>). Feuille de route UI : <a href="expert-config.html">expert-config.html</a>. Distinct du plan Terraform avant apply.</dd>
         <dt id="g-secnumcloud">SecNumCloud</dt>
         <dd>Qualification ANSSI pour le cloud de confiance. Outscale propose une région SecNumCloud ; bige-ops cible aussi ce terrain.</dd>
         <dt id="g-souverain">Cloud souverain</dt>
@@ -776,6 +809,7 @@
           <ul>
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
             <li><a href="vms.html">VMs</a></li>
             <li><a href="oks.html">OKS &amp; pods</a></li>
             <li><a href="bases.html">Bases de données</a></li>

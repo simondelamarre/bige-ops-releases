@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mode expert · fichiers, diffs &amp; commits — bige-ops</title>
+  <meta name="description" content="Édition des fichiers de config en mode expert, revue des diffs et commits Git — feuille de route UI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="github-config.html">GitHub config</a> · <a href="index.html#g-expert">Glossaire</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Beta démo</span>
+    </div>
+    <h1>Mode expert · fichiers, diffs &amp; commits</h1>
+    <p class="lead">
+      Visual / Flow pour composer. Quand il faut aller dans le détail :
+      <strong>édition directe</strong> des fichiers de la simulation
+      (<code>project.yaml</code>, Terraform généré, specs OKS, scripts…).
+      Puis <strong>diffs</strong> et <strong>commits</strong> sur le
+      config-history — la feuille de route des interfaces.
+    </p>
+
+    <div class="callout">
+      <strong>Deux vitesses.</strong>
+      Flow = setup rapide. Expert = vérité fichiers + Git.
+      Ni l’un ni l’autre ne remplace Outscale ; les secrets restent hors repo.
+    </div>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  V[Visual / Flow] -->|Save + generate| F[Fichiers simulation]
+  F -->|éditeur Workspace| E[Mode expert]
+  E -->|revue diff| D[Diff local]
+  D -->|commit / push| G[GitHub config-history]
+  G -->|sim/… ou main| C[Cloud plan / apply]
+      </pre>
+      <figcaption>Flow → fichiers → diff → commit → plan/apply.</figcaption>
+    </figure>
+
+    <h2>Mode expert aujourd’hui</h2>
+    <p>
+      Dans l’app, l’onglet <strong>Workspace</strong> expose l’arbre des
+      fichiers du projet et un <strong>éditeur</strong> (YAML, HCL, scripts).
+      Vous ouvrez <code>bige-ops/project.yaml</code>, un module Terraform,
+      un manifest OKS — vous corrigez, vous <strong>Save</strong> en local,
+      puis validate / generate / plan.
+    </p>
+    <p>
+      C’est le chemin <strong>expert</strong> : hors formulaires Visual,
+      quand un champ manque, un layout custom, ou une materialization à
+      peaufiner. La simulation reste la vérité produit ; les fichiers sont
+      ce que vous versionnez et appliquez.
+    </p>
+
+    <h2>Diffs &amp; commits — où on va (interfaces)</h2>
+    <p>
+      Aujourd’hui : push GitHub (souvent un commit groupé), revue
+      <strong>plan Terraform</strong> avant apply, diff config vs snapshot
+      dans la revue Apply. Ce n’est pas encore un « Git desktop » complet
+      dans bige-ops.
+    </p>
+    <p>
+      <strong>Cible produit</strong> (à câbler dans les UI) :
+    </p>
+    <ul>
+      <li>
+        <strong>Diff fichiers</strong> — voir clairement ce qui a changé
+        (Visual Save, édition expert, generate) avant de committer.
+      </li>
+      <li>
+        <strong>Commit intentionnel</strong> — message, branche
+        (<code>sim/…</code> vs <code>main</code>), pas un push opaque.
+      </li>
+      <li>
+        <strong>Lien Flow ↔ fichiers</strong> — du nœud Visual au fichier
+        touché, et inversement.
+      </li>
+      <li>
+        <strong>Garde-fous</strong> — jamais de secrets dans le diff poussé ;
+        rappel OOS / backup / perte de données sur les destroys.
+      </li>
+    </ul>
+    <p>
+      Convention Git déjà documentée :
+      <a href="github-config.html">GitHub config-history</a>
+      (projet→repo, sim→branche, promote→main, deploy=main).
+      Cette page fixe le contrat <em>expert + diff + commit</em> pour
+      guider les prochaines itérations d’interface.
+    </p>
+
+    <table>
+      <thead>
+        <tr><th>Couche</th><th>Aujourd’hui</th><th>Interface cible</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Édition fichiers</td>
+          <td>Workspace · arbre + éditeur</td>
+          <td>Même socle, plus lié au Flow</td>
+        </tr>
+        <tr>
+          <td>Diff local</td>
+          <td>Plan TF + snapshot config (partiel)</td>
+          <td>Revue unifiée fichiers / plan</td>
+        </tr>
+        <tr>
+          <td>Commit / push</td>
+          <td>Hub / Workspace push config-history</td>
+          <td>Commit message + branche explicites</td>
+        </tr>
+        <tr>
+          <td>Apply cloud</td>
+          <td>Change review + ack risques</td>
+          <td>Inchangé : plan avant apply</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      Retour : <a href="index.html#g-expert">glossaire Expert</a> ·
+      <a href="github-config.html">config-history</a> ·
+      <a href="perimetre.html">périmètre</a>.
+    </p>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Doc</h3>
+          <ul>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+            <li><a href="vms.html">VMs</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Produit</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">Beta démo · expert = fichiers · Git = config-history</p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+  </script>
+</body>
+</html>
