@@ -70,13 +70,26 @@
 
     .brand .ops { color: var(--accent-bright); }
 
+    /* Floating player — ops/tech: soft lift, modest radius, no gimmicks */
+    .player-shell {
+      margin: 0 0 1.5rem;
+      padding: 0.35rem;
+      border-radius: 10px;
+      background: var(--ink-900);
+      border: 1px solid var(--ink-700);
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.45),
+        0 2px 8px rgba(0, 0, 0, 0.35);
+    }
+
     video.player {
       display: block;
       width: 100%;
       aspect-ratio: 16 / 9;
-      margin: 0 0 1.25rem;
+      margin: 0;
       background: #000;
-      border: 1px solid var(--ink-700);
+      border: 0;
+      border-radius: 7px;
       object-fit: contain;
     }
 
@@ -253,14 +266,16 @@
   <main>
     <p class="brand">bige<span class="ops">-ops</span></p>
 
-    <video
-      class="player"
-      controls
-      playsinline
-      preload="none"
-      poster="bige-ops-three-clicks.png"
-      aria-label="Démo bige-ops — bientôt disponible"
-    ></video>
+    <div class="player-shell">
+      <video
+        class="player"
+        controls
+        playsinline
+        preload="none"
+        poster="bige-ops-three-clicks.png"
+        aria-label="Démo bige-ops — bientôt disponible"
+      ></video>
+    </div>
 
     <div id="download" class="download-inline">
       <div class="actions">
