@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GitHub config-history — bige-ops</title>
+  <meta name="description" content="Projet → repo GitHub, simulation → branche, promote → main, deploy = main. Emulate deploy &amp; rollback." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Beta démo</span>
+    </div>
+    <h1>GitHub · config-history</h1>
+    <p class="lead">
+      Un repo Git <strong>privé à vous</strong> pour versionner la config d’infra
+      (pas les secrets, pas le monorepo app). Projet → repo, simulation → branche,
+      promote → <code>main</code>, deploy lit toujours la vérité
+      <strong>live / main</strong>.
+    </p>
+
+    <div class="callout">
+      <strong>Deux repos, deux jobs.</strong>
+      <em>Config-history</em> (<code>*-infra</code>) = blueprint simulation.
+      <em>Repo applicatif</em> = code que <code>deploy</code> clone.
+      On ne mélange pas.
+    </div>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart TB
+  P[Créer compte / projet] -->|nouveau| R[Repo GitHub privé *-infra]
+  R --> S[Créer simulation]
+  S -->|nouvelle| B[Branche sim/nom]
+  B -->|push configs| B
+  B -->|promote| M[main = stack live]
+  M -->|deploy apps| D[Cloud Outscale]
+  M -->|rollback snapshot| B2[État précédent + plan/apply]
+      </pre>
+      <figcaption>Convention : draft → sim/… · live / deploy → main.</figcaption>
+    </figure>
+
+    <h2>La logique en quatre gestes</h2>
+    <p>
+      <strong>1 · Créer un projet / lier le tenant</strong> —
+      bige-ops peut <strong>créer un nouveau repo GitHub</strong> privé
+      (config-history) ou s’attacher à un repo existant
+      (<code>config_repo</code> sur le compte). C’est le coffre Git de la stack,
+      pas l’app métier.
+    </p>
+    <p>
+      <strong>2 · Créer une simulation</strong> —
+      variante locale (layout, €, generate). Au push :
+      <strong>nouvelle branche</strong> <code>sim/&lt;id&gt;</code>.
+      Vous itérez sans toucher la prod déclarative.
+    </p>
+    <p>
+      <strong>3 · Promote une stack</strong> —
+      la draft devient <strong>live</strong>. Côté Git : alignement sur
+      <strong><code>main</code></strong> (push main / équivalent merge de la
+      vérité promote). Option <code>simulation promote --push-main</code>.
+      Un snapshot pré-promote permet de revenir en arrière sur la config.
+    </p>
+    <p>
+      <strong>4 · Deploy</strong> —
+      le déploiement applicatif / la stack active s’adosse à la
+      <strong>live</strong>, donc à la ligne <strong>main</strong> du
+      config-history. On ne déploie pas « une branche random » : main =
+      ce qui est promu.
+    </p>
+
+    <table>
+      <thead>
+        <tr><th>Action locale</th><th>Effet GitHub config-history</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Nouveau projet / bind</td><td>Repo privé créé ou lié</td></tr>
+        <tr><td>Nouvelle simulation (draft)</td><td>Branche <code>sim/&lt;id&gt;</code></td></tr>
+        <tr><td>Push depuis draft</td><td>Commit sur <code>sim/…</code></td></tr>
+        <tr><td>Promote (+ push-main)</td><td>Live + <code>main</code> à jour</td></tr>
+        <tr><td>Deploy</td><td>Référence live / <code>main</code></td></tr>
+        <tr><td>Rollback snapshot</td><td>Restore fichiers locaux → plan/apply cloud</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Emulate deploy &amp; rollback</h2>
+    <p>
+      Avant d’engager le cloud, vous <strong>émulez</strong> : simulation +
+      estimate + generate + <code>plan</code>. Le GitHub config-history
+      versionne ces états sur <code>sim/…</code> pour comparer, review, CI légère.
+    </p>
+    <p>
+      <strong>Rollback</strong> = restaurer un <strong>snapshot</strong> de
+      simulation (<code>simulation rollback</code>), puis
+      <code>plan</code> / <code>apply</code> pour réconcilier le cloud.
+      Ce n’est pas un « undo magique Outscale » : c’est
+      <em>rejouer la config précédente</em> depuis le blueprint versionné.
+      Lien mental : branche / snapshot → restore → plan → apply.
+    </p>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+sequenceDiagram
+  participant Dev as Vous
+  participant Sim as Simulation
+  participant GH as GitHub main/sim
+  participant Cloud as Outscale
+  Dev->>Sim: draft + push
+  Sim->>GH: sim/feature
+  Dev->>Sim: promote
+  Sim->>GH: main
+  Dev->>Cloud: apply / deploy
+  Dev->>Sim: rollback snapshot
+  Sim->>Cloud: plan + apply réconciliation
+      </pre>
+    </figure>
+
+    <h2>Ce qui part / ne part jamais</h2>
+    <p>
+      <strong>Poussé :</strong> <code>project.yaml</code>, terraform sans tfvars,
+      oks, scripts app, layout Visual, <code>.env.example</code>, SECRETS.md.
+      <strong>Exclu :</strong> credentials, PEM, <code>.env</code>, tfvars,
+      kubeconfigs, state, inventory, sources app clonées.
+      Voir aussi le bloc sécurité sur la
+      <a href="index.html">landing</a>.
+    </p>
+
+    <h2>Défauts &amp; versions à venir</h2>
+    <p>
+      Convention branches live→main / draft→sim/… : déjà le défaut.
+      Création repo à la volée, push Hub, promote --push-main : en place.
+      À durcir ensuite : UX « emulate deploy » plus visible, rollback guidé
+      depuis le Hub, garde-fous destroy (ex. OOS non vide) —
+      <a href="oos.html">OOS &amp; backups</a>.
+    </p>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Doc</h3>
+          <ul>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="vms.html">VMs</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Produit</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">Beta démo · config-history ≠ repo app · deploy = main</p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+  </script>
+</body>
+</html>

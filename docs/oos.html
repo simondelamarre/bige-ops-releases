@@ -87,8 +87,30 @@ flowchart TB
       <a href="perimetre.html">périmètre</a>.
     </p>
 
+    <h2>Ne pas détruire un OOS qui a des objets</h2>
+    <p>
+      <strong>Règle produit (défaut à venir / à respecter dès maintenant) :</strong>
+      bige-ops <strong>ne gère pas</strong> et
+      <strong>ne doit pas détruire</strong> un bucket OOS qui contient encore
+      des objects (backups, fichiers). Tant qu’il y a du contenu, la suppression
+      doit être <strong>bloquée / prevent</strong> côté outil.
+    </p>
+    <p>
+      Pour vider ou supprimer pour de vrai : passer par les
+      <strong>interfaces Outscale</strong> (console / API), manuellement,
+      en conscience. On ne « tidy » pas vos backups à votre place —
+      trop dangereux pour un starter kit.
+    </p>
+    <p>
+      Gap documenté : enforce destroy-prevent (plan/apply refuse le destroy
+      OOS non vide) dès que le garde-fou est câblé. En attendant : ne retirez
+      pas un <code>oos_bucket</code> live de la simulation si le bucket a des
+      objects — ou assumez le risque hors outil.
+    </p>
+
     <p>
       Retour data : <a href="bases.html">bases de données</a>.
+      Git config : <a href="github-config.html">GitHub config-history</a>.
       Machines : <a href="vms.html">VMs</a> ·
       <a href="oks.html">OKS</a>.
     </p>
