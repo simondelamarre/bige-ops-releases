@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>bige-ops — Outscale, sans le chaos</title>
-  <meta name="description" content="Concevez votre stack Outscale, voyez le prix, déployez. Gratuit, 100 % local." />
+  <title>bige-ops — Outscale, plus simple à démarrer</title>
+  <meta name="description" content="Simulez, décidez, déployez sur Outscale. App desktop gratuite, 100 % locale." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -12,7 +12,6 @@
     rel="stylesheet"
   />
   <style>
-    /* Tokens mirror desktop/tailwind.config.js */
     :root {
       --ink-950: #0b0d10;
       --ink-900: #12151a;
@@ -41,7 +40,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* App atmosphere: deep ink + one quiet teal, no grey wash */
     .bg {
       pointer-events: none;
       position: fixed;
@@ -63,8 +61,18 @@
       font-size: 1.125rem;
       font-weight: 600;
       letter-spacing: -0.025em;
-      margin: 0 0 2.5rem;
+      margin: 0 0 1.5rem;
       color: var(--white);
+    }
+
+    video.player {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      margin: 0 0 2.25rem;
+      background: #000;
+      border: 1px solid var(--ink-700);
+      object-fit: contain;
     }
 
     h1 {
@@ -74,7 +82,7 @@
       line-height: 1.15;
       font-size: clamp(1.875rem, 4.5vw, 2.25rem);
       margin: 0 0 0.85rem;
-      max-width: 18ch;
+      max-width: 22ch;
       color: var(--white);
     }
 
@@ -82,14 +90,14 @@
       margin: 0 0 1rem;
       color: var(--mist);
       font-size: 1.05rem;
-      max-width: 38rem;
+      max-width: 40rem;
     }
 
     .solution {
       color: var(--white);
       font-size: 1.1rem;
       font-weight: 500;
-      margin: 2rem 0 1.25rem;
+      margin: 1.5rem 0 1.25rem;
     }
 
     .actions {
@@ -125,7 +133,7 @@
     .actions a.secondary:hover { border-color: var(--mist); }
 
     .brew {
-      margin: 0 0 2.5rem;
+      margin: 0;
       font-size: 0.875rem;
     }
 
@@ -136,15 +144,6 @@
       background: var(--ink-900);
       padding: 0.2rem 0.45rem;
       border: 1px solid var(--ink-700);
-    }
-
-    video.player {
-      display: block;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background: #000;
-      border: 1px solid var(--ink-700);
-      object-fit: contain;
     }
 
     footer {
@@ -167,15 +166,25 @@
   <main>
     <p class="brand">bige-ops</p>
 
-    <h1>Le cloud Outscale ne devrait pas commencer dans un tableur.</h1>
+    <video
+      class="player"
+      controls
+      playsinline
+      preload="none"
+      poster="bige-ops-three-clicks.png"
+      aria-label="Démo bige-ops — bientôt disponible"
+    ></video>
+
+    <h1>Outscale est excellent. On vous aide à y aller plus vite.</h1>
     <p>
-      Terraform à vide. SKUs Tina à coller. Un prix qu’on découvre trop tard.
-      Déployer devient un projet avant même d’avoir une architecture.
+      Cloud souverain, SecNumCloud, catalogue clair : Outscale a tout pour construire.
+      Ce qui manque souvent au démarrage, c’est un espace pour simuler le layout,
+      lire le €, et trancher avant de déployer.
     </p>
 
     <p class="solution">
-      App desktop gratuite : layout, prix, déploiement sur votre compte Outscale.
-      En local. En trois gestes.
+      bige-ops est une app desktop gratuite, 100&nbsp;% locale.
+      Composez, estimez, décidez — puis déployez sur <em>votre</em> compte Outscale.
     </p>
 
     <div class="actions">
@@ -186,17 +195,10 @@
       <code>brew tap simondelamarre/bige-ops &amp;&amp; brew install --cask bige-ops</code>
     </p>
 
-    <video
-      class="player"
-      controls
-      playsinline
-      preload="none"
-      poster="bige-ops-three-clicks.png"
-      aria-label="Démo bige-ops — bientôt disponible"
-    ></video>
-
     <footer>
       Gratuit · 100&nbsp;% local ·
+      <a href="https://www.outscale.com/">Outscale</a>
+      ·
       <a href="https://github.com/simondelamarre/bige-ops-releases">GitHub</a>
     </footer>
   </main>
