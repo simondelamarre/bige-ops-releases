@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GitHub config-history — bige-ops</title>
-  <meta name="description" content="Projet → repo GitHub, simulation → branche, promote → main, deploy = main. Emulate deploy &amp; rollback." />
+  <meta name="description" content="Config-history GitHub : branches sim/main, deploy via l’app, autres Git WIP, rollback manuel. Cool mais imparfait." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -24,6 +24,15 @@
       promote → <code>main</code>, deploy lit toujours la vérité
       <strong>live / main</strong>.
     </p>
+
+    <div class="callout">
+      <strong>GitHub only (pour l’instant).</strong>
+      Le <strong>deploy bige-ops</strong> passe par l’<strong>app</strong> et
+      <strong>sync votre GitHub</strong> (config-history). GitLab, Bitbucket,
+      Forgejo, bare git… : <strong>non gérés</strong> (WIP). En cas de souci
+      Git, le <strong>rollback se fait manuellement sur GitHub</strong>
+      (historique / branches) — l’app ne remplace pas la console GitHub.
+    </div>
 
     <div class="callout">
       <strong>Deux repos, deux jobs.</strong>
@@ -89,6 +98,42 @@ flowchart TB
       </tbody>
     </table>
 
+    <h2>Branches : pourquoi c’est cool (et imparfait)</h2>
+    <p>
+      <strong>Cool.</strong>
+      Une simulation = une branche <code>sim/&lt;id&gt;</code> : vous itérez,
+      comparez, review, sans écraser la vérité live. Promote aligne
+      <code>main</code> = ce qui est déployable. L’historique GitHub devient
+      la mémoire du blueprint (qui a changé quoi, quand) — utile pour
+      auditer et pour repartir d’un commit connu.
+    </p>
+    <p>
+      <strong>Imparfait.</strong>
+      Ce n’est pas un GitOps complet ni un « undo one-click » cloud.
+      L’app pousse / promeut via <strong>GitHub</strong> ; elle ne gère pas
+      encore les conflits complexes, les PR riches, ni les autres forges.
+      Si un push / promote / sync rate, ou si vous devez revenir loin :
+      ouvrez <strong>GitHub</strong> (revert, checkout d’un commit,
+      force-alignement de branche), puis resync / plan / apply dans bige-ops.
+      Les snapshots locaux aident, mais le filet de sécurité « vérité Git »
+      reste <strong>manuel sur GitHub</strong> pour l’instant.
+    </p>
+
+    <h2>Deploy via l’app · sync GitHub</h2>
+    <p>
+      Le chemin nominal : vous validez dans l’app (Visual / Workspace /
+      Change review) → <strong>deploy / apply</strong> côté Outscale, et la
+      config d’infra est <strong>synchronisée sur votre repo GitHub</strong>
+      (branches <code>sim/…</code> ou <code>main</code> selon le geste).
+      Pas de backend bige-ops qui garde votre Git : c’est <em>votre</em>
+      compte GitHub, piloté depuis le desktop.
+    </p>
+    <p>
+      <strong>Autres Git : WIP.</strong> Pas de sync native GitLab / autre
+      pour le moment. Vous pouvez toujours versionner hors outil, mais
+      bige-ops ne « drive » que GitHub aujourd’hui.
+    </p>
+
     <h2>Emulate deploy &amp; rollback</h2>
     <p>
       Avant d’engager le cloud, vous <strong>émulez</strong> : simulation +
@@ -96,12 +141,18 @@ flowchart TB
       versionne ces états sur <code>sim/…</code> pour comparer, review, CI légère.
     </p>
     <p>
-      <strong>Rollback</strong> = restaurer un <strong>snapshot</strong> de
-      simulation (<code>simulation rollback</code>), puis
-      <code>plan</code> / <code>apply</code> pour réconcilier le cloud.
-      Ce n’est pas un « undo magique Outscale » : c’est
-      <em>rejouer la config précédente</em> depuis le blueprint versionné.
-      Lien mental : branche / snapshot → restore → plan → apply.
+      <strong>Rollback dans l’app</strong> = restaurer un
+      <strong>snapshot</strong> de simulation (<code>simulation rollback</code>),
+      puis <code>plan</code> / <code>apply</code> pour réconcilier le cloud.
+      Ce n’est pas un « undo magique Outscale ».
+    </p>
+    <p>
+      <strong>Rollback Git (secours)</strong> — si l’état local / la sync
+      est foireux : allez sur <strong>GitHub</strong>, reprenez un commit
+      ou une branche saine (<code>main</code> / <code>sim/…</code>), puis
+      ramenez la config dans la simulation et rejouez plan/apply.
+      Lien mental : GitHub = source de vérité versionnée ; Outscale = effet
+      cloud après apply.
     </p>
 
     <figure class="diagram">

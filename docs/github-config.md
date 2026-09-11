@@ -3,15 +3,20 @@
 - Créer projet → **nouveau repo** GitHub privé `*-infra`
 - Créer simulation → branche **`sim/<id>`**
 - Promote → **`main`** (live)
-- Deploy → toujours la vérité **live / main**
-- Rollback → snapshot local puis plan/apply (pas undo magique cloud)
+- **Deploy** via l’**app** + **sync GitHub** (autres Git = **WIP**)
+- Rollback cloud = snapshot local + plan/apply ; rollback Git = **manuel sur GitHub** si problème
+
+## Branches : cool / imparfait
+
+Cool : une sim = une branche ; `main` = vérité déployable ; historique auditable.  
+Imparfait : pas GitOps one-click ; pas GitLab/etc. ; en cas de sync foireux → GitHub puis resync / plan / apply.
 
 ```mermaid
 flowchart LR
-  P[Projet] --> R[Repo]
+  P[Projet] --> R[Repo GitHub]
   R --> S[sim/…]
   S --> M[main]
-  M --> D[deploy]
+  M --> D[deploy via app]
 ```
 
 HTML : [github-config.html](https://simondelamarre.github.io/bige-ops-releases/github-config.html)

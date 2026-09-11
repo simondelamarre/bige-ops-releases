@@ -604,19 +604,23 @@
         <strong>Créer un projet</strong> → nouveau repo GitHub privé (config-history).
         <strong>Créer une simulation</strong> → branche <code>sim/…</code>.
         <strong>Promote</strong> → alignement <code>main</code> (stack live).
-        <strong>Deploy</strong> → toujours la vérité live / <code>main</code>.
-        Rollback = snapshot puis plan/apply — emulate avant d’engager le cloud.
+        <strong>Deploy</strong> passe par l’<strong>app</strong> et
+        <strong>sync votre GitHub</strong> (live / <code>main</code>).
+        Autres forges Git : <strong>WIP</strong> (non gérées). En cas de
+        problème, rollback Git <strong>manuel sur GitHub</strong> ; snapshots
+        locaux + plan/apply pour le cloud.
       </p>
       <p>
-        Ce repo ne sert <strong>qu’à ça</strong> : blueprint infra, pas le monorepo app.
-        Aucun secret poussé. Détail du flow :
+        Cool : une sim = une branche, historique lisible, promote = vérité
+        déployable. Imparfait : pas un GitOps one-click, pas d’autres Git
+        pour l’instant. Détail :
         <a href="github-config.html">GitHub config-history</a>
-        (emulate deploy &amp; rollback).
+        (branches, deploy, rollbacks).
       </p>
       <p class="keywords">
-        private git ·
+        private git · GitHub only ·
         <a class="term" href="#g-config-history">config-history</a> ·
-        sim/ · main · promote · deploy · rollback
+        sim/ · main · promote · deploy · rollback manuel
       </p>
     </section>
 
@@ -780,7 +784,7 @@
         <dt id="g-deploy">Deploy / Apply</dt>
         <dd>Pousser la stack sur votre compte Outscale (plan puis apply). Credentials requis. Distinct du push Git config-history.</dd>
         <dt id="g-config-history">Config-history</dt>
-        <dd>Repo Git privé : projet→repo, simulation→branche sim/…, promote→main, deploy=main. Pas le repo app. Jamais de secrets. Voir github-config.html.</dd>
+        <dd>Repo GitHub privé (pour l’instant) : projet→repo, simulation→branche sim/…, promote→main. Deploy via l’app + sync GitHub ; autres Git = WIP. Rollback Git manuel sur GitHub si besoin. Voir github-config.html.</dd>
         <dt id="g-promote">Promote</dt>
         <dd>Draft → live. Côté Git : main. Snapshot pré-promote pour rollback config puis plan/apply.</dd>
         <dt id="g-oks">OKS</dt>
