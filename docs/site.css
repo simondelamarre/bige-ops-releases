@@ -57,17 +57,48 @@ a:focus-visible {
 .doc-nav a:visited { color: #9bb8d4; }
 .doc-nav a:hover { color: #7ed4c6; }
 
-.brand {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  margin: 0 0 0.35rem;
-  color: var(--white);
-  text-decoration: none;
+.brand-row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.65rem 0.85rem;
+  margin: 0 0 1.25rem;
 }
 
-.brand .ops { color: var(--accent-bright); }
+a.brand,
+a.brand:visited,
+a.brand:hover,
+a.brand:focus-visible {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 5vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: 0;
+  color: #f3f5f8;
+  text-decoration: none;
+  outline-offset: 3px;
+}
+
+a.brand .ops,
+a.brand:visited .ops,
+a.brand:hover .ops {
+  color: #5ec4b4;
+}
+
+.brand-badge {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5ec4b4;
+  border: 1px solid rgba(94, 196, 180, 0.28);
+  background: rgba(94, 196, 180, 0.06);
+  padding: 0.2rem 0.45rem;
+  line-height: 1.2;
+  align-self: center;
+}
 
 h1 {
   font-family: var(--font-display);
