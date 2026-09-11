@@ -248,7 +248,7 @@
   </style>
 </head>
 <body>
-  <!-- landing build: 2026-09-11-display-fix -->
+  <!-- landing build: 2026-09-11-git-block -->
   <main>
     <p class="brand">bige<span class="ops">-ops</span></p>
 
@@ -306,6 +306,37 @@
       <p class="keywords">
         local-first · no shared vault · vos keys · credentials locaux ·
         zero trust machine · chiffrement disque · session lock
+      </p>
+    </section>
+
+    <section class="block">
+      <h2>Git privé</h2>
+      <p class="title">Simulations versionnées sur votre repo — jamais de secrets dessus.</p>
+      <p>
+        Chaque simulation vit d’abord <strong>en local</strong>.
+        Quand vous voulez un historique d’équipe, vous poussez vers un repo
+        <strong>Git privé à vous</strong> — typiquement un
+        <strong><code>*-infra</code></strong> dédié à la config.
+        Une branche = une variante (<code>main</code> pour le live,
+        <code>sim/…</code> pour les drafts).
+      </p>
+      <p>
+        Ce repo ne sert <strong>qu’à ça</strong> : <code>project.yaml</code>,
+        layouts, Terraform généré, specs OKS — l’historique de la stack.
+        <strong>Pas</strong> le monorepo applicatif, <strong>pas</strong> le
+        pipeline de deploy app. On ne mélange pas code produit et gestion
+        d’infra : le repo app clone/deploy d’un côté, le config-history
+        versionne la simulation de l’autre.
+      </p>
+      <p>
+        <strong>Aucun secret ne part</strong> : pas de PEM, pas de
+        <code>.env</code>, pas de tfvars, pas de kubeconfig, pas de state.
+        Credentials restent dans le coffre local. Git = blueprint versionné,
+        machine = keys.
+      </p>
+      <p class="keywords">
+        private git · config-history · *-infra · branches · sim/ · main ·
+        no secrets in git · IaC history · separation of concerns
       </p>
     </section>
 
