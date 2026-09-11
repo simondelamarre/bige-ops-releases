@@ -708,17 +708,20 @@
 
     <section class="block">
       <h2>Reverse engineering</h2>
-      <p class="title">Vous avez déjà du cloud ? On lit l’existant, on réécrit mieux.</p>
+      <p class="title">Vous avez déjà du cloud ? On lit l’existant — on comprend, on affiche.</p>
       <p>
         L’app <strong>liste vos produits</strong> Outscale (VMs, volumes, réseau, OKS…),
-        reconstruit une config exploitable, puis vous aide à
-        <strong>optimiser</strong> — pricing, layout, Terraform / specs régénérés.
-        De l’<a class="term" href="#g-inventory">inventaire</a> live au blueprint propre.
+        lit l’<a class="term" href="#g-inventory">inventory</a>,
+        et <strong>affiche</strong> une simulation compréhensible
+        (Visual / fichiers). Ce n’est <strong>pas</strong> une promesse de
+        « réécrire mieux » : on <strong>ré-interprète pour comprendre et
+        montrer</strong> — ensuite vous optimisez si vous le voulez
+        (sizing, €, materialization).
       </p>
       <p class="keywords">
         <a class="term" href="#g-reverse">reverse engineering</a> ·
         <a class="term" href="#g-inventory">inventory</a> ·
-        import · rewrite · optimize · brownfield
+        lire · comprendre · afficher · brownfield
       </p>
     </section>
 
@@ -884,7 +887,7 @@
         <dt id="g-inventory">Inventory</dt>
         <dd>Liste live des ressources sur votre compte (VMs, volumes, réseau, OKS…). Base de la rétro et du resync.</dd>
         <dt id="g-reverse">Reverse engineering</dt>
-        <dd>Partir de l’inventory, reconstruire une config exploitable, puis optimiser (sizing, €, materialization).</dd>
+        <dd>Partir de l’inventory live : <strong>lire</strong>, <strong>comprendre</strong>, <strong>afficher</strong> dans la simulation / Visual. Pas une réécriture « forcément meilleure » — l’optimisation (sizing, €, generate) reste un geste volontaire après.</dd>
         <dt id="g-terraform">Terraform</dt>
         <dd>Artefact généré depuis la simulation — pas l’interface principale. Materialization pour apply.</dd>
         <dt id="g-materialization">Materialization</dt>
