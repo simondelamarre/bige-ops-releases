@@ -11,7 +11,7 @@ flowchart LR
 
 Déclarer `oos_bucket`, `generate` → Terraform endpoint régional, apply sur votre compte. Secrets AK/SK hors `project.yaml`.
 
-HTML : [oos.html](https://simondelamarre.github.io/bige-ops-releases/oos.html)
+HTML : [oos.html](https://bige.dev/oos.html)
 
 
 ## Indestructible via bige-ops (même vide)

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Layouts &amp; topologies — bige-ops</title>
+  <meta name="description" content="Layouts nommés et topologies single-vm / multi-vm / oks : runtimes, bases, services, bâtisseur de stack. Starter kit Outscale." />
+  <link rel="canonical" href="https://bige.dev/layouts.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Beta démo</span>
+    </div>
+    <h1>Layouts &amp; topologies</h1>
+    <p class="lead">
+      Un <strong>layout</strong> est un point de départ : un runtime, des
+      bases, des services, et une <strong>topologie</strong> qui décide
+      combien de machines existent et qui est exposé. Trois topologies,
+      huit layouts nommés, un bâtisseur pour le reste.
+    </p>
+
+    <h2>Les trois topologies</h2>
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  L[Layout choisi] --> S[single-vm]
+  L --> M[multi-vm]
+  L --> O[oks]
+  S --> S1[Une VM all-in-one]
+  M --> M1[VM app publique]
+  M --> M2[Une VM privee par base]
+  O --> O1[Cluster OKS et manifests]
+      </pre>
+      <figcaption>La topologie n’est pas un détail cosmétique : elle fixe le blast radius.</figcaption>
+    </figure>
+
+    <ul>
+      <li>
+        <strong><code>single-vm</code></strong> (mono-VM) — une seule VM
+        <code>{name}-all</code>, une EIP publique, docker installé
+        (+ nodejs si des services applicatifs sont présents). Simple,
+        pas cher, et <em>un seul blast radius</em> : tout tombe ensemble.
+      </li>
+      <li>
+        <strong><code>multi-vm</code></strong> — une VM app publique, plus
+        une VM privée par base de données. Isolation réelle, coût plus
+        élevé, câblage réseau à comprendre.
+      </li>
+      <li>
+        <strong><code>oks</code></strong> — un cluster OKS et des manifests
+        Kubernetes générés. <strong>Aucune VM app n’est matérialisée</strong> :
+        les services deviennent des Deployments. Voir
+        <a href="oks.html">OKS &amp; pods</a>.
+      </li>
+    </ul>
+
+    <h2>Les huit layouts nommés</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>runtime</th>
+          <th>topologie</th>
+          <th>LBU</th>
+          <th>bases</th>
+          <th>services</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>node-app</code></td><td>nodejs</td><td>multi-vm</td><td>oui</td>
+          <td>mongodb, redis, weaviate</td><td>api, web, worker</td>
+        </tr>
+        <tr>
+          <td><code>python-app</code></td><td>python</td><td>multi-vm</td><td>oui</td>
+          <td>postgres, redis</td><td>api, web, worker</td>
+        </tr>
+        <tr>
+          <td><code>java-spring</code></td><td>java</td><td>multi-vm</td><td>oui</td>
+          <td>postgres, redis</td><td>api, web</td>
+        </tr>
+        <tr>
+          <td><code>elixir-phoenix</code></td><td>elixir</td><td>multi-vm</td><td>oui</td>
+          <td>postgres, redis</td><td>api, web, worker</td>
+        </tr>
+        <tr>
+          <td><code>php-app</code></td><td>php</td><td>multi-vm</td><td>oui</td>
+          <td>postgres, redis</td><td>api, web, worker</td>
+        </tr>
+        <tr>
+          <td><code>go-app</code></td><td>go</td><td>multi-vm</td><td>oui</td>
+          <td>postgres, redis</td><td>api, web, worker</td>
+        </tr>
+        <tr>
+          <td><code>node-lite</code></td><td>nodejs</td><td><strong>single-vm</strong></td><td>non</td>
+          <td>postgres</td><td>api, web</td>
+        </tr>
+        <tr>
+          <td><code>python-ml</code></td><td>python</td><td>multi-vm</td><td>oui</td>
+          <td>postgres, redis, weaviate</td><td>api, web, worker</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Un layout n’est pas un contrat.</strong>
+      Il pose une simulation cohérente en un appel, puis vous éditez :
+      types de VM, tailles de volumes, réplicas, ouverture réseau.
+      Le prix se lit ensuite — voir <a href="simulations.html">projets &amp; simulations</a>.
+    </div>
+
+    <h2>Bâtisseur de stack</h2>
+    <p>
+      Quand aucun preset ne colle, le <strong>bâtisseur de stack</strong>
+      (alias <code>custom</code> ou <code>build</code>) construit le layout
+      à la demande. Il exige <code>--runtime</code>. Par défaut :
+      <code>postgres</code> + <code>redis</code>, topologie
+      <code>multi-vm</code>, LBU activé, worker inclus.
+      Dans l’app desktop, c’est le wizard <strong>Setup</strong> /
+      « Bâtisseur de stack ».
+    </p>
+
+<pre>bige-ops add layouts                 # lister les layouts
+bige-ops add layouts -q spring       # rechercher par mot-clé
+bige-ops add layout node-app --name mon-app
+bige-ops add layout custom --runtime python --db postgres --db redis --web spa --lbu</pre>
+
+    <h2>Runtimes et services disponibles</h2>
+    <p>
+      <strong>Runtimes app</strong> : <code>nodejs</code>, <code>python</code>,
+      <code>go</code>, <code>rust</code>, <code>java</code>,
+      <code>elixir</code>, <code>php</code>, <code>custom</code>.
+    </p>
+    <p>
+      <strong>Catalogue de services</strong> : <code>api</code>,
+      <code>web</code>, <code>worker</code>, <code>mongodb</code>,
+      <code>redis</code>, <code>postgres</code>, <code>weaviate</code>,
+      <code>database</code> (alias Postgres générique). En plus, vous
+      déclarez des <strong>services custom</strong> au nom libre via
+      <code>service_config</code>, avec <code>kind: custom</code> et soit
+      une <code>image</code>, soit un dépôt <code>git</code>.
+    </p>
+
+<pre>service_config:
+  moteur-pdf:
+    kind: custom
+    image: ghcr.io/moi/moteur-pdf:1.4
+  api:
+    replicas: 2</pre>
+
+    <h2>Ce que ça n’est pas</h2>
+    <ul>
+      <li>
+        Les <strong>workers partagent la VM app</strong>. Il n’y a pas de VM
+        worker dédiée : si votre worker mange le CPU, il le mange à l’API.
+      </li>
+      <li>
+        En <code>multi-vm</code>, les <strong>URLs de bases n’existent
+        qu’après l’apply</strong> : elles remontent du coffre vers le
+        <code>.env</code>. Ne les codez pas en dur avant.
+      </li>
+      <li>
+        Le <strong>premier deploy doit être complet</strong>. Un deploy
+        ciblé <code>--service</code> suppose que la stack a déjà été
+        déployée entièrement au moins une fois.
+      </li>
+      <li>
+        Aucun layout ne remplace une revue d’architecture. C’est un kickoff :
+        quand vous scalez pour de vrai, <strong>vous opérez</strong> —
+        <a href="perimetre.html">périmètre</a>.
+      </li>
+    </ul>
+
+    <p>
+      Machines : <a href="vms.html">VMs</a>.
+      Kubernetes : <a href="oks.html">OKS &amp; pods</a>.
+      Data : <a href="bases.html">bases de données</a>.
+      Exposition : <a href="reseau.html">réseau</a>.
+      Vocabulaire : <a href="index.html#glossaire">glossaire</a>.
+    </p>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="index.html#glossaire">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+  </script>
+</body>
+</html>

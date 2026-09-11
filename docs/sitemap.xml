@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://bige.dev/agent.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/bases-complexes.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/bases.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/cli.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/expert-config.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/github-config.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/</loc><priority>1.0</priority></url>
+  <url><loc>https://bige.dev/install.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/inventory.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/layouts.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/oks.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/oos.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/perimetre.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/repos-vms-docker.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/reseau.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/savoir.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/secrets.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/simulations.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/vms.html</loc><priority>0.7</priority></url>
+</urlset>

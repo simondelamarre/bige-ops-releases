@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Assistant IA — bige-ops</title>
+  <meta name="description" content="L’agent bige-ops : Claude Sonnet 4.5, votre clé API, outils de config en lecture/écriture. Jamais d’apply, deploy ni push." />
+  <link rel="canonical" href="https://bige.dev/agent.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="secrets.html">Secrets</a> · <a href="expert-config.html">Config experte</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Beta démo</span>
+    </div>
+    <h1>Assistant IA (agent)</h1>
+    <p class="lead">
+      Un chat intégré qui manipule la <strong>configuration</strong> de votre
+      simulation : lire le contexte, éditer <code>project.yaml</code>, lancer
+      des commandes en lecture, préparer un Dockerfile. Il ne touche jamais à
+      votre cloud : <strong>c’est vous qui faites <code>plan</code> et
+      <code>apply</code></strong>.
+    </p>
+
+    <div class="callout">
+      <strong>Votre clé, votre compte.</strong>
+      Modèle utilisé aujourd’hui : <strong>Claude Sonnet 4.5</strong>
+      (Anthropic). Vous saisissez <strong>votre propre clé API</strong> dans
+      Settings ; elle est stockée localement dans
+      <code>~/.config/bige-ops/settings.json</code>. Les appels partent du
+      backend local de l’app (Tauri) vers l’API Anthropic — la clé ne transite
+      pas par un backend bige-ops, et ce n’est <strong>pas</strong> une clé
+      managée par nous. Mistral / stack souveraine : prévu, pas encore là.
+      Voir <a href="index.html#agent-keys">clés &amp; agent</a>.
+    </div>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  U[Vous — chat] --> A[Agent]
+  A --> R[Lecture contexte et fichiers]
+  A --> W[Ecriture project.yaml]
+  W --> V[validate + generate]
+  V --> P[Plan / Apply par vous]
+      </pre>
+      <figcaption>L’agent s’arrête avant le cloud. La dernière étape reste manuelle.</figcaption>
+    </figure>
+
+    <h2>Ce que l’agent peut faire</h2>
+    <ul>
+      <li>Lister les <strong>simulations</strong> du workspace et en <strong>créer</strong> une nouvelle.</li>
+      <li>Lire le <strong>contexte</strong> du projet : statut, <code>project.yaml</code>, estimation de coût.</li>
+      <li>Lister et lire les fichiers de la simulation.</li>
+      <li>Éditer <code>project.yaml</code> : mise à jour complète ou patch ciblé.</li>
+      <li><strong>Retirer</strong> un composant, <strong>ajouter</strong> une stack.</li>
+      <li>Lancer des commandes CLI <strong>en lecture ou local</strong> : <code>validate</code>, <code>generate</code>, <code>estimate --json</code>, <code>status</code>, <code>plan</code>, <code>diff config</code>, <code>inventory show</code>…</li>
+      <li>Lire la <strong>documentation intégrée</strong> pour justifier ses choix.</li>
+      <li>Préparer un <strong>repo applicatif</strong>, lire et écrire un <code>Dockerfile</code>, et ouvrir une <strong>pull request</strong> dessus.</li>
+    </ul>
+
+    <h2>Ce que l’agent ne fait jamais</h2>
+    <table>
+      <thead>
+        <tr><th>Bloqué</th><th>Pourquoi</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>apply</code>, <code>deploy</code>, <code>redeploy</code></td><td>Mutations réelles sur votre cloud ou vos workloads</td></tr>
+        <tr><td><code>github push</code></td><td>Le push du config-history reste une décision humaine</td></tr>
+        <tr><td><code>auth login</code> / <code>auth logout</code></td><td>Touche à vos credentials Outscale</td></tr>
+        <tr><td><code>import selection</code></td><td>Réécrit <code>project.yaml</code> depuis l’inventaire live</td></tr>
+        <tr><td><code>init --force</code></td><td>Peut effacer un projet existant</td></tr>
+      </tbody>
+    </table>
+    <p>
+      L’agent ne lit ni n’écrit les <a href="secrets.html">fichiers de secrets</a> :
+      credentials, coffre, <code>.env</code>, <code>.pem</code>,
+      <code>terraform.tfvars</code> sont filtrés côté outils. Les actions
+      sensibles restantes passent par une <strong>demande de confirmation
+      explicite</strong> dans le chat — vous validez, ou non.
+    </p>
+
+    <h2>Dans vos repos applicatifs</h2>
+    <p>
+      Quand l’agent travaille sur un repo de code, l’écriture est
+      volontairement étroite :
+    </p>
+    <ul>
+      <li>fichiers autorisés : <code>Dockerfile</code>, <code>.dockerignore</code>, <code>.bige-ops/*</code> ;</li>
+      <li>toujours sur une branche <code>bige-ops/*</code> ;</li>
+      <li>toujours via une <strong>pull request</strong> — <strong>jamais de commit sur <code>main</code></strong>.</li>
+    </ul>
+    <p>
+      Le partage des rôles entre config-history, repos applicatifs et VMs est
+      détaillé dans <a href="repos-vms-docker.html">repos, VMs &amp; Dockerfiles</a>.
+    </p>
+
+    <h2>Comment bien s’en servir</h2>
+    <ul>
+      <li>Donnez une intention et une contrainte : « API + Postgres, budget sous X € HT/mois, région eu-west-2 ».</li>
+      <li>Faites-lui lire le contexte avant d’éditer, puis relancez <code>validate</code> et <code>generate</code>.</li>
+      <li>Relisez le diff de <code>project.yaml</code> — c’est la seule vérité.</li>
+      <li>Pour l’exposition réseau, vérifiez ses choix : <a href="reseau.html">ouvrir ou non</a>.</li>
+      <li>Pour reprendre la main à la pince : <a href="expert-config.html">config experte</a>.</li>
+    </ul>
+
+    <h2>Limites honnêtes</h2>
+    <div class="callout callout-warn">
+      <strong>L’agent peut se tromper.</strong>
+      C’est un <strong>co-pilote sur la configuration</strong>, pas un
+      opérateur cloud, pas un architecte, pas votre SRE. Il peut proposer un
+      dimensionnement faux, une exposition réseau trop large ou un coût mal
+      calibré. <strong>Relisez avant <code>plan</code> et
+      <code>apply</code>.</strong> La fonctionnalité est encore
+      <strong>WIP</strong> : outils et garde-fous bougent d’une version à
+      l’autre. Enfin, la consommation de tokens est facturée sur
+      <strong>votre compte Anthropic</strong> — pas sur le nôtre.
+    </div>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="index.html#glossaire">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+  </script>
+</body>
+</html>

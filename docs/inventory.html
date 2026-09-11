@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inventaire &amp; import — bige-ops</title>
+  <meta name="description" content="Lire un compte Outscale existant : inventory fetch, show, import selection et plan. Matrice honnête de ce qui est importé ou seulement observé." />
+  <link rel="canonical" href="https://bige.dev/inventory.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Beta démo</span>
+    </div>
+    <h1>Inventaire &amp; import (reverse)</h1>
+    <p class="lead">
+      Votre compte Outscale existe déjà ? bige-ops le <strong>lit</strong>,
+      le comprend et l’affiche — avec une estimation de coût. Il ne prétend
+      pas le réécrire mieux que vous. Une partie est importable en
+      composants, le reste est seulement observé, et c’est dit.
+    </p>
+
+    <h2>Lire le compte</h2>
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  A[Compte Outscale] --> F[inventory fetch]
+  F --> SN[Snapshot local]
+  SN --> SH[inventory show]
+  SN --> IS[import selection]
+  IS --> Y[YAML puis generate]
+  IS --> IP[import plan]
+      </pre>
+      <figcaption>On part du compte réel, pas d’une feuille blanche.</figcaption>
+    </figure>
+
+    <ul>
+      <li>
+        <code>bige-ops inventory fetch</code> — interroge le compte et
+        stocke un <strong>snapshot local</strong> : nets, subnets, VMs,
+        volumes, snapshots, buckets OOS, security groups, keypairs, IPs
+        publiques, route tables, NAT, internet service, LBU, net peering,
+        VPN, OKS.
+      </li>
+      <li>
+        <code>bige-ops inventory show</code> — affiche le résumé et
+        l’<strong>estimation de coût</strong>.
+      </li>
+      <li>
+        <code>bige-ops import selection --id i-xxxx</code> — écrit du YAML
+        depuis l’inventaire, puis lance <code>generate</code>.
+      </li>
+      <li>
+        <code>bige-ops import plan</code> — imprime les commandes
+        <code>terraform import</code> suggérées. Rien n’est exécuté.
+      </li>
+    </ul>
+
+<pre>bige-ops inventory fetch
+bige-ops inventory show
+bige-ops import selection --id i-0123456789abcdef
+bige-ops import plan</pre>
+
+    <h2>Matrice honnête</h2>
+    <p>
+      Tout ce que l’API renvoie n’est pas modélisable en composant. Trois
+      états, sans zone grise :
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>État</th>
+          <th>Ressources</th>
+          <th>Ce que vous pouvez en faire</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Importé en composant</strong></td>
+          <td>VMs, volumes, nets, subnets, security groups (IDs adoptés), keypairs</td>
+          <td>YAML généré, Terraform, édition dans l’app</td>
+        </tr>
+        <tr>
+          <td><strong>Observé seulement</strong></td>
+          <td>
+            route tables, NAT, internet service, IPs publiques, net peering,
+            VPN, OOS (en reverse), LBU importés (sketch, pas de reverse des
+            listeners), OKS (listé dans l’inventaire, pas réécrit en YAML)
+          </td>
+          <td>affiché et compté, mais <strong>aucun Terraform de création</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Local seulement</strong></td>
+          <td><code>nic</code>, <code>dhcp_options</code></td>
+          <td>visibles en Visual / YAML, <strong>pas de Terraform généré</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Pas modélisé</strong></td>
+          <td>DirectLink</td>
+          <td>rien — hors périmètre</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>La philosophie.</strong>
+      On <strong>lit, comprend et affiche</strong>. On ne fait pas
+      « on réécrit mieux ». Un compte construit à la main reste le vôtre :
+      l’inventaire vous donne une carte et un coût, pas un ordre de
+      migration.
+    </div>
+
+    <div class="callout callout-warn">
+      <strong>Danger — <code>inventory clean --yes</code> est destructif.</strong>
+      Cette commande importe tout ce qui est importable, vide le projet, puis
+      lance un <code>terraform destroy</code> sur le compte. Elle est
+      <strong>à réserver aux comptes de test</strong>. Les buckets OOS, eux,
+      restent indestructibles via bige-ops — ce qui ne vous dispense pas de
+      relire deux fois avant de taper la commande.
+    </div>
+
+    <h2>Ce que ça n’est pas</h2>
+    <ul>
+      <li>
+        Pas un outil de migration : il n’adopte pas votre compte entier dans
+        un state Terraform propre.
+      </li>
+      <li>
+        Pas un reverse complet. Le tableau ci-dessus est la limite réelle,
+        pas une roadmap déguisée.
+      </li>
+      <li>
+        Pas un audit de sécurité ni de conformité. Voir les security groups
+        affichés comme un point de départ de lecture, pas comme un verdict.
+      </li>
+      <li>
+        Pas un remplacement de votre SRE. Quand le compte devient sérieux,
+        <strong>vous opérez</strong> — <a href="perimetre.html">périmètre</a>.
+      </li>
+    </ul>
+
+    <p>
+      Câblage réseau : <a href="reseau.html">réseau</a>.
+      Machines : <a href="vms.html">VMs</a>.
+      Objet et backups : <a href="oos.html">OOS</a>.
+      Où vit l’inventaire : <a href="simulations.html">projets &amp; simulations</a>.
+    </p>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="index.html#glossaire">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+  </script>
+</body>
+</html>

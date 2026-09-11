@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Installer &amp; mettre à jour — bige-ops</title>
+  <meta name="description" content="Installer bige-ops : DMG macOS, Homebrew cask, Linux. Mises à jour vérifiées mais manuelles, CLI embarquée, dépendances système." />
+  <link rel="canonical" href="https://bige.dev/install.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a> · <a href="cli.html">CLI · app</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Beta démo</span>
+    </div>
+    <h1>Installer &amp; mettre à jour</h1>
+    <p class="lead">
+      bige-ops est une application <strong>desktop locale</strong>, gratuite,
+      distribuée via GitHub Releases. Version courante : <strong>0.3.0</strong>
+      (tag <code>v0.3.0</code>). macOS et Linux ; <strong>pas de Windows</strong>
+      aujourd’hui.
+    </p>
+
+    <div class="callout">
+      <strong>Beta démo, gratuite.</strong>
+      Le produit est jeune : il manque des choses et il reste des bugs.
+      Dites-le — issues publiques :
+      <a href="https://github.com/simondelamarre/bige-ops-releases/issues">bige-ops-releases · issues</a>.
+    </div>
+
+    <h2>Où récupérer l’app</h2>
+    <p>
+      Tout passe par le dépôt public
+      <a href="https://github.com/simondelamarre/bige-ops-releases">simondelamarre/bige-ops-releases</a> :
+      le DMG macOS et le fichier <code>latest.json</code> utilisé pour la
+      vérification de version.
+    </p>
+    <ul>
+      <li><strong>macOS — DMG</strong> : <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">dernière release</a>, puis glissez l’app dans <code>/Applications</code>.</li>
+      <li><strong>macOS — Homebrew</strong> : le tap <code>simondelamarre/bige-ops</code> expose un cask.</li>
+      <li><strong>Linux</strong> : build disponible depuis les releases.</li>
+      <li><strong>Windows</strong> : non supporté à ce jour. Pas de contournement propre, pas d’ETA à vous vendre.</li>
+    </ul>
+
+<pre>brew tap simondelamarre/bige-ops
+brew install --cask bige-ops</pre>
+
+    <h2>Mises à jour : vérifiées, pas automatiques</h2>
+    <p>
+      L’application <strong>vérifie</strong> s’il existe une version plus
+      récente en lisant <code>latest.json</code> sur le dépôt de releases.
+      Elle vous le signale — et c’est tout. Il n’y a
+      <strong>pas d’auto-install</strong>, pas d’updater silencieux, rien qui
+      remplace le binaire dans votre dos.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Installation</th><th>Mettre à jour</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>DMG macOS</td><td>Télécharger la nouvelle release, remplacer l’app dans <code>/Applications</code></td></tr>
+        <tr><td>Homebrew cask</td><td><code>brew upgrade --cask bige-ops</code></td></tr>
+        <tr><td>Linux</td><td>Télécharger et remplacer le binaire</td></tr>
+      </tbody>
+    </table>
+
+    <h2>CLI embarquée</h2>
+    <p>
+      Le binaire <code>bige-ops</code> (build PyInstaller) est
+      <strong>packagé dans l’application</strong> : c’est lui que l’app appelle
+      pour <code>validate</code>, <code>generate</code>, <code>estimate</code>,
+      <code>plan</code>, <code>apply</code>, <code>deploy</code>. Vous
+      n’installez rien de plus pour démarrer.
+    </p>
+    <p>
+      La version de la CLI doit rester <strong>alignée</strong> avec celle de
+      l’app. L’écran <strong>Settings</strong> affiche l’état :
+      CLI introuvable, CLI désalignée, ou à jour. Si c’est désaligné, mettez
+      l’app à jour plutôt que de bricoler le PATH.
+      Détail des commandes : <a href="cli.html">CLI · app · OKS</a>.
+    </p>
+
+    <h2>Dépendances système</h2>
+    <p>
+      L’app embarque un écran de diagnostic <strong>« Dépendances »</strong>
+      qui teste ce qui est présent sur votre poste. Vous pouvez utiliser
+      bige-ops en <strong>mode projection</strong> (design + estimation) sans
+      rien de tout ça ; les outils deviennent nécessaires dès que vous
+      matérialisez ou déployez.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Outil</th><th>Requis pour</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>CLI <code>bige-ops</code> embarquée</td><td>Tout le moteur : validate, generate, estimate</td></tr>
+        <tr><td><strong>Terraform</strong></td><td><code>plan</code> et <code>apply</code> sur l’infra Outscale</td></tr>
+        <tr><td><strong>oks-cli</strong></td><td>Cluster OKS : création, nodepools, kubeconfig</td></tr>
+        <tr><td><strong>kubectl</strong></td><td>Deploy des manifests sur OKS</td></tr>
+        <tr><td><strong>Docker</strong> / SSH</td><td>Deploy applicatif sur VMs (build + compose)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Premier lancement</h2>
+    <ul>
+      <li>Choisissez un <strong>workspace</strong> : un simple dossier local où vivront vos simulations.</li>
+      <li>Créez un <strong>compte Outscale</strong> dans l’app et renseignez vos clés API — ou restez sans credentials en <strong>mode projection</strong> pour designer et estimer.</li>
+      <li>Créez une première simulation, puis <code>validate</code> / <code>generate</code> avant tout <code>plan</code>.</li>
+    </ul>
+    <p>
+      Où atterrissent les clés et les secrets : <a href="secrets.html">Secrets, coffre &amp; credentials</a>.
+      Ce que l’outil couvre — et ne couvre pas : <a href="perimetre.html">Périmètre</a>.
+      Concept de simulation : <a href="simulations.html">Simulations</a>.
+    </p>
+
+    <h2>Limites honnêtes</h2>
+    <div class="callout callout-warn">
+      <strong>Ce que l’installation ne vous donne pas.</strong>
+      Pas de Windows. Pas de mise à jour automatique : c’est vous qui
+      remplacez le binaire. Pas de packaging des dépendances tierces —
+      Terraform, oks-cli, kubectl et Docker restent à votre charge, avec les
+      versions de votre poste. Et l’app ne remplace ni votre SRE ni votre DBA :
+      c’est un kickoff.
+    </div>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="index.html#glossaire">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+  </script>
+</body>
+</html>

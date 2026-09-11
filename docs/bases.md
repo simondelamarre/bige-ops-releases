@@ -27,4 +27,4 @@ flowchart TB
 
 Volume / snapshot = filet block. **OOS** = objet S3-compatible pour dumps / backups applicatifs. Voir [oos.md](oos.md).
 
-Pages HTML (diagrammes) : [bases.html](https://simondelamarre.github.io/bige-ops-releases/bases.html) · [oos.html](https://simondelamarre.github.io/bige-ops-releases/oos.html)
+Pages HTML (diagrammes) : [bases.html](https://bige.dev/bases.html) · [oos.html](https://bige.dev/oos.html)

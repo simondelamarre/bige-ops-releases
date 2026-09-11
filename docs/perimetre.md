@@ -11,4 +11,4 @@ flowchart LR
   E --> F[Vous opérez le scale]
 ```
 
-HTML : [perimetre.html](https://simondelamarre.github.io/bige-ops-releases/perimetre.html)
+HTML : [perimetre.html](https://bige.dev/perimetre.html)

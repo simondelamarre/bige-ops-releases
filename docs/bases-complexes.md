@@ -10,4 +10,4 @@ Mongo 8, Postgres RAG, Cassandra, Elastic… kickoff simple. **On n’est pas un
 | Elastic | custom OKS documenté | presets nœuds lourds / estimate |
 | Autres | custom pattern | cataloguer |
 
-HTML : [bases-complexes.html](https://simondelamarre.github.io/bige-ops-releases/bases-complexes.html)
+HTML : [bases-complexes.html](https://bige.dev/bases-complexes.html)

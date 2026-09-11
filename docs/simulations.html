@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projets, simulations &amp; promote — bige-ops</title>
+  <meta name="description" content="Workspace, compte Outscale, simulations live et draft : promote, snapshot, rollback, diff config. Starter kit Outscale." />
+  <link rel="canonical" href="https://bige.dev/simulations.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Beta démo</span>
+    </div>
+    <h1>Projets, simulations &amp; promote</h1>
+    <p class="lead">
+      Tout est local et hiérarchique : un <strong>workspace</strong> sur
+      votre poste, des <strong>comptes</strong> Outscale dedans, des
+      <strong>simulations</strong> dans chaque compte. Une simulation est
+      live, les autres sont des brouillons — jusqu’au <code>promote</code>.
+    </p>
+
+    <h2>Le modèle</h2>
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart TB
+  W[Workspace sur votre poste] --> A[Compte = un tenant Outscale]
+  A --> C[credentials et inventory et shared.yaml]
+  A --> S1[Simulation live]
+  A --> S2[Simulation draft]
+  S2 -->|promote| S1
+  S1 -->|archivee| S3[Archive]
+      </pre>
+      <figcaption>Le compte porte ce qui est partagé ; la simulation porte ce qui est jetable.</figcaption>
+    </figure>
+
+    <table>
+      <thead>
+        <tr><th>Niveau</th><th>Sur disque</th><th>Contient</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Workspace</td>
+          <td>un dossier de votre choix</td>
+          <td>vos comptes</td>
+        </tr>
+        <tr>
+          <td>Compte</td>
+          <td><code>accounts/&lt;id&gt;/</code></td>
+          <td>credentials, inventaire, <code>shared.yaml</code></td>
+        </tr>
+        <tr>
+          <td>Simulation</td>
+          <td><code>accounts/&lt;id&gt;/simulations/&lt;name&gt;/</code></td>
+          <td>la stack, le YAML, les artefacts générés</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Live et draft</h2>
+    <ul>
+      <li>
+        <strong>Simulation live</strong> — <code>existing/</code>, ou celle
+        que vous avez promue. C’est la stack de travail, celle orientée prod,
+        celle qui correspond à ce que vous appliquez sur le compte.
+      </li>
+      <li>
+        <strong>Simulation draft</strong> — une variante en parallèle. Vous
+        cassez, vous testez, vous comparez le coût. Elle
+        <strong>ne remplace rien</strong> tant que vous ne faites pas
+        <code>promote</code>.
+      </li>
+    </ul>
+
+    <div class="callout">
+      <strong>Convention Git.</strong>
+      La simulation live pousse sur la branche <code>main</code> du
+      config-history. Une simulation draft ou archivée pousse sur
+      <code>sim/&lt;slug&gt;</code>. Détail :
+      <a href="github-config.html">GitHub config</a>.
+    </div>
+
+    <h2>Les commandes</h2>
+<pre>bige-ops account list
+bige-ops account add
+bige-ops account show
+bige-ops account shared-add
+bige-ops account shared-list
+
+bige-ops simulation list
+bige-ops simulation create
+bige-ops simulation ensure
+bige-ops simulation clone
+bige-ops simulation promote
+bige-ops simulation archive
+
+bige-ops simulation snapshot
+bige-ops simulation snapshots
+bige-ops simulation rollback --snapshot &lt;id&gt; --dry-run
+
+bige-ops diff config
+bige-ops workspace migrate</pre>
+
+    <h2>Promote</h2>
+    <p>
+      <code>promote</code> marque la simulation courante comme live et
+      <strong>archive la précédente</strong>. Par défaut, un
+      <strong>snapshot</strong> de l’ancienne live est pris avant — coupez-le
+      avec <code>--no-snapshot</code> si vous savez ce que vous faites.
+      Avec <code>--push-main</code>, les configs partent sur la branche
+      <code>main</code> du dépôt de config-history.
+    </p>
+<pre>cd accounts/&lt;id&gt;/simulations/ma-variante
+bige-ops simulation promote            # snapshot auto + archive de l’ancienne live
+bige-ops simulation promote --push-main</pre>
+
+    <h2>Snapshots, rollback, diff</h2>
+    <p>
+      <code>snapshot</code> capture l’état de la configuration,
+      <code>snapshots</code> les liste, <code>rollback --snapshot &lt;id&gt;</code>
+      revient dessus (essayez d’abord avec <code>--dry-run</code>).
+      <code>diff config</code> compare le YAML courant à un snapshot.
+      C’est un <strong>filet local sur la config</strong>, rien de plus.
+    </p>
+
+    <div class="callout callout-warn">
+      <strong>Rollback de la config ≠ rollback du cloud.</strong>
+      Un rollback remet vos fichiers YAML dans un état antérieur. Il ne
+      défait <strong>rien</strong> sur Outscale. Revenir en arrière côté
+      infrastructure veut dire re-<code>plan</code> puis re-<code>apply</code>,
+      et parfois un destroy — avec les risques de
+      <strong>perte de données</strong> que cela implique. Le rollback Git
+      côté GitHub, lui, reste manuel.
+    </div>
+
+    <h2>Ce que ça n’est pas</h2>
+    <ul>
+      <li>
+        Pas un système de versioning de votre infrastructure réelle : le
+        seul état de vérité du cloud, c’est le compte Outscale et le state
+        Terraform.
+      </li>
+      <li>
+        Pas de merge entre simulations. On promeut ou on archive ; on ne
+        fusionne pas deux drafts.
+      </li>
+      <li>
+        Pas de workflow multi-équipe avec verrous. Le workspace est local,
+        mono-poste ; la coordination passe par Git, à votre main.
+      </li>
+      <li>
+        Pas un remplacement de votre process de release. C’est un kickoff —
+        <a href="perimetre.html">périmètre</a>.
+      </li>
+    </ul>
+
+    <p>
+      Historique Git : <a href="github-config.html">GitHub config</a>.
+      YAML brut : <a href="expert-config.html">config expert</a>.
+      Lire le compte existant : <a href="inventory.html">inventaire &amp; import</a>.
+      Objet et backups : <a href="oos.html">OOS</a>.
+      Définition : <a href="index.html#g-promote">glossaire · promote</a>.
+    </p>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="index.html#glossaire">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+  </script>
+</body>
+</html>

@@ -5,4 +5,4 @@
 - **Ex. NVMe** : non modélisé aujourd’hui (y compris SecNumCloud) — **peut changer demain**.
 - **Experts Outscale** (commerciaux & tech) : écrivez sur [GitHub Issues](https://github.com/simondelamarre/bige-ops-releases/issues) — avancées, déceptions, remarques outil / usage / pricing. Ce sont eux les experts.
 
-HTML : [savoir.html](https://simondelamarre.github.io/bige-ops-releases/savoir.html)
+HTML : [savoir.html](https://bige.dev/savoir.html)

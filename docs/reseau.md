@@ -11,4 +11,4 @@ Exposer un pod, une VM, ou une face d’un layout multi-VM : règles **projet** 
 
 Doc Outscale : [Nets](https://docs.outscale.com/en/userguide/About-Nets.html) · [Security Groups](https://docs.outscale.com/en/userguide/About-Security-Groups.html) · [SG rules](https://docs.outscale.com/en/userguide/Adding-Rules-to-a-Security-Group.html) · [SG + LBU](https://docs.outscale.com/en/userguide/About-Security-Groups-in-LBU.html)
 
-HTML : [reseau.html](https://simondelamarre.github.io/bige-ops-releases/reseau.html)
+HTML : [reseau.html](https://bige.dev/reseau.html)

@@ -6,6 +6,21 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <title>bige-ops — Outscale IaaS, VMs (VPS), OKS Kubernetes managé</title>
   <meta name="description" content="Ops Outscale souverain local-first : starter kit, VMs (=VPS catalogue), OKS, OOS, CLI. Gratuit." />
+  <link rel="canonical" href="https://bige.dev/" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="bige-ops" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:url" content="https://bige.dev/" />
+  <meta property="og:title" content="bige-ops — le starter kit Outscale" />
+  <meta property="og:description" content="Simulez votre stack Outscale, lisez le € HT/mois, générez Terraform / OKS, appliquez sur votre compte. Local-first, gratuit." />
+  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta property="og:image:alt" content="bige-ops — design & deploy in three clicks" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="bige-ops — le starter kit Outscale" />
+  <meta name="twitter:description" content="Simulez votre stack Outscale, lisez le € HT/mois, générez Terraform / OKS, appliquez sur votre compte." />
+  <meta name="twitter:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -291,6 +306,83 @@
       color: var(--ink-950);
     }
 
+    .callout {
+      margin: 1.25rem 0 1.5rem;
+      padding: 0.9rem 1rem;
+      border: 1px solid var(--ink-700);
+      border-left: 3px solid var(--accent);
+      background: var(--ink-900);
+      color: var(--mist);
+      font-size: 1rem;
+      max-width: 42rem;
+    }
+
+    .callout strong { color: var(--white); }
+
+    .callout-warn {
+      border-color: #6d5722;
+      border-left-color: #c9a227;
+      background: #16130d;
+      color: #e9dfc8;
+    }
+
+    .callout-warn strong { color: #f5d78a; }
+
+    .shot {
+      margin: 1.35rem 0 0.5rem;
+      padding: 0;
+    }
+
+    .shot img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--ink-700);
+      border-radius: 10px;
+      background: var(--ink-900);
+    }
+
+    .shot figcaption {
+      margin-top: 0.55rem;
+      font-size: 0.88rem;
+      color: var(--ink-600);
+    }
+
+    .toc {
+      margin: 0 0 2.5rem;
+      padding: 1rem 1.1rem;
+      border: 1px solid var(--ink-700);
+      border-radius: 10px;
+      background: var(--ink-900);
+    }
+
+    .toc h2 {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-bright);
+      margin: 0 0 0.7rem;
+    }
+
+    .toc ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.9rem;
+      margin: 0;
+      padding: 0;
+      font-size: 0.95rem;
+    }
+
+    .toc a {
+      text-decoration: none;
+      border-bottom: 1px solid var(--ink-600);
+    }
+
+    .toc a:hover { border-bottom-color: var(--accent-bright); }
+
     .glossary {
       scroll-margin-top: 1rem;
     }
@@ -459,11 +551,30 @@
       </p>
     </div>
 
-    <section class="block">
+    <nav class="toc" aria-label="Sommaire">
+      <h2>Sommaire</h2>
+      <ul>
+        <li><a href="#zero-hero">Zero → Hero</a></li>
+        <li><a href="#visual">Visual · Flow</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#securite">Sécurité</a></li>
+        <li><a href="#git">Git privé</a></li>
+        <li><a href="#agent-keys">Assistant IA</a></li>
+        <li><a href="#reseau">Réseau</a></li>
+        <li><a href="#oks-warn">OKS · attention</a></li>
+        <li><a href="#cli">CLI</a></li>
+        <li><a href="#perimetre">Périmètre</a></li>
+        <li><a href="#glossaire">Glossaire</a></li>
+      </ul>
+    </nav>
+
+    <section class="block" id="zero-hero">
       <h2>Zero → Hero</h2>
       <h1>Le starter kit pour bien commencer sur Outscale.</h1>
       <p>
-        Estimations catalogue, layouts prêts à l’emploi, simulations de stack —
+        Estimations catalogue,
+        <a class="term" href="layouts.html"><strong>layouts prêts à l’emploi</strong></a>,
+        simulations de stack —
         de <strong>zéro</strong> à une architecture déployable.
         Vous validez le design et le € avant d’engager le cloud.
       </p>
@@ -481,15 +592,24 @@
         <a class="term" href="#g-simulation">simulation</a> ·
         <a class="term" href="#g-estimate">estimate</a> ·
         <a class="term" href="#g-projection">projection</a> ·
+        <a class="term" href="#g-layout">layout</a> ·
         <a class="term" href="#g-vm">VM</a> ·
         <a class="term" href="#g-vps">VPS</a> ·
         Outscale
       </p>
     </section>
 
-    <section class="block">
+    <section class="block" id="visual">
       <h2>Visual · Flow</h2>
       <p class="title">Vue flow interactive — droit au but sur les setups.</p>
+      <figure class="shot">
+        <img src="visual-simulation.svg" width="1100" height="620" loading="lazy" decoding="async"
+             alt="Canvas Visual : palette Net/VPC, VM, LBU, MongoDB, Redis, OKS à gauche ; à droite une stack multi-VM avec VM app publique, VMs mongodb et redis privées, un volume data, et des badges de coût mensuel ; total estimé ~186 EUR HT/mois en eu-west-2." />
+        <figcaption>
+          Visual — topologie + coût estimé par nœud. Catalogue public Outscale,
+          € HT indicatif, pas un devis.
+        </figcaption>
+      </figure>
       <p>
         Le canvas flow (Visual) est la vue interactive de la
         <a class="term" href="#g-simulation">simulation</a> :
@@ -512,7 +632,7 @@
       </p>
     </section>
 
-    <section class="block">
+    <section class="block" id="expert">
       <h2>Mode expert</h2>
       <p class="title">Édition des fichiers de config — quand le flow ne suffit pas.</p>
       <p>
@@ -576,7 +696,7 @@
       </p>
     </section>
 
-    <section class="block">
+    <section class="block" id="securite">
       <h2>Sécurité</h2>
       <p class="title">Pas de SaaS secrets. Vos credentials, votre responsabilité.</p>
       <p>
@@ -599,6 +719,10 @@
         <strong>Vos secrets → votre responsabilité</strong> :
         sécurisez le poste (chiffrement disque, session lock), gérez qui a
         accès au poste. On ne stocke pas vos clés “quelque part pour vous”.
+        Où vit quoi exactement — credentials, <a class="term" href="#g-coffre">coffre</a>,
+        <code>.env</code>, kubeconfigs, et ce qui n’est
+        <strong>jamais</strong> poussé sur Git :
+        <a href="secrets.html">secrets &amp; coffre</a>.
       </p>
       <p class="keywords">
         no SaaS vault · local credentials ·
@@ -607,7 +731,7 @@
       </p>
     </section>
 
-    <section class="block">
+    <section class="block" id="git">
       <h2>Git privé</h2>
       <p class="title">Simulations versionnées sur votre repo — jamais de secrets dessus.</p>
       <p>
@@ -624,6 +748,7 @@
         Cool : une sim = une branche, historique lisible, promote = vérité
         déployable. Imparfait : pas un GitOps one-click, pas d’autres Git
         pour l’instant. Détail :
+        <a href="simulations.html">simulations &amp; promote</a> ·
         <a href="github-config.html">GitHub config-history</a>
         (branches, deploy, rollbacks).
       </p>
@@ -634,7 +759,7 @@
       </p>
     </section>
 
-    <section class="block">
+    <section class="block" id="repos">
       <h2>Repos · VMs · Docker</h2>
       <p class="title">Stack versionnée d’un côté — code &amp; Dockerfile de l’autre.</p>
       <p>
@@ -691,6 +816,10 @@
         Il travaille la <strong>config</strong>, pas le coffre secrets cloud.
       </p>
       <p>
+        Ce que l’agent peut faire — et surtout ce qu’il ne fera <strong>jamais</strong>
+        (apply, deploy, push Git, secrets) : <a href="agent.html">assistant IA</a>.
+      </p>
+      <p>
         <strong>Mistral à venir</strong> — stack IA alignée cloud
         <a class="term" href="#g-souverain"><strong>souverain</strong></a> / SecNumCloud.
       </p>
@@ -702,7 +831,7 @@
       </p>
     </section>
 
-    <section class="block">
+    <section class="block" id="multi-tenant">
       <h2>Multi-tenant</h2>
       <p class="title">Plusieurs comptes Outscale. Un seul poste ops.</p>
       <p>
@@ -716,7 +845,7 @@
       </p>
     </section>
 
-    <section class="block">
+    <section class="block" id="reverse">
       <h2>Reverse engineering</h2>
       <p class="title">Vous avez déjà du cloud ? On lit l’existant — on comprend, on affiche.</p>
       <p>
@@ -731,11 +860,12 @@
       <p class="keywords">
         <a class="term" href="#g-reverse">reverse engineering</a> ·
         <a class="term" href="#g-inventory">inventory</a> ·
-        lire · comprendre · afficher · brownfield
+        lire · comprendre · afficher ·
+        <a href="inventory.html">matrice d’import</a>
       </p>
     </section>
 
-    <section class="block">
+    <section class="block" id="outscale">
       <h2>Outscale</h2>
       <p class="title">Cloud souverain — IaaS &amp; PaaS, VMs (VPS), OKS managé.</p>
       <p>
@@ -817,7 +947,7 @@
       </p>
     </section>
 
-    <section class="block">
+    <section class="block" id="cli">
       <h2>CLI · OKS</h2>
       <p class="title">App d’abord — même moteur en terminal ; kube sous le capot.</p>
       <p>
@@ -842,7 +972,7 @@
       </p>
     </section>
 
-    <section class="block">
+    <section class="block" id="terraform">
       <h2>Terraform</h2>
       <p class="title">Des layouts pour tout forger — IaaS et OKS.</p>
       <p>
@@ -860,7 +990,7 @@
       </p>
     </section>
 
-    <section class="block">
+    <section class="block" id="perimetre">
       <h2>Périmètre</h2>
       <p class="title">On aide à démarrer. On ne fait pas tout.</p>
       <p>
@@ -875,6 +1005,12 @@
         <a href="perimetre.html">périmètre</a>,
         <a href="savoir.html">sait / ne sait pas</a>
         (pricing, capacités, canal experts Outscale),
+        <a href="install.html">installer &amp; mettre à jour</a>,
+        <a href="layouts.html">layouts &amp; topologies</a>,
+        <a href="simulations.html">simulations &amp; promote</a>,
+        <a href="inventory.html">inventaire &amp; import</a>,
+        <a href="secrets.html">secrets &amp; coffre</a>,
+        <a href="agent.html">assistant IA</a>,
         <a href="vms.html">VMs · VPS</a>,
         <a href="reseau.html">réseau · ouvrir ou non</a>,
         <a href="oks.html">OKS &amp; pods</a>,
@@ -961,42 +1097,82 @@
         <dt id="g-reseau">Réseau / exposition</dt>
         <dd>Décider d’ouvrir (ou non) un pod, une VM, ou une face de layout : règles projet + Net / Security Groups Outscale. Voir <a href="reseau.html">reseau.html</a>.</dd>
         <dt id="g-agent">Agent LLM</dt>
-        <dd>Co-pilote chat : travaille avec <strong>vos clés API perso</strong> (locales) pour comprendre / maintenir le layout et éviter cascades de keys &amp; setups — selon vos règles. Voir <a href="#agent-keys">Assistant IA</a>.</dd>
+        <dd>Co-pilote chat : travaille avec <strong>vos clés API perso</strong> (locales) pour comprendre / maintenir le layout et éviter cascades de keys &amp; setups — selon vos règles. Voir <a href="agent.html">agent.html</a>.</dd>
+        <dt id="g-topologie">Topologie</dt>
+        <dd>Forme d’une simulation. Trois seulement : <a href="#g-mono-vm">mono-VM</a> (<code>single-vm</code>), <a href="#g-multi-vm">multi-VM</a> (<code>multi-vm</code>), <a href="#g-oks">OKS</a> (<code>oks</code>). Voir <a href="layouts.html">layouts.html</a>.</dd>
+        <dt id="g-layout">Layout</dt>
+        <dd>Preset prêt à l’emploi : une <a href="#g-topologie">topologie</a> + un runtime + des bases + éventuellement un <a href="#g-lbu">LBU</a>. Ex. <code>node-app</code>, <code>python-app</code>, <code>node-lite</code>. Le <strong>bâtisseur</strong> (<code>custom</code>) compose le vôtre. Voir <a href="layouts.html">layouts.html</a>.</dd>
+        <dt id="g-service-config">service_config</dt>
+        <dd>Section de <a href="#g-project-yaml"><code>project.yaml</code></a> qui règle un service : image ou repo Git, <a href="#g-replicas">réplicas</a>, volumes, variables d’env, backup vers <a href="#g-oos">OOS</a>.</dd>
+        <dt id="g-project-yaml">project.yaml</dt>
+        <dd>Le fichier déclaratif de la simulation (<code>bige-ops/project.yaml</code>). Source de vérité : <code>generate</code> en dérive Terraform, specs OKS et compose. Éditable en <a href="#g-expert">mode expert</a>.</dd>
+        <dt id="g-replicas">Réplicas</dt>
+        <dd>Nombre de <strong>pods</strong> d’un Deployment OKS (<code>service_config.*.replicas</code>). Ce n’est <strong>pas</strong> un replica-set Mongo ni un cluster Elastic managé. Voir <a href="oks.html">oks.html</a>.</dd>
+        <dt id="g-nodepool">Nodepool</dt>
+        <dd>Groupe de nœuds d’un cluster <a href="#g-oks">OKS</a> : type Tina + nombre. Le control plane, lui, est opéré par Outscale.</dd>
+        <dt id="g-kubeconfig">Kubeconfig</dt>
+        <dd>Fichier d’accès au cluster, récupéré à l’apply OKS (<code>bige-ops/kubeconfigs/</code>). C’est lui qui permet <code>kubectl</code>. Secret local — jamais poussé. Voir <a href="secrets.html">secrets.html</a>.</dd>
+        <dt id="g-lbu">LBU</dt>
+        <dd>Load Balancer Unit — le load balancer Outscale. Point d’entrée public d’un layout : le HTTP public passe par le <strong>DNS du LBU</strong>, pas par l’IP de la VM. Voir <a href="reseau.html">reseau.html</a>.</dd>
+        <dt id="g-eip">EIP / IP publique</dt>
+        <dd>Adresse IP publique attachée à une VM (ou à un NAT). Facturée aussi quand elle n’est attachée à rien. Exposer une VM = lui donner une EIP + ouvrir un <a href="#g-sg">security group</a>.</dd>
+        <dt id="g-net">Net / VPC</dt>
+        <dd>Le réseau privé Outscale (« Net », équivalent VPC). Contient des <strong>subnets</strong> (publics / privés), des routes, une sortie Internet et éventuellement un NAT.</dd>
+        <dt id="g-sg">Security group</dt>
+        <dd>Pare-feu Outscale au niveau VM : règles entrantes / sortantes. C’est lui qui décide si un port est <strong>ouvert ou non</strong>. Voir <a href="reseau.html">reseau.html</a>.</dd>
+        <dt id="g-omi">OMI</dt>
+        <dd>Outscale Machine Image — l’image système d’une VM. bige-ops <strong>choisit</strong> une OMI existante de votre compte ; il n’en fabrique pas. Construire vos propres images : hors starter kit.</dd>
+        <dt id="g-coffre">Coffre (vault local)</dt>
+        <dd>Le magasin de secrets applicatifs de la simulation (<code>vault.local.json</code>), déversé en <code>.env</code> au deploy. <strong>Local</strong>, jamais poussé sur Git. Pas un vault SaaS. Voir <a href="secrets.html">secrets.html</a>.</dd>
+        <dt id="g-dry-run">Dry run</dt>
+        <dd>Passer en <a href="#g-apply">plan / apply</a> sans rien promettre : c’est là que les <strong>codes d’erreur de l’API Outscale</strong> révèlent ce que votre contrat autorise vraiment (région, OKS, quotas). Voir <a href="#oks-warn">OKS · point d’attention</a>.</dd>
+        <dt id="g-snapshot-config">Snapshot (config)</dt>
+        <dd>Copie locale de la simulation avant une opération risquée (promote, apply, reset) — filet pour <code>rollback</code>. À ne pas confondre avec un <strong>snapshot de volume</strong> Outscale, qui est une ressource cloud.</dd>
       </dl>
     </section>
 
     <footer class="site-footer">
       <div class="cols">
         <div>
-          <h3>Doc</h3>
+          <h3>Comprendre</h3>
           <ul>
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="savoir.html">Sait / ne sait pas</a></li>
-            <li><a href="cli.html">CLI · app · OKS</a></li>
-            <li><a href="github-config.html">GitHub config</a></li>
-            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
-            <li><a href="expert-config.html">Mode expert · diffs</a></li>
-            <li><a href="vms.html">VMs · VPS</a></li>
-            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
-            <li><a href="oks.html">OKS &amp; pods</a></li>
-            <li><a href="#agent-keys">Assistant IA · clés perso</a></li>
-            <li><a href="bases.html">Bases de données</a></li>
-            <li><a href="bases-complexes.html">Bases complexes</a></li>
-            <li><a href="oos.html">OOS &amp; backups</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
             <li><a href="#glossaire">Glossaire</a></li>
           </ul>
         </div>
         <div>
-          <h3>Produit</h3>
+          <h3>Composer</h3>
           <ul>
-            <li><a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a></li>
-            <li><a href="https://www.outscale.com/">Outscale</a></li>
-            <li><a href="https://www.outscale.com/fr/secnumcloud/">SecNumCloud</a></li>
-            <li><a href="https://github.com/simondelamarre/bige-ops-releases">GitHub</a></li>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
           </ul>
         </div>
       </div>
-      <p class="meta">Gratuit · Beta démo · kickoff starter kit — scale = vous gérez</p>
+      <p class="meta">
+        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
     </footer>
   </main>
 

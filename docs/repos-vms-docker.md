@@ -7,4 +7,4 @@
 - Si ça casse au build/deploy → en général mauvais setup Dockerfile (path / contexte) sur un repo pris en charge.
 - **Review lecture / écriture sous container Docker : WIP**.
 
-HTML : [repos-vms-docker.html](https://simondelamarre.github.io/bige-ops-releases/repos-vms-docker.html)
+HTML : [repos-vms-docker.html](https://bige.dev/repos-vms-docker.html)

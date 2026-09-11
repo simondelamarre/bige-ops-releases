@@ -20,6 +20,16 @@
   <code>brew tap simondelamarre/bige-ops && brew install --cask bige-ops</code>
 </p>
 
+<p align="center">
+  <a href="https://bige.dev/"><strong>bige.dev</strong></a> —
+  <a href="https://bige.dev/layouts.html">layouts</a> ·
+  <a href="https://bige.dev/reseau.html">réseau</a> ·
+  <a href="https://bige.dev/oks.html">OKS</a> ·
+  <a href="https://bige.dev/secrets.html">secrets</a> ·
+  <a href="https://bige.dev/install.html">install</a> ·
+  <a href="https://bige.dev/perimetre.html">scope</a>
+</p>
+
 ---
 
 ## Why it exists
