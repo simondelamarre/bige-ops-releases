@@ -2,7 +2,9 @@
 
 Kubernetes managé Outscale : nodepools + Deployments. Réplicas = pods, pas replica-set DB géré.
 
-**App d’abord.** CLI `bige-ops` = même moteur. OKS sous le capot : `oks-cli` (cluster) + `kubectl` (apps). Voir [cli.html](https://simondelamarre.github.io/bige-ops-releases/cli.html).
+**Warn :** estimate ≠ contrat. OKS / régions / SecNumCloud pas garantis sur votre tenant — dry run + codes d’erreur API. Contact : [Outscale](https://www.outscale.com/fr/contactez-nous/) · sales@outscale.com.
+
+**App d’abord.** CLI `bige-ops` = même moteur. OKS sous le capot : `oks-cli` + `kubectl`. Voir [cli.html](https://simondelamarre.github.io/bige-ops-releases/cli.html).
 
 ```mermaid
 flowchart TB

@@ -195,6 +195,15 @@ pre {
 
 .callout strong { color: var(--white); }
 
+.callout-warn {
+  border-color: #8a6a2f;
+  border-left-color: #c9a227;
+  background: #1a160e;
+  color: #f0e6d2;
+}
+.callout-warn strong { color: #f5d78a; }
+.callout-warn a { color: #5ec4b4; }
+
 table {
   width: 100%;
   border-collapse: collapse;
