@@ -222,6 +222,81 @@
       line-height: 1.7;
     }
 
+    button.term {
+      appearance: none;
+      background: none;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-color: var(--ink-600);
+      text-underline-offset: 0.18em;
+    }
+
+    button.term:hover {
+      color: var(--accent-bright);
+      text-decoration-color: var(--accent-bright);
+    }
+
+    .block strong button.term {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    dialog.term-dialog {
+      max-width: 28rem;
+      width: calc(100% - 2rem);
+      margin: auto;
+      padding: 1.25rem 1.35rem;
+      border: 1px solid var(--ink-700);
+      border-radius: 8px;
+      background: var(--ink-900);
+      color: var(--white);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    dialog.term-dialog::backdrop {
+      background: rgba(0, 0, 0, 0.55);
+    }
+
+    dialog.term-dialog h3 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.6rem;
+    }
+
+    dialog.term-dialog p {
+      margin: 0 0 1rem;
+      color: var(--mist);
+      font-size: 0.98rem;
+      line-height: 1.5;
+    }
+
+    dialog.term-dialog form {
+      margin: 0;
+      text-align: right;
+    }
+
+    dialog.term-dialog button.close {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.45rem 0.85rem;
+      border: 1px solid var(--ink-600);
+      background: transparent;
+      color: var(--white);
+      cursor: pointer;
+    }
+
+    dialog.term-dialog button.close:hover {
+      border-color: var(--mist);
+    }
+
     footer {
       margin-top: 2.5rem;
       font-size: 0.85rem;
@@ -318,15 +393,19 @@
       </p>
       <p>
         <strong>Pas besoin de compte Outscale pour commencer.</strong>
-        Mode <strong>projection</strong> : créez des simulations, composez
+        Mode <button type="button" class="term" data-term="projection"><strong>projection</strong></button> :
+        créez des <button type="button" class="term" data-term="simulation">simulations</button>, composez
         le layout, lisez le <strong>€ HT/mois</strong> (catalogue public) —
         même sans credentials. Connectez le compte plus tard pour inventory,
         plan et apply sur <em>votre</em> tenant — y compris
-        <strong>SecNumCloud</strong> / cloud <strong>souverain</strong>.
+        <button type="button" class="term" data-term="secnumcloud"><strong>SecNumCloud</strong></button>
+        / cloud <button type="button" class="term" data-term="souverain"><strong>souverain</strong></button>.
       </p>
       <p class="keywords">
-        starter kit · zero to hero · simulation · estimate · pricing ·
-        projection sans compte · no credentials required · configs prêtes · Outscale
+        <button type="button" class="term" data-term="simulation">simulation</button> ·
+        <button type="button" class="term" data-term="estimate">estimate</button> ·
+        <button type="button" class="term" data-term="projection">projection</button> ·
+        Outscale
       </p>
     </section>
 
@@ -336,8 +415,8 @@
       <p>
         Avant même d’avoir un account, vous obtenez vos
         <strong>premières stacks</strong> et des
-        <strong>estimations € HT/mois</strong> à partir du
-        <strong>catalogue public</strong> embarqué.
+        <button type="button" class="term" data-term="estimate"><strong>estimations € HT/mois</strong></button>
+        à partir du <strong>catalogue public</strong> embarqué.
         Utile pour projeter et comparer — pas pour promettre la
         <strong>réalité commerciale</strong> de votre facture.
       </p>
@@ -349,12 +428,14 @@
         décaler, ou différer de ce que vous facture Outscale.
       </p>
       <p>
-        <strong>À retenir :</strong> estimate = aide à la décision.
+        <strong>À retenir :</strong>
+        <button type="button" class="term" data-term="estimate">estimate</button> = aide à la décision.
         Devis / bill = Outscale (et votre commercial).
       </p>
       <p class="keywords">
-        estimate · catalogue public · indicative · not a quote ·
-        no live pricing feed · tenant · nego · Outscale bill
+        <button type="button" class="term" data-term="estimate">estimate</button> ·
+        catalogue public · indicative · not a quote ·
+        no live pricing feed · tenant · nego
       </p>
     </section>
 
@@ -383,8 +464,9 @@
         accès à la machine. On ne stocke pas vos clés “quelque part pour vous”.
       </p>
       <p class="keywords">
-        no SaaS vault · local credentials · Outscale after deploy ·
-        your secrets your responsibility · optional external vault · no sharing
+        no SaaS vault · local credentials ·
+        <button type="button" class="term" data-term="deploy">deploy</button> ·
+        your secrets your responsibility
       </p>
     </section>
 
@@ -392,7 +474,7 @@
       <h2>Git privé</h2>
       <p class="title">Simulations versionnées sur votre repo — jamais de secrets dessus.</p>
       <p>
-        Chaque simulation vit d’abord <strong>en local</strong>.
+        Chaque <button type="button" class="term" data-term="simulation">simulation</button> vit d’abord <strong>en local</strong>.
         Quand vous voulez un historique d’équipe, vous poussez vers un repo
         <strong>Git privé à vous</strong> — typiquement un
         <strong><code>*-infra</code></strong> dédié à la config.
@@ -401,10 +483,12 @@
       </p>
       <p>
         Ce repo ne sert <strong>qu’à ça</strong> : <code>project.yaml</code>,
-        layouts, Terraform généré, specs OKS — l’historique de la stack.
+        layouts, Terraform généré, specs
+        <button type="button" class="term" data-term="oks">OKS</button> — l’historique de la stack.
         <strong>Pas</strong> le monorepo applicatif, <strong>pas</strong> le
         pipeline de deploy app. On ne mélange pas code produit et gestion
-        d’infra : le repo app clone/deploy d’un côté, le config-history
+        d’infra : le repo app clone/deploy d’un côté, le
+        <button type="button" class="term" data-term="config-history">config-history</button>
         versionne la simulation de l’autre.
       </p>
       <p>
@@ -414,8 +498,11 @@
         machine = keys.
       </p>
       <p class="keywords">
-        private git · config-history · *-infra · branches · sim/ · main ·
-        no secrets in git · IaC history · separation of concerns
+        private git ·
+        <button type="button" class="term" data-term="config-history">config-history</button> ·
+        *-infra · branches ·
+        <button type="button" class="term" data-term="simulation">sim/</button> ·
+        no secrets in git
       </p>
     </section>
 
@@ -425,18 +512,21 @@
       <p>
         Un co-pilote en mode <strong>chat</strong> sur votre simulation :
         composer la stack, comparer les coûts, trancher — puis
-        <strong>deploy</strong> ou <strong>promote</strong> en un geste.
+        <button type="button" class="term" data-term="deploy"><strong>deploy</strong></button> ou
+        <button type="button" class="term" data-term="promote"><strong>promote</strong></button> en un geste.
         Les clés LLM sont <strong>managées</strong> (pas vos clés à coller
         dans l’app). L’agent travaille la <strong>config</strong>, pas le coffre —
         vos secrets restent locaux.
       </p>
       <p>
         <strong>Mistral à venir</strong> — stack IA alignée cloud
-        <strong>souverain</strong> / SecNumCloud.
+        <button type="button" class="term" data-term="souverain"><strong>souverain</strong></button> / SecNumCloud.
       </p>
       <p class="keywords">
-        AI chat · managed LLM keys · Mistral à venir · souverain ·
-        simulate · decide · deploy · promote · no secrets in prompt
+        AI chat · managed LLM keys · Mistral à venir ·
+        <button type="button" class="term" data-term="souverain">souverain</button> ·
+        <button type="button" class="term" data-term="deploy">deploy</button> ·
+        <button type="button" class="term" data-term="promote">promote</button>
       </p>
     </section>
 
@@ -449,7 +539,8 @@
         plusieurs tenants Outscale depuis la même machine.
       </p>
       <p class="keywords">
-        multi-tenant · multi-compte · multi-projet · Outscale accounts · ops desk
+        <button type="button" class="term" data-term="multi-tenant">multi-tenant</button> ·
+        multi-compte · multi-projet · Outscale accounts
       </p>
     </section>
 
@@ -460,11 +551,12 @@
         L’app <strong>liste vos produits</strong> Outscale (VMs, volumes, réseau, OKS…),
         reconstruit une config exploitable, puis vous aide à
         <strong>optimiser</strong> — pricing, layout, Terraform / specs régénérés.
-        De l’inventaire live au blueprint propre.
+        De l’<button type="button" class="term" data-term="inventory">inventaire</button> live au blueprint propre.
       </p>
       <p class="keywords">
-        reverse engineering · inventory · import · rewrite · optimize ·
-        live resources · brownfield
+        <button type="button" class="term" data-term="reverse">reverse engineering</button> ·
+        <button type="button" class="term" data-term="inventory">inventory</button> ·
+        import · rewrite · optimize · brownfield
       </p>
     </section>
 
@@ -472,16 +564,25 @@
       <h2>Outscale</h2>
       <p class="title">Cloud souverain — IaaS &amp; PaaS, VMs, VPS, OKS managé.</p>
       <p>
-        <strong>Outscale</strong> : cloud français <strong>souverain</strong>,
-        <strong>SecNumCloud</strong>, <strong>IaaS</strong> (VM, VPS, volumes, réseau)
-        et <strong>PaaS</strong> avec <strong>OKS</strong> —
+        <strong>Outscale</strong> : cloud français
+        <button type="button" class="term" data-term="souverain"><strong>souverain</strong></button>,
+        <button type="button" class="term" data-term="secnumcloud"><strong>SecNumCloud</strong></button>,
+        <button type="button" class="term" data-term="iaas"><strong>IaaS</strong></button>
+        (VM, VPS, volumes, réseau) et
+        <button type="button" class="term" data-term="paas"><strong>PaaS</strong></button>
+        avec <button type="button" class="term" data-term="oks"><strong>OKS</strong></button> —
         <strong>Kubernetes managé</strong> (kube / K8s).
         bige-ops est pensé pour ce terrain : projection locale, deploy sur
         <em>votre</em> compte — y compris région SecNumCloud.
       </p>
       <p class="keywords">
-        Outscale · cloud souverain · SecNumCloud · IaaS · PaaS · VM · VPS ·
-        OKS · Kubernetes managé · kube · K8s
+        Outscale ·
+        <button type="button" class="term" data-term="souverain">cloud souverain</button> ·
+        <button type="button" class="term" data-term="secnumcloud">SecNumCloud</button> ·
+        <button type="button" class="term" data-term="iaas">IaaS</button> ·
+        <button type="button" class="term" data-term="paas">PaaS</button> ·
+        <button type="button" class="term" data-term="oks">OKS</button> ·
+        Kubernetes managé · kube · K8s
       </p>
     </section>
 
@@ -490,11 +591,14 @@
       <p class="title">Pilotez OKS comme un pro — kube à portée de main.</p>
       <p>
         Même moteur en GUI et en <strong>CLI</strong> : clusters
-        <strong>OKS</strong>, contextes <strong>kubectl</strong>, workflows kube.
+        <button type="button" class="term" data-term="oks"><strong>OKS</strong></button>,
+        contextes <strong>kubectl</strong>, workflows kube.
         Vous simulez le cluster managé, vous validez, vous enchaînez sur le terrain.
       </p>
       <p class="keywords">
-        CLI · kubectl · OKS · Kubernetes · kube · K8s · cluster managé · ops
+        CLI · kubectl ·
+        <button type="button" class="term" data-term="oks">OKS</button> ·
+        Kubernetes · kube · K8s · cluster managé
       </p>
     </section>
 
@@ -502,12 +606,17 @@
       <h2>Terraform</h2>
       <p class="title">Des layouts pour tout forger — IaaS et OKS.</p>
       <p>
-        Composez le layout, <strong>générez Terraform</strong> et les specs
-        (OKS, YAML apps) : materialization prête à appliquer sur votre compte.
+        Composez le layout, <button type="button" class="term" data-term="terraform"><strong>générez Terraform</strong></button>
+        et les specs (OKS, YAML apps) :
+        <button type="button" class="term" data-term="materialization">materialization</button>
+        prête à appliquer sur votre compte.
         VMs, réseau, volumes, Kubernetes managé — une forge ops, pas un tableur.
       </p>
       <p class="keywords">
-        Terraform · IaC · layout · generate · forge · IaaS · OKS · YAML · deploy
+        <button type="button" class="term" data-term="terraform">Terraform</button> ·
+        <button type="button" class="term" data-term="materialization">IaC / materialization</button> ·
+        layout · generate · forge ·
+        <button type="button" class="term" data-term="deploy">deploy</button>
       </p>
     </section>
 
@@ -526,21 +635,118 @@
     <a class="secondary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Linux</a>
   </div>
 
+  <dialog id="term-dialog" class="term-dialog">
+    <h3 id="term-title"></h3>
+    <p id="term-body"></p>
+    <form method="dialog">
+      <button type="submit" class="close">Fermer</button>
+    </form>
+  </dialog>
+
   <script>
     (function () {
+      var TERMS = {
+        projection: {
+          title: "Projection",
+          body: "Mode sans credentials Outscale : vous composez des simulations et lisez une estimation catalogue. Inventory / plan / apply restent bloqués jusqu’au login."
+        },
+        simulation: {
+          title: "Simulation",
+          body: "Variante de stack versionnable (layout + coût projeté). Drafts en parallèle du live ; promote ou apply pour aligner la prod."
+        },
+        estimate: {
+          title: "Estimate",
+          body: "Projection € HT/mois depuis le catalogue public embarqué. Indicatif — pas un devis Outscale, pas de feed pricing temps réel."
+        },
+        secnumcloud: {
+          title: "SecNumCloud",
+          body: "Qualification ANSSI pour le cloud de confiance. Outscale propose une région SecNumCloud ; bige-ops cible aussi ce terrain."
+        },
+        souverain: {
+          title: "Cloud souverain",
+          body: "Cloud français / données et contrôle sous juridiction nationale. Outscale + SecNumCloud ; l’outil reste local-first, sans coffre SaaS à nous."
+        },
+        deploy: {
+          title: "Deploy / Apply",
+          body: "Pousser la stack sur votre compte Outscale (plan puis apply). Credentials requis. Distinct du push Git config-history."
+        },
+        promote: {
+          title: "Promote",
+          body: "Élever une simulation draft au rang de stack live (référence active). Option de pousser main sur le repo config-history."
+        },
+        "config-history": {
+          title: "Config-history",
+          body: "Repo Git privé dédié à l’historique d’infra (project.yaml, Terraform généré, specs OKS). Pas le repo applicatif. Jamais de secrets dessus."
+        },
+        oks: {
+          title: "OKS",
+          body: "Outscale Kubernetes Service — Kubernetes managé (control plane géré). Vous travaillez clusters / workloads ; Outscale opère le plan de contrôle."
+        },
+        iaas: {
+          title: "IaaS",
+          body: "Infrastructure as a Service : VMs / VPS, volumes, réseau, IP… Vous composez la machine ; le cloud fournit le compute."
+        },
+        paas: {
+          title: "PaaS",
+          body: "Platform as a Service : couches managées (ex. OKS). Moins d’ops bas niveau, plus de focus apps / clusters."
+        },
+        "multi-tenant": {
+          title: "Multi-tenant",
+          body: "Plusieurs comptes / projets Outscale sur le même poste : bascule dev, prod, client, SecNumCloud sans rejouer tout le setup."
+        },
+        inventory: {
+          title: "Inventory",
+          body: "Liste live des ressources sur votre compte Outscale (VMs, volumes, réseau, OKS…). Base de la rétro et du resync."
+        },
+        reverse: {
+          title: "Reverse engineering",
+          body: "Partir de l’inventory cloud, reconstruire une config exploitable, puis optimiser (sizing, €, Terraform / specs régénérés)."
+        },
+        terraform: {
+          title: "Terraform",
+          body: "Artefact généré depuis la simulation — pas l’interface principale. Materialization pour apply sur votre compte."
+        },
+        materialization: {
+          title: "Materialization",
+          body: "Ce que `generate` écrit sur disque : Terraform, specs OKS, YAML apps. La vérité produit reste la simulation ; ces fichiers sont la couche d’apply."
+        }
+      };
+
+      var dialog = document.getElementById("term-dialog");
+      var titleEl = document.getElementById("term-title");
+      var bodyEl = document.getElementById("term-body");
+
+      document.addEventListener("click", function (e) {
+        var btn = e.target.closest("button.term");
+        if (!btn || !dialog) return;
+        var key = btn.getAttribute("data-term");
+        var term = TERMS[key];
+        if (!term) return;
+        titleEl.textContent = term.title;
+        bodyEl.textContent = term.body;
+        if (typeof dialog.showModal === "function") dialog.showModal();
+        else dialog.setAttribute("open", "");
+      });
+
+      if (dialog) {
+        dialog.addEventListener("click", function (e) {
+          if (e.target === dialog) dialog.close();
+        });
+      }
+
       var inline = document.getElementById("download");
       var sticky = document.getElementById("download-sticky");
-      if (!inline || !sticky || !("IntersectionObserver" in window)) return;
-
-      var observer = new IntersectionObserver(
-        function (entries) {
-          var visible = entries[0] && entries[0].isIntersecting;
-          sticky.classList.toggle("is-visible", !visible);
-          sticky.setAttribute("aria-hidden", visible ? "true" : "false");
-        },
-        { threshold: 0, rootMargin: "0px" }
-      );
-      observer.observe(inline);
+      if (inline && sticky && "IntersectionObserver" in window) {
+        var observer = new IntersectionObserver(
+          function (entries) {
+            var visible = entries[0] && entries[0].isIntersecting;
+            sticky.classList.toggle("is-visible", !visible);
+            sticky.setAttribute("aria-hidden", visible ? "true" : "false");
+          },
+          { threshold: 0, rootMargin: "0px" }
+        );
+        observer.observe(inline);
+      }
     })();
   </script>
 </body>
