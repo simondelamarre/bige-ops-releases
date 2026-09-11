@@ -332,23 +332,31 @@
 
     <section class="block">
       <h2>Sécurité</h2>
-      <p class="title">Pas de vault partagé. Tout reste sur votre machine.</p>
+      <p class="title">Pas de SaaS secrets. Vos credentials, votre responsabilité.</p>
       <p>
-        Aucun coffre cloud à nous. Pas de SaaS qui garde vos secrets.
-        Vos <strong>clés API</strong>, credentials et configs vivent
-        <strong>en local</strong> — vous déployez avec <strong>vos</strong> keys
-        sur <strong>votre</strong> compte Outscale.
+        bige-ops ne propose <strong>aucun vault partagé</strong> et
+        <strong>aucun coffre cloud à nous</strong>. Rien n’est synchronisé
+        vers un backend bige-ops — <strong>pas de partage SaaS</strong>
+        de vos clés avec l’outil.
       </p>
       <p>
-        Le vrai risque, ce n’est pas « un vault quelque part » :
-        c’est <strong>perdre votre machine</strong> ou
-        <strong>ne pas la verrouiller</strong>.
-        Sécurisez le poste (disk chiffrement, session lock) —
-        le reste ne quitte pas votre bureau.
+        Les secrets d’infra “réels” (accès runtime, credentials cloud une fois
+        la stack live) vivent côté <strong>Outscale</strong> après deploy —
+        c’est le cloud qui les détient, pas nous.
+        Pour travailler en local, vous pouvez enregistrer credentials /
+        valeurs de coffre <strong>sur votre machine</strong>
+        (fichiers locaux). Si vous avez déjà un vault d’entreprise, vous
+        restez libre de l’utiliser en dehors de bige-ops : l’app n’impose
+        pas le sien.
+      </p>
+      <p>
+        <strong>Vos secrets → votre responsabilité</strong> :
+        sécurisez le poste (chiffrement disque, session lock), gérez qui a
+        accès à la machine. On ne stocke pas vos clés “quelque part pour vous”.
       </p>
       <p class="keywords">
-        local-first · no shared vault · vos keys · credentials locaux ·
-        zero trust machine · chiffrement disque · session lock
+        no SaaS vault · local credentials · Outscale after deploy ·
+        your secrets your responsibility · optional external vault · no sharing
       </p>
     </section>
 
