@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>bige-ops — Outscale IaaS, VMs, OKS Kubernetes managé</title>
-  <meta name="description" content="Starter kit Outscale : simulez IaaS, VMs, VPS, OKS Kubernetes managé, estimez, générez Terraform et CLI kube. Gratuit, 100 % local." />
+  <meta name="description" content="Starter kit Outscale local-first : pas de vault partagé, vos keys sur votre machine. IaaS, VMs, OKS, Terraform, CLI kube. Gratuit." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -278,12 +278,33 @@
       <p>
         Estimations catalogue, layouts prêts à l’emploi, simulations de stack —
         de <strong>zéro</strong> à une architecture déployable.
-        Couche <strong>sécurité</strong> incluse dans les parcours :
-        vous validez le design et le € avant d’engager le cloud.
+        Vous validez le design et le € avant d’engager le cloud.
       </p>
       <p class="keywords">
         starter kit · zero to hero · simulation · estimate · pricing ·
-        configs prêtes · sécurité · Outscale
+        configs prêtes · Outscale
+      </p>
+    </section>
+
+    <section class="block">
+      <h2>Sécurité</h2>
+      <p class="title">Pas de vault partagé. Tout reste sur votre machine.</p>
+      <p>
+        Aucun coffre cloud à nous. Pas de SaaS qui garde vos secrets.
+        Vos <strong>clés API</strong>, credentials et configs vivent
+        <strong>en local</strong> — vous déployez avec <strong>vos</strong> keys
+        sur <strong>votre</strong> compte Outscale.
+      </p>
+      <p>
+        Le vrai risque, ce n’est pas « un vault quelque part » :
+        c’est <strong>perdre votre machine</strong> ou
+        <strong>ne pas la verrouiller</strong>.
+        Sécurisez le poste (disk chiffrement, session lock) —
+        le reste ne quitte pas votre bureau.
+      </p>
+      <p class="keywords">
+        local-first · no shared vault · vos keys · credentials locaux ·
+        zero trust machine · chiffrement disque · session lock
       </p>
     </section>
 
