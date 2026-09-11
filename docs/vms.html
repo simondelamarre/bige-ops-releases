@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>VMs — bige-ops</title>
-  <meta name="description" content="Gérer les VMs Outscale avec bige-ops : layout, sizing, generate Terraform. On aide à démarrer." />
+  <meta name="description" content="VMs Outscale : single-vm, multi-vm, sizing, volumes. Starter kit — le scale reste le vôtre." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -15,32 +15,70 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
     <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
     <h1>VMs Outscale</h1>
+    <p class="lead">
+      Composer une topologie machine (type Tina, disques, réseau), estimer,
+      générer Terraform, apply sur <em>votre</em> compte.
+      Le patch OS et le scale horizontal fins restent de votre côté.
+    </p>
 
-    <div class="callout">
-      <strong>On démarre la topologie.</strong> Type Tina, subnets, volumes,
-      EIP, LBU — depuis Visual ou CLI. Le run fin (patch OS, monitoring avancé)
-      reste le vôtre.
-    </div>
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart TB
+  subgraph sim [Simulation]
+    L[Layout Visual / YAML]
+    F[Formulaire sizing]
+  end
+  L --> F
+  F -->|Save + generate| TF[Terraform]
+  TF -->|plan / apply| OSC[Compte Outscale]
+  OSC --> RUN[Vous gérez le run]
+      </pre>
+      <figcaption>Le formulaire met à jour le setup tout de suite — pas d’interview en boucle.</figcaption>
+    </figure>
 
-    <h2>Ce que bige-ops fait</h2>
-    <ul>
-      <li>Stacks <strong>single-vm</strong> / <strong>multi-vm</strong> dans une simulation</li>
-      <li>Inspector : type d’instance, disques, réseau — formulaire → maj du setup tout de suite</li>
-      <li><code>generate</code> → Terraform (materialization), puis plan / apply sur votre compte</li>
-      <li>Estimate catalogue sur le sizing choisi (indicatif)</li>
-    </ul>
-
-    <h2>Ce que vous assumez</h2>
-    <ul>
-      <li>Images OMI / SSH / hardening</li>
-      <li>Choix prod vs projection, apply réel</li>
-      <li>Ops quotidien une fois la VM live</li>
-    </ul>
-
-    <h2>Flux typique</h2>
+    <h2>Single-vm vs multi-vm</h2>
     <p>
-      Visual → drop VM / stack → formulaire sizing → Save + generate →
-      Workspace plan/apply. Ou CLI <code>bige-ops add stack --topology multi-vm</code>.
+      En <strong>single-vm</strong>, apps et souvent la data partagent une machine :
+      simple pour démarrer, limites de blast radius évidentes.
+      En <strong>multi-vm</strong>, vous séparez les rôles (app, worker, data…)
+      sur plusieurs VMs dans le même Net — toujours via le layout, toujours
+      avec estimate sur le sizing choisi.
+    </p>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  subgraph single [single-vm]
+    V1[VM app+data]
+  end
+  subgraph multi [multi-vm]
+    A[VM app]
+    W[VM worker]
+    D[VM data]
+  end
+      </pre>
+    </figure>
+
+    <h2>Ce que le formulaire pilote</h2>
+    <p>
+      Type d’instance, volumes attachés, placement réseau, liens EIP / LBU
+      selon le canvas. Chaque changement réécrit la simulation ;
+      <code>generate</code> materialize le Terraform. Vous relisez, vous apply.
+    </p>
+
+    <h2>Kickoff ≠ babysitting</h2>
+    <p>
+      Images OMI, SSH, hardening, monitoring avancé, scaling agressif :
+      hors starter kit. Quand la charge monte,
+      <strong>c’est à vous de gérer</strong> — voir
+      <a href="perimetre.html">périmètre</a>.
+    </p>
+
+    <p>
+      Alternative Kubernetes managé :
+      <a href="oks.html">OKS &amp; pods</a>.
+      Data et backups objet : <a href="bases.html">bases</a>,
+      <a href="oos.html">OOS</a>.
     </p>
 
     <footer class="site-footer">
@@ -52,6 +90,7 @@
             <li><a href="vms.html">VMs</a></li>
             <li><a href="oks.html">OKS &amp; pods</a></li>
             <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
           </ul>
         </div>
         <div>
@@ -65,5 +104,9 @@
       <p class="meta">Beta démo · kickoff starter kit — scale = vous gérez</p>
     </footer>
   </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+  </script>
 </body>
 </html>

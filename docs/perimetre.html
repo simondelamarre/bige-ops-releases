@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Périmètre — bige-ops</title>
-  <meta name="description" content="bige-ops aide à démarrer sur Outscale. On ne fait pas tout : limites claires." />
+  <meta name="description" content="Kickoff Outscale : ce que bige-ops couvre, ce qu’il ne remplace pas. Scale = vous gérez." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -15,40 +15,77 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a></p>
     <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
     <h1>On aide à démarrer. On ne fait pas tout.</h1>
+    <p class="lead">
+      bige-ops est un <strong>kickoff / starter kit</strong> pour Outscale :
+      projeter, estimer, composer, générer, appliquer.
+      Ce n’est pas une infra qui remplace l’intelligence humaine.
+    </p>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  A[Idée] --> B[Simulation]
+  B --> C[Estimate]
+  C --> D[Generate]
+  D --> E[Apply / deploy]
+  E --> F[Vous opérez le scale]
+  style F fill:#1a1f27,stroke:#5ec4b4,color:#f3f5f8
+      </pre>
+      <figcaption>Le kit s’arrête là où commence le jugement de run.</figcaption>
+    </figure>
 
     <div class="callout">
-      <strong>Kickoff, pas babysitting.</strong> bige-ops est un
-      <strong>starter kit</strong> pour Outscale (projection, estimate, layout,
-      generate, apply). Ce n’est <strong>pas</strong> une infra qui remplace
-      l’intelligence humaine, pas un MSP, pas la console Outscale.
       <strong>Quand vous scalez, c’est à vous de gérer.</strong>
+      Capacité, incidents, hardening fin, négo commerciale Outscale :
+      hors babysitting bige-ops.
     </div>
 
-    <h2>Ce qu’on couvre</h2>
-    <ul>
-      <li>Simulations / layouts (VMs, OKS, services) + estimation catalogue</li>
-      <li>Génération Terraform / specs OKS / YAML apps</li>
-      <li>Plan / apply / deploy sur <em>votre</em> compte (avec vos credentials)</li>
-      <li>Presets (réplicas, nodepools, types DB) via formulaires Visual</li>
-      <li>Inventory + reverse pour repartir d’un existant</li>
-    </ul>
+    <h2>Deux couches mentales</h2>
+    <p>
+      D’un côté la <strong>simulation</strong> (layout + € catalogue) :
+      vous explorez sans engagement. De l’autre le
+      <strong>compte Outscale</strong> : inventory, plan, apply —
+      avec vos credentials. Le passage de l’une à l’autre est volontaire.
+    </p>
 
-    <h2>Ce qu’on ne fait pas</h2>
-    <ul>
-      <li>Remplacer le jugement humain sur le design, le scale et le run</li>
-      <li>Gérer la montée en charge à votre place — <strong>scale = vous opérez</strong></li>
-      <li>Négocier votre contrat / pricing commercial Outscale</li>
-      <li>Héberger un vault SaaS ou opérer votre prod comme un MSP</li>
-      <li>Garantir la facture réelle (estimate = indicative)</li>
-      <li>Remplacer kubectl / Terraform experts pour les cas avancés</li>
-      <li>Tout automatiser sans relecture : vous validez, vous appliquez</li>
-    </ul>
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart TB
+  subgraph kit [Starter kit bige-ops]
+    S[Simulation / Visual]
+    G[Generate TF / OKS / YAML]
+  end
+  subgraph you [Votre responsabilité]
+    R[Run · scale · DBA · SRE]
+    N[Négo · devis Outscale]
+  end
+  S --> G
+  G -->|apply| R
+  R --- N
+      </pre>
+    </figure>
+
+    <h2>Ce qu’on couvre (kickoff)</h2>
+    <p>
+      Simulations et layouts (VMs, OKS, services), estimation catalogue,
+      génération Terraform / specs OKS / YAML apps, plan·apply·deploy sur
+      <em>votre</em> compte, presets via formulaires Visual (réplicas,
+      nodepools, types DB), inventory + reverse pour repartir d’un existant,
+      buckets <a href="oos.html">OOS</a> pour stocker / démarrer les backups.
+    </p>
+
+    <h2>Ce qu’on ne remplace pas</h2>
+    <p>
+      Le jugement sur le design et le scale, l’opération de la montée en charge,
+      le contrat commercial Outscale, un vault SaaS ou un MSP, la garantie
+      de facture (estimate = indicative), et l’expertise kubectl / Terraform
+      avancée. Vous validez, vous appliquez, vous assumez le run.
+    </p>
 
     <h2>En pratique</h2>
     <p>
-      On pose les <strong>standards</strong> pour démarrer vite.
-      Ensuite c’est vous (ou votre DevOps) qui assume le run, le scale,
-      le hardening fin, et le lien avec le commercial Outscale.
+      On pose les <strong>standards opérationnels</strong> pour démarrer vite.
+      Ensuite c’est vous (ou votre DevOps) qui porte le scale.
       Le kit kickoff ; l’intelligence reste humaine.
     </p>
 
@@ -61,6 +98,7 @@
             <li><a href="vms.html">VMs</a></li>
             <li><a href="oks.html">OKS &amp; pods</a></li>
             <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
           </ul>
         </div>
         <div>
@@ -75,5 +113,9 @@
       <p class="meta">Beta démo · kickoff starter kit — scale = vous gérez</p>
     </footer>
   </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+  </script>
 </body>
 </html>

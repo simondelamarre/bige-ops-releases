@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OOS &amp; backups — bige-ops</title>
+  <meta name="description" content="OOS Object Storage Outscale : buckets, versioning, lien backup DB. Bien démarrer les sauvegardes objet." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a> · <a href="bases.html">Bases</a></p>
+    <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+    <h1>OOS &amp; backups</h1>
+    <p class="lead">
+      <strong>OOS</strong> (Outscale Object Storage) est le stockage objet
+      S3-compatible. Pour bien commencer : un bucket, un lien backup depuis
+      la DB, des scripts générés — pas encore une usine de PRA complète.
+    </p>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  DB[(Postgres / Mongo…)] -->|backup.enabled| B[backup.sh]
+  B --> OOS[(OOS bucket)]
+  VOL[Volume / snapshot] -.->|filet block| DB
+  OOS -->|dumps / objets| SAFE[Rétention à votre charge]
+      </pre>
+      <figcaption>Block storage pour le chaud · OOS pour l’objet / dumps.</figcaption>
+    </figure>
+
+    <h2>À quoi sert OOS ici</h2>
+    <p>
+      Déclarer un <code>oos_bucket</code> dans la simulation (Visual palette
+      Storage, ou YAML). <code>generate</code> produit du Terraform
+      (provider AWS pointé sur l’endpoint OOS régional, ex.
+      <code>oos.eu-west-2.outscale.com</code>), avec versioning optionnel.
+      Apply crée le bucket sur <em>votre</em> compte.
+    </p>
+
+<pre>components:
+  - type: oos_bucket
+    name: app-backups
+    bucket: app-backups</pre>
+
+    <h2>Lien DB → backup</h2>
+    <p>
+      Sur un nœud base, vous activez le backup et pointez le bucket
+      (<code>backup.enabled</code> + <code>oos_bucket</code>). Visual dessine
+      l’edge <strong>backup</strong>. Si le backup est coché sans bucket,
+      le générateur peut créer automatiquement un composant
+      <code>oos_bucket</code>. Après generate : scripts sous
+      <code>bige-ops/app/&lt;stack&gt;/backup.sh</code> — vous les exécutez /
+      planifiez dans <em>votre</em> run.
+    </p>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart TB
+  F[Formulaire DB] -->|active backup| S[Simulation]
+  S -->|generate| T[TF OOS + backup.sh]
+  T -->|apply| C[Bucket live]
+  C --> H[Humain : cron / rétention / restore tests]
+      </pre>
+    </figure>
+
+    <h2>Secrets</h2>
+    <p>
+      Clés d’accès OOS (AK/SK) passent par le coffre local /
+      <code>terraform.tfvars</code> — <strong>jamais</strong> dans
+      <code>project.yaml</code> ni le config-history Git.
+      Même règle que le reste : pas de vault SaaS bige-ops.
+    </p>
+
+    <h2>Limites actuelles (honnêtes)</h2>
+    <p>
+      Pas de reverse-engineering des buckets depuis l’inventory aujourd’hui.
+      Pas de politique de rétention magique ni de restore one-click certifié.
+      OOS dans bige-ops = <strong>bien démarrer</strong> l’objet et le fil
+      backup ; la discipline restore / PRA, c’est vous —
+      <a href="perimetre.html">périmètre</a>.
+    </p>
+
+    <p>
+      Retour data : <a href="bases.html">bases de données</a>.
+      Machines : <a href="vms.html">VMs</a> ·
+      <a href="oks.html">OKS</a>.
+    </p>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Doc</h3>
+          <ul>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="vms.html">VMs</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Produit</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">Beta démo · kickoff starter kit — scale = vous gérez</p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+  </script>
+</body>
+</html>

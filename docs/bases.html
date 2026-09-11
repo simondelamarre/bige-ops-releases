@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bases de données — bige-ops</title>
-  <meta name="description" content="Presets DB Outscale : Postgres, Mongo, Redis… réplicas et nœuds via formulaire, maj setup directe." />
+  <meta name="description" content="DB Outscale : coloc VM, VM dédiée, réplicas OKS, volumes, backups OOS. Formulaire → setup direct." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -15,66 +15,147 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
     <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
     <h1>Bases de données</h1>
+    <p class="lead">
+      Postgres, Mongo, Redis (et customs) : vous choisissez <em>où</em> ça tourne
+      (même VM, VM dédiée, ou pods OKS), vous réglez réplicas / volumes dans
+      le formulaire, le setup se met à jour <strong>tout de suite</strong>.
+      Le DBA fin et la stratégie backup restent les vôtres — on kickoff.
+    </p>
 
     <div class="callout">
-      <strong>Presets par type.</strong> Vous choisissez Postgres, Mongo, Redis…
-      Le formulaire applique réplicas / sizing / nœuds gérés et
-      <em>met à jour le setup tout de suite</em> — sans questionnaire en boucle.
-      Le DBA fin et le backup stratégie restent les vôtres.
+      <strong>Schéma mental.</strong> Trois placements possibles pour la data.
+      Le formulaire ne pose pas dix questions : il écrit la simulation,
+      puis <code>generate</code> materialize.
     </div>
 
-    <h2>Types &amp; presets</h2>
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart TB
+  DB[(Base)]
+  DB --> C1[Coloc sur VM app]
+  DB --> C2[VM data dédiée]
+  DB --> C3[Pods OKS]
+  C2 --> VOL[Volume block]
+  C3 --> REP[Réplicas Deployment]
+  C1 --> VOL
+  VOL -.->|backup optionnel| OOS[(OOS bucket)]
+  REP -.->|backup optionnel| OOS
+      </pre>
+      <figcaption>Coloc · dédiée · OKS — puis objet OOS pour démarrer les sauvegardes.</figcaption>
+    </figure>
+
+    <h2>1 · Coloc vs VM dédiée</h2>
+    <p>
+      En stack <strong>single-vm</strong> / multi-vm simple, la DB est souvent
+      <strong>colocalisée</strong> avec l’app : un seul blast radius, estimate
+      bas, parfait pour projeter. Dès que vous isolez le risque data, vous
+      passez une <strong>VM dédiée</strong> (rôle data dans multi-vm) :
+      sizing machine + <strong>volume</strong> attaché pour la persistance.
+      Le canvas / inspector lie le service DB à la VM et au volume ;
+      Save réécrit <code>project.yaml</code> sans re-interview.
+    </p>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  subgraph coloc [Démarrage]
+    A1[VM app + DB]
+  end
+  subgraph dedi [Isolement]
+    A2[VM app]
+    D2[VM data + volume]
+  end
+  coloc -->|scale / risque| dedi
+      </pre>
+    </figure>
+
+    <h2>2 · Sur OKS : réplicas pods ≠ replica-set géré</h2>
+    <p>
+      Topologie <strong>oks</strong> : la DB est un Deployment.
+      Le champ <strong>réplicas</strong> (<code>service_config.*.replicas</code>)
+      scale le nombre de pods. C’est le bon levier pour démarrer —
+      ce n’est <strong>pas</strong> encore un replica-set Mongo ou un cluster
+      Postgres managé. HA moteur = votre run (ou un opérateur plus tard).
+      Voir aussi <a href="oks.html">OKS &amp; pods</a>.
+    </p>
+
+<pre>service_config:
+  postgres:
+    replicas: 1
+  mongodb:
+    replicas: 1</pre>
+
+    <h2>3 · Storage local vs backups objet</h2>
+    <p>
+      La persistance chaude passe par le <strong>volume</strong> (block storage)
+      attaché à la VM data, ou le stockage du cluster OKS selon le layout.
+      Les <strong>snapshots</strong> de volume sont le premier filet block.
+      Pour les sauvegardes applicatives / dumps vers l’objet, on branche
+      <strong>OOS</strong> (Object Storage Outscale, S3-compatible) :
+      bucket dédié, lien <code>backup</code> DB → OOS dans Visual, scripts
+      générés après <code>generate</code>.
+      Détail : <a href="oos.html">OOS &amp; backups</a>.
+    </p>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+sequenceDiagram
+  participant UI as Formulaire Visual
+  participant Sim as Simulation
+  participant Gen as generate
+  participant Cloud as Outscale
+  UI->>Sim: réplicas / VM / volume / backup OOS
+  Note over Sim: maj directe du setup
+  Sim->>Gen: Save
+  Gen->>Gen: TF + manifests + backup.sh
+  Gen->>Cloud: apply / deploy (vos keys)
+      </pre>
+    </figure>
+
+    <h2>Presets par type</h2>
+    <p>
+      Chaque type amène une image catalogue et des champs utiles dans
+      l’inspector. Postgres : volume data, attache VM ou pod, réplicas OKS.
+      Mongo / Redis : même logique (coloc, dédiée, ou OKS). Custom : image + port
+      + les mêmes leviers sizing / réplicas. Pas de wizard qui recommence :
+      un champ changé = setup à jour.
+    </p>
+
     <table>
       <thead>
-        <tr>
-          <th>Type</th>
-          <th>Preset typique</th>
-          <th>Via formulaire</th>
-        </tr>
+        <tr><th>Type</th><th>Démarrage typique</th><th>Levier formulaire</th></tr>
       </thead>
       <tbody>
         <tr>
           <td><strong>Postgres</strong></td>
-          <td>Image catalogue, volume data</td>
-          <td>Taille, attache VM / pod, réplicas OKS</td>
+          <td>Catalogue + volume</td>
+          <td>VM / pod, GiB, réplicas OKS</td>
         </tr>
         <tr>
           <td><strong>MongoDB</strong></td>
-          <td>Service data colocalisé ou pod</td>
-          <td>Réplicas Deployment (OKS), ressources</td>
+          <td>Coloc ou pod</td>
+          <td>Placement, réplicas pods</td>
         </tr>
         <tr>
           <td><strong>Redis</strong></td>
           <td>Cache léger</td>
-          <td>Réplicas, coloc VM app ou OKS</td>
+          <td>Coloc app ou OKS</td>
         </tr>
         <tr>
           <td><strong>Custom</strong></td>
           <td>Image + port</td>
-          <td>Mêmes champs sizing / réplicas</td>
+          <td>Mêmes leviers</td>
         </tr>
       </tbody>
     </table>
 
-    <h2>Formulaire → setup, sans plus de questions</h2>
+    <h2>Hors kickoff (volontaire)</h2>
     <p>
-      Dans Visual (inspector) : vous changez un champ (réplicas, type de nœud
-      nodepool, GiB volume…). La simulation / <code>project.yaml</code> est
-      mis à jour <strong>directement</strong>. Save + generate materialize
-      Terraform / manifests. Pas d’assistant qui redemande dix fois la même chose.
+      Tuning SQL, indexes, sharding, operators K8s spécialisés, promesse HA
+      sans relecture humaine : <strong>pas</strong> le job du starter kit.
+      Quand la data scale, l’intelligence reste humaine —
+      <a href="perimetre.html">périmètre</a>.
     </p>
-    <ul>
-      <li><strong>OKS</strong> : réplicas pods = <code>service_config.*.replicas</code></li>
-      <li><strong>Nodepools</strong> : count + node-type gérés sur le cluster</li>
-      <li><strong>VMs</strong> : DB souvent colocalisée / liée — sizing machine + volume</li>
-    </ul>
-
-    <h2>Hors scope (volontaire)</h2>
-    <ul>
-      <li>Tuning SQL / indexes / sharding avancé</li>
-      <li>Opérateurs K8s spécialisés non générés par défaut</li>
-      <li>Garantir la HA prod sans relecture humaine</li>
-    </ul>
 
     <footer class="site-footer">
       <div class="cols">
@@ -85,6 +166,7 @@
             <li><a href="vms.html">VMs</a></li>
             <li><a href="oks.html">OKS &amp; pods</a></li>
             <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
           </ul>
         </div>
         <div>
@@ -98,5 +180,9 @@
       <p class="meta">Beta démo · kickoff starter kit — scale = vous gérez</p>
     </footer>
   </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+  </script>
 </body>
 </html>
