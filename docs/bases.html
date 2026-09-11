@@ -101,6 +101,14 @@ flowchart LR
       générés après <code>generate</code>.
       Détail : <a href="oos.html">OOS &amp; backups</a>.
     </p>
+    <p>
+      <strong>Pas de backup = tu auras un problème.</strong>
+      À la destruction, bige-ops affiche les risques selon le setup :
+      en <em>mono-VM</em>, app + bases partagent le même disque (on ne peut pas
+      « geler » la DB seule sans bloquer toute la machine) — le filet, c’est
+      le dump → OOS. En multi-VM / OKS, destroy d’une VM data / des pods =
+      perte live ; OOS reste indestructible via l’outil.
+    </p>
 
     <figure class="diagram">
       <pre class="mermaid">

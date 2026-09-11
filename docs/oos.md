@@ -17,3 +17,7 @@ HTML : [oos.html](https://simondelamarre.github.io/bige-ops-releases/oos.html)
 ## Indestructible via bige-ops (même vide)
 
 OOS est **non géré** pour la destruction : bige-ops ne détruit **jamais** un bucket (même vide) — `prevent_destroy`, remove/UI bloqués. Enregistré dans `shared.yaml` → visible sur **chaque** simulation du compte. Purge manuelle via Outscale uniquement.
+
+## Pas de backup = problème
+
+Sans `backup.enabled` + bucket OOS sur une DB, l’app te le dit (Visual, préflight, plan). À la destruction : risques explicites selon le setup (mono-VM = app+DB même disque ; multi-VM = VM data). OOS ne sauve que si tu as branché le backup.
