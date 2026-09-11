@@ -14,6 +14,6 @@ Déclarer `oos_bucket`, `generate` → Terraform endpoint régional, apply sur v
 HTML : [oos.html](https://simondelamarre.github.io/bige-ops-releases/oos.html)
 
 
-## Ne pas détruire un OOS non vide
+## Indestructible via bige-ops (même vide)
 
-bige-ops **ne détruit pas** un bucket qui a des objects — prevent ; purge manuelle via interfaces Outscale.
+OOS est **non géré** pour la destruction : bige-ops ne détruit **jamais** un bucket (même vide) — `prevent_destroy`, remove/UI bloqués. Enregistré dans `shared.yaml` → visible sur **chaque** simulation du compte. Purge manuelle via Outscale uniquement.
