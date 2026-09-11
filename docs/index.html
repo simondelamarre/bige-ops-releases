@@ -46,9 +46,7 @@
       position: fixed;
       inset: 0;
       z-index: -1;
-      background:
-        radial-gradient(ellipse 80% 50% at 20% -10%, rgba(61, 158, 143, 0.18), transparent 55%),
-        var(--ink-950);
+      background: var(--ink-950);
     }
 
     main {
@@ -70,16 +68,14 @@
 
     .brand .ops { color: var(--accent-bright); }
 
-    /* Floating player — ops/tech: soft lift, modest radius, no gimmicks */
+    /* Floating player — border + sober shadow only */
     .player-shell {
       margin: 0 0 1.5rem;
-      padding: 0.35rem;
       border-radius: 10px;
-      background: var(--ink-900);
+      background: #000;
       border: 1px solid var(--ink-700);
-      box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.45),
-        0 2px 8px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
     }
 
     video.player {
@@ -89,7 +85,7 @@
       margin: 0;
       background: #000;
       border: 0;
-      border-radius: 7px;
+      border-radius: 0;
       object-fit: contain;
     }
 
@@ -228,9 +224,8 @@
       gap: 0.65rem;
       flex-wrap: wrap;
       padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
-      background: rgba(11, 13, 16, 0.92);
+      background: var(--ink-950);
       border-top: 1px solid var(--ink-700);
-      backdrop-filter: blur(10px);
     }
 
     .download-sticky.is-visible { display: flex; }
@@ -256,10 +251,8 @@
       border: 1px solid var(--ink-600);
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .download-sticky { backdrop-filter: none; background: var(--ink-950); }
-    }
-  </style>
+
+
 </head>
 <body>
   <div class="bg" aria-hidden="true"></div>
