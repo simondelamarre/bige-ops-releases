@@ -248,3 +248,51 @@ body.bige-nav-open .bige-nav[hidden] { display: block !important; }
   .bige-nav,
   .bige-nav-backdrop { transition: none !important; }
 }
+
+
+/* Shared footer (also used on the marketing home) */
+.site-footer.bige-footer,
+.bige-footer {
+  margin-top: 3rem;
+  padding: 1.75rem 1.25rem 2.5rem;
+  border-top: 1px solid var(--bige-ink-700);
+  color: var(--bige-mist);
+  font-size: 0.92rem;
+}
+.bige-footer .cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 1.25rem 1.5rem;
+  margin: 0 0 1.35rem;
+  max-width: 1040px;
+}
+.bige-footer h3 {
+  font-family: var(--bige-font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bige-mist);
+  margin: 0 0 0.55rem;
+}
+.bige-footer ul { list-style: none; margin: 0; padding: 0; }
+.bige-footer li { margin: 0 0 0.35rem; }
+.bige-footer a {
+  color: var(--bige-accent-bright);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+.bige-footer a:visited { color: #9bb8d4; }
+.bige-footer a:hover { color: #7ed4c6; }
+.bige-footer .meta {
+  margin: 0;
+  color: var(--bige-ink-600, #3a4354);
+  font-size: 0.85rem;
+  max-width: 1040px;
+}
+@media (min-width: 960px) {
+  body.bige-has-nav .bige-footer .cols,
+  body.bige-has-nav .bige-footer .meta {
+    /* content already padded by body; keep footer readable */
+  }
+}
