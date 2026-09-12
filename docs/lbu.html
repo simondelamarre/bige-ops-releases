@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LBU · l’entrée publique — bige-ops</title>
-  <meta name="description" content="Load Balancer Unit : ce que bige-ops crée (un listener HTTP, des backends, un health check) et ce qu’il ne crée pas (TLS, multi-listener)." />
+  <meta name="description" content="Load Balancer Unit : multi-listeners HTTP/TCP, backends, health check Outscale-conforme — prêt à apply. Pas de TLS généré." />
   <link rel="canonical" href="https://bige.dev/lbu.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/lbu.html" />
   <meta property="og:title" content="LBU · l’entrée publique — bige-ops" />
-  <meta property="og:description" content="Load Balancer Unit : ce que bige-ops crée (un listener HTTP, des backends, un health check) et ce qu’il ne crée pas (TLS, multi-listener)." />
+  <meta property="og:description" content="Load Balancer Unit : multi-listeners HTTP/TCP, backends, health check Outscale-conforme — prêt à apply. Pas de TLS généré." />
   <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -52,23 +52,29 @@ flowchart LR
     <ul>
       <li><strong>Sept des huit layouts nommés</strong> créent un LBU. Seul <code>node-lite</code>, qui est mono-VM, n’en a pas : il expose une EIP.</li>
       <li>Le <strong>scheme</strong> : <code>internet-facing</code> ou <code>internal</code>.</li>
-      <li><strong>Un listener</strong>, en HTTP : port d’entrée, port et protocole backend.</li>
-      <li>Les <strong>VMs backend</strong> attachées.</li>
-      <li>Un <strong>health check</strong> optionnel, défini par un chemin.</li>
+      <li><strong>Un ou plusieurs listeners</strong> HTTP/TCP (les layouts avec web + api en posent souvent deux).</li>
+      <li>Les <strong>VMs backend</strong> attachées (<code>backend_vms</code>).</li>
+      <li>Un <strong>health check</strong> Outscale-conforme (<code>check_interval</code>, path, port, seuils) via <code>outscale_load_balancer_attributes</code>.</li>
+      <li>Les <strong>ports backend ouverts</strong> sur le security group default (dérivés des listeners — pas seulement 3000–3001).</li>
     </ul>
+    <div class="callout">
+      <strong>Ready to deploy (HTTP).</strong>
+      Visual → Enregistrer → generate → plan → apply produit un LBU Net sur le
+      subnet public, branché sur vos VMs app, avec health check valide côté
+      provider Outscale.
+    </div>
 
     <h2>Ce que bige-ops ne crée pas</h2>
     <div class="callout callout-warn">
       <strong>Pas de HTTPS généré.</strong>
-      Les listeners produits sont en <strong>HTTP</strong>. Aucune ressource de
-      certificat n’est générée. Si vous voulez du TLS, la terminaison se fait
-      dans la console Outscale ou en amont du LBU. Ne lisez pas « entrée
-      publique » comme « entrée chiffrée ».
+      Les listeners produits sont en <strong>HTTP</strong> ou <strong>TCP</strong>.
+      Aucune ressource de certificat n’est générée. Si vous voulez du TLS, la
+      terminaison se fait dans la console Outscale ou en amont du LBU.
     </div>
     <table>
       <tr><th>Capacité</th><th>État</th></tr>
-      <tr><td>Plusieurs listeners</td><td>le modèle interne les accepte, l’app n’en expose qu’un</td></tr>
-      <tr><td>Health check avancé (intervalle, seuils, timeout)</td><td>non — chemin seulement</td></tr>
+      <tr><td>Plusieurs listeners</td><td>oui — Visual et layouts</td></tr>
+      <tr><td>Health check (intervalle, seuils, timeout, path)</td><td>oui — schéma provider (<code>check_interval</code>)</td></tr>
       <tr><td>Sticky sessions, choix d’algorithme</td><td>non</td></tr>
       <tr><td>Certificat / terminaison TLS</td><td>non</td></tr>
     </table>
@@ -79,14 +85,8 @@ flowchart LR
       composant marqué <strong>observé</strong> : sans listeners, sans
       backends, et <strong>exclu du Terraform de création</strong>. C’est
       volontaire — un apply ne doit pas recréer par-dessus un LBU que vous
-      avez réglé à la main.
+      avez réglé à la main. Dans Visual, Enregistrer est désactivé sur ces nœuds.
     </p>
-    <div class="callout callout-warn">
-      <strong>Limite d’affichage.</strong>
-      Sur le canvas, un LBU importé ressemble aujourd’hui à un LBU pilotable.
-      Il ne l’est pas. Tant que le badge « observé » n’est pas posé sur ce
-      nœud, fiez-vous à <a href="inventory.html">la matrice d’inventaire</a>.
-    </div>
 
     <h2>Security groups et LBU</h2>
     <p>
