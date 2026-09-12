@@ -1238,7 +1238,7 @@
         <dt id="g-nat">NAT service</dt>
         <dd>Passerelle de sortie pour une subnet privée. <strong>Désactivée par défaut</strong> : sans elle, une VM data ne télécharge rien. Facturée à l’heure. <a href="reseau-avance.html">Détail</a>.</dd>
         <dt id="g-listener">Listener (LBU)</dt>
-        <dd>La règle d’écoute d’un load balancer : port d’entrée, port backend. bige-ops en génère <strong>un seul, en HTTP</strong> — aucun certificat TLS n’est produit. <a href="lbu.html">Détail</a>.</dd>
+        <dd>Règle d’écoute d’un load balancer : port d’entrée, port backend. bige-ops en génère <strong>un ou plusieurs</strong>, en <strong>HTTP ou TCP</strong> — aucun certificat TLS. <a href="lbu.html">Détail</a>.</dd>
         <dt id="g-zone">Zone de disponibilité</dt>
         <dd>Un projet en pose <strong>une seule</strong>, par défaut la première de la région. Donc pas de haute disponibilité multi-zone. <a href="regions.html">Détail</a>.</dd>
         <dt id="g-coffre">Coffre (vault local)</dt>
@@ -1259,6 +1259,7 @@
             <li><a href="documentation.html">Toute la doc</a></li>
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="outscale.html">Catalogue Outscale</a></li>
             <li><a href="install.html">Installer &amp; mettre à jour</a></li>
             <li><a href="index.html#glossaire">Glossaire</a></li>
           </ul>

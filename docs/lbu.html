@@ -29,7 +29,7 @@
       <span class="brand-badge">Beta démo</span>
     </div>
     <h1>LBU · l’entrée publique</h1>
-    <p class="lead">Le <strong>LBU</strong> est la porte d’entrée HTTP de vos layouts multi-VM. bige-ops en crée un, avec un listener, et attache vos VMs derrière. Au-delà de ça, c’est votre console Outscale.</p>
+    <p class="lead">Le <strong>LBU</strong> est la porte d’entrée HTTP de vos layouts multi-VM. bige-ops en crée un, avec un ou plusieurs listeners, et attache vos VMs derrière. Au-delà de ça, c’est votre console Outscale.</p>
     <div class="callout">
       <strong>À retenir.</strong>
       Un LBU porte un <strong>nom DNS</strong>, pas une EIP. Le public tape le
@@ -45,7 +45,7 @@ flowchart LR
   L --> A2["VM app :3000"]
   A1 --> D["VM data — privée"]
       </pre>
-      <figcaption>Un listener, des backends, une couche data qui ne voit jamais Internet.</figcaption>
+      <figcaption>Exemple : listener HTTP, backends app, data privée.</figcaption>
     </figure>
 
     <h2>Ce que bige-ops crée</h2>
@@ -113,6 +113,7 @@ flowchart LR
             <li><a href="documentation.html">Toute la doc</a></li>
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="outscale.html">Catalogue Outscale</a></li>
             <li><a href="install.html">Installer &amp; mettre à jour</a></li>
             <li><a href="index.html#glossaire">Glossaire</a></li>
           </ul>

@@ -98,6 +98,22 @@ flowchart TB
       </li>
     </ul>
 
+    <h2>Catalogue Outscale complet</h2>
+    <p>
+      La liste de <strong>tous</strong> les services Outscale (compute, stockage,
+      réseau, LBU, OKS, OOS, VPN, DirectLink, GPU, licences, quotas…) avec le
+      niveau de support réel dans bige-ops est sur
+      <a href="outscale.html"><strong>Catalogue Outscale</strong></a>.
+      C’est la page à ouvrir avant de demander « est-ce que X est géré ? ».
+    </p>
+    <ul>
+      <li><strong>Créé</strong> — Visual → generate → apply.</li>
+      <li><strong>Observé</strong> — inventaire / canvas, pas de TF create.</li>
+      <li><strong>Décoratif</strong> — canvas seulement (NIC, DHCP).</li>
+      <li><strong>Prix seulement</strong> — FGPU, Dedicated, licences, DirectLink, trafic…</li>
+      <li><strong>Hors périmètre</strong> — NVMe, OSU, quotas, TLS LBU.</li>
+    </ul>
+
     <h2>Exemple : NVMe</h2>
     <p>
       Selon notre lecture actuelle du terrain / catalogue embarqué,
@@ -181,6 +197,7 @@ flowchart TB
             <li><a href="documentation.html">Toute la doc</a></li>
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="outscale.html">Catalogue Outscale</a></li>
             <li><a href="install.html">Installer &amp; mettre à jour</a></li>
             <li><a href="index.html#glossaire">Glossaire</a></li>
           </ul>

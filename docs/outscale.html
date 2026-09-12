@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catalogue Outscale — bige-ops</title>
+  <meta name="description" content="Tous les services Outscale et le niveau de support réel dans bige-ops : créé, observé, décoratif, prix seulement, hors périmètre." />
+  <link rel="canonical" href="https://bige.dev/outscale.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="bige-ops" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:url" content="https://bige.dev/outscale.html" />
+  <meta property="og:title" content="Catalogue Outscale — bige-ops" />
+  <meta property="og:description" content="Tous les services Outscale et le niveau de support réel dans bige-ops : créé, observé, décoratif, prix seulement, hors périmètre." />
+  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="documentation.html">Doc</a> · <a href="savoir.html">Sait / ne sait pas</a> · <a href="perimetre.html">Périmètre</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Beta démo</span>
+    </div>
+    <h1>Catalogue Outscale</h1>
+    <p class="lead">Tout ce qu’Outscale propose, en une page — avec le niveau de support <strong>réel</strong> de bige-ops. Pas d’aspiration : créé, observé, décoratif, prix seulement, ou hors périmètre.</p>
+    <div class="callout">
+      <strong>Règle de lecture.</strong>
+      Chaque ligne dit ce qu’Outscale propose et ce que bige-ops fait vraiment.
+      <em>Créé</em> = generate + apply. <em>Observé</em> = inventaire / canvas, pas de TF create.
+      <em>Décoratif</em> = canvas / YAML seulement. <em>Prix seulement</em> = catalogue embarqué, pas de modèle.
+      <em>Hors périmètre</em> = documenté pour ne pas mentir par omission.
+    </div>
+
+    <h2>Compute</h2>
+    <table>
+      <tr><th>Service Outscale</th><th>Support bige-ops</th><th>Doc</th></tr>
+      <tr><td>VMs (Tina / VPS)</td><td><strong>Créé</strong> — taille, subnet, user_data, keypair</td><td><a href="vms.html">vms</a></td></tr>
+      <tr><td>Keypairs SSH</td><td><strong>Créé</strong> (module TF) ou réutilisé à l’import</td><td><a href="secrets.html">secrets</a></td></tr>
+      <tr><td>Flexible GPU (FGPU)</td><td><strong>Prix seulement</strong> — pas de modèle ni de déploiement</td><td><a href="catalogue-prix.html">catalogue</a></td></tr>
+      <tr><td>Dedicated hosts / VM dédiées</td><td><strong>Prix seulement</strong></td><td><a href="catalogue-prix.html">catalogue</a></td></tr>
+      <tr><td>Licences Windows / SQL / RHEL…</td><td><strong>Prix seulement</strong> — OMI Linux par défaut</td><td><a href="catalogue-prix.html">catalogue</a></td></tr>
+    </table>
+
+    <h2>Stockage</h2>
+    <table>
+      <tr><th>Service Outscale</th><th>Support bige-ops</th><th>Doc</th></tr>
+      <tr><td>BSU (gp2 / io1 / standard)</td><td><strong>Créé</strong> — taille, type, IOPS io1, attach VM</td><td><a href="volumes-bsu.html">volumes-bsu</a></td></tr>
+      <tr><td>Snapshots BSU</td><td><strong>Créé</strong> si volume source ; inventaire = observé</td><td><a href="volumes-bsu.html">volumes-bsu</a></td></tr>
+      <tr><td>NVMe</td><td><strong>Hors périmètre</strong> — non modélisé (y compris SecNumCloud)</td><td><a href="savoir.html">savoir</a></td></tr>
+      <tr><td>OSU (Enterprise / Premium)</td><td><strong>Hors périmètre</strong> — legacy ≠ OOS</td><td><a href="oos.html">oos</a></td></tr>
+    </table>
+
+    <h2>Réseau</h2>
+    <table>
+      <tr><th>Service Outscale</th><th>Support bige-ops</th><th>Doc</th></tr>
+      <tr><td>Net (VPC)</td><td><strong>Créé</strong> / adopté à l’import</td><td><a href="reseau.html">réseau</a></td></tr>
+      <tr><td>Subnets</td><td><strong>Auto</strong> (public + privé) dans le module Net</td><td><a href="reseau-avance.html">réseau avancé</a></td></tr>
+      <tr><td>Security groups</td><td><strong>Auto</strong> (entrant) ; import = observé, pas d’éditeur de règles</td><td><a href="reseau-avance.html">réseau avancé</a></td></tr>
+      <tr><td>Route tables / Internet service</td><td><strong>Auto</strong> via module Net</td><td><a href="reseau-avance.html">réseau avancé</a></td></tr>
+      <tr><td>NAT service</td><td><strong>Auto</strong> si <code>enable_nat</code> — <strong>off par défaut</strong></td><td><a href="reseau-avance.html">réseau avancé</a></td></tr>
+      <tr><td>EIP / Public IP</td><td><strong>Créé</strong> (VM publique, NAT) ; orpheline facturée</td><td><a href="reseau-avance.html">réseau avancé</a></td></tr>
+      <tr><td>FNI (NIC)</td><td><strong>Décoratif</strong> — aucun Terraform</td><td><a href="reseau-avance.html">réseau avancé</a></td></tr>
+      <tr><td>DHCP options</td><td><strong>Décoratif</strong> — aucun Terraform</td><td><a href="reseau-avance.html">réseau avancé</a></td></tr>
+    </table>
+
+    <h2>Load balancing</h2>
+    <table>
+      <tr><th>Service Outscale</th><th>Support bige-ops</th><th>Doc</th></tr>
+      <tr><td>LBU (listeners, backends, health check)</td><td><strong>Créé</strong> — HTTP/TCP, multi-listeners, <code>check_interval</code> provider</td><td><a href="lbu.html">lbu</a></td></tr>
+      <tr><td>LBU TLS / certificats serveur</td><td><strong>Hors périmètre</strong> — pas de <code>server_certificate_id</code></td><td><a href="lbu.html">lbu</a></td></tr>
+      <tr><td>LBU importé</td><td><strong>Observé</strong> — croquis, Save désactivé</td><td><a href="inventory.html">inventaire</a></td></tr>
+    </table>
+
+    <h2>Conteneurs · OKS</h2>
+    <table>
+      <tr><th>Service Outscale</th><th>Support bige-ops</th><th>Doc</th></tr>
+      <tr><td>OKS control plane</td><td><strong>Créé</strong> via oks-cli (pas Terraform) — sujet au contrat</td><td><a href="oks.html">oks</a> · <a href="regions.html">régions</a></td></tr>
+      <tr><td>OKS nodepools</td><td><strong>Créé</strong> — type Tina + count</td><td><a href="oks.html">oks</a></td></tr>
+      <tr><td>OKS inventaire / reverse</td><td><strong>Observé partiel</strong> — projets listés, pas réécrits en YAML</td><td><a href="inventory.html">inventaire</a></td></tr>
+    </table>
+
+    <h2>Object storage · images</h2>
+    <table>
+      <tr><th>Service Outscale</th><th>Support bige-ops</th><th>Doc</th></tr>
+      <tr><td>OOS buckets</td><td><strong>Créé</strong> (provider AWS→endpoint OOS) ; <strong>jamais détruit</strong> via bige-ops</td><td><a href="oos.html">oos</a></td></tr>
+      <tr><td>OMI</td><td><strong>Sélection</strong> — Ubuntu/Debian résolus ; pas de construction d’image</td><td><a href="omi.html">omi</a></td></tr>
+    </table>
+
+    <h2>Connectivité avancée</h2>
+    <table>
+      <tr><th>Service Outscale</th><th>Support bige-ops</th><th>Doc</th></tr>
+      <tr><td>Net peering</td><td><strong>Observé</strong> — pas de TF create</td><td><a href="reseau-avance.html">réseau avancé</a></td></tr>
+      <tr><td>VPN (connections)</td><td><strong>Observé</strong> — gateways dans le snapshot brut seulement</td><td><a href="reseau-avance.html">réseau avancé</a></td></tr>
+      <tr><td>Client / Virtual Gateway</td><td><strong>Inventaire brut</strong> — pas d’UI dédiée</td><td><a href="inventory.html">inventaire</a></td></tr>
+      <tr><td>DirectLink / Hosted DirectLink</td><td><strong>Prix seulement</strong> — hors modèle</td><td><a href="catalogue-prix.html">catalogue</a></td></tr>
+    </table>
+
+    <h2>Compte · régions · conformité</h2>
+    <table>
+      <tr><th>Service Outscale</th><th>Support bige-ops</th><th>Doc</th></tr>
+      <tr><td>Régions (5 au catalogue)</td><td><strong>Choix</strong> au compte / projet</td><td><a href="regions.html">régions</a></td></tr>
+      <tr><td>Zones / subregions</td><td><strong>Une seule AZ</strong> par projet</td><td><a href="regions.html">régions</a></td></tr>
+      <tr><td>SecNumCloud</td><td>Région <code>cloudgouv-eu-west-1</code> — même codepath, contrat à part</td><td><a href="regions.html">régions</a></td></tr>
+      <tr><td>AK / SK · auth</td><td>Login local — jamais poussé sur Git</td><td><a href="secrets.html">secrets</a></td></tr>
+      <tr><td>Quotas compte</td><td><strong>Hors périmètre</strong> — console / API Outscale</td><td><a href="savoir.html">savoir</a></td></tr>
+      <tr><td>Trafic sortant (FCU / OOS / LBU)</td><td><strong>Prix seulement</strong> — pas dans l’estimate projet typique</td><td><a href="catalogue-prix.html">catalogue</a></td></tr>
+    </table>
+
+    <h2>Ce que ça implique</h2>
+    <p>
+      Si c’est marqué <strong>Créé</strong>, Visual → generate → plan → apply doit
+      produire une config Outscale-conforme (vérifié pour Net, VM, LBU HTTP,
+      volumes, OOS, OKS via oks-cli). Si c’est autre chose, la doc le dit
+      ici — pas dans un coin de glossaire.
+    </p>
+    <h2>Doc produit Outscale (référence)</h2>
+    <ul>
+      <li><a href="https://docs.outscale.com/en/userguide/About-VMs.html">About VMs</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Volumes.html">About volumes</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Nets.html">About Nets</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Load-Balancers.html">About load balancers</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-OKS.html">About OKS</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-OOS.html">About OOS</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-OMIs.html">About OMIs</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-DirectLink.html">About DirectLink</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Regions-Endpoints-and-Availability-Zones.html">Regions and AZs</a></li>
+    </ul>
+
+    <p class="doc-nav" style="margin-top:2rem"><a href="documentation.html">Toute la doc</a> · <a href="catalogue-prix.html">Catalogue de prix</a> · <a href="inventory.html">Inventaire</a></p>
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="documentation.html">Toute la doc</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="outscale.html">Catalogue Outscale</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="index.html#glossaire">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
+            <li><a href="omi.html">OMI · images</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Réseau &amp; région</h3>
+          <ul>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="reseau-avance.html">Réseau avancé</a></li>
+            <li><a href="lbu.html">LBU · entrée publique</a></li>
+            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark" });
+  </script>
+</body>
+</html>
