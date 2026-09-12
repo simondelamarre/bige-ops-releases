@@ -8,6 +8,7 @@
   <meta name="description" content="Ops Outscale souverain local-first : starter kit, VMs (=VPS catalogue), OKS, OOS, CLI. Gratuit." />
   <link rel="canonical" href="https://bige.dev/" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <meta name="theme-color" content="#0b0d10" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="bige-ops" />
@@ -388,8 +389,19 @@
       color: var(--ink-600);
     }
 
-    .toc {
+    /* Menu → un panneau à la fois */
+    .panel-shell {
+      display: grid;
+      grid-template-columns: minmax(11rem, 14rem) minmax(0, 1fr);
+      gap: 1.5rem 1.75rem;
+      align-items: start;
       margin: 0 0 2.5rem;
+    }
+
+    .toc {
+      position: sticky;
+      top: 1rem;
+      margin: 0;
       padding: 1rem 1.1rem;
       border: 1px solid var(--ink-700);
       border-radius: 10px;
@@ -409,19 +421,77 @@
     .toc ul {
       list-style: none;
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem 0.9rem;
+      flex-direction: column;
+      gap: 0.15rem;
       margin: 0;
       padding: 0;
       font-size: 0.95rem;
     }
 
     .toc a {
+      display: block;
       text-decoration: none;
-      border-bottom: 1px solid var(--ink-600);
+      border-bottom: 0;
+      padding: 0.35rem 0.45rem;
+      border-radius: 6px;
+      color: var(--mist);
     }
 
-    .toc a:hover { border-bottom-color: var(--accent-bright); }
+    .toc a:visited { color: var(--mist); }
+
+    .toc a:hover {
+      color: var(--accent-bright);
+      background: rgba(94, 196, 180, 0.06);
+    }
+
+    .toc a[aria-current="page"] {
+      color: var(--white);
+      background: rgba(94, 196, 180, 0.12);
+    }
+
+    .toc a[aria-current="page"]:visited { color: var(--white); }
+
+    .panel-stage {
+      min-width: 0;
+    }
+
+    .panel-back {
+      display: none;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent-bright);
+      background: transparent;
+      border: 0;
+      padding: 0.35rem 0;
+      margin: 0 0 1rem;
+      cursor: pointer;
+      letter-spacing: -0.01em;
+    }
+
+    .panel-back:hover { color: #7ed4c6; }
+
+    .panel-back:focus-visible {
+      outline: 2px solid var(--accent-bright);
+      outline-offset: 2px;
+    }
+
+    .panels > .block {
+      display: none;
+      margin: 0;
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .panels > .block.is-active {
+      display: block;
+      animation: panel-in 0.28s ease;
+    }
+
+    @keyframes panel-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: none; }
+    }
 
     .glossary {
       scroll-margin-top: 1rem;
@@ -573,23 +643,36 @@
       .brew code { font-size: 0.78rem; }
       .copy-btn { padding: 0.6rem 1rem; width: 100%; }
 
-      /* Sommaire : liste lisible, pas une soupe de liens */
-      .toc { padding: 0.9rem 1rem; }
+      /* Mobile : menu OU panneau (← Menu pour revenir) */
+      .panel-shell {
+        display: block;
+        margin-bottom: 2rem;
+      }
+
+      .toc {
+        position: static;
+        padding: 0.9rem 1rem;
+      }
+
       .toc ul {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.5rem 0.9rem;
+        gap: 0.35rem 0.65rem;
       }
+
       .toc li { min-width: 0; }
+
       .toc a {
-        display: block;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        padding: 0.15rem 0;
+        padding: 0.55rem 0.5rem;
       }
 
-      .block { margin-bottom: 1.65rem; padding-bottom: 1.65rem; }
+      body.panel-view .toc { display: none; }
+      body.menu-view .panel-stage { display: none; }
+      body.panel-view .panel-back { display: inline-flex; align-items: center; gap: 0.25rem; }
+
       .block p { font-size: 1rem; }
       .block .title, .block h1 { font-size: 1.3rem; }
 
@@ -612,12 +695,13 @@
 
     @media (prefers-reduced-motion: reduce) {
       * { transition: none !important; scroll-behavior: auto !important; }
+      .panels > .block.is-active { animation: none; }
     }
   </style>
 </head>
 <body>
   <a class="skip-link" href="#contenu">Aller au contenu</a>
-  <!-- landing build: 2026-09-11-a11y -->
+  <!-- landing build: 2026-09-12-panel-menu -->
   <main id="contenu">
     <div class="brand-row">
       <p class="brand">bige<span class="ops">-ops</span></p>
@@ -650,24 +734,29 @@
       </p>
     </div>
 
-    <nav class="toc" aria-label="Sommaire">
+    <div class="panel-shell">
+    <nav class="toc" id="panel-menu" aria-label="Sommaire">
       <h2>Sommaire</h2>
       <ul>
-        <li><a href="#zero-hero">Zero → Hero</a></li>
-        <li><a href="#visual">Visual · Flow</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#securite">Sécurité</a></li>
-        <li><a href="#git">Git privé</a></li>
-        <li><a href="#agent-keys">Assistant IA</a></li>
-        <li><a href="#reseau">Réseau</a></li>
-        <li><a href="#oks-warn">OKS · attention</a></li>
-        <li><a href="#cli">CLI</a></li>
-        <li><a href="#perimetre">Périmètre</a></li>
-        <li><a href="#glossaire">Glossaire</a></li>
+        <li><a href="#zero-hero" data-panel="zero-hero">Zero → Hero</a></li>
+        <li><a href="#visual" data-panel="visual">Visual · Flow</a></li>
+        <li><a href="#pricing" data-panel="pricing">Pricing</a></li>
+        <li><a href="#securite" data-panel="securite">Sécurité</a></li>
+        <li><a href="#git" data-panel="git">Git privé</a></li>
+        <li><a href="#agent-keys" data-panel="agent-keys">Assistant IA</a></li>
+        <li><a href="#reseau" data-panel="reseau">Réseau</a></li>
+        <li><a href="#oks-warn" data-panel="oks-warn">OKS · attention</a></li>
+        <li><a href="#cli" data-panel="cli">CLI</a></li>
+        <li><a href="#perimetre" data-panel="perimetre">Périmètre</a></li>
+        <li><a href="#glossaire" data-panel="glossaire">Glossaire</a></li>
       </ul>
     </nav>
 
-    <section class="block" id="zero-hero">
+    <div class="panel-stage" id="panel-stage">
+      <button type="button" class="panel-back" id="panel-back" aria-label="Retour au menu">← Menu</button>
+      <div class="panels" id="panels">
+
+    <section class="block is-active" id="zero-hero" data-panel-id="zero-hero">
       <h2>Zero → Hero</h2>
       <h1>Le starter kit pour bien commencer sur Outscale.</h1>
       <p>
@@ -1250,6 +1339,10 @@
       </dl>
     </section>
 
+      </div><!-- /.panels -->
+    </div><!-- /.panel-stage -->
+    </div><!-- /.panel-shell -->
+
     <footer class="site-footer">
       <div class="cols">
         <div>
@@ -1359,6 +1452,152 @@
         { threshold: 0, rootMargin: "0px" }
       );
       observer.observe(inline);
+    })();
+
+    /* Menu un panneau à la fois — Zero→Hero défaut desktop ; ← Menu mobile */
+    (function () {
+      var DEFAULT_PANEL = "zero-hero";
+      var mq = window.matchMedia("(max-width: 640px)");
+      var panelsRoot = document.getElementById("panels");
+      var menu = document.getElementById("panel-menu");
+      var back = document.getElementById("panel-back");
+      if (!panelsRoot || !menu) return;
+
+      var panels = Array.prototype.slice.call(
+        panelsRoot.querySelectorAll(":scope > .block[id]")
+      );
+      var byId = {};
+      panels.forEach(function (el) { byId[el.id] = el; });
+
+      var menuLinks = Array.prototype.slice.call(
+        menu.querySelectorAll("a[data-panel]")
+      );
+
+      function isMobile() { return mq.matches; }
+
+      function resolvePanelId(hash) {
+        var raw = (hash || "").replace(/^#/, "");
+        if (!raw) return null;
+        if (byId[raw]) return raw;
+        var el = document.getElementById(raw);
+        if (!el) return null;
+        var host = el.closest ? el.closest("#panels > .block") : null;
+        if (host && host.id) return host.id;
+        return null;
+      }
+
+      function setMobileMode(mode) {
+        document.body.classList.remove("menu-view", "panel-view");
+        if (!isMobile()) return;
+        document.body.classList.add(mode === "panel" ? "panel-view" : "menu-view");
+      }
+
+      function showPanel(id, opts) {
+        opts = opts || {};
+        var panel = byId[id] || byId[DEFAULT_PANEL];
+        if (!panel) return;
+        panels.forEach(function (el) {
+          el.classList.toggle("is-active", el === panel);
+        });
+        menuLinks.forEach(function (a) {
+          if (a.getAttribute("data-panel") === panel.id) {
+            a.setAttribute("aria-current", "page");
+          } else {
+            a.removeAttribute("aria-current");
+          }
+        });
+        if (opts.mobileMode) setMobileMode(opts.mobileMode);
+        else if (isMobile()) setMobileMode("panel");
+        else setMobileMode(null);
+
+        if (opts.scroll !== false) {
+          var target = opts.focusId && document.getElementById(opts.focusId);
+          if (target && panel.contains(target)) {
+            target.scrollIntoView({ block: "start" });
+          } else if (isMobile()) {
+            panel.scrollIntoView({ block: "start" });
+          }
+        }
+      }
+
+      function goMenu() {
+        setMobileMode("menu");
+        if (history.replaceState) {
+          history.replaceState(null, "", window.location.pathname + window.location.search);
+        } else {
+          window.location.hash = "";
+        }
+        menuLinks.forEach(function (a) { a.removeAttribute("aria-current"); });
+        var first = byId[DEFAULT_PANEL];
+        if (first) {
+          panels.forEach(function (el) {
+            el.classList.toggle("is-active", el === first);
+          });
+        }
+        menu.scrollIntoView({ block: "start" });
+      }
+
+      function applyFromHash(scroll) {
+        var focus = (window.location.hash || "").replace(/^#/, "");
+        var id = resolvePanelId(window.location.hash);
+        if (id) {
+          showPanel(id, {
+            mobileMode: "panel",
+            scroll: scroll !== false,
+            focusId: focus && focus !== id ? focus : null
+          });
+          return;
+        }
+        if (isMobile()) {
+          setMobileMode("menu");
+          showPanel(DEFAULT_PANEL, { mobileMode: "menu", scroll: false });
+        } else {
+          showPanel(DEFAULT_PANEL, { scroll: false });
+        }
+      }
+
+      menu.addEventListener("click", function (e) {
+        var a = e.target.closest && e.target.closest("a[data-panel]");
+        if (!a) return;
+        var id = a.getAttribute("data-panel");
+        if (!byId[id]) return;
+        e.preventDefault();
+        if (history.pushState) history.pushState(null, "", "#" + id);
+        else window.location.hash = id;
+        showPanel(id, { mobileMode: "panel", scroll: true });
+      });
+
+      if (back) {
+        back.addEventListener("click", function () { goMenu(); });
+      }
+
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest && e.target.closest('a[href^="#"]');
+        if (!a || menu.contains(a)) return;
+        var href = a.getAttribute("href");
+        if (!href || href === "#") return;
+        var id = resolvePanelId(href);
+        if (!id) return;
+        e.preventDefault();
+        var focus = href.replace(/^#/, "");
+        if (history.pushState) history.pushState(null, "", href);
+        else window.location.hash = focus;
+        showPanel(id, {
+          mobileMode: "panel",
+          scroll: true,
+          focusId: focus !== id ? focus : null
+        });
+      });
+
+      window.addEventListener("hashchange", function () { applyFromHash(true); });
+      window.addEventListener("popstate", function () { applyFromHash(true); });
+      if (mq.addEventListener) {
+        mq.addEventListener("change", function () { applyFromHash(false); });
+      } else if (mq.addListener) {
+        mq.addListener(function () { applyFromHash(false); });
+      }
+
+      applyFromHash(true);
     })();
   </script>
 </body>
