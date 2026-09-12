@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LBU · l’entrée publique — bige-ops</title>
+  <meta name="description" content="Load Balancer Unit : ce que bige-ops crée (un listener HTTP, des backends, un health check) et ce qu’il ne crée pas (TLS, multi-listener)." />
+  <link rel="canonical" href="https://bige.dev/lbu.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="bige-ops" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:url" content="https://bige.dev/lbu.html" />
+  <meta property="og:title" content="LBU · l’entrée publique — bige-ops" />
+  <meta property="og:description" content="Load Balancer Unit : ce que bige-ops crée (un listener HTTP, des backends, un health check) et ce qu’il ne crée pas (TLS, multi-listener)." />
+  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="reseau.html">Réseau</a> · <a href="layouts.html">Layouts</a> · <a href="vms.html">VMs</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Beta démo</span>
+    </div>
+    <h1>LBU · l’entrée publique</h1>
+    <p class="lead">Le <strong>LBU</strong> est la porte d’entrée HTTP de vos layouts multi-VM. bige-ops en crée un, avec un listener, et attache vos VMs derrière. Au-delà de ça, c’est votre console Outscale.</p>
+    <div class="callout">
+      <strong>À retenir.</strong>
+      Un LBU porte un <strong>nom DNS</strong>, pas une EIP. Le public tape le
+      DNS du load balancer ; vos VMs restent derrière, sans IP publique.
+    </div>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  U[Internet] --> DNS["DNS du LBU"]
+  DNS --> L["listener HTTP :80"]
+  L --> A1["VM app :3000"]
+  L --> A2["VM app :3000"]
+  A1 --> D["VM data — privée"]
+      </pre>
+      <figcaption>Un listener, des backends, une couche data qui ne voit jamais Internet.</figcaption>
+    </figure>
+
+    <h2>Ce que bige-ops crée</h2>
+    <ul>
+      <li><strong>Sept des huit layouts nommés</strong> créent un LBU. Seul <code>node-lite</code>, qui est mono-VM, n’en a pas : il expose une EIP.</li>
+      <li>Le <strong>scheme</strong> : <code>internet-facing</code> ou <code>internal</code>.</li>
+      <li><strong>Un listener</strong>, en HTTP : port d’entrée, port et protocole backend.</li>
+      <li>Les <strong>VMs backend</strong> attachées.</li>
+      <li>Un <strong>health check</strong> optionnel, défini par un chemin.</li>
+    </ul>
+
+    <h2>Ce que bige-ops ne crée pas</h2>
+    <div class="callout callout-warn">
+      <strong>Pas de HTTPS généré.</strong>
+      Les listeners produits sont en <strong>HTTP</strong>. Aucune ressource de
+      certificat n’est générée. Si vous voulez du TLS, la terminaison se fait
+      dans la console Outscale ou en amont du LBU. Ne lisez pas « entrée
+      publique » comme « entrée chiffrée ».
+    </div>
+    <table>
+      <tr><th>Capacité</th><th>État</th></tr>
+      <tr><td>Plusieurs listeners</td><td>le modèle interne les accepte, l’app n’en expose qu’un</td></tr>
+      <tr><td>Health check avancé (intervalle, seuils, timeout)</td><td>non — chemin seulement</td></tr>
+      <tr><td>Sticky sessions, choix d’algorithme</td><td>non</td></tr>
+      <tr><td>Certificat / terminaison TLS</td><td>non</td></tr>
+    </table>
+
+    <h2>Un LBU importé est un croquis</h2>
+    <p>
+      L’inventaire liste vos load balancers existants. L’import en écrit un
+      composant marqué <strong>observé</strong> : sans listeners, sans
+      backends, et <strong>exclu du Terraform de création</strong>. C’est
+      volontaire — un apply ne doit pas recréer par-dessus un LBU que vous
+      avez réglé à la main.
+    </p>
+    <div class="callout callout-warn">
+      <strong>Limite d’affichage.</strong>
+      Sur le canvas, un LBU importé ressemble aujourd’hui à un LBU pilotable.
+      Il ne l’est pas. Tant que le badge « observé » n’est pas posé sur ce
+      nœud, fiez-vous à <a href="inventory.html">la matrice d’inventaire</a>.
+    </div>
+
+    <h2>Security groups et LBU</h2>
+    <p>
+      Le LBU a ses propres règles côté Outscale, distinctes de celles des VMs
+      qu’il sert. Ouvrir le listener ne suffit pas si le SG de la VM backend
+      ne laisse pas entrer le load balancer. Les principes d’exposition sont
+      sur <a href="reseau.html">Réseau · ouvrir ou non</a>.
+    </p>
+
+    <h2>Doc produit Outscale (référence)</h2>
+    <ul>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Load-Balancers.html">About load balancers</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/Configuring-Health-Checks.html">Configuring health checks</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Security-Groups-in-LBU.html">Security groups in LBU</a></li>
+    </ul>
+
+    <p class="doc-nav" style="margin-top:2rem"><a href="reseau.html">Réseau · ouvrir ou non</a> · <a href="reseau-avance.html">Réseau avancé</a> · <a href="inventory.html">Inventaire &amp; import</a></p>
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="documentation.html">Toute la doc</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="index.html#glossaire">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
+            <li><a href="omi.html">OMI · images</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Réseau &amp; région</h3>
+          <ul>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="reseau-avance.html">Réseau avancé</a></li>
+            <li><a href="lbu.html">LBU · entrée publique</a></li>
+            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark" });
+  </script>
+</body>
+</html>

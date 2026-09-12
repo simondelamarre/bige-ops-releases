@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CLI bige-ops &amp; OKS — bige-ops</title>
-  <meta name="description" content="App desktop d’abord. CLI bige-ops = même moteur. OKS : oks-cli + kubectl sous le capot." />
-  <link rel="canonical" href="https://bige.dev/cli.html" />
+  <title>OMI · les images — bige-ops</title>
+  <meta name="description" content="bige-ops choisit une OMI existante (Ubuntu, Debian) ; il n’en fabrique pas. Résolution automatique et override." />
+  <link rel="canonical" href="https://bige.dev/omi.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="bige-ops" />
   <meta property="og:locale" content="fr_FR" />
-  <meta property="og:url" content="https://bige.dev/cli.html" />
-  <meta property="og:title" content="CLI bige-ops &amp; OKS — bige-ops" />
-  <meta property="og:description" content="App desktop d’abord. CLI bige-ops = même moteur. OKS : oks-cli + kubectl sous le capot." />
+  <meta property="og:url" content="https://bige.dev/omi.html" />
+  <meta property="og:title" content="OMI · les images — bige-ops" />
+  <meta property="og:description" content="bige-ops choisit une OMI existante (Ubuntu, Debian) ; il n’en fabrique pas. Résolution automatique et override." />
   <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,95 +23,45 @@
 </head>
 <body>
   <main>
-    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="oks.html">OKS</a> · <a href="perimetre.html">Périmètre</a></p>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="vms.html">VMs</a> · <a href="repos-vms-docker.html">Repos · VMs · Docker</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
       <span class="brand-badge">Beta démo</span>
     </div>
-    <h1>CLI · app · OKS</h1>
-    <p class="lead">
-      Le kickoff se fait dans l’<strong>app desktop</strong> (Visual, Workspace,
-      Chat). La <strong>CLI <code>bige-ops</code></strong> existe : c’est le
-      <strong>même moteur</strong> (l’app l’appelle). Pour
-      <strong>OKS</strong>, oui on s’appuie sur des CLI kube —
-      <code>oks-cli</code> et <code>kubectl</code> — sous le capot.
-    </p>
+    <h1>OMI · les images</h1>
+    <p class="lead">Une <strong>OMI</strong> est l’image disque qui sert à démarrer une VM. bige-ops en <strong>choisit</strong> une. Il n’en fabrique pas — et c’est une limite assumée, pas un oubli.</p>
+    <h2>Comment l’image est choisie</h2>
+    <ul>
+      <li>Par défaut, bige-ops <strong>résout automatiquement</strong> une image officielle récente à partir du catalogue de votre compte : Ubuntu 24.04, Ubuntu 22.04 ou Debian 12.</li>
+      <li>Vous pouvez <strong>forcer</strong> une image : au niveau du projet, ou VM par VM.</li>
+      <li>À l’import d’un compte existant, l’identifiant d’image de la VM est repris tel quel — on ne vous rebascule pas sur une autre distribution dans votre dos.</li>
+    </ul>
 
     <div class="callout">
-      <strong>On utilise la CLI pour OKS ?</strong>
-      Oui, mais pas comme produit « terminal-first ». L’app (ou
-      <code>bige-ops apply --target oks</code> /
-      <code>bige-ops deploy</code>) lance <code>oks-cli</code> pour le
-      cluster et <code>kubectl apply</code> pour les manifests. Vous
-      pouvez aussi enchaîner à la main une fois le kubeconfig généré.
+      <strong>Corollaire utile.</strong>
+      L’image est la base ; ce qui tourne dessus vient d’ailleurs — paquets
+      système et conteneurs Docker. Voir
+      <a href="repos-vms-docker.html">Repos, VMs &amp; Dockerfiles</a>.
     </div>
 
-    <figure class="diagram">
-      <pre class="mermaid">
-flowchart LR
-  App[App desktop] --> Engine[bige-ops CLI]
-  Engine -->|IaaS| TF[Terraform]
-  Engine -->|OKS cluster| OKSCLI[oks-cli]
-  Engine -->|workloads| KUBECTL[kubectl]
-  OKSCLI --> Cloud[Outscale OKS]
-  KUBECTL --> Cloud
-      </pre>
-      <figcaption>App → même CLI → Terraform / oks-cli / kubectl.</figcaption>
-    </figure>
-
-    <h2>Qui fait quoi</h2>
-    <table>
-      <thead>
-        <tr><th>Outil</th><th>Rôle</th><th>Quand</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>App desktop</strong></td>
-          <td>Composer, estimate, review, deploy</td>
-          <td>Chemin nominal (kickoff)</td>
-        </tr>
-        <tr>
-          <td><strong><code>bige-ops</code></strong></td>
-          <td>validate / generate / plan / apply / deploy</td>
-          <td>Sous l’app, ou script / CI / terminal</td>
-        </tr>
-        <tr>
-          <td><strong><code>oks-cli</code></strong></td>
-          <td>Projet / cluster / nodepools / kubeconfig OKS</td>
-          <td>Via <code>apply --target oks</code> (embarqué)</td>
-        </tr>
-        <tr>
-          <td><strong><code>kubectl</code></strong></td>
-          <td>Appliquer / inspecter les manifests <code>oks/apps/</code></td>
-          <td>Via <code>deploy</code> topologie oks, ou à la main</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2>OKS en pratique</h2>
+    <h2>Ce que ça n’est pas</h2>
+    <ul>
+      <li><strong>Pas de construction d’OMI.</strong> Pas de Packer, pas de snapshot d’une VM configurée promue en image dorée.</li>
+      <li><strong>Pas de catalogue d’images</strong> parcourable dans l’app : vous subissez la résolution automatique ou vous collez un identifiant.</li>
+      <li><strong>Pas de ligne de coût</strong> : une OMI publique n’est pas facturée en tant que telle, elle n’apparaît donc pas dans l’estimation.</li>
+    </ul>
     <p>
-      1. Simulation topologie <strong>oks</strong> (Visual ou
-      <code>bige-ops add stack --topology oks</code>).
-      2. <code>generate</code> → specs sous <code>bige-ops/oks/</code> +
-      apps YAML.
-      3. <code>apply --target oks</code> → <strong>oks-cli</strong>.
-      4. <code>deploy</code> → <strong>kubectl apply</strong> des Deployments
-      (réplicas = pods).
-    </p>
-    <p>
-      Détail produit OKS :
-      <a href="oks.html">OKS &amp; pods</a>.
-      Doc CLI complète : dans l’app (Docs) — pages <code>cli/oks</code>,
-      <code>cli/overview</code>.
+      Si votre besoin est une image durcie maison rejouée à chaque VM, c’est
+      au-delà du kickoff — voir <a href="perimetre.html">Périmètre</a>.
     </p>
 
-    <h2>Ce que ce n’est pas</h2>
-    <p>
-      Pas un substitut à votre formation kubectl. Pas un IDE kube.
-      La landing « CLI Kubernetes » = <em>même moteur + outils kube
-      disponibles</em>, pas « tout se fait uniquement en CLI ».
-    </p>
+    <h2>Doc produit Outscale (référence)</h2>
+    <ul>
+      <li><a href="https://docs.outscale.com/en/userguide/About-OMIs.html">About OMIs</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-VMs.html">About VMs</a></li>
+    </ul>
 
+    <p class="doc-nav" style="margin-top:2rem"><a href="vms.html">VMs · VPS</a> · <a href="volumes-bsu.html">Volumes BSU</a> · <a href="repos-vms-docker.html">Repos · VMs · Docker</a></p>
     <footer class="site-footer">
       <div class="cols">
         <div>
@@ -171,7 +121,7 @@ flowchart LR
   </main>
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+    mermaid.initialize({ startOnLoad: true, theme: "dark" });
   </script>
 </body>
 </html>

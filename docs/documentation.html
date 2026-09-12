@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Documentation — bige-ops</title>
+  <meta name="description" content="Toutes les pages de documentation bige-ops : comprendre, composer, réseau et région, opérer." />
+  <link rel="canonical" href="https://bige.dev/documentation.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="bige-ops" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:url" content="https://bige.dev/documentation.html" />
+  <meta property="og:title" content="Documentation — bige-ops" />
+  <meta property="og:description" content="Toutes les pages de documentation bige-ops : comprendre, composer, réseau et région, opérer." />
+  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="index.html#glossaire">Glossaire</a> · <a href="install.html">Installer</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Beta démo</span>
+    </div>
+    <h1>Documentation</h1>
+    <p class="lead">Toute la doc, en une page. Chaque lien mène à une page courte, écrite contre le code — avec ses limites dites à voix haute.</p>
+    <h2>Comprendre</h2>
+    <table>
+      <tr><td><a href="perimetre.html">Périmètre</a></td><td>ce qu’on couvre, ce qu’on ne remplace pas.</td></tr>
+      <tr><td><a href="savoir.html">Sait / ne sait pas</a></td><td>les limites du catalogue embarqué et des capacités connues.</td></tr>
+      <tr><td><a href="install.html">Installer &amp; mettre à jour</a></td><td>DMG, Homebrew, Linux, dépendances, premier lancement.</td></tr>
+      <tr><td><a href="index.html#glossaire">Glossaire</a></td><td>le vocabulaire Outscale et bige-ops, défini une fois.</td></tr>
+    </table>
+
+    <h2>Composer</h2>
+    <table>
+      <tr><td><a href="layouts.html">Layouts &amp; topologies</a></td><td>trois topologies, huit presets, le bâtisseur.</td></tr>
+      <tr><td><a href="vms.html">VMs · VPS</a></td><td>mono-VM contre multi-VM, ce que le formulaire pilote.</td></tr>
+      <tr><td><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></td><td>disque racine, volumes de données, gp2/io1, snapshots.</td></tr>
+      <tr><td><a href="omi.html">OMI · images</a></td><td>on choisit une image, on n’en fabrique pas.</td></tr>
+      <tr><td><a href="bases.html">Bases de données</a></td><td>où poser une base, et avec quel stockage.</td></tr>
+      <tr><td><a href="bases-complexes.html">Bases complexes</a></td><td>Mongo, Postgres, Cassandra, Elastic : la matrice honnête.</td></tr>
+      <tr><td><a href="oos.html">OOS &amp; backups</a></td><td>buckets S3-compatibles, sauvegardes, indestructibilité.</td></tr>
+    </table>
+
+    <h2>Réseau &amp; région</h2>
+    <table>
+      <tr><td><a href="reseau.html">Réseau · ouvrir ou non</a></td><td>les principes d’exposition : pod, VM, face d’un layout.</td></tr>
+      <tr><td><a href="reseau-avance.html">Réseau avancé</a></td><td>NAT, routes, EIP, FNI, peering, VPN : créé, auto, observé ou décoratif.</td></tr>
+      <tr><td><a href="lbu.html">LBU · entrée publique</a></td><td>un listener HTTP, des backends — et pas de TLS généré.</td></tr>
+      <tr><td><a href="regions.html">Régions &amp; SecNumCloud</a></td><td>régions connues, zone unique, question du contrat.</td></tr>
+      <tr><td><a href="oks.html">OKS &amp; pods</a></td><td>Kubernetes managé : cluster, nodepools, kubeconfig.</td></tr>
+    </table>
+
+    <h2>Opérer</h2>
+    <table>
+      <tr><td><a href="simulations.html">Simulations &amp; promote</a></td><td>live et draft, promote, snapshots de configuration.</td></tr>
+      <tr><td><a href="inventory.html">Inventaire &amp; import</a></td><td>lire un compte existant, et ce que le reverse sait réécrire.</td></tr>
+      <tr><td><a href="catalogue-prix.html">Catalogue de prix</a></td><td>comment l’estimation est calculée, et ce qu’elle oublie.</td></tr>
+      <tr><td><a href="secrets.html">Secrets &amp; coffre</a></td><td>où vivent les credentials, et ce qui ne part jamais sur Git.</td></tr>
+      <tr><td><a href="agent.html">Assistant IA</a></td><td>vos clés API, en local, sur la configuration seulement.</td></tr>
+      <tr><td><a href="cli.html">CLI · app · OKS</a></td><td>qui fait quoi entre l’app, bige-ops, oks-cli et kubectl.</td></tr>
+      <tr><td><a href="github-config.html">GitHub config</a></td><td>projet → repo, simulation → branche, promote → main.</td></tr>
+      <tr><td><a href="repos-vms-docker.html">Repos · VMs · Docker</a></td><td>config-history contre repo applicatif, Dockerfile.</td></tr>
+      <tr><td><a href="expert-config.html">Mode expert · diffs</a></td><td>éditer les fichiers, et où va la revue de diff.</td></tr>
+    </table>
+
+
+    <p class="doc-nav" style="margin-top:2rem"><a href="index.html">Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="documentation.html">Toute la doc</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="index.html#glossaire">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
+            <li><a href="omi.html">OMI · images</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Réseau &amp; région</h3>
+          <ul>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="reseau-avance.html">Réseau avancé</a></li>
+            <li><a href="lbu.html">LBU · entrée publique</a></li>
+            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark" });
+  </script>
+</body>
+</html>

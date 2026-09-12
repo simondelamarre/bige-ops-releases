@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Réseau avancé — bige-ops</title>
+  <meta name="description" content="NAT, route tables, internet service, EIP, FNI, DHCP, peering, VPN, DirectLink : créé, auto, observé ou décoratif." />
+  <link rel="canonical" href="https://bige.dev/reseau-avance.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="bige-ops" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:url" content="https://bige.dev/reseau-avance.html" />
+  <meta property="og:title" content="Réseau avancé — bige-ops" />
+  <meta property="og:description" content="NAT, route tables, internet service, EIP, FNI, DHCP, peering, VPN, DirectLink : créé, auto, observé ou décoratif." />
+  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="reseau.html">Réseau</a> · <a href="lbu.html">LBU</a> · <a href="inventory.html">Inventaire</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Beta démo</span>
+    </div>
+    <h1>Réseau avancé</h1>
+    <p class="lead"><a href="reseau.html">Réseau · ouvrir ou non</a> dit <em>quoi</em> exposer. Cette page dit ce que bige-ops <strong>matérialise</strong> vraiment côté Outscale, et ce qu’il se contente de regarder.</p>
+    <div class="callout">
+      <strong>Quatre niveaux, un seul vocabulaire.</strong>
+      <strong>Créé</strong> : bige-ops génère le Terraform et vous le réglez.
+      <strong>Auto</strong> : créé à l’intérieur du module réseau, sans réglage fin.
+      <strong>Observé</strong> : lu depuis votre compte, jamais réécrit.
+      <strong>Décoratif</strong> : visible sur le canvas, aucun Terraform derrière.
+    </div>
+
+    <h2>La matrice</h2>
+    <table>
+      <tr><th>Ressource</th><th>Niveau</th><th>Détail</th></tr>
+      <tr><td>Net (VPC)</td><td>créé</td><td>en neuf, ou adopté quand il vient d’un import</td></tr>
+      <tr><td>Subnets</td><td>auto</td><td>un <code>/24</code> public et un <code>/24</code> privé dans un <code>/16</code>, sur une seule zone</td></tr>
+      <tr><td>Security groups</td><td>auto</td><td>dérivés des rôles applicatifs, <strong>règles entrantes seulement</strong> ; un SG importé est observé</td></tr>
+      <tr><td>Route tables</td><td>auto</td><td>posées par le module réseau, pas éditables</td></tr>
+      <tr><td>Internet service</td><td>auto</td><td>idem</td></tr>
+      <tr><td>NAT service</td><td>auto, <strong>désactivé par défaut</strong></td><td>voir l’encadré ci-dessous</td></tr>
+      <tr><td>EIP</td><td>créé</td><td>pour une VM publique, et pour le NAT quand il est activé</td></tr>
+      <tr><td>FNI (interface réseau)</td><td>décoratif</td><td>posable sur le canvas, écrit en YAML, <strong>aucun Terraform</strong></td></tr>
+      <tr><td>DHCP options</td><td>décoratif</td><td>idem</td></tr>
+      <tr><td>Net peering</td><td>observé</td><td>lu à l’inventaire, écrit en composant observé</td></tr>
+      <tr><td>VPN</td><td>observé</td><td>les connexions sont listées ; les gateways client et virtuelles sont lues mais pas affichées</td></tr>
+      <tr><td>DirectLink</td><td>ni modélisé, ni observé</td><td>présent uniquement dans le catalogue de prix</td></tr>
+    </table>
+
+    <h2>Le piège du NAT</h2>
+    <div class="callout callout-warn">
+      <strong>Le NAT est à <code>false</code> par défaut.</strong>
+      Une VM data en subnet privée n’a alors <strong>aucune sortie
+      Internet</strong> : pas d’<code>apt</code>, pas de <code>docker
+      pull</code>, pas de webhook sortant. Si votre layout a besoin de sortir,
+      activez-le explicitement — et sachez qu’un NAT service se facture à
+      l’heure, plus le trafic.
+    </div>
+    <p>
+      C’est le premier mur d’un multi-VM : le déploiement passe, et la VM data
+      ne télécharge rien. Le cas est signalé à la validation, mais le réflexe
+      vaut d’être écrit ici.
+    </p>
+
+    <h2>EIP : ce qui est facturé</h2>
+    <p>
+      Une EIP attachée à une VM ou à un NAT fait partie du coût de la
+      ressource. Une EIP <strong>orpheline</strong>, elle, est facturée pour
+      rien — l’inventaire la compte, et l’estimation de projet aussi.
+    </p>
+    <div class="callout callout-warn">
+      <strong>Limite connue.</strong>
+      Quand vous choisissez d’attacher une EIP à une VM depuis le canvas,
+      l’app ne propose pas encore de sélecteur de VM cible. Le statut du nœud
+      vous signale que la cible manque, mais il faut passer par le YAML pour
+      la renseigner.
+    </div>
+
+    <h2>Pourquoi « observé » plutôt que « géré »</h2>
+    <p>
+      Peering, VPN, security groups importés : bige-ops les lit, les écrit en
+      composant marqué observé, et les <strong>exclut de la génération
+      Terraform</strong>. Ce n’est pas un manque de courage, c’est le contrat :
+      un <code>apply</code> ne doit jamais recréer par-dessus un lien réseau
+      que vous avez négocié à la main, ni détruire une interconnexion parce
+      qu’elle n’était pas dans le YAML.
+    </p>
+    <p>
+      La contrepartie est que ces objets ne sont pas réglables depuis l’app.
+      Pour les changer, c’est la console ou l’API Outscale.
+    </p>
+
+    <h2>Doc produit Outscale (référence)</h2>
+    <ul>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Nets.html">About nets</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Route-Tables.html">About route tables</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Internet-Services.html">About internet services</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-NAT-Services.html">About NAT services</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-EIPs.html">About EIPs</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Public-IPs.html">About public IPs</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-FNIs.html">About FNIs (network interfaces)</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-DHCP-Options.html">About DHCP options</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Net-Peerings.html">About net peerings</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-VPN-Connections.html">About VPN connections</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-DirectLink.html">About DirectLink</a></li>
+    </ul>
+
+    <p class="doc-nav" style="margin-top:2rem"><a href="reseau.html">Réseau · ouvrir ou non</a> · <a href="lbu.html">LBU</a> · <a href="regions.html">Régions</a> · <a href="catalogue-prix.html">Catalogue de prix</a></p>
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="documentation.html">Toute la doc</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="index.html#glossaire">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
+            <li><a href="omi.html">OMI · images</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Réseau &amp; région</h3>
+          <ul>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="reseau-avance.html">Réseau avancé</a></li>
+            <li><a href="lbu.html">LBU · entrée publique</a></li>
+            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark" });
+  </script>
+</body>
+</html>

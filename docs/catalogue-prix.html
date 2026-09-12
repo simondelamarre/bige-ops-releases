@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catalogue de prix &amp; estimation — bige-ops</title>
+  <meta name="description" content="Comment l’estimation est calculée en local, ce qu’elle compte, et surtout ce qu’elle ne compte pas." />
+  <link rel="canonical" href="https://bige.dev/catalogue-prix.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="bige-ops" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:url" content="https://bige.dev/catalogue-prix.html" />
+  <meta property="og:title" content="Catalogue de prix &amp; estimation — bige-ops" />
+  <meta property="og:description" content="Comment l’estimation est calculée en local, ce qu’elle compte, et surtout ce qu’elle ne compte pas." />
+  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="index.html#pricing">Pricing</a> · <a href="savoir.html">Sait / ne sait pas</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Beta démo</span>
+    </div>
+    <h1>Catalogue de prix &amp; estimation</h1>
+    <p class="lead">L’estimation est calculée <strong>en local</strong>, contre un catalogue public embarqué dans l’app. Ce n’est pas un devis, ce n’est pas branché sur votre contrat, et il y a des lignes qu’elle ne compte pas. Les voici toutes.</p>
+    <h2>Comment le chiffre est fabriqué</h2>
+    <p>
+      Un type de VM Outscale s’écrit <code>tinav6.c4r8p2</code> : génération,
+      cœurs, RAM, profil de performance. bige-ops décompose cette chaîne, puis
+      multiplie chaque dimension par le tarif de la région, lu dans le
+      catalogue public embarqué. Tout se passe sur votre machine : aucune
+      requête, aucune donnée envoyée.
+    </p>
+    <div class="callout">
+      <strong>Conséquence directe.</strong>
+      Le catalogue est figé à la version de l’app. Si Outscale change ses
+      prix, votre estimation ne bouge pas tant que vous ne mettez pas à jour.
+    </div>
+
+    <h2>Ce qui est compté</h2>
+    <table>
+      <tr><th>Ligne</th><th>Base de calcul</th></tr>
+      <tr><td>VM</td><td>cœurs + RAM + profil, selon le type Tina</td></tr>
+      <tr><td>Disque racine</td><td>taille — toujours au tarif <code>gp2</code></td></tr>
+      <tr><td>Volumes supplémentaires</td><td>taille et type, IOPS comprises si renseignées</td></tr>
+      <tr><td>LBU</td><td>à l’heure</td></tr>
+      <tr><td>NAT service</td><td>à l’heure, uniquement si le NAT est activé</td></tr>
+      <tr><td>EIP orpheline</td><td>à l’heure</td></tr>
+      <tr><td>OKS</td><td>profil du control plane + type et nombre de nœuds</td></tr>
+      <tr><td>Bucket OOS</td><td>seulement si vous renseignez une taille</td></tr>
+      <tr><td>Snapshots</td><td>dans la vue inventaire uniquement</td></tr>
+    </table>
+
+    <h2>Ce qui n’est pas compté</h2>
+    <div class="callout callout-warn">
+      <strong>Lisez l’estimation comme un plancher, pas comme une facture.</strong>
+      Les lignes ci-dessous sont absentes du total.
+    </div>
+    <ul>
+      <li><strong>Le trafic sortant</strong> — VMs, OOS, LBU. Les tarifs sont dans le catalogue, mais le trafic n’est pas ajouté à l’estimation : on ne sait pas deviner votre volume.</li>
+      <li><strong>Le VPN</strong> — le tarif existe au catalogue, il n’est pas branché sur le modèle.</li>
+      <li><strong>DirectLink</strong> — présent au catalogue, sans aucun modèle derrière. N’en tirez aucune estimation.</li>
+      <li><strong>Le surcoût <code>io1</code> du disque racine</strong> d’une base, toujours chiffré en <code>gp2</code> — voir <a href="volumes-bsu.html">Volumes BSU</a>.</li>
+      <li><strong>Un bucket OOS sans taille renseignée</strong>, qui vaut 0 € dans le total.</li>
+      <li><strong>Licences, hôtes dédiés, GPU</strong> — tarifés au catalogue, absents du modèle de composition.</li>
+    </ul>
+
+    <h2>Ce que ça n’est pas</h2>
+    <p>
+      Pas un devis. Pas de remise contractuelle, pas d’engagement, pas de prix
+      en temps réel. Pour un vrai chiffre, il y a la
+      <a href="https://fr.outscale.com/tarifs/">grille publique Outscale</a> et
+      votre interlocuteur commercial. L’estimation de bige-ops sert à comparer
+      deux layouts entre eux et à éviter la mauvaise surprise d’ordre de
+      grandeur — c’est déjà beaucoup, ce n’est pas plus.
+    </p>
+
+    <h2>Doc produit Outscale (référence)</h2>
+    <ul>
+      <li><a href="https://docs.outscale.com/en/userguide/Instance-Types.html">Instance types</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Volumes.html">About volumes</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Regions-Endpoints-and-Availability-Zones.html">Regions and availability zones</a></li>
+    </ul>
+
+    <p class="doc-nav" style="margin-top:2rem"><a href="savoir.html">Sait / ne sait pas</a> · <a href="regions.html">Régions</a> · <a href="volumes-bsu.html">Volumes BSU</a> · <a href="perimetre.html">Périmètre</a></p>
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="documentation.html">Toute la doc</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="index.html#glossaire">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
+            <li><a href="omi.html">OMI · images</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Réseau &amp; région</h3>
+          <ul>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="reseau-avance.html">Réseau avancé</a></li>
+            <li><a href="lbu.html">LBU · entrée publique</a></li>
+            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark" });
+  </script>
+</body>
+</html>

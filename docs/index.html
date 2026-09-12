@@ -785,6 +785,8 @@
         Devis / bill = Outscale (et votre commercial).
         Détail + canal experts :
         <a href="savoir.html">ce que bige-ops sait / ne sait pas</a>.
+        Le calcul ligne par ligne — et surtout ce qu’il ne compte pas —
+        est sur <a href="catalogue-prix.html">catalogue de prix</a>.
       </p>
       <p class="keywords">
         <a class="term" href="#g-estimate">estimate</a> ·
@@ -1011,7 +1013,9 @@
         Security Groups · LBU ·
         <a class="term" href="#g-vm">VM</a> ·
         pods ·
-        <a href="reseau.html">principes</a>
+        <a href="reseau.html">principes</a> ·
+        <a href="reseau-avance.html">NAT, routes, EIP</a> ·
+        <a href="lbu.html">LBU</a>
       </p>
     </section>
 
@@ -1042,7 +1046,8 @@
         <a class="term" href="#g-oks">OKS</a> ·
         contrat tenant · dry run ·
         <a class="term" href="#g-secnumcloud">SecNumCloud</a> ·
-        estimate ≠ entitlement
+        estimate ≠ entitlement ·
+        <a href="regions.html">régions &amp; SecNumCloud</a>
       </p>
     </section>
 
@@ -1100,7 +1105,8 @@
         Pas un MSP, pas votre DBA, pas la négociation commerciale Outscale.
       </p>
       <p>
-        Les détails :
+        Tout est regroupé sur <a href="documentation.html"><strong>la page
+        documentation</strong></a>. Les détails :
         <a href="perimetre.html">périmètre</a>,
         <a href="savoir.html">sait / ne sait pas</a>
         (pricing, capacités, canal experts Outscale),
@@ -1111,7 +1117,13 @@
         <a href="secrets.html">secrets &amp; coffre</a>,
         <a href="agent.html">assistant IA</a>,
         <a href="vms.html">VMs · VPS</a>,
+        <a href="volumes-bsu.html">volumes BSU &amp; snapshots</a>,
+        <a href="omi.html">OMI · images</a>,
         <a href="reseau.html">réseau · ouvrir ou non</a>,
+        <a href="reseau-avance.html">réseau avancé</a>,
+        <a href="lbu.html">LBU · entrée publique</a>,
+        <a href="regions.html">régions &amp; SecNumCloud</a>,
+        <a href="catalogue-prix.html">catalogue de prix</a>,
         <a href="oks.html">OKS &amp; pods</a>,
         <a href="cli.html">CLI · app · OKS</a>,
         <a href="bases.html">bases de données</a>,
@@ -1221,6 +1233,14 @@
         <dd>Pare-feu Outscale au niveau VM : règles entrantes / sortantes. C’est lui qui décide si un port est <strong>ouvert ou non</strong>. Voir <a href="reseau.html">reseau.html</a>.</dd>
         <dt id="g-omi">OMI</dt>
         <dd>Outscale Machine Image — l’image système d’une VM. bige-ops <strong>choisit</strong> une OMI existante de votre compte ; il n’en fabrique pas. Construire vos propres images : hors starter kit.</dd>
+        <dt id="g-bsu">BSU / volume</dt>
+        <dd>Le stockage bloc d’Outscale, attaché à une VM. Types <code>gp2</code> (SSD polyvalent) et <code>io1</code> (IOPS provisionnées, imposé au disque racine des bases). Pas de NVMe modélisé. <a href="volumes-bsu.html">Détail</a>.</dd>
+        <dt id="g-nat">NAT service</dt>
+        <dd>Passerelle de sortie pour une subnet privée. <strong>Désactivée par défaut</strong> : sans elle, une VM data ne télécharge rien. Facturée à l’heure. <a href="reseau-avance.html">Détail</a>.</dd>
+        <dt id="g-listener">Listener (LBU)</dt>
+        <dd>La règle d’écoute d’un load balancer : port d’entrée, port backend. bige-ops en génère <strong>un seul, en HTTP</strong> — aucun certificat TLS n’est produit. <a href="lbu.html">Détail</a>.</dd>
+        <dt id="g-zone">Zone de disponibilité</dt>
+        <dd>Un projet en pose <strong>une seule</strong>, par défaut la première de la région. Donc pas de haute disponibilité multi-zone. <a href="regions.html">Détail</a>.</dd>
         <dt id="g-coffre">Coffre (vault local)</dt>
         <dd>Le magasin de secrets applicatifs de la simulation (<code>vault.local.json</code>), déversé en <code>.env</code> au deploy. <strong>Local</strong>, jamais poussé sur Git. Pas un vault SaaS. Voir <a href="secrets.html">secrets.html</a>.</dd>
         <dt id="g-dry-run">Dry run</dt>
@@ -1235,10 +1255,12 @@
         <div>
           <h3>Comprendre</h3>
           <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="documentation.html">Toute la doc</a></li>
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="savoir.html">Sait / ne sait pas</a></li>
             <li><a href="install.html">Installer &amp; mettre à jour</a></li>
-            <li><a href="#glossaire">Glossaire</a></li>
+            <li><a href="index.html#glossaire">Glossaire</a></li>
           </ul>
         </div>
         <div>
@@ -1246,11 +1268,21 @@
           <ul>
             <li><a href="layouts.html">Layouts &amp; topologies</a></li>
             <li><a href="vms.html">VMs · VPS</a></li>
-            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
-            <li><a href="oks.html">OKS &amp; pods</a></li>
+            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
+            <li><a href="omi.html">OMI · images</a></li>
             <li><a href="bases.html">Bases de données</a></li>
             <li><a href="bases-complexes.html">Bases complexes</a></li>
             <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Réseau &amp; région</h3>
+          <ul>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="reseau-avance.html">Réseau avancé</a></li>
+            <li><a href="lbu.html">LBU · entrée publique</a></li>
+            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
           </ul>
         </div>
         <div>
@@ -1258,6 +1290,7 @@
           <ul>
             <li><a href="simulations.html">Simulations &amp; promote</a></li>
             <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
             <li><a href="secrets.html">Secrets &amp; coffre</a></li>
             <li><a href="agent.html">Assistant IA</a></li>
             <li><a href="cli.html">CLI · app · OKS</a></li>

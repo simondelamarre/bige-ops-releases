@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Volumes BSU &amp; snapshots — bige-ops</title>
+  <meta name="description" content="Disque racine, volumes de données, types gp2/io1, snapshots : ce que bige-ops pilote sur le stockage bloc Outscale." />
+  <link rel="canonical" href="https://bige.dev/volumes-bsu.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="bige-ops" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:url" content="https://bige.dev/volumes-bsu.html" />
+  <meta property="og:title" content="Volumes BSU &amp; snapshots — bige-ops" />
+  <meta property="og:description" content="Disque racine, volumes de données, types gp2/io1, snapshots : ce que bige-ops pilote sur le stockage bloc Outscale." />
+  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="vms.html">VMs</a> · <a href="bases.html">Bases</a> · <a href="oos.html">OOS</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Beta démo</span>
+    </div>
+    <h1>Volumes BSU &amp; snapshots</h1>
+    <p class="lead">Le disque, c’est là que ça fait mal. <strong>BSU</strong> est le stockage bloc d’Outscale : un volume attaché à une VM. bige-ops en pilote une partie — mieux vaut savoir laquelle avant de poser une base dessus.</p>
+    <div class="callout">
+      <strong>Principe court.</strong>
+      Le disque racine suit la VM et meurt avec elle. Ce qui doit survivre va
+      sur un volume séparé, ou dans <a href="oos.html">OOS</a>.
+    </div>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  VM[VM] --> ROOT["disque racine<br/>gp2 ou io1"]
+  VM --> DATA["volume de données<br/>gp2 / io1"]
+  DATA --> SNAP["snapshot BSU"]
+  DATA -.->|dump applicatif| OOS[bucket OOS]
+      </pre>
+      <figcaption>Racine jetable, données sur volume, sauvegarde applicative dans OOS.</figcaption>
+    </figure>
+
+    <h2>Les trois types que bige-ops connaît</h2>
+    <table>
+      <tr><th>Type</th><th>Pour quoi</th><th>Dans l’app</th></tr>
+      <tr><td><code>gp2</code></td><td>SSD polyvalent, le défaut raisonnable</td><td>choisissable</td></tr>
+      <tr><td><code>io1</code></td><td>SSD à IOPS provisionnées, pour une base qui écrit</td><td>choisissable sur un volume ; <strong>imposé automatiquement</strong> au disque racine des rôles mongo, postgres et weaviate</td></tr>
+      <tr><td><code>standard</code></td><td>magnétique, froid</td><td>reconnu au chiffrage, rarement pertinent</td></tr>
+    </table>
+    <p>
+      Pas de NVMe. Le catalogue embarqué ne le modélise pas, y compris en
+      région SecNumCloud — voir <a href="savoir.html">ce que le kit sait</a>.
+    </p>
+
+    <h2>Le disque racine</h2>
+    <ul>
+      <li>Sa <strong>taille</strong> est pilotée par le formulaire de la VM.</li>
+      <li>Son <strong>type</strong> ne l’est pas : <code>io1</code> si le rôle est une base, <code>gp2</code> sinon.</li>
+      <li>Les <strong>IOPS</strong> d’un racine <code>io1</code> sont à 3000 et ne sont réglables ni dans l’app, ni dans le YAML.</li>
+      <li>À l’import d’un compte existant, le racine d’une VM n’est pas repris comme composant séparé — il reste attaché à sa VM.</li>
+    </ul>
+    <div class="callout callout-warn">
+      <strong>Écart de chiffrage connu.</strong>
+      L’estimation compte toujours le disque racine en <code>gp2</code>, même
+      quand le Terraform le crée en <code>io1</code> pour une base. Sur un
+      layout avec VM data, la facture réelle sera <em>au-dessus</em> de
+      l’estimation. C’est identifié et corrigé au backlog — en attendant,
+      lisez le chiffre d’un layout data comme un plancher.
+    </div>
+
+    <h2>Les volumes de données</h2>
+    <p>
+      Le composant <strong>Volume</strong> se pose sur le canvas Visual. Il est
+      réellement éditable : taille en GiB, type <code>gp2</code> ou
+      <code>io1</code>, VM d’attache, nom de device. Il génère du Terraform, il
+      est importé depuis un compte existant, et il est compté dans
+      l’estimation — IOPS comprises quand elles sont renseignées.
+    </p>
+
+    <h2>Snapshots</h2>
+    <ul>
+      <li>Le composant <strong>Snapshot</strong> génère du Terraform et apparaît à l’inventaire.</li>
+      <li>Un snapshot vu sur votre compte <strong>n’est pas réimporté</strong> en YAML : il reste une ligne d’inventaire.</li>
+      <li>Il est chiffré dans l’estimation <em>d’inventaire</em>, pas dans celle d’un projet.</li>
+      <li>Ne pas confondre avec les <a href="simulations.html">snapshots de configuration</a>, qui sont des sauvegardes locales de vos fichiers, pas du cloud.</li>
+    </ul>
+
+    <h2>Ce que ça n’est pas</h2>
+    <ul>
+      <li>Pas de redimensionnement à chaud piloté depuis l’app.</li>
+      <li>Pas de politique de rétention ni de sauvegarde planifiée — pour la sauvegarde applicative, c’est <a href="oos.html">OOS</a>.</li>
+      <li>Pas de chiffrement de volume piloté.</li>
+    </ul>
+
+    <h2>Doc produit Outscale (référence)</h2>
+    <ul>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Volumes.html">About volumes</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/Attaching-a-Volume-to-a-VM.html">Attaching a volume to a VM</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/Modifying-a-Volume.html">Modifying a volume</a></li>
+      <li><a href="https://docs.outscale.com/en/userguide/About-Snapshots.html">About snapshots</a></li>
+    </ul>
+
+    <p class="doc-nav" style="margin-top:2rem"><a href="bases.html">Bases de données</a> · <a href="catalogue-prix.html">Catalogue de prix</a> · <a href="inventory.html">Inventaire &amp; import</a></p>
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="documentation.html">Toute la doc</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="index.html#glossaire">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
+            <li><a href="omi.html">OMI · images</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Réseau &amp; région</h3>
+          <ul>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="reseau-avance.html">Réseau avancé</a></li>
+            <li><a href="lbu.html">LBU · entrée publique</a></li>
+            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark" });
+  </script>
+</body>
+</html>
