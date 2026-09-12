@@ -175,9 +175,49 @@
     .actions a.secondary:hover { border-color: var(--mist); }
 
     .brew {
+      display: flex;
+      align-items: stretch;
+      gap: 0.5rem;
       margin: 0;
       font-size: 0.875rem;
       color: var(--mist);
+      max-width: 34rem;
+    }
+
+    .brew code {
+      flex: 1 1 auto;
+      min-width: 0;
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      padding: 0.55rem 0.7rem;
+      line-height: 1.5;
+    }
+
+    .copy-btn {
+      flex: 0 0 auto;
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--white);
+      background: var(--ink-900);
+      border: 1px solid var(--ink-600);
+      padding: 0 0.85rem;
+      cursor: pointer;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .copy-btn:hover { border-color: var(--mist); }
+
+    .copy-btn:focus-visible {
+      outline: 2px solid var(--accent-bright);
+      outline-offset: 2px;
+    }
+
+    .copy-btn[data-copied="true"] {
+      color: var(--accent-bright);
+      border-color: var(--accent-bright);
     }
 
     code {
@@ -516,6 +556,63 @@
     }
 
     .download-sticky a.secondary:visited { color: #c5cad3; }
+
+    /* ---- Mobile ---- */
+    @media (max-width: 640px) {
+      body { padding-bottom: 5.5rem; }
+
+      main { padding: 1.75rem 1.1rem 2rem; }
+
+      .baseline { font-size: 1.05rem; margin-bottom: 1.25rem; }
+
+      /* CTAs pleine largeur : pouce d’abord */
+      .actions { gap: 0.55rem; }
+      .actions a { flex: 1 1 100%; padding: 0.85rem 1rem; }
+
+      .brew { flex-direction: column; gap: 0.4rem; max-width: none; }
+      .brew code { font-size: 0.78rem; }
+      .copy-btn { padding: 0.6rem 1rem; width: 100%; }
+
+      /* Sommaire : liste lisible, pas une soupe de liens */
+      .toc { padding: 0.9rem 1rem; }
+      .toc ul {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.5rem 0.9rem;
+      }
+      .toc li { min-width: 0; }
+      .toc a {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 0.15rem 0;
+      }
+
+      .block { margin-bottom: 1.65rem; padding-bottom: 1.65rem; }
+      .block p { font-size: 1rem; }
+      .block .title, .block h1 { font-size: 1.3rem; }
+
+      .keywords { font-size: 0.9rem; }
+
+      .callout { padding: 0.8rem 0.9rem; font-size: 0.95rem; }
+
+      .glossary dd { font-size: 0.95rem; }
+
+      .site-footer .cols { grid-template-columns: 1fr; gap: 1.1rem; }
+
+      /* Barre collante : une seule action prioritaire */
+      .download-sticky { gap: 0.5rem; padding: 0.65rem 0.9rem calc(0.65rem + env(safe-area-inset-bottom)); }
+      .download-sticky a { flex: 1 1 0; justify-content: center; font-size: 0.9rem; padding: 0.7rem 0.5rem; }
+    }
+
+    @media (max-width: 380px) {
+      .toc ul { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; scroll-behavior: auto !important; }
+    }
   </style>
 </head>
 <body>
@@ -547,7 +644,9 @@
         <a class="secondary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger Linux</a>
       </div>
       <p class="brew">
-        <code>brew tap simondelamarre/bige-ops &amp;&amp; brew install --cask bige-ops</code>
+        <code id="brew-cmd" title="brew tap simondelamarre/bige-ops &amp;&amp; brew install --cask bige-ops">brew tap simondelamarre/bige-ops &amp;&amp; brew install --cask bige-ops</code>
+        <button type="button" class="copy-btn" id="brew-copy"
+                data-target="brew-cmd" aria-label="Copier la commande Homebrew">Copier</button>
       </p>
     </div>
 
@@ -1182,6 +1281,38 @@
   </div>
 
   <script>
+    (function () {
+      var btn = document.getElementById("brew-copy");
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        var src = document.getElementById(btn.dataset.target);
+        if (!src) return;
+        var text = src.textContent.trim();
+        var done = function () {
+          var label = btn.textContent;
+          btn.textContent = "Copié";
+          btn.dataset.copied = "true";
+          setTimeout(function () {
+            btn.textContent = label;
+            btn.removeAttribute("data-copied");
+          }, 1800);
+        };
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).then(done);
+          return;
+        }
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "absolute";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); done(); } catch (e) {}
+        document.body.removeChild(ta);
+      });
+    })();
+
     (function () {
       var inline = document.getElementById("download");
       var sticky = document.getElementById("download-sticky");
