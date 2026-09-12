@@ -28,6 +28,7 @@
     href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
     rel="stylesheet"
   />
+  <link rel="stylesheet" href="site-nav.css" />
   <style>
     :root {
       --ink-950: #0b0d10;
@@ -462,8 +463,7 @@
     }
 
     .doc-layout {
-      display: grid;
-      grid-template-columns: minmax(11.5rem, 13.5rem) minmax(0, 1fr);
+      display: block;
       gap: 1.75rem 2rem;
       align-items: start;
       margin: 0 0 1rem;
@@ -771,15 +771,40 @@
 </head>
 <body>
   <a class="skip-link" href="#contenu">Aller au contenu</a>
-  <!-- guide build: 2026-09-12-from-home -->
-  <header class="site-top">
-    <button type="button" class="nav-toggle" id="nav-toggle"
-            aria-expanded="false" aria-controls="site-nav" aria-label="Ouvrir le menu">
-      <span class="nav-toggle-bars" aria-hidden="true"></span>
-    </button>
-    <a class="top-brand" href="index.html">bige<span class="ops">-ops</span></a>
+<!-- bige shared chrome -->
+  <header class="bige-top">
+    <a class="bige-top-brand" href="index.html">bige<span class="ops">-ops</span></a>
+    <div class="bige-top-actions">
+      <a class="bige-top-cta" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a>
+      <button type="button" class="bige-nav-toggle" id="bige-nav-toggle"
+              aria-expanded="false" aria-controls="bige-nav" aria-label="Ouvrir le menu">
+        <span class="bige-nav-toggle-bars" aria-hidden="true"></span>
+      </button>
+    </div>
   </header>
-  <main id="contenu">
+
+  <button type="button" class="bige-nav-backdrop" id="bige-nav-backdrop" hidden aria-label="Fermer le menu"></button>
+
+  <nav class="bige-nav" id="bige-nav" aria-label="Menu du site">
+    <p class="bige-nav-label">Menu</p>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="guide.html">Guide</a></li>
+      <li><a href="documentation.html">Documentation</a></li>
+      <li><a href="install.html">Installer</a></li>
+      <li><a href="perimetre.html">Périmètre</a></li>
+      <li><a href="layouts.html">Layouts</a></li>
+      <li><a href="savoir.html">Sait / ne sait pas</a></li>
+      <li><a href="guide.html#glossaire">Glossaire</a></li>
+    </ul>
+    <p class="bige-nav-label spaced">Télécharger</p>
+    <ul class="bige-nav-download">
+      <li><a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">macOS &amp; Linux</a></li>
+    </ul>
+  </nav>
+
+  <!-- guide build: 2026-09-12-unified-left-nav -->
+<main id="contenu">
     <div class="hero">
     <div class="brand-row">
       <p class="brand">bige<span class="ops">-ops</span></p>
@@ -816,34 +841,7 @@
     </div><!-- /.hero -->
 
     <div class="doc-layout">
-      <div class="nav-backdrop" id="nav-backdrop" hidden></div>
-      <nav class="site-nav" id="site-nav" aria-label="Menu">
-        <p class="nav-label">Site</p>
-        <ul>
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="documentation.html">Documentation</a></li>
-          <li><a href="install.html">Installer</a></li>
-          <li><a href="perimetre.html">Périmètre</a></li>
-          <li><a href="layouts.html">Layouts</a></li>
-          <li><a href="savoir.html">Sait / ne sait pas</a></li>
-        </ul>
-        <p class="nav-label" style="margin-top:1.25rem">Dans cette page</p>
-        <ul>
-          <li><a href="#zero-hero">Zero → Hero</a></li>
-          <li><a href="#visual">Visual · Flow</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#securite">Sécurité</a></li>
-          <li><a href="#git">Git privé</a></li>
-          <li><a href="#agent-keys">Assistant IA</a></li>
-          <li><a href="#reseau">Réseau</a></li>
-          <li><a href="#oks-warn">OKS · attention</a></li>
-          <li><a href="#cli">CLI</a></li>
-          <li><a href="#perimetre">Périmètre</a></li>
-          <li><a href="#glossaire">Glossaire</a></li>
-        </ul>
-      </nav>
-
-      <div class="doc-body">
+<div class="doc-body">
 
     <section class="block" id="zero-hero">
       <h2>Zero → Hero</h2>
@@ -1543,78 +1541,7 @@
     })();
 
     /* Hamburger mobile + nav active au scroll (desktop sidebar scroll-to) */
-    (function () {
-      var toggle = document.getElementById("nav-toggle");
-      var nav = document.getElementById("site-nav");
-      var backdrop = document.getElementById("nav-backdrop");
-      if (!toggle || !nav) return;
-
-      var links = Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]'));
-      var sectionIds = links.map(function (a) {
-        return a.getAttribute("href").slice(1);
-      }).filter(Boolean);
-
-      function setOpen(open) {
-        document.body.classList.toggle("nav-open", open);
-        toggle.setAttribute("aria-expanded", open ? "true" : "false");
-        toggle.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
-        if (backdrop) backdrop.hidden = !open;
-        if (open) {
-          var active = nav.querySelector("a.is-active") || links[0];
-          if (active) active.focus();
-        } else {
-          toggle.focus();
-        }
-      }
-
-      function closeNav() {
-        if (document.body.classList.contains("nav-open")) setOpen(false);
-      }
-
-      toggle.addEventListener("click", function () {
-        setOpen(!document.body.classList.contains("nav-open"));
-      });
-      if (backdrop) {
-        backdrop.addEventListener("click", closeNav);
-      }
-      document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") closeNav();
-      });
-
-      links.forEach(function (a) {
-        a.addEventListener("click", function () {
-          closeNav();
-        });
-      });
-
-      function setActive(id) {
-        links.forEach(function (a) {
-          var on = a.getAttribute("href") === "#" + id;
-          a.classList.toggle("is-active", on);
-          if (on) a.setAttribute("aria-current", "location");
-          else a.removeAttribute("aria-current");
-        });
-      }
-
-      var sections = sectionIds
-        .map(function (id) { return document.getElementById(id); })
-        .filter(Boolean);
-
-      if ("IntersectionObserver" in window && sections.length) {
-        var current = sectionIds[0];
-        var observer = new IntersectionObserver(
-          function (entries) {
-            entries.forEach(function (entry) {
-              if (entry.isIntersecting) current = entry.target.id;
-            });
-            if (current) setActive(current);
-          },
-          { rootMargin: "-20% 0px -65% 0px", threshold: 0 }
-        );
-        sections.forEach(function (el) { observer.observe(el); });
-        setActive(current);
-      }
-    })();
-  </script>
+</script>
+  <script src="site-nav.js" defer></script>
 </body>
 </html>

@@ -19,12 +19,44 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site-nav.css" />
   <link rel="stylesheet" href="site.css" />
 </head>
 <body>
+<!-- bige shared chrome -->
+  <header class="bige-top">
+    <a class="bige-top-brand" href="index.html">bige<span class="ops">-ops</span></a>
+    <div class="bige-top-actions">
+      <a class="bige-top-cta" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a>
+      <button type="button" class="bige-nav-toggle" id="bige-nav-toggle"
+              aria-expanded="false" aria-controls="bige-nav" aria-label="Ouvrir le menu">
+        <span class="bige-nav-toggle-bars" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+  <button type="button" class="bige-nav-backdrop" id="bige-nav-backdrop" hidden aria-label="Fermer le menu"></button>
+
+  <nav class="bige-nav" id="bige-nav" aria-label="Menu du site">
+    <p class="bige-nav-label">Menu</p>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="guide.html">Guide</a></li>
+      <li><a href="documentation.html">Documentation</a></li>
+      <li><a href="install.html">Installer</a></li>
+      <li><a href="perimetre.html">Périmètre</a></li>
+      <li><a href="layouts.html">Layouts</a></li>
+      <li><a href="savoir.html">Sait / ne sait pas</a></li>
+      <li><a href="guide.html#glossaire">Glossaire</a></li>
+    </ul>
+    <p class="bige-nav-label spaced">Télécharger</p>
+    <ul class="bige-nav-download">
+      <li><a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">macOS &amp; Linux</a></li>
+    </ul>
+  </nav>
+
   <main>
-    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="guide.html#glossaire">Glossaire</a> · <a href="install.html">Installer</a></p>
-    <div class="brand-row">
+<div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
       <span class="brand-badge">Beta démo</span>
     </div>
@@ -137,5 +169,6 @@
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark" });
   </script>
+  <script src="site-nav.js" defer></script>
 </body>
 </html>
