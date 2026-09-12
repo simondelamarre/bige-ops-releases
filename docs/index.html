@@ -25,6 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site-nav.css" />
   <style>
     :root {
       --ink-950: #0b0d10;
@@ -85,222 +86,6 @@
       text-decoration: none;
     }
     .skip:focus { left: 1rem; top: 1rem; }
-
-    /* ---- Header: brand + hamburger only on mobile ---- */
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 210;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      min-width: 0;
-      width: 100%;
-      max-width: 100%;
-      padding: 0.75rem 1rem;
-      /* fond opaque — pas de backdrop-filter (sinon fixed du drawer
-         se rattache au header et déborde en largeur sur mobile) */
-      background: #0b0d10;
-      border-bottom: 1px solid var(--ink-700);
-    }
-
-    .brand {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      color: #fff;
-      text-decoration: none;
-      min-width: 0;
-      flex: 0 1 auto;
-    }
-    .brand:visited, .brand:hover { color: #fff; }
-    .brand .ops { color: var(--accent-bright); }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex: 0 0 auto;
-    }
-
-    .header-cta {
-      display: none;
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 0.88rem;
-      text-decoration: none;
-      color: var(--ink-950);
-      background: var(--accent);
-      padding: 0.5rem 0.85rem;
-      border-radius: 8px;
-      white-space: nowrap;
-    }
-    .header-cta:visited { color: var(--ink-950); }
-    .header-cta:hover { background: var(--accent-bright); color: var(--ink-950); }
-
-    .nav-toggle {
-      width: 2.5rem;
-      height: 2.5rem;
-      border: 1px solid var(--ink-700);
-      border-radius: 8px;
-      background: var(--ink-900);
-      color: #fff;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .nav-toggle:focus-visible {
-      outline: 2px solid var(--accent-bright);
-      outline-offset: 2px;
-    }
-    .nav-toggle-bars {
-      display: block;
-      width: 1.05rem;
-      height: 2px;
-      background: currentColor;
-      box-shadow: 0 -5px 0 currentColor, 0 5px 0 currentColor;
-      position: relative;
-    }
-    body.nav-open .nav-toggle-bars {
-      height: 0;
-      box-shadow: none;
-    }
-    body.nav-open .nav-toggle-bars::before,
-    body.nav-open .nav-toggle-bars::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      width: 1.05rem;
-      height: 2px;
-      background: currentColor;
-    }
-    body.nav-open .nav-toggle-bars::before { transform: rotate(45deg); }
-    body.nav-open .nav-toggle-bars::after { transform: rotate(-45deg); }
-
-    /* Mobile overlay menu — full screen, above content */
-    .nav-desktop {
-      display: none;
-    }
-
-    .nav-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      display: flex;
-      flex-direction: column;
-      background: rgba(11, 13, 16, 0.97);
-      padding: 4.75rem 1.25rem 2rem;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition: opacity 0.2s ease, visibility 0.2s ease;
-    }
-    body.nav-open .nav-overlay {
-      display: flex !important; /* beat [hidden] if still present */
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-    }
-    .nav-overlay[hidden] {
-      display: none !important;
-    }
-    body.nav-open .nav-overlay[hidden] {
-      display: flex !important;
-    }
-
-    .nav-overlay .nav-label {
-      font-family: var(--font-display);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent-bright);
-      margin: 0 0 0.75rem;
-    }
-    .nav-overlay .nav-label.spaced { margin-top: 1.5rem; }
-
-    .nav-overlay ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-    }
-    .nav-overlay a {
-      display: block;
-      text-decoration: none;
-      color: var(--white);
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      padding: 0.85rem 0.35rem;
-      border-bottom: 1px solid var(--ink-700);
-    }
-    .nav-overlay a:visited { color: var(--white); }
-    .nav-overlay a:hover { color: var(--accent-bright); }
-    .nav-overlay a[aria-current="page"] { color: var(--accent-bright); }
-
-    .nav-overlay .nav-download a {
-      font-size: 1.05rem;
-      border-bottom: 0;
-      margin-top: 0.35rem;
-      padding: 0.85rem 1rem;
-      text-align: center;
-      background: var(--accent);
-      color: var(--ink-950);
-      border-radius: 8px;
-    }
-    .nav-overlay .nav-download a:visited { color: var(--ink-950); }
-    .nav-overlay .nav-download a:hover {
-      background: var(--accent-bright);
-      color: var(--ink-950);
-    }
-
-    /* Desktop: inline nav in header, hide overlay + hamburger */
-    @media (min-width: 900px) {
-      .site-header {
-        padding: 0.85rem clamp(1.25rem, 4vw, 2rem);
-        gap: 1rem;
-      }
-      .header-cta { display: inline-flex; }
-      .nav-toggle { display: none; }
-      .nav-overlay { display: none !important; }
-
-      .nav-desktop {
-        display: flex;
-        align-items: center;
-        gap: 0.15rem;
-        margin-left: auto;
-        min-width: 0;
-      }
-      .nav-desktop a {
-        font-size: 0.92rem;
-        padding: 0.4rem 0.55rem;
-        white-space: nowrap;
-        text-decoration: none;
-        color: var(--mist);
-        border-radius: 6px;
-      }
-      .nav-desktop a:visited { color: var(--mist); }
-      .nav-desktop a:hover {
-        color: #fff;
-        background: rgba(94, 196, 180, 0.08);
-      }
-      .nav-desktop a[aria-current="page"] {
-        color: #fff;
-        background: rgba(94, 196, 180, 0.12);
-      }
-      .header-actions { margin-left: 0.35rem; }
-    }
-
     /* ---- Main ---- */
     main {
       width: 100%;
@@ -638,48 +423,40 @@
 </head>
 <body>
   <a class="skip" href="#contenu">Aller au contenu</a>
-  <!-- landing build: 2026-09-12-nav-overlay -->
-
-  <header class="site-header">
-    <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-
-    <nav class="nav-desktop" aria-label="Menu principal">
-      <a href="index.html" aria-current="page">Accueil</a>
-      <a href="guide.html">Guide</a>
-      <a href="documentation.html">Documentation</a>
-      <a href="install.html">Installer</a>
-    </nav>
-
-    <div class="header-actions">
-      <a class="header-cta" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a>
-      <button type="button" class="nav-toggle" id="nav-toggle"
-              aria-expanded="false" aria-controls="nav-overlay" aria-label="Ouvrir le menu">
-        <span class="nav-toggle-bars" aria-hidden="true"></span>
+<!-- bige shared chrome -->
+  <header class="bige-top">
+    <a class="bige-top-brand" href="index.html">bige<span class="ops">-ops</span></a>
+    <div class="bige-top-actions">
+      <a class="bige-top-cta" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a>
+      <button type="button" class="bige-nav-toggle" id="bige-nav-toggle"
+              aria-expanded="false" aria-controls="bige-nav" aria-label="Ouvrir le menu">
+        <span class="bige-nav-toggle-bars" aria-hidden="true"></span>
       </button>
     </div>
   </header>
 
-  <div class="nav-overlay" id="nav-overlay" hidden>
-    <nav aria-label="Menu mobile">
-      <p class="nav-label">Menu</p>
-      <ul>
-        <li><a href="index.html" aria-current="page">Accueil</a></li>
-        <li><a href="guide.html">Guide</a></li>
-        <li><a href="documentation.html">Documentation</a></li>
-        <li><a href="install.html">Installer</a></li>
-        <li><a href="perimetre.html">Périmètre</a></li>
-        <li><a href="layouts.html">Layouts</a></li>
-        <li><a href="savoir.html">Sait / ne sait pas</a></li>
-        <li><a href="guide.html#glossaire">Glossaire</a></li>
-      </ul>
-      <p class="nav-label spaced">Télécharger</p>
-      <ul class="nav-download">
-        <li><a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">macOS &amp; Linux</a></li>
-      </ul>
-    </nav>
-  </div>
+  <button type="button" class="bige-nav-backdrop" id="bige-nav-backdrop" hidden aria-label="Fermer le menu"></button>
 
-  <main id="contenu">
+  <nav class="bige-nav" id="bige-nav" aria-label="Menu du site">
+    <p class="bige-nav-label">Menu</p>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="guide.html">Guide</a></li>
+      <li><a href="documentation.html">Documentation</a></li>
+      <li><a href="install.html">Installer</a></li>
+      <li><a href="perimetre.html">Périmètre</a></li>
+      <li><a href="layouts.html">Layouts</a></li>
+      <li><a href="savoir.html">Sait / ne sait pas</a></li>
+      <li><a href="guide.html#glossaire">Glossaire</a></li>
+    </ul>
+    <p class="bige-nav-label spaced">Télécharger</p>
+    <ul class="bige-nav-download">
+      <li><a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">macOS &amp; Linux</a></li>
+    </ul>
+  </nav>
+
+  <!-- landing build: 2026-09-12-unified-left-nav -->
+<main id="contenu">
     <div class="hero-text">
       <div class="brand-row">
         <p class="brand-lg">bige<span class="ops">-ops</span></p>
@@ -853,47 +630,7 @@
       );
       observer.observe(inline);
     })();
-
-    (function () {
-      var toggle = document.getElementById("nav-toggle");
-      var overlay = document.getElementById("nav-overlay");
-      if (!toggle || !overlay) return;
-
-      function setOpen(open) {
-        document.body.classList.toggle("nav-open", open);
-        toggle.setAttribute("aria-expanded", open ? "true" : "false");
-        toggle.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
-        overlay.hidden = !open;
-        if (open) {
-          var first = overlay.querySelector("a");
-          if (first) first.focus();
-        } else {
-          toggle.focus();
-        }
-      }
-      function closeNav() {
-        if (document.body.classList.contains("nav-open")) setOpen(false);
-      }
-
-      toggle.addEventListener("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        setOpen(!document.body.classList.contains("nav-open"));
-      });
-      document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") closeNav();
-      });
-      overlay.querySelectorAll("a").forEach(function (a) {
-        a.addEventListener("click", closeNav);
-      });
-
-      if (window.matchMedia) {
-        var mq = window.matchMedia("(min-width: 900px)");
-        var onChange = function () { if (mq.matches) closeNav(); };
-        if (mq.addEventListener) mq.addEventListener("change", onChange);
-        else if (mq.addListener) mq.addListener(onChange);
-      }
-    })();
-  </script>
+</script>
+  <script src="site-nav.js" defer></script>
 </body>
 </html>

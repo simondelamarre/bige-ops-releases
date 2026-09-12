@@ -1,0 +1,250 @@
+/* Shared site chrome — same menu on every page, opens from the left */
+:root {
+  --bige-ink-950: #0b0d10;
+  --bige-ink-900: #12151a;
+  --bige-ink-700: #252b36;
+  --bige-ink-600: #3a4354;
+  --bige-accent: #3d9e8f;
+  --bige-accent-bright: #5ec4b4;
+  --bige-mist: #9aa3b2;
+  --bige-white: #f3f5f8;
+  --bige-font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --bige-font-display: "Space Grotesk", ui-sans-serif, sans-serif;
+  --bige-nav-width: 16.5rem;
+  --bige-top-height: 3.5rem;
+}
+
+body.bige-nav-open {
+  overflow: hidden;
+}
+
+/* ---- Top bar ---- */
+.bige-top {
+  position: sticky;
+  top: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: var(--bige-top-height);
+  padding: 0.65rem 1rem;
+  background: #0b0d10;
+  border-bottom: 1px solid var(--bige-ink-700);
+}
+
+.bige-top-brand {
+  font-family: var(--bige-font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: #fff;
+  text-decoration: none;
+  min-width: 0;
+}
+.bige-top-brand:visited,
+.bige-top-brand:hover { color: #fff; }
+.bige-top-brand .ops { color: var(--bige-accent-bright); }
+
+.bige-top-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+}
+
+.bige-top-cta {
+  display: none;
+  font-family: var(--bige-font-display);
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-decoration: none;
+  color: var(--bige-ink-950);
+  background: var(--bige-accent);
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.bige-top-cta:visited { color: var(--bige-ink-950); }
+.bige-top-cta:hover { background: var(--bige-accent-bright); color: var(--bige-ink-950); }
+
+.bige-nav-toggle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--bige-ink-700);
+  border-radius: 8px;
+  background: var(--bige-ink-900);
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 320;
+}
+.bige-nav-toggle:focus-visible {
+  outline: 2px solid var(--bige-accent-bright);
+  outline-offset: 2px;
+}
+.bige-nav-toggle-bars {
+  display: block;
+  width: 1.05rem;
+  height: 2px;
+  background: currentColor;
+  box-shadow: 0 -5px 0 currentColor, 0 5px 0 currentColor;
+  position: relative;
+}
+body.bige-nav-open .bige-nav-toggle-bars {
+  height: 0;
+  box-shadow: none;
+}
+body.bige-nav-open .bige-nav-toggle-bars::before,
+body.bige-nav-open .bige-nav-toggle-bars::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 1.05rem;
+  height: 2px;
+  background: currentColor;
+}
+body.bige-nav-open .bige-nav-toggle-bars::before { transform: rotate(45deg); }
+body.bige-nav-open .bige-nav-toggle-bars::after { transform: rotate(-45deg); }
+
+/* ---- Backdrop ---- */
+.bige-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 280;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+body.bige-nav-open .bige-nav-backdrop {
+  opacity: 1;
+  pointer-events: auto;
+}
+.bige-nav-backdrop[hidden] { display: none !important; }
+body.bige-nav-open .bige-nav-backdrop[hidden] { display: block !important; }
+
+/* ---- Left drawer (same panel everywhere) ---- */
+.bige-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 290;
+  width: min(var(--bige-nav-width), 86vw);
+  max-width: 100%;
+  margin: 0;
+  padding: 4.75rem 1rem 2rem;
+  background: var(--bige-ink-950);
+  border-right: 1px solid var(--bige-ink-700);
+  transform: translateX(-105%);
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 0.22s ease, visibility 0.22s ease;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+body.bige-nav-open .bige-nav {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+}
+.bige-nav[hidden] { display: none !important; }
+body.bige-nav-open .bige-nav[hidden] { display: block !important; }
+
+.bige-nav .bige-nav-label {
+  font-family: var(--bige-font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bige-accent-bright);
+  margin: 0 0 0.7rem;
+}
+.bige-nav .bige-nav-label.spaced { margin-top: 1.4rem; }
+
+.bige-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.bige-nav a {
+  display: block;
+  text-decoration: none;
+  color: var(--bige-mist);
+  font-size: 1rem;
+  padding: 0.55rem 0.6rem;
+  border-radius: 6px;
+  border-left: 2px solid transparent;
+}
+.bige-nav a:visited { color: var(--bige-mist); }
+.bige-nav a:hover {
+  color: #fff;
+  background: rgba(94, 196, 180, 0.08);
+}
+.bige-nav a[aria-current="page"] {
+  color: #fff;
+  background: rgba(94, 196, 180, 0.12);
+  border-left-color: var(--bige-accent-bright);
+}
+
+.bige-nav .bige-nav-download a {
+  margin-top: 0.35rem;
+  text-align: center;
+  background: var(--bige-accent);
+  color: var(--bige-ink-950);
+  font-family: var(--bige-font-display);
+  font-weight: 600;
+  border-left: 0;
+}
+.bige-nav .bige-nav-download a:visited { color: var(--bige-ink-950); }
+.bige-nav .bige-nav-download a:hover {
+  background: var(--bige-accent-bright);
+  color: var(--bige-ink-950);
+}
+
+/* Desktop: persistent left sidebar + room for content */
+@media (min-width: 960px) {
+  .bige-top-cta { display: inline-flex; }
+  .bige-nav-toggle { display: none; }
+  .bige-nav-backdrop { display: none !important; }
+
+  .bige-nav {
+    transform: none;
+    visibility: visible;
+    pointer-events: auto;
+    top: var(--bige-top-height);
+    padding-top: 1.25rem;
+    display: block !important;
+  }
+  .bige-nav[hidden] { display: block !important; }
+
+  /* Push page content under fixed top bar and beside sidebar */
+  body.bige-has-nav {
+    padding-left: var(--bige-nav-width);
+    padding-top: var(--bige-top-height);
+  }
+  body.bige-has-nav .bige-top {
+    position: fixed;
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bige-nav,
+  .bige-nav-backdrop { transition: none !important; }
+}
