@@ -22,6 +22,7 @@
 
 <p align="center">
   <a href="https://bige.dev/"><strong>bige.dev</strong></a> —
+  <a href="https://bige.dev/#pourquoi">pourquoi</a> ·
   <a href="https://bige.dev/#pratique">en pratique</a> ·
   <a href="https://bige.dev/#features">features</a> ·
   <a href="https://bige.dev/install.html">install</a>
