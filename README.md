@@ -1,13 +1,13 @@
 <p align="center">
-  <img src="docs/bige-ops-three-clicks.png" alt="bige-ops — design, estimate, deploy on Outscale" width="920" />
+  <img src="docs/bige-ops-three-clicks.png" alt="bige-ops — design, project, deploy on Outscale" width="920" />
 </p>
 
 <h1 align="center">LESS IS MORE</h1>
 
 <p align="center">
   <strong>Free desktop app for <a href="https://www.outscale.com/">Outscale</a> &amp; <a href="https://www.outscale.com/fr/secnumcloud/">SecNumCloud</a></strong><br/>
-  Skip blank Terraform — design · € · deploy (VMs / OKS)<br/>
-  <em>100% local. No SaaS control plane.</em>
+  Skip blank Terraform — <strong>design · project · deploy</strong> (VMs / OKS)<br/>
+  <em>Local tool. Your cloud hosts. No SaaS control plane.</em>
 </p>
 
 <p align="center">
@@ -25,6 +25,7 @@
   <a href="https://bige.dev/#pourquoi">pourquoi</a> ·
   <a href="https://bige.dev/#pratique">en pratique</a> ·
   <a href="https://bige.dev/#features">features</a> ·
+  <a href="https://bige.dev/#ecoute">écoute</a> ·
   <a href="https://bige.dev/install.html">install</a>
 </p>
 
@@ -32,17 +33,20 @@
 
 ## What it is
 
-Free desktop app for [Outscale](https://www.outscale.com/) & [SecNumCloud](https://www.outscale.com/fr/secnumcloud/): **layout → estimate (€) → apply / deploy** on *your* account. Same engine in the GUI and the CLI. Fully local.
+Free desktop app: **layout → project → apply / deploy** on *your* cloud account. Same engine in the GUI and the CLI.
 
-Terraform / OKS specs / app YAML = **materialization**, not the product.
+- **The tool deploys. The cloud hosts.** Not a local Docker runner.
+- **Outscale & SecNumCloud** are ready today. Other clouds come next — we don’t pretend to be multi-cloud magic.
+- Terraform / OKS specs / app YAML = **materialization**, not the product.
 
 | | |
 |---|---|
-| Price | **Free** — Outscale bill stays yours |
-| Runs | **Your machine** |
-| Regions | `eu-west-2` · `cloudgouv-eu-west-1` (**SecNumCloud**) |
+| Price | **Free** — your cloud bill stays yours |
+| Tool | Runs on **your machine** |
+| Stack | Runs on **your cloud** |
+| Regions (Outscale) | `eu-west-2` · `cloudgouv-eu-west-1` (**SecNumCloud**) |
 
-No Outscale account yet? Stay in **projection** (design + € offline). Login only for inventory, plan, apply.
+No account yet? Stay in **projection** (design offline). Login only for inventory, plan, apply.
 
 Starters: Node / Python / Java / Go / Elixir / PHP × Mongo / Redis / Postgres / Weaviate × VMs and/or **OKS**. Details on [bige.dev](https://bige.dev/).
 
@@ -51,10 +55,16 @@ Starters: Node / Python / Java / Go / Elixir / PHP × Mongo / Redis / Postgres /
 ## What’s new in 0.5
 
 - **Repos & risk** — scan linked repos, exposed risks, **MD / PDF** reports (internal or RSSI)
-- **Instant estimate** — local cache + tariffs page
+- **Estimate cache** — local tariffs when available (projection first; gaps are OK)
 - **OKS logs** — `kubectl` pod logs from the app
 
-**In progress / next:** fuller vuln scan · credits & account · on-demand CLI tooling — [roadmap on the site](https://bige.dev/#feuille-de-route).
+**In progress / next:** fuller vuln scan · credits & account · other clouds · on-demand CLI tooling — [roadmap](https://bige.dev/#features).
+
+---
+
+## Secrets
+
+Coffre **local** first. Optional sync to backends **you** control: GitHub Actions secrets, HashiCorp Vault, Fly. No bige-ops SaaS vault. → [secrets](https://bige.dev/secrets.html)
 
 ---
 
@@ -62,7 +72,10 @@ Starters: Node / Python / Java / Go / Elixir / PHP × Mongo / Redis / Postgres /
 
 | macOS / Linux | [Latest release — FREE](https://github.com/simondelamarre/bige-ops-releases/releases/latest) |
 | Homebrew | `brew tap simondelamarre/bige-ops && brew install --cask bige-ops` |
-| Issues / feedback | [Open an issue](https://github.com/simondelamarre/bige-ops-releases/issues/new/choose) — also from the desktop app → Settings → Report an issue |
+| Issues | [Open an issue](https://github.com/simondelamarre/bige-ops-releases/issues/new/choose) |
+| Features | [Feature request](https://github.com/simondelamarre/bige-ops-releases/issues/new?template=feature_request.yml) |
+
+Also from the desktop app → Settings → Report an issue. We read, prioritize, reply. → [écoute](https://bige.dev/#ecoute)
 
 ### macOS Gatekeeper (not notarized)
 
