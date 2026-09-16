@@ -1,13 +1,13 @@
 <p align="center">
-  <img src="docs/bige-ops-three-clicks.png" alt="bige-ops — design, project, deploy on Outscale" width="920" />
+  <img src="docs/bige-ops-three-clicks.png" alt="bige-ops — dessiner, projeter, déployer" width="920" />
 </p>
 
 <h1 align="center">LESS IS MORE</h1>
 
 <p align="center">
-  <strong>Free desktop app for <a href="https://www.outscale.com/">Outscale</a> &amp; <a href="https://www.outscale.com/fr/secnumcloud/">SecNumCloud</a></strong><br/>
-  Skip blank Terraform — <strong>design · project · deploy</strong> (VMs / OKS)<br/>
-  <em>Local tool. Your cloud hosts. No SaaS control plane.</em>
+  <strong>App desktop gratuite pour <a href="https://www.outscale.com/">Outscale</a> &amp; <a href="https://www.outscale.com/fr/secnumcloud/">SecNumCloud</a></strong><br/>
+  Une app desktop gratuite pour déployer sans te noyer.<br/>
+  <em>L’outil déploie. Le cloud héberge. Pas de plan de contrôle SaaS.</em>
 </p>
 
 <p align="center">
@@ -31,66 +31,111 @@
 
 ---
 
-## What it is
+## Pourquoi
 
-Free desktop app: **layout → project → apply / deploy** on *your* cloud account. Same engine in the GUI and the CLI.
+Même texte que le tour dans l’app et que [bige.dev/#pourquoi](https://bige.dev/#pourquoi).
 
-- **The tool deploys. The cloud hosts.** Not a local Docker runner.
-- **Outscale & SecNumCloud** are ready today. Other clouds come next — we don’t pretend to be multi-cloud magic.
-- Terraform / OKS specs / app YAML = **materialization**, not the product.
+### Less is more.
+
+Une app desktop gratuite pour déployer sans te noyer.
+
+Tu dessines ta stack — VMs ou cluster Kubernetes — tu la projettes, puis tu la déploies sur ton compte. Les fichiers Terraform ou YAML sortent derrière : ce n’est pas ce que tu viens écrire à la main.
+
+→ [bige.dev/#why-less](https://bige.dev/#why-less)
+
+### Outscale & SecNumCloud.
+
+C’est prêt. Le reste vient après.
+
+Aujourd’hui tu peux appliquer et suivre le pricing sur Outscale, y compris SecNumCloud. D’autres clouds arriveront. On ne prétend pas les supporter tous tant que ce n’est pas vrai.
+
+→ [bige.dev/#why-outscale](https://bige.dev/#why-outscale)
+
+### L’outil déploie. Le cloud héberge.
+
+Ce n’est pas un Docker sur ton poste.
+
+bige-ops tourne sur ta machine pour piloter le déploiement. Ta stack, elle, vit sur ton cloud. Tes secrets restent chez toi — coffre local, avec sync optionnelle vers GitHub, HashiCorp Vault ou Fly si tu le veux.
+
+→ [secrets](https://bige.dev/secrets.html) · [bige.dev/#why-deploy](https://bige.dev/#why-deploy)
+
+### Tu peux commencer sans compte.
+
+Tu projettes d’abord. Tu te connectes quand tu appliques.
+
+Sans identifiants Outscale, tu explores et tu projettes. Tu te connectes seulement pour l’inventaire, le plan et l’apply — quand tu es prêt.
+
+→ [install](https://bige.dev/install.html) · [bige.dev/#why-projection](https://bige.dev/#why-projection)
+
+### Vulns et risques.
+
+On regarde tes repos, pas seulement un dashboard.
+
+Déployer reste gratuit. Scanner tes dépôts, voir les CVE et remédier, c’est la suite — et c’est là que les crédits entrent.
+
+→ [bige.dev/#why-vulns](https://bige.dev/#why-vulns)
+
+### Tes clés LLM.
+
+Les tiennes. Rien n’est gardé chez nous.
+
+Tu branches ta propre clé — Anthropic, OpenAI, Google Gemini, Mistral. Les appels partent de ton poste vers le fournisseur. bige-ops ne stocke pas et ne réutilise pas ces échanges.
+
+→ [agent](https://bige.dev/agent.html) · [bige.dev/#why-byok](https://bige.dev/#why-byok)
+
+### On t’écoute.
+
+Un bug ou une idée : tu l’ouvres sur GitHub.
+
+Le dépôt public reçoit tes issues et tes demandes de features. On les lit, on priorise, on répond — sans toucher à ton graphe ni à tes secrets.
 
 | | |
 |---|---|
-| Price | **Free** — your cloud bill stays yours |
-| Tool | Runs on **your machine** |
-| Stack | Runs on **your cloud** |
-| Regions (Outscale) | `eu-west-2` · `cloudgouv-eu-west-1` (**SecNumCloud**) |
-
-No account yet? Stay in **projection** (design offline). Login only for inventory, plan, apply.
-
-Starters: Node / Python / Java / Go / Elixir / PHP × Mongo / Redis / Postgres / Weaviate × VMs and/or **OKS**. Details on [bige.dev](https://bige.dev/).
+| Issue | [Ouvrir une issue](https://github.com/simondelamarre/bige-ops-releases/issues/new/choose) |
+| Feature | [Demander une feature](https://github.com/simondelamarre/bige-ops-releases/issues/new?template=feature_request.yml) |
+| Site | [bige.dev/#why-ecoute](https://bige.dev/#why-ecoute) · [écoute](https://bige.dev/#ecoute) |
 
 ---
 
-## What’s new in 0.5
+## En bref
 
-- **Repos & risk** — scan linked repos, exposed risks, **MD / PDF** reports (internal or RSSI)
-- **Estimate cache** — local tariffs when available (projection first; gaps are OK)
-- **OKS logs** — `kubectl` pod logs from the app
+| | |
+|---|---|
+| Prix | **Gratuit** — la facture cloud reste la tienne |
+| Outil | Sur **ta machine** |
+| Stack | Sur **ton cloud** |
+| Régions Outscale | `eu-west-2` · `cloudgouv-eu-west-1` (**SecNumCloud**) |
 
-**In progress / next:** fuller vuln scan · credits & account · other clouds · on-demand CLI tooling — [roadmap](https://bige.dev/#features).
-
----
-
-## Secrets
-
-Coffre **local** first. Optional sync to backends **you** control: GitHub Actions secrets, HashiCorp Vault, Fly. No bige-ops SaaS vault. → [secrets](https://bige.dev/secrets.html)
+Starters : Node / Python / Java / Go / Elixir / PHP × Mongo / Redis / Postgres / Weaviate × VMs et/ou **OKS**. Détail sur [bige.dev](https://bige.dev/).
 
 ---
 
-## Install
+## Nouveautés 0.5
 
-| macOS / Linux | [Latest release — FREE](https://github.com/simondelamarre/bige-ops-releases/releases/latest) |
+- **Vulns & risques** — scan des repos liés, CVE, rapports MD / PDF
+- **Estimate cache** — tarifs locaux quand disponibles (projection d’abord)
+- **Logs OKS** — pods via kubectl depuis l’app
+
+**Ensuite :** scan vulns élargi · crédits · autres clouds · CLI à la demande — [features](https://bige.dev/#features).
+
+---
+
+## Installer
+
+| macOS / Linux | [Dernière release — FREE](https://github.com/simondelamarre/bige-ops-releases/releases/latest) |
 | Homebrew | `brew tap simondelamarre/bige-ops && brew install --cask bige-ops` |
-| Issues | [Open an issue](https://github.com/simondelamarre/bige-ops-releases/issues/new/choose) |
-| Features | [Feature request](https://github.com/simondelamarre/bige-ops-releases/issues/new?template=feature_request.yml) |
 
-Also from the desktop app → Settings → Report an issue. We read, prioritize, reply. → [écoute](https://bige.dev/#ecoute)
+### macOS Gatekeeper (pas notarié)
 
-### macOS Gatekeeper (not notarized)
-
-Downloads are quarantined. Modern macOS may show **“Apple could not verify…”** and block with **no** “Open anyway”.
-
-After copying `bige-ops.app` to `/Applications` — **before** the first double-click:
+Après copie dans `/Applications` — **avant** le premier double-clic :
 
 ```bash
 xattr -cr /Applications/bige-ops.app && codesign --force --deep --sign - /Applications/bige-ops.app
 ```
 
-Or run **Fix Gatekeeper.command** from the DMG. After Trash: copy again, then re-run.  
-Homebrew cask clears quarantine in postflight. Full guide: [install.html#gatekeeper](https://bige.dev/install.html#gatekeeper).
+Ou **Fix Gatekeeper.command** sur le DMG. Guide : [install.html#gatekeeper](https://bige.dev/install.html#gatekeeper).
 
-Source stays private; **this** public repo is where bugs and feature requests land on GitHub.
+Le code source reste privé ; **ce** dépôt public reçoit bugs et features.
 
 **Outscale** · [outscale.com](https://www.outscale.com/) · **SecNumCloud** · [outscale.com/fr/secnumcloud](https://www.outscale.com/fr/secnumcloud/)
 
