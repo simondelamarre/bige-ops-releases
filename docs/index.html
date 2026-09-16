@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <title>bige-ops — Outscale IaaS, VMs (VPS), OKS Kubernetes managé</title>
-  <meta name="description" content="Ops Outscale souverain local-first : starter kit, VMs (=VPS catalogue), OKS, OOS, CLI. Gratuit." />
+  <meta name="description" content="App gratuite, 100 % locale, sans SaaS. Design · € · deploy sur votre compte Outscale." />
   <link rel="canonical" href="https://bige.dev/" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -14,12 +14,12 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/" />
   <meta property="og:title" content="bige-ops — le starter kit Outscale" />
-  <meta property="og:description" content="Simulez votre stack Outscale, lisez le € HT/mois, générez Terraform / OKS, appliquez sur votre compte. Local-first, gratuit." />
+  <meta property="og:description" content="Gratuit · 100 % local · pas de control plane SaaS. Design, €, deploy sur votre compte Outscale." />
   <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <meta property="og:image:alt" content="bige-ops — design & deploy in three clicks" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="bige-ops — le starter kit Outscale" />
-  <meta name="twitter:description" content="Simulez votre stack Outscale, lisez le € HT/mois, générez Terraform / OKS, appliquez sur votre compte." />
+  <meta name="twitter:description" content="Gratuit · 100 % local · pas de control plane SaaS." />
   <meta name="twitter:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -91,7 +91,6 @@
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      /* #5ec4b4 on #0b0d10 ≈ AAA for small text; soft border/bg only */
       color: #5ec4b4;
       border: 1px solid rgba(94, 196, 180, 0.28);
       background: rgba(94, 196, 180, 0.06);
@@ -101,7 +100,7 @@
     }
 
     .baseline {
-      margin: 0 0 1.5rem;
+      margin: 0 0 1.1rem;
       max-width: 36rem;
       font-size: clamp(1.05rem, 2.4vw, 1.2rem);
       font-weight: 500;
@@ -109,30 +108,48 @@
       line-height: 1.4;
     }
 
-    /* Floating player — border + sober shadow only */
-    .player-shell {
-      margin: 0 0 1.5rem;
-      border-radius: 10px;
-      background: #000;
-      border: 1px solid var(--ink-700);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-      overflow: hidden;
+    .pitch {
+      margin: 0 0 1.35rem;
+      padding: 0;
+      list-style: none;
+      color: var(--mist);
+      font-size: 1.02rem;
+      max-width: 40rem;
     }
 
-    video.player {
+    .pitch li {
+      margin: 0 0 0.4rem;
+      padding-left: 0.9rem;
+      position: relative;
+    }
+
+    .pitch li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--accent-bright);
+      font-size: 0.85rem;
+    }
+
+    .pitch strong { color: var(--white); font-weight: 600; }
+
+    .shot {
+      margin: 0 0 1.5rem;
+      padding: 0;
+    }
+
+    .shot img {
       display: block;
       width: 100%;
-      aspect-ratio: 16 / 9;
-      margin: 0;
-      background: #000;
-      border: 0;
-      border-radius: 0;
-      object-fit: contain;
+      height: auto;
+      border: 1px solid var(--ink-700);
+      border-radius: 10px;
+      background: var(--ink-900);
     }
 
     .download-inline {
-      margin: 0 0 2.5rem;
-      padding-bottom: 2rem;
+      margin: 0 0 2.25rem;
+      padding-bottom: 1.75rem;
       border-bottom: 1px solid var(--ink-700);
     }
 
@@ -162,7 +179,6 @@
     }
 
     .actions a.primary:visited { color: var(--ink-950); }
-
     .actions a.primary:hover { background: var(--accent-bright); }
 
     .actions a.secondary {
@@ -171,7 +187,6 @@
     }
 
     .actions a.secondary:visited { color: #c5cad3; }
-
     .actions a.secondary:hover { border-color: var(--mist); }
 
     .brew {
@@ -248,90 +263,107 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--accent-bright);
-      margin: 0 0 0.65rem;
-    }
-
-    .block h1,
-    .block .title {
-      font-family: var(--font-display);
-      font-weight: 600;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
-      font-size: clamp(1.45rem, 3.5vw, 1.85rem);
       margin: 0 0 0.75rem;
-      color: var(--white);
     }
 
     .block p {
       margin: 0 0 0.75rem;
       color: var(--mist);
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       max-width: 42rem;
     }
 
     .block p:last-child { margin-bottom: 0; }
+    .block strong { color: var(--white); font-weight: 600; }
 
-    .block strong {
-      color: var(--white);
-      font-weight: 600;
-    }
-
-    .keywords {
-      margin: 0.85rem 0 0;
-      color: var(--mist);
-      font-size: 0.95rem;
-      line-height: 1.7;
-    }
-
-    .feat-legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem 1rem;
-      margin: 0 0 1rem;
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.65rem;
+      margin: 0;
       padding: 0;
       list-style: none;
-      font-size: 0.85rem;
+    }
+
+    .link-grid a {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      min-height: 4.25rem;
+      padding: 0.9rem 1rem;
+      text-decoration: none;
+      border: 1px solid var(--ink-700);
+      border-radius: 8px;
+      background: rgba(18, 21, 26, 0.55);
+      color: var(--white);
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .link-grid a:visited { color: #c5cad3; }
+
+    .link-grid a:hover {
+      border-color: var(--accent);
+      background: rgba(61, 158, 143, 0.08);
+      color: var(--white);
+    }
+
+    .link-grid a:focus-visible {
+      outline: 2px solid var(--accent-bright);
+      outline-offset: 2px;
+    }
+
+    .link-grid .lg-title {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.02rem;
+      letter-spacing: -0.01em;
+      color: inherit;
+    }
+
+    .link-grid .lg-sub {
+      font-size: 0.88rem;
       color: var(--mist);
+      line-height: 1.35;
     }
-    .feat-legend li {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .feat-group { margin: 0 0 1.15rem; }
-    .feat-group:last-of-type { margin-bottom: 0.75rem; }
+
+    .feat-group { margin: 0 0 1rem; }
+    .feat-group:last-of-type { margin-bottom: 0; }
+
     .feat-group h3 {
       font-family: var(--font-display);
       font-size: 0.7rem;
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin: 0 0 0.5rem;
+      margin: 0 0 0.45rem;
       color: var(--mist);
     }
+
     .feat-list {
       list-style: none;
       margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
+
     .feat-list li {
       display: grid;
       grid-template-columns: auto 1fr;
-      gap: 0.5rem 0.7rem;
-      align-items: start;
-      padding: 0.6rem 0.7rem;
+      gap: 0.45rem 0.65rem;
+      align-items: center;
+      padding: 0.45rem 0.6rem;
       border: 1px solid var(--ink-700);
-      border-radius: 8px;
-      background: rgba(18, 21, 26, 0.55);
-      font-size: 0.98rem;
+      border-radius: 6px;
+      background: rgba(18, 21, 26, 0.45);
+      font-size: 0.95rem;
       color: var(--mist);
-      line-height: 1.45;
+      line-height: 1.35;
     }
-    .feat-list .feat-body { min-width: 0; }
-    .feat-list .feat-body strong { color: var(--white); }
+
+    .feat-list strong { color: var(--white); }
+
     .badge {
       display: inline-block;
       font-family: var(--font-display);
@@ -343,22 +375,25 @@
       border-radius: 4px;
       line-height: 1.2;
       white-space: nowrap;
-      margin-top: 0.1rem;
     }
+
     .badge-stable {
       color: #0b0d10;
       background: #5ec4b4;
     }
+
     .badge-wip {
       color: #f5d78a;
       background: rgba(245, 215, 138, 0.12);
       border: 1px solid rgba(245, 215, 138, 0.35);
     }
+
     .badge-backlog {
       color: #9aa3b2;
       background: rgba(154, 163, 178, 0.1);
       border: 1px solid rgba(154, 163, 178, 0.28);
     }
+
     .provider-row {
       display: flex;
       flex-wrap: wrap;
@@ -367,6 +402,7 @@
       padding: 0;
       list-style: none;
     }
+
     .provider-row li {
       font-family: var(--font-display);
       font-size: 0.78rem;
@@ -376,59 +412,47 @@
       border: 1px solid var(--ink-600);
       color: var(--mist);
     }
+
     .provider-row li.is-live {
       color: #0b0d10;
       background: #5ec4b4;
       border-color: #5ec4b4;
     }
+
     .provider-row li.is-wip {
       color: #f5d78a;
       border-color: rgba(245, 215, 138, 0.4);
       background: rgba(245, 215, 138, 0.08);
     }
 
-    /* Links: native visited + focus (a11y first) */
-    a {
-      color: #5ec4b4;
+    .faq {
+      margin: 0;
+      padding: 0;
     }
 
-    a:visited {
-      color: #9bb8d4;
+    .faq dt {
+      font-family: var(--font-display);
+      font-weight: 600;
+      color: var(--white);
+      margin: 0.85rem 0 0.25rem;
+      font-size: 1rem;
     }
 
-    a:hover {
-      color: #7ed4c6;
+    .faq dt:first-child { margin-top: 0; }
+
+    .faq dd {
+      margin: 0;
+      color: var(--mist);
+      font-size: 0.98rem;
+      max-width: 42rem;
     }
 
+    a { color: #5ec4b4; }
+    a:visited { color: #9bb8d4; }
+    a:hover { color: #7ed4c6; }
     a:focus-visible {
       outline: 2px solid #5ec4b4;
       outline-offset: 2px;
-    }
-
-    a.term {
-      color: inherit;
-      text-decoration: underline;
-      text-decoration-color: var(--ink-600);
-      text-underline-offset: 0.18em;
-    }
-
-    a.term:visited {
-      color: #9bb8d4;
-      text-decoration-color: #5a6a7a;
-    }
-
-    a.term:hover {
-      color: #5ec4b4;
-      text-decoration-color: #5ec4b4;
-    }
-
-    .block strong a.term {
-      color: var(--white);
-      font-weight: 600;
-    }
-
-    .block strong a.term:visited {
-      color: #9bb8d4;
     }
 
     .skip-link {
@@ -450,175 +474,30 @@
       color: var(--ink-950);
     }
 
-    .callout {
-      margin: 1.25rem 0 1.5rem;
-      padding: 0.9rem 1rem;
-      border: 1px solid var(--ink-700);
-      border-left: 3px solid var(--accent);
-      background: var(--ink-900);
-      color: var(--mist);
-      font-size: 1rem;
-      max-width: 42rem;
-    }
-
-    .callout strong { color: var(--white); }
-
-    .callout-warn {
-      border-color: #6d5722;
-      border-left-color: #c9a227;
-      background: #16130d;
-      color: #e9dfc8;
-    }
-
-    .callout-warn strong { color: #f5d78a; }
-
-    .shot {
-      margin: 1.35rem 0 0.5rem;
-      padding: 0;
-    }
-
-    .shot img {
-      display: block;
-      width: 100%;
-      height: auto;
-      border: 1px solid var(--ink-700);
-      border-radius: 10px;
-      background: var(--ink-900);
-    }
-
-    .shot figcaption {
-      margin-top: 0.55rem;
-      font-size: 0.88rem;
-      color: var(--ink-600);
-    }
-
-    .toc {
-      margin: 0 0 2.5rem;
-      padding: 1rem 1.1rem;
-      border: 1px solid var(--ink-700);
-      border-radius: 10px;
-      background: var(--ink-900);
-    }
-
-    .toc h2 {
-      font-family: var(--font-display);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent-bright);
-      margin: 0 0 0.7rem;
-    }
-
-    .toc ul {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem 0.9rem;
-      margin: 0;
-      padding: 0;
-      font-size: 0.95rem;
-    }
-
-    .toc a {
-      text-decoration: none;
-      border-bottom: 1px solid var(--ink-600);
-    }
-
-    .toc a:hover { border-bottom-color: var(--accent-bright); }
-
-    .glossary {
-      scroll-margin-top: 1rem;
-    }
-
-    .glossary dl {
-      margin: 0;
-    }
-
-    .glossary dt {
-      font-family: var(--font-display);
-      font-weight: 600;
-      color: var(--white);
-      margin: 1.1rem 0 0.25rem;
-      scroll-margin-top: 1rem;
-    }
-
-    .glossary dd {
-      margin: 0 0 0 0;
-      color: var(--mist);
-      font-size: 1rem;
-      max-width: 42rem;
-    }
-
-    footer {
-      margin-top: 2.5rem;
-      font-size: 0.85rem;
-      color: var(--ink-600);
-    }
-
-    footer a {
-      color: #5ec4b4;
-      text-decoration: underline;
-      text-underline-offset: 0.15em;
-    }
-
-    footer a:visited { color: #9bb8d4; }
-    footer a:hover { color: #7ed4c6; }
-
     .site-footer {
-      margin-top: 3rem;
-      padding-top: 1.5rem;
+      margin-top: 2.5rem;
+      padding-top: 1.35rem;
       border-top: 1px solid var(--ink-700);
       font-size: 0.9rem;
       color: var(--ink-600);
     }
 
-    .site-footer .cols {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-      gap: 1.25rem 1.5rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .site-footer h3 {
-      font-family: var(--font-display);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    .site-footer .meta {
       color: var(--mist);
-      margin: 0 0 0.55rem;
-    }
-
-    .site-footer ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .site-footer li {
-      margin: 0 0 0.35rem;
       font-size: 0.9rem;
-      color: var(--mist);
+      margin: 0;
+      line-height: 1.6;
     }
 
     .site-footer a {
       color: #5ec4b4;
       text-decoration: underline;
       text-underline-offset: 0.15em;
-      border-bottom: 0;
     }
 
     .site-footer a:visited { color: #9bb8d4; }
     .site-footer a:hover { color: #7ed4c6; }
 
-    .site-footer .meta {
-      color: var(--ink-600);
-      font-size: 0.85rem;
-      margin: 0;
-    }
-
-    /* Sticky download — appears when inline CTAs leave the viewport */
     .download-sticky {
       position: fixed;
       left: 0;
@@ -651,7 +530,6 @@
     }
 
     .download-sticky a.primary:visited { color: var(--ink-950); }
-
     .download-sticky a.primary:hover { background: var(--accent-bright); }
 
     .download-sticky a.secondary {
@@ -661,57 +539,18 @@
 
     .download-sticky a.secondary:visited { color: #c5cad3; }
 
-    /* ---- Mobile ---- */
     @media (max-width: 640px) {
       body { padding-bottom: 5.5rem; }
-
       main { padding: 1.75rem 1.1rem 2rem; }
-
-      .baseline { font-size: 1.05rem; margin-bottom: 1.25rem; }
-
-      /* CTAs pleine largeur : pouce d’abord */
-      .actions { gap: 0.55rem; }
+      .baseline { font-size: 1.05rem; }
       .actions a { flex: 1 1 100%; padding: 0.85rem 1rem; }
-
       .brew { flex-direction: column; gap: 0.4rem; max-width: none; }
       .brew code { font-size: 0.78rem; }
       .copy-btn { padding: 0.6rem 1rem; width: 100%; }
-
-      /* Sommaire : liste lisible, pas une soupe de liens */
-      .toc { padding: 0.9rem 1rem; }
-      .toc ul {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.5rem 0.9rem;
-      }
-      .toc li { min-width: 0; }
-      .toc a {
-        display: block;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        padding: 0.15rem 0;
-      }
-
+      .link-grid { grid-template-columns: 1fr; }
       .block { margin-bottom: 1.65rem; padding-bottom: 1.65rem; }
-      .block p { font-size: 1rem; }
-      .block .title, .block h1 { font-size: 1.3rem; }
-
-      .keywords { font-size: 0.9rem; }
-
-      .callout { padding: 0.8rem 0.9rem; font-size: 0.95rem; }
-
-      .glossary dd { font-size: 0.95rem; }
-
-      .site-footer .cols { grid-template-columns: 1fr; gap: 1.1rem; }
-
-      /* Barre collante : une seule action prioritaire */
       .download-sticky { gap: 0.5rem; padding: 0.65rem 0.9rem calc(0.65rem + env(safe-area-inset-bottom)); }
       .download-sticky a { flex: 1 1 0; justify-content: center; font-size: 0.9rem; padding: 0.7rem 0.5rem; }
-    }
-
-    @media (max-width: 380px) {
-      .toc ul { grid-template-columns: 1fr; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -721,26 +560,30 @@
 </head>
 <body>
   <a class="skip-link" href="#contenu">Aller au contenu</a>
-  <!-- landing build: 2026-09-16-v0.5 -->
+  <!-- landing build: 2026-09-16-short -->
   <main id="contenu">
     <div class="brand-row">
       <p class="brand">bige<span class="ops">-ops</span></p>
       <span class="brand-badge">Gratuit</span>
     </div>
-    <p class="baseline">
-      Concevez la stack Outscale, lisez le €, déployez en trois clics.
-    </p>
+    <p class="baseline">Gratuit · 100&nbsp;% local · pas de control plane SaaS</p>
 
-    <div class="player-shell">
-      <video
-        class="player"
-        controls
-        playsinline
-        preload="none"
-        poster="bige-ops-three-clicks.png"
-        aria-label="Démo bige-ops — bientôt disponible"
-      ></video>
-    </div>
+    <ul class="pitch">
+      <li>Design → € → deploy sur <strong>votre</strong> compte Outscale</li>
+      <li>Démarrer sans compte (mode projection)</li>
+      <li>Terraform = materialization, pas le produit</li>
+    </ul>
+
+    <figure class="shot">
+      <img
+        src="bige-ops-three-clicks.png"
+        width="1100"
+        height="620"
+        loading="eager"
+        decoding="async"
+        alt="bige-ops — design, estimate, deploy en trois clics"
+      />
+    </figure>
 
     <div id="download" class="download-inline">
       <div class="actions">
@@ -754,52 +597,71 @@
       </p>
     </div>
 
-    <nav class="toc" aria-label="Sommaire">
-      <h2>Sommaire</h2>
-      <ul>
-        <li><a href="#produit">Le produit</a></li>
-        <li><a href="#outscale">Outscale</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#visual">Visual</a></li>
-        <li><a href="#securite">Sécurité</a></li>
-        <li><a href="#oks-warn">OKS</a></li>
-        <li><a href="#perimetre">Périmètre</a></li>
-        <li><a href="#glossaire">Glossaire</a></li>
+    <section class="block" id="pratique">
+      <h2>En pratique</h2>
+      <ul class="link-grid">
+        <li>
+          <a href="install.html">
+            <span class="lg-title">Installer &amp; Gatekeeper</span>
+            <span class="lg-sub">DMG, brew, déblocage macOS</span>
+          </a>
+        </li>
+        <li>
+          <a href="layouts.html">
+            <span class="lg-title">Layouts</span>
+            <span class="lg-sub">Topologies VMs / OKS prêtes</span>
+          </a>
+        </li>
+        <li>
+          <a href="documentation.html">
+            <span class="lg-title">Documentation</span>
+            <span class="lg-sub">Toute la doc du kit</span>
+          </a>
+        </li>
+        <li>
+          <a href="catalogue-prix.html">
+            <span class="lg-title">Catalogue de prix</span>
+            <span class="lg-sub">€ HT/mois indicatifs</span>
+          </a>
+        </li>
+        <li>
+          <a href="secrets.html">
+            <span class="lg-title">Secrets</span>
+            <span class="lg-sub">Coffre local, jamais SaaS</span>
+          </a>
+        </li>
+        <li>
+          <a href="oks.html">
+            <span class="lg-title">OKS</span>
+            <span class="lg-sub">Kubernetes managé Outscale</span>
+          </a>
+        </li>
+        <li>
+          <a href="savoir.html">
+            <span class="lg-title">Sait / ne sait pas</span>
+            <span class="lg-sub">Périmètre honnête</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/simondelamarre/bige-ops-releases/issues">
+            <span class="lg-title">Issues GitHub</span>
+            <span class="lg-sub">Bugs, idées, votes</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.opencve.io/" rel="noopener noreferrer">
+            <span class="lg-title">OpenCVE</span>
+            <span class="lg-sub">Base CVE utilisée par le scan</span>
+          </a>
+        </li>
       </ul>
-    </nav>
-
-    <section class="block" id="produit">
-      <h2>Le produit</h2>
-      <h1>Design · € · deploy — d’abord sur Outscale.</h1>
-      <p>
-        App <strong>gratuite</strong>, 100&nbsp;% locale, conçue pour
-        <a href="https://www.outscale.com/"><strong>Outscale</strong></a>
-        et <a href="https://www.outscale.com/fr/secnumcloud/"><strong>SecNumCloud</strong></a>.
-        Composez un layout (VMs et/ou <a class="term" href="#g-oks">OKS</a>),
-        lisez une <a class="term" href="#g-estimate">estimation</a> catalogue €&nbsp;HT/mois,
-        puis plan / apply / deploy sur <em>votre</em> compte.
-      </p>
-      <p>
-        <strong>Pas de compte Outscale pour commencer</strong> :
-        mode <a class="term" href="#g-projection">projection</a>, design et € offline.
-        Terraform, specs OKS et YAML apps sont de la
-        <a class="term" href="#g-materialization">materialization</a> —
-        pas le produit que vous achetez.
-      </p>
-      <p>
-        Starters : <a href="layouts.html">layouts</a> ·
-        install : <a href="install.html">installer</a> ·
-        doc : <a href="documentation.html">toute la doc</a>.
-      </p>
     </section>
 
     <section class="block" id="outscale">
-      <h2>Outscale d’abord</h2>
-      <p class="title">Cloud souverain en production. Autres providers en intégration.</p>
+      <h2>Outscale</h2>
       <p>
-        Aujourd’hui le moteur pricing / apply / OKS est branché sur
-        <strong>Outscale</strong> (régions classiques + SecNumCloud).
-        C’est le chemin nominal — pas un multi-cloud fantôme.
+        Pricing / apply / OKS branchés sur <strong>Outscale</strong> (régions + SecNumCloud).
+        Autres clouds : bientôt.
       </p>
       <ul class="provider-row" aria-label="Cloud providers">
         <li class="is-live">Outscale · live</li>
@@ -810,387 +672,66 @@
         <li class="is-wip">Azure · bientôt</li>
         <li class="is-wip">GCP · bientôt</li>
       </ul>
-      <p>
-        Les providers « bientôt » sont déjà listés à la création de compte ;
-        catalogue pricing et materialization complète restent Outscale-only pour l’instant.
-        Suivi : <a href="https://github.com/simondelamarre/bige-ops-releases/issues">issues publiques</a>.
-      </p>
     </section>
 
     <section class="block" id="features">
       <h2>Features</h2>
-      <p class="title">Stable · WIP · backlog — pas de vapourware.</p>
-      <ul class="feat-legend" aria-label="Légende des statuts">
-        <li><span class="badge badge-stable">Stable</span> utilisable aujourd’hui</li>
-        <li><span class="badge badge-wip">WIP</span> en cours, encore imparfait</li>
-        <li><span class="badge badge-backlog">Backlog</span> prévu, pas commencé</li>
-      </ul>
 
       <div class="feat-group">
         <h3>Stable</h3>
         <ul class="feat-list">
-          <li>
-            <span class="badge badge-stable">Stable</span>
-            <div class="feat-body">
-              <strong>Visual + estimate Outscale</strong> —
-              canvas topologie, catalogue € HT/mois, projection offline.
-            </div>
-          </li>
-          <li>
-            <span class="badge badge-stable">Stable</span>
-            <div class="feat-body">
-              <strong>Apply / deploy</strong> —
-              plan · apply (Terraform / OKS) puis deploy apps sur <em>votre</em> tenant.
-            </div>
-          </li>
-          <li>
-            <span class="badge badge-stable">Stable</span>
-            <div class="feat-body">
-              <strong>Repos · risques · CVE</strong> —
-              scan des dépôts liés, risques exposés, croisement
-              <a href="https://www.opencve.io/" rel="noopener noreferrer">OpenCVE</a>,
-              rapport <strong>MD / PDF</strong> (interne ou RSSI).
-            </div>
-          </li>
-          <li>
-            <span class="badge badge-stable">Stable</span>
-            <div class="feat-body">
-              <strong>Estimate cache + tarifs</strong> —
-              € instantané au rechargement · page tarifs.
-            </div>
-          </li>
-          <li>
-            <span class="badge badge-stable">Stable</span>
-            <div class="feat-body">
-              <strong>Logs OKS</strong> —
-              suivi <code>kubectl</code> des pods depuis l’app.
-            </div>
-          </li>
+          <li><span class="badge badge-stable">Stable</span> <span><strong>Visual + estimate</strong> — canvas, € HT/mois, projection offline</span></li>
+          <li><span class="badge badge-stable">Stable</span> <span><strong>Apply / deploy</strong> — plan · apply · deploy sur votre tenant</span></li>
+          <li><span class="badge badge-stable">Stable</span> <span><strong>Repos · risques · CVE</strong> — scan + <a href="https://www.opencve.io/" rel="noopener noreferrer">OpenCVE</a> · rapport MD/PDF</span></li>
+          <li><span class="badge badge-stable">Stable</span> <span><strong>Estimate cache</strong> + page tarifs</span></li>
+          <li><span class="badge badge-stable">Stable</span> <span><strong>Logs OKS</strong> — pods via kubectl</span></li>
         </ul>
       </div>
 
       <div class="feat-group">
-        <h3>En cours / WIP</h3>
+        <h3>WIP</h3>
         <ul class="feat-list">
-          <li>
-            <span class="badge badge-wip">WIP</span>
-            <div class="feat-body">
-              <strong>Mode agent</strong> —
-              copilote config avec <em>vos</em> clés API (édite le layout,
-              jamais apply / secrets). Encore limité, itération ouverte.
-            </div>
-          </li>
-          <li>
-            <span class="badge badge-wip">WIP</span>
-            <div class="feat-body">
-              <strong>Full scan vulns</strong> —
-              couverture monorepo plus large, tools agent, boucle faux positifs.
-            </div>
-          </li>
-          <li>
-            <span class="badge badge-wip">WIP</span>
-            <div class="feat-body">
-              <strong>Autres cloud providers</strong> —
-              Fly.io, Scaleway, OVH, AWS, Azure, GCP… — câblage progressif
-              (Outscale reste le chemin nominal).
-            </div>
-          </li>
+          <li><span class="badge badge-wip">WIP</span> <span><strong>Agent</strong> — copilote (vos clés) ; édite le layout, jamais apply / secrets</span></li>
+          <li><span class="badge badge-wip">WIP</span> <span><strong>Full scan vulns</strong> — couverture monorepo élargie</span></li>
+          <li><span class="badge badge-wip">WIP</span> <span><strong>Autres clouds</strong> — Fly, Scaleway, OVH, AWS, Azure, GCP</span></li>
         </ul>
       </div>
 
       <div class="feat-group">
         <h3>Backlog</h3>
         <ul class="feat-list">
-          <li>
-            <span class="badge badge-backlog">Backlog</span>
-            <div class="feat-body">
-              <strong>Crédits &amp; compte</strong> —
-              free tier, paiements légers, compte GitHub / GitLab.
-            </div>
-          </li>
-          <li>
-            <span class="badge badge-backlog">Backlog</span>
-            <div class="feat-body">
-              <strong>Tooling CLI à la demande</strong> —
-              installer / mettre à jour les binaires ops quand il le faut.
-            </div>
-          </li>
+          <li><span class="badge badge-backlog">Backlog</span> <span><strong>Crédits &amp; compte</strong> — free tier, GitHub / GitLab</span></li>
+          <li><span class="badge badge-backlog">Backlog</span> <span><strong>CLI tooling</strong> — binaires ops à la demande</span></li>
         </ul>
       </div>
 
-      <p>
-        Idées, bugs, votes :
-        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">toutes les issues</a>
+      <p style="margin-top:0.85rem">
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Issues</a>
         ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">en ouvrir une</a>
-        (aussi depuis l’app → Paramètres).
       </p>
     </section>
 
-    <section class="block" id="visual">
-      <h2>Visual</h2>
-      <p class="title">La topologie et le €, sur un seul canvas.</p>
-      <figure class="shot">
-        <img src="visual-simulation.svg" width="1100" height="620" loading="lazy" decoding="async"
-             alt="Canvas Visual : palette et stack multi-VM avec coûts estimés." />
-        <figcaption>
-          Visual — topologie + coût estimé. Catalogue public, € HT indicatif.
-        </figcaption>
-      </figure>
-      <p>
-        Cliquez un nœud, corrigez dans l’inspector, sauvegardez.
-        Pour les fichiers Terraform / YAML : <a href="expert-config.html">mode expert</a>.
-      </p>
-    </section>
-
-    <section class="block" id="pricing">
-      <h2>Pricing</h2>
-      <p class="title">Aide à la décision — pas un devis Outscale.</p>
-      <p>
-        Estimate = catalogue public embarqué. La facture réelle dépend de
-        votre tenant et de vos conditions commerciales.
-        Détail : <a href="catalogue-prix.html">catalogue de prix</a> ·
-        <a href="savoir.html">sait / ne sait pas</a>.
-      </p>
-    </section>
-
-    <section class="block" id="securite">
-      <h2>Sécurité</h2>
-      <p class="title">Local-first. CVE &amp; surface — sans coffre SaaS à nous.</p>
-      <p>
-        Credentials et secrets restent sur <strong>votre poste</strong>
-        (ou chez Outscale après deploy). Rien n’est synchronisé vers un backend bige-ops.
-        Voir <a href="secrets.html">secrets &amp; coffre</a>.
-      </p>
-      <p>
-        Sur les repos liés à la simulation : scan de surface, risques exposés,
-        croisement <a href="https://www.opencve.io/" rel="noopener noreferrer"><strong>OpenCVE</strong></a>
-        (CVE connues), export de rapport MD/PDF pour les équipes ou un RSSI.
-      </p>
-    </section>
-
-    <section class="block" id="git">
-      <h2>Git &amp; ops</h2>
-      <p>
-        Projet → repo GitHub privé (config-history). Simulation → branche <code>sim/…</code>.
-        Promote → <code>main</code>. Détail :
-        <a href="simulations.html">simulations</a> ·
-        <a href="github-config.html">GitHub config</a> ·
-        <a href="inventory.html">inventory</a> (lire l’existant sur le compte).
-      </p>
-      <p>
-        <span class="badge badge-wip">WIP</span>
-        <strong>Mode agent</strong> — copilote optionnel avec <strong>vos</strong> clés API :
-        il édite la config, jamais apply / deploy / secrets.
-        Voir <a href="agent.html">assistant IA</a> ·
-        <a href="#features">features</a>.
-      </p>
-    </section>
-
-    <section class="block" id="oks-warn">
-      <h2>OKS · attention</h2>
-      <p class="title">Simuler OKS ≠ l’avoir sur votre contrat.</p>
-      <div class="callout callout-warn">
-        On estime des fourchettes catalogue. Votre tenant peut ne pas
-        autoriser Kubernetes managé ni SecNumCloud. On le découvre au
-        <strong>plan / apply</strong> (erreurs API). Contact :
-        <a href="https://www.outscale.com/fr/contactez-nous/">Outscale</a>
-        · <a href="mailto:sales@outscale.com">sales@outscale.com</a>.
-        Régions : <a href="regions.html">régions &amp; SecNumCloud</a>.
-      </div>
-    </section>
-
-    <section class="block" id="cli">
-      <h2>CLI</h2>
-      <p>
-        Même moteur que l’app. Sous le capot OKS : <code>oks-cli</code> + <code>kubectl</code>.
-        <a href="cli.html">CLI · app · OKS</a>.
-      </p>
-    </section>
-
-    <section class="block" id="perimetre">
-      <h2>Périmètre</h2>
-      <p class="title">Kickoff Outscale — pas un MSP.</p>
-      <p>
-        On aide à démarrer et à appliquer. Le run, le scale et la négo commerciale
-        restent les vôtres.
-        <a href="perimetre.html">Périmètre</a> ·
-        <a href="documentation.html">documentation</a> ·
-        <a href="reseau.html">réseau</a> ·
-        <a href="oks.html">OKS</a>.
-      </p>
-    </section>
-
-    <section class="block glossary" id="glossaire" aria-labelledby="glossaire-title">
-      <h2 id="glossaire-title">Glossaire</h2>
-      <p class="title">Vocabulaire fédéré (liens depuis la page).</p>
-      <p class="keywords" style="margin-top:0">
-        Projet → simulation → generate → apply → deploy.
-        VM (= VPS catalogue) · mono-VM / multi-VM · OKS · OOS.
-      </p>
-      <dl>
-        <dt id="g-visual">Visual / Flow</dt>
-        <dd>Canvas interactif de la topologie. Clic nœud → inspector → maj simulation. Du symptôme au setup, sans perdre le schéma mental.</dd>
-        <dt id="g-projection">Projection</dt>
-        <dd>Mode sans credentials Outscale : vous composez des simulations et lisez une estimation catalogue. Inventory / plan / apply restent bloqués jusqu’au login.</dd>
-        <dt id="g-projet">Projet</dt>
-        <dd>Conteneur ops lié à un compte Outscale : crée ou lie le <a href="#g-config-history">config-history</a>. Contient plusieurs <a href="#g-simulation">simulations</a>. ≠ simulation.</dd>
-        <dt id="g-simulation">Simulation</dt>
-        <dd>Variante versionnable (layout + coût projeté). Drafts en parallèle du live ; <a href="#g-promote">promote</a> pour aligner le live déclaratif ; <a href="#g-apply">apply</a> / <a href="#g-deploy">deploy</a> pour le cloud. Editable en <a href="#g-expert">mode expert</a>.</dd>
-        <dt id="g-stack">Stack (live)</dt>
-        <dd>Topologie / layout d’une simulation, ou l’état <strong>live</strong> après promote (<code>main</code>). Ne pas dire « stack » pour projet ni pour repo app.</dd>
-        <dt id="g-estimate">Estimate</dt>
-        <dd>Projection € HT/mois depuis le catalogue public embarqué. Indicatif — pas un devis Outscale, pas de feed pricing temps réel. Voir <a href="savoir.html">sait / ne sait pas</a>.</dd>
-        <dt id="g-capabilities">Capacités (snapshot)</dt>
-        <dd>Ce que le kit modélise aujourd’hui (types Tina, volumes, régions connues…). L’offre Outscale peut évoluer (ex. NVMe absent du modèle actuel, y compris SecNumCloud — peut changer demain). Les experts Outscale signalent via GitHub.</dd>
-        <dt id="g-vm">VM</dt>
-        <dd>Instance compute Outscale (type Tina, disques, réseau). Terme <strong>produit</strong> bige-ops. Unité du layout IaaS dans Visual. Voir <a href="vms.html">vms.html</a>.</dd>
-        <dt id="g-vps">VPS</dt>
-        <dd>Virtual Private Server — libellé <strong>catalogue / marketing Outscale</strong> pour une machine virtuelle. Dans bige-ops on dit <a href="#g-vm">VM</a>. Pas un second produit.</dd>
-        <dt id="g-mono-vm">Mono-VM</dt>
-        <dd>Topologie où apps (et souvent les bases) partagent <strong>une</strong> VM (<code>*-all</code>). Alias code : <code>single-vm</code>. Simple pour démarrer ; destroy = un seul blast radius.</dd>
-        <dt id="g-multi-vm">Multi-VM</dt>
-        <dd>Plusieurs VMs dans le même Net, rôles séparés (app, worker, data…). Alias code : <code>multi-vm</code>. La DB « dédiée » = rôle data + volume.</dd>
-        <dt id="g-expert">Mode expert</dt>
-        <dd>Édition directe des fichiers de la simulation (Workspace). Complète le Visual. Voir <a href="expert-config.html">expert-config.html</a>.</dd>
-        <dt id="g-diff-commit">Diffs &amp; commits</dt>
-        <dd>Revue des changements puis commit / push sur le config-history. Feuille de route : <a href="expert-config.html">expert-config.html</a>. Distinct du plan Terraform.</dd>
-        <dt id="g-secnumcloud">SecNumCloud</dt>
-        <dd>Qualification ANSSI pour le cloud de confiance. Outscale propose une région SecNumCloud ; bige-ops cible aussi ce terrain.</dd>
-        <dt id="g-souverain">Cloud souverain</dt>
-        <dd>Cloud français / données et contrôle sous juridiction nationale. Outscale + SecNumCloud ; l’outil reste local-first, sans coffre SaaS à nous.</dd>
-        <dt id="g-apply">Apply</dt>
-        <dd>Provisionner / réconcilier l’<strong>infra</strong> (Terraform, oks-cli, OOS…) sur votre compte. Précédé de <code>plan</code>. ≠ deploy apps. Credentials requis.</dd>
-        <dt id="g-deploy">Deploy</dt>
-        <dd>Pousser les <strong>apps</strong> (clone repo app, compose / kubectl) vers le runtime déjà provisionné. Lit la vérité live / <code>main</code>. Distinct du push Git config-history.</dd>
-        <dt id="g-config-history">Config-history</dt>
-        <dd>Repo GitHub privé : projet→repo, simulation→branche <code>sim/…</code>, promote→<code>main</code>. Sync via l’app ; autres Git = WIP. Rollback Git manuel sur GitHub. <strong>Seul repo où bige-ops commit</strong> pour l’infra. Voir github-config.html.</dd>
-        <dt id="g-app-repo">Repo applicatif</dt>
-        <dd>Code métier (api/web/worker…). Cloné au deploy sur la VM. bige-ops <strong>n’y commit pas</strong> pour le moment. Voir <a href="repos-vms-docker.html">repos-vms-docker.html</a>.</dd>
-        <dt id="g-dockerfile">Dockerfile</dt>
-        <dd>Build des services app : fichier dans le repo <em>ou</em> override <code>service_config.*.git.dockerfile</code>. Pannes de deploy → souvent mauvais path/contexte. Review lecture/écriture <em>sous</em> container : <strong>WIP</strong>.</dd>
-        <dt id="g-promote">Promote</dt>
-        <dd>Simulation draft → live. Côté Git : <code>main</code>. Snapshot pré-promote pour rollback config puis plan / apply.</dd>
-        <dt id="g-oks">OKS</dt>
-        <dd>Outscale Kubernetes Service — Kubernetes managé. Apply via oks-cli ; deploy via kubectl. <strong>Simuler ≠ entitlement</strong> : votre contrat peut ne pas inclure OKS / SecNumCloud / toutes les régions — on le voit au dry run (erreurs API). Voir <a href="#oks-warn">point d’attention</a> · <a href="oks.html">oks.html</a>.</dd>
-        <dt id="g-cli">CLI bige-ops</dt>
-        <dd>Même moteur que l’app (validate, generate, plan, apply, deploy). Chemin nominal = GUI. Voir <a href="cli.html">cli.html</a>.</dd>
-        <dt id="g-iaas">IaaS</dt>
-        <dd>Infrastructure as a Service : <a href="#g-vm">VMs</a> (parfois appelées <a href="#g-vps">VPS</a> chez Outscale), volumes, réseau, IP…</dd>
-        <dt id="g-paas">PaaS</dt>
-        <dd>Platform as a Service : couches managées (ex. OKS). Moins d’ops bas niveau, plus de focus apps / clusters.</dd>
-        <dt id="g-multi-tenant">Multi-tenant</dt>
-        <dd>Plusieurs comptes / projets Outscale sur le même <strong>poste</strong> : bascule dev, prod, client, SecNumCloud.</dd>
-        <dt id="g-inventory">Inventory</dt>
-        <dd>Liste live des ressources sur votre compte (VMs, volumes, réseau, OKS…). Base de la rétro et du resync.</dd>
-        <dt id="g-reverse">Reverse engineering</dt>
-        <dd>Partir de l’inventory live : <strong>lire</strong>, <strong>comprendre</strong>, <strong>afficher</strong> dans la simulation / Visual. Pas une réécriture « forcément meilleure » — l’optimisation (sizing, €, generate) reste un geste volontaire après.</dd>
-        <dt id="g-terraform">Terraform</dt>
-        <dd>Artefact généré depuis la simulation — pas l’interface principale. Materialization pour apply.</dd>
-        <dt id="g-materialization">Materialization</dt>
-        <dd>Ce que <code>generate</code> écrit : Terraform, specs OKS, YAML apps. La vérité produit reste la simulation.</dd>
-        <dt id="g-oos">OOS</dt>
-        <dd>Outscale Object Storage (S3-compatible). Indestructible via bige-ops. Voir <a href="oos.html">oos.html</a>.</dd>
-        <dt id="g-reseau">Réseau / exposition</dt>
-        <dd>Décider d’ouvrir (ou non) un pod, une VM, ou une face de layout : règles projet + Net / Security Groups Outscale. Voir <a href="reseau.html">reseau.html</a>.</dd>
-        <dt id="g-agent">Agent LLM</dt>
-        <dd>Co-pilote chat : travaille avec <strong>vos clés API perso</strong> (locales) pour comprendre / maintenir le layout et éviter cascades de keys &amp; setups — selon vos règles. Voir <a href="agent.html">agent.html</a>.</dd>
-        <dt id="g-topologie">Topologie</dt>
-        <dd>Forme d’une simulation. Trois seulement : <a href="#g-mono-vm">mono-VM</a> (<code>single-vm</code>), <a href="#g-multi-vm">multi-VM</a> (<code>multi-vm</code>), <a href="#g-oks">OKS</a> (<code>oks</code>). Voir <a href="layouts.html">layouts.html</a>.</dd>
-        <dt id="g-layout">Layout</dt>
-        <dd>Preset prêt à l’emploi : une <a href="#g-topologie">topologie</a> + un runtime + des bases + éventuellement un <a href="#g-lbu">LBU</a>. Ex. <code>node-app</code>, <code>python-app</code>, <code>node-lite</code>. Le <strong>bâtisseur</strong> (<code>custom</code>) compose le vôtre. Voir <a href="layouts.html">layouts.html</a>.</dd>
-        <dt id="g-service-config">service_config</dt>
-        <dd>Section de <a href="#g-project-yaml"><code>project.yaml</code></a> qui règle un service : image ou repo Git, <a href="#g-replicas">réplicas</a>, volumes, variables d’env, backup vers <a href="#g-oos">OOS</a>.</dd>
-        <dt id="g-project-yaml">project.yaml</dt>
-        <dd>Le fichier déclaratif de la simulation (<code>bige-ops/project.yaml</code>). Source de vérité : <code>generate</code> en dérive Terraform, specs OKS et compose. Éditable en <a href="#g-expert">mode expert</a>.</dd>
-        <dt id="g-replicas">Réplicas</dt>
-        <dd>Nombre de <strong>pods</strong> d’un Deployment OKS (<code>service_config.*.replicas</code>). Ce n’est <strong>pas</strong> un replica-set Mongo ni un cluster Elastic managé. Voir <a href="oks.html">oks.html</a>.</dd>
-        <dt id="g-nodepool">Nodepool</dt>
-        <dd>Groupe de nœuds d’un cluster <a href="#g-oks">OKS</a> : type Tina + nombre. Le control plane, lui, est opéré par Outscale.</dd>
-        <dt id="g-kubeconfig">Kubeconfig</dt>
-        <dd>Fichier d’accès au cluster, récupéré à l’apply OKS (<code>bige-ops/kubeconfigs/</code>). C’est lui qui permet <code>kubectl</code>. Secret local — jamais poussé. Voir <a href="secrets.html">secrets.html</a>.</dd>
-        <dt id="g-lbu">LBU</dt>
-        <dd>Load Balancer Unit — le load balancer Outscale. Point d’entrée public d’un layout : le HTTP public passe par le <strong>DNS du LBU</strong>, pas par l’IP de la VM. Voir <a href="reseau.html">reseau.html</a>.</dd>
-        <dt id="g-eip">EIP / IP publique</dt>
-        <dd>Adresse IP publique attachée à une VM (ou à un NAT). Facturée aussi quand elle n’est attachée à rien. Exposer une VM = lui donner une EIP + ouvrir un <a href="#g-sg">security group</a>.</dd>
-        <dt id="g-net">Net / VPC</dt>
-        <dd>Le réseau privé Outscale (« Net », équivalent VPC). Contient des <strong>subnets</strong> (publics / privés), des routes, une sortie Internet et éventuellement un NAT.</dd>
-        <dt id="g-sg">Security group</dt>
-        <dd>Pare-feu Outscale au niveau VM : règles entrantes / sortantes. C’est lui qui décide si un port est <strong>ouvert ou non</strong>. Voir <a href="reseau.html">reseau.html</a>.</dd>
-        <dt id="g-omi">OMI</dt>
-        <dd>Outscale Machine Image — l’image système d’une VM. bige-ops <strong>choisit</strong> une OMI existante de votre compte ; il n’en fabrique pas. Construire vos propres images : hors starter kit.</dd>
-        <dt id="g-bsu">BSU / volume</dt>
-        <dd>Le stockage bloc d’Outscale, attaché à une VM. Types <code>gp2</code> (SSD polyvalent) et <code>io1</code> (IOPS provisionnées, imposé au disque racine des bases). Pas de NVMe modélisé. <a href="volumes-bsu.html">Détail</a>.</dd>
-        <dt id="g-nat">NAT service</dt>
-        <dd>Passerelle de sortie pour une subnet privée. <strong>Désactivée par défaut</strong> : sans elle, une VM data ne télécharge rien. Facturée à l’heure. <a href="reseau-avance.html">Détail</a>.</dd>
-        <dt id="g-listener">Listener (LBU)</dt>
-        <dd>Règle d’écoute d’un load balancer : port d’entrée, port backend. bige-ops en génère <strong>un ou plusieurs</strong>, en <strong>HTTP ou TCP</strong> — aucun certificat TLS. <a href="lbu.html">Détail</a>.</dd>
-        <dt id="g-zone">Zone de disponibilité</dt>
-        <dd>Un projet en pose <strong>une seule</strong>, par défaut la première de la région. Donc pas de haute disponibilité multi-zone. <a href="regions.html">Détail</a>.</dd>
-        <dt id="g-coffre">Coffre (vault local)</dt>
-        <dd>Le magasin de secrets applicatifs de la simulation (<code>vault.local.json</code>), déversé en <code>.env</code> au deploy. <strong>Local</strong>, jamais poussé sur Git. Pas un vault SaaS. Voir <a href="secrets.html">secrets.html</a>.</dd>
-        <dt id="g-dry-run">Dry run</dt>
-        <dd>Passer en <a href="#g-apply">plan / apply</a> sans rien promettre : c’est là que les <strong>codes d’erreur de l’API Outscale</strong> révèlent ce que votre contrat autorise vraiment (région, OKS, quotas). Voir <a href="#oks-warn">OKS · point d’attention</a>.</dd>
-        <dt id="g-snapshot-config">Snapshot (config)</dt>
-        <dd>Copie locale de la simulation avant une opération risquée (promote, apply, reset) — filet pour <code>rollback</code>. À ne pas confondre avec un <strong>snapshot de volume</strong> Outscale, qui est une ressource cloud.</dd>
+    <section class="block" id="faq">
+      <h2>FAQ</h2>
+      <dl class="faq">
+        <dt>Faut-il un compte Outscale&nbsp;?</dt>
+        <dd>Non pour commencer : projection offline. Oui pour inventory / plan / apply.</dd>
+        <dt>Où sont les secrets&nbsp;?</dt>
+        <dd>Sur votre poste (coffre local). Rien synchronisé vers un backend bige-ops. <a href="secrets.html">Détail</a>.</dd>
+        <dt>Gatekeeper macOS bloque l’app&nbsp;?</dt>
+        <dd>Pas notarisé. Voir <a href="install.html#gatekeeper">installer &amp; Gatekeeper</a>.</dd>
+        <dt>Et les autres clouds&nbsp;?</dt>
+        <dd>Outscale d’abord. Autres providers en WIP — suivi sur les <a href="https://github.com/simondelamarre/bige-ops-releases/issues">issues</a>.</dd>
       </dl>
     </section>
 
     <footer class="site-footer">
-      <div class="cols">
-        <div>
-          <h3>Comprendre</h3>
-          <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="documentation.html">Toute la doc</a></li>
-            <li><a href="perimetre.html">Périmètre</a></li>
-            <li><a href="savoir.html">Sait / ne sait pas</a></li>
-            <li><a href="outscale.html">Catalogue Outscale</a></li>
-            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
-            <li><a href="index.html#glossaire">Glossaire</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Composer</h3>
-          <ul>
-            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
-            <li><a href="vms.html">VMs · VPS</a></li>
-            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
-            <li><a href="omi.html">OMI · images</a></li>
-            <li><a href="bases.html">Bases de données</a></li>
-            <li><a href="bases-complexes.html">Bases complexes</a></li>
-            <li><a href="oos.html">OOS &amp; backups</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Réseau &amp; région</h3>
-          <ul>
-            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
-            <li><a href="reseau-avance.html">Réseau avancé</a></li>
-            <li><a href="lbu.html">LBU · entrée publique</a></li>
-            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
-            <li><a href="oks.html">OKS &amp; pods</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Opérer</h3>
-          <ul>
-            <li><a href="simulations.html">Simulations &amp; promote</a></li>
-            <li><a href="inventory.html">Inventaire &amp; import</a></li>
-            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
-            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
-            <li><a href="agent.html">Assistant IA</a></li>
-            <li><a href="cli.html">CLI · app · OKS</a></li>
-            <li><a href="github-config.html">GitHub config</a></li>
-            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
-            <li><a href="expert-config.html">Mode expert · diffs</a></li>
-          </ul>
-        </div>
-      </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
-        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
-        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+        Gratuit · 100&nbsp;% local ·
+        <a href="documentation.html">doc</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">issues</a>
       </p>
     </footer>
   </main>
