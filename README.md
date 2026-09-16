@@ -6,8 +6,8 @@
 
 <p align="center">
   <strong>Free desktop app for <a href="https://www.outscale.com/">Outscale</a> &amp; <a href="https://www.outscale.com/fr/secnumcloud/">SecNumCloud</a></strong><br/>
-  Design the stack · see the € · deploy when you’re ready<br/>
-  <em>Same engine in the GUI and the CLI. Fully local.</em>
+  Skip blank Terraform — design · € · deploy (VMs / OKS)<br/>
+  <em>100% local. No SaaS control plane.</em>
 </p>
 
 <p align="center">
@@ -22,10 +22,9 @@
 
 <p align="center">
   <a href="https://bige.dev/"><strong>bige.dev</strong></a> —
-  <a href="https://bige.dev/#nouveautes">nouveautés</a> ·
-  <a href="https://bige.dev/#feuille-de-route">roadmap</a> ·
-  <a href="https://bige.dev/install.html">install</a> ·
-  <a href="https://bige.dev/#features">features</a>
+  <a href="https://bige.dev/#pratique">en pratique</a> ·
+  <a href="https://bige.dev/#features">features</a> ·
+  <a href="https://bige.dev/install.html">install</a>
 </p>
 
 ---
