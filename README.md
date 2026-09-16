@@ -128,7 +128,22 @@ Optional agent (Claude via your Anthropic API key) can help edit the projection 
 
 | macOS / Linux | [Latest release — FREE](https://github.com/simondelamarre/bige-ops-releases/releases/latest) |
 | Homebrew | `brew tap simondelamarre/bige-ops && brew install --cask bige-ops` |
-| Gatekeeper (macOS, not notarized yet) | `xattr -cr /Applications/bige-ops.app` then `codesign --force --deep --sign - /Applications/bige-ops.app` |
+| Issues / feedback | [Open an issue](https://github.com/simondelamarre/bige-ops-releases/issues/new/choose) — also from the desktop app → Settings → Report an issue |
+
+### macOS Gatekeeper (not notarized)
+
+Downloads are quarantined. Modern macOS may show **“Apple could not verify…”** and block with **no** “Open anyway”.
+
+After copying `bige-ops.app` to `/Applications` — **before** the first double-click:
+
+```bash
+xattr -cr /Applications/bige-ops.app && codesign --force --deep --sign - /Applications/bige-ops.app
+```
+
+Or run **Fix Gatekeeper.command** from the DMG. After Trash: copy again, then re-run.  
+Homebrew cask clears quarantine in postflight. Full guide: [install.html#gatekeeper](https://bige.dev/install.html#gatekeeper).
+
+Source stays private; **this** public repo is where bugs and feature requests land on GitHub.
 
 **Outscale** · [outscale.com](https://www.outscale.com/) · **SecNumCloud** · [outscale.com/fr/secnumcloud](https://www.outscale.com/fr/secnumcloud/)
 

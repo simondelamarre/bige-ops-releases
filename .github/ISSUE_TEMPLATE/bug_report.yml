@@ -1,0 +1,47 @@
+name: Bug report
+description: Something broke or behaved unexpectedly in the desktop app or CLI
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. The product source is private; this public repo is the place for user-facing issues.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: Steps to reproduce, expected vs actual.
+      placeholder: |
+        1. …
+        2. …
+        Expected: …
+        Actual: …
+    validations:
+      required: true
+  - type: input
+    id: app-version
+    attributes:
+      label: Desktop / CLI version
+      description: From Settings → Application (e.g. v0.3.0).
+      placeholder: v0.x.x
+    validations:
+      required: false
+  - type: dropdown
+    id: os
+    attributes:
+      label: OS
+      options:
+        - macOS (Apple Silicon)
+        - macOS (Intel)
+        - Linux
+        - Other
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / screenshots
+      description: Paste relevant terminal output (no secrets, tokens, or credentials).
+    validations:
+      required: false

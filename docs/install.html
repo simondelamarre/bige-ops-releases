@@ -24,7 +24,7 @@
     <p class="lead">
       bige-ops est une application <strong>desktop locale</strong>, gratuite,
       distribuée via GitHub Releases. Version courante : <strong>0.3.0</strong>
-      (tag <code>v0.3.0</code>). macOS et Linux ; <strong>pas de Windows</strong>
+      (tag <code>v0.4.0</code>). macOS et Linux ; <strong>pas de Windows</strong>
       aujourd’hui.
     </p>
 
@@ -55,10 +55,39 @@ brew install --cask bige-ops</pre>
       <strong>Cask vs release.</strong>
       Le cask Homebrew peut être en retard sur le tag GitHub
       (ex. cask <code>0.2.2</code> alors que la release est
-      <code>0.3.0</code>). Vérifiez <code>brew info --cask bige-ops</code> :
+      <code>0.4.0</code>). Vérifiez <code>brew info --cask bige-ops</code> :
       si les numéros divergent, préférez le
       <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">DMG latest</a>.
     </div>
+
+    <h2 id="gatekeeper">macOS bloque l’app ? (Gatekeeper)</h2>
+    <div class="callout callout-warn">
+      <strong>Pas encore notarié par Apple.</strong>
+      Après un téléchargement DMG, macOS peut afficher
+      « Apple n’a pas pu confirmer que bige-ops… » et
+      <em>refuser toute ouverture</em> — sans bouton « Ouvrir quand même ».
+      Ce n’est pas un DMG corrompu : c’est la quarantaine + l’absence de notarisation.
+    </div>
+    <ol>
+      <li>Montez le DMG et glissez <code>bige-ops.app</code> dans <code>/Applications</code>.</li>
+      <li><strong>Avant</strong> le premier double-clic, ouvrez Terminal et collez :</li>
+    </ol>
+<pre>xattr -cr /Applications/bige-ops.app && codesign --force --deep --sign - /Applications/bige-ops.app
+open /Applications/bige-ops.app</pre>
+    <p>
+      Sur le DMG, le fichier <strong>Fix Gatekeeper.command</strong> fait la même chose
+      (double-clic → autoriser Terminal si macOS le demande).
+    </p>
+    <p>
+      <strong>Après mise à la corbeille :</strong> restaurez ou re-copiez l’app depuis le DMG,
+      puis relancez les commandes <em>avant</em> de rouvrir. Un simple re-téléchargement
+      ne suffit souvent pas.
+    </p>
+    <p>
+      <strong>Sans Terminal :</strong>
+      <code>brew tap simondelamarre/bige-ops && brew install --cask bige-ops</code>
+      — le cask retire la quarantaine automatiquement.
+    </p>
 
     <h2>Mises à jour : vérifiées, pas automatiques</h2>
     <p>
