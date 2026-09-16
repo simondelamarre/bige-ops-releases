@@ -474,6 +474,28 @@
 
     .pourquoi-list strong { color: var(--white); }
 
+    .why-card {
+      margin: 1.35rem 0 0;
+      max-width: 44rem;
+    }
+
+    .why-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--white);
+      margin: 0 0 0.35rem;
+    }
+
+    .why-card .why-sub {
+      color: #5ec4b4;
+      font-family: var(--font-display);
+      font-weight: 500;
+      margin: 0 0 0.5rem;
+    }
+
+    .why-card p { margin: 0.4rem 0; color: var(--mist); }
+
     a { color: #5ec4b4; }
     a:visited { color: #9bb8d4; }
     a:hover { color: #7ed4c6; }
@@ -596,9 +618,9 @@
     <p class="baseline">Gratuit · outil local · stack sur ton cloud · pas de plan de contrôle SaaS</p>
 
     <ul class="pitch">
-      <li><strong>Less is more.</strong> Une app pour dessiner, projeter et déployer — sans blank Terraform.</li>
-      <li><strong>Outscale &amp; SecNumCloud</strong> sont prêts. Les autres clouds viennent ensuite.</li>
-      <li>L’outil déploie. Le cloud héberge. Tu gardes tes secrets.</li>
+      <li><strong>Less is more.</strong> Une app desktop gratuite pour déployer sans te noyer.</li>
+      <li><strong>Outscale &amp; SecNumCloud.</strong> C’est prêt. Le reste vient après.</li>
+      <li><strong>L’outil déploie. Le cloud héberge.</strong> Ce n’est pas un Docker sur ton poste.</li>
     </ul>
 
     <figure class="shot" id="shot-hero">
@@ -628,36 +650,66 @@
     <section class="block" id="pourquoi">
       <h2>Pourquoi bige-ops</h2>
       <p>
-        Comme sur <a href="https://github.com/simondelamarre/bige-ops-releases">GitHub</a> :
-        <strong>Less is more</strong> — design · € · deploy (VMs / OKS) sur
-        <strong>Outscale</strong> &amp; SecNumCloud. Outil local, pas de plan de contrôle SaaS.
-        Autres clouds ensuite.
+        Même texte que le tour dans l’app et que le
+        <a href="https://github.com/simondelamarre/bige-ops-releases">README GitHub</a>.
       </p>
-      <ol class="pourquoi-list">
-        <li><strong>Less is more</strong> — design · deploy, pas le blank Terraform. <a href="https://bige.dev/">bige.dev</a></li>
-        <li><strong>Outscale prêt</strong> — autres clouds ensuite. <a href="#outscale">Clouds</a></li>
-        <li><strong>L’outil déploie</strong> — le cloud héberge. <a href="secrets.html">Secrets</a></li>
-        <li><strong>Projection d’abord</strong> — compte seulement pour apply. <a href="install.html">Installer</a></li>
-        <li><strong>Vulns &amp; risques</strong> — scan repos. <a href="#features">Features</a></li>
-        <li><strong>BYOK</strong> — tes clés LLM. <a href="agent.html">Agent</a></li>
-        <li><strong>On t’écoute</strong> — issues &amp; features. <a href="#ecoute">Écoute</a></li>
-      </ol>
+
+      <article class="why-card" id="why-less">
+        <h3>Less is more.</h3>
+        <p class="why-sub">Une app desktop gratuite pour déployer sans te noyer.</p>
+        <p>Tu dessines ta stack — VMs ou cluster Kubernetes — tu la projettes, puis tu la déploies sur ton compte. Les fichiers Terraform ou YAML sortent derrière : ce n’est pas ce que tu viens écrire à la main.</p>
+      </article>
+
+      <article class="why-card" id="why-outscale">
+        <h3>Outscale &amp; SecNumCloud.</h3>
+        <p class="why-sub">C’est prêt. Le reste vient après.</p>
+        <p>Aujourd’hui tu peux appliquer et suivre le pricing sur Outscale, y compris SecNumCloud. D’autres clouds arriveront. On ne prétend pas les supporter tous tant que ce n’est pas vrai.</p>
+      </article>
+
+      <article class="why-card" id="why-deploy">
+        <h3>L’outil déploie. Le cloud héberge.</h3>
+        <p class="why-sub">Ce n’est pas un Docker sur ton poste.</p>
+        <p>bige-ops tourne sur ta machine pour piloter le déploiement. Ta stack, elle, vit sur ton cloud. Tes secrets restent chez toi — coffre local, avec sync optionnelle vers GitHub, HashiCorp Vault ou Fly si tu le veux.</p>
+        <p><a href="secrets.html">Secrets →</a></p>
+      </article>
+
+      <article class="why-card" id="why-projection">
+        <h3>Tu peux commencer sans compte.</h3>
+        <p class="why-sub">Tu projettes d’abord. Tu te connectes quand tu appliques.</p>
+        <p>Sans identifiants Outscale, tu explores et tu projettes. Tu te connectes seulement pour l’inventaire, le plan et l’apply — quand tu es prêt.</p>
+        <p><a href="install.html">Installer →</a></p>
+      </article>
+
+      <article class="why-card" id="why-vulns">
+        <h3>Vulns et risques.</h3>
+        <p class="why-sub">On regarde tes repos, pas seulement un dashboard.</p>
+        <p>Déployer reste gratuit. Scanner tes dépôts, voir les CVE et remédier, c’est la suite — et c’est là que les crédits entrent.</p>
+        <p><a href="#features">Features →</a></p>
+      </article>
+
+      <article class="why-card" id="why-byok">
+        <h3>Tes clés LLM.</h3>
+        <p class="why-sub">Les tiennes. Rien n’est gardé chez nous.</p>
+        <p>Tu branches ta propre clé — Anthropic, OpenAI, Google Gemini, Mistral. Les appels partent de ton poste vers le fournisseur. bige-ops ne stocke pas et ne réutilise pas ces échanges.</p>
+        <p><a href="agent.html">Agent →</a></p>
+      </article>
+
+      <article class="why-card" id="why-ecoute">
+        <h3>On t’écoute.</h3>
+        <p class="why-sub">Un bug ou une idée : tu l’ouvres sur GitHub.</p>
+        <p>Le dépôt public reçoit tes issues et tes demandes de features. On les lit, on priorise, on répond — sans toucher à ton graphe ni à tes secrets.</p>
+      </article>
     </section>
 
     <section class="block" id="ecoute">
       <h2>On t’écoute</h2>
+      <p class="why-sub" style="color:#5ec4b4;font-family:var(--font-display);font-weight:500">Un bug ou une idée : tu l’ouvres sur GitHub.</p>
       <p>
-        Ton problème, ton friction, ton idée — ce n’est pas un ticket perdu dans le vide.
-        Tu ouvres une <strong>issue</strong> ou une <strong>feature request</strong> sur le dépôt public ;
-        on lit, on priorise, on répond. Sans accéder à ton graphe ni à tes secrets.
+        Le dépôt public reçoit tes issues et tes demandes de features. On les lit, on priorise, on répond — sans toucher à ton graphe ni à tes secrets.
       </p>
       <p class="actions" style="margin-top:1rem">
         <a class="primary" href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">Ouvrir une issue</a>
         <a class="secondary" href="https://github.com/simondelamarre/bige-ops-releases/issues/new?template=feature_request.yml">Demander une feature</a>
-      </p>
-      <p style="margin-top:0.85rem;color:var(--mist);font-size:0.95rem">
-        Voir aussi la <a href="github-config.html">forge / config GitHub</a>
-        · <a href="https://github.com/simondelamarre/bige-ops-releases/issues">toutes les issues</a>.
       </p>
     </section>
 
