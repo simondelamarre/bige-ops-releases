@@ -52,11 +52,13 @@ Starters: Node / Python / Java / Go / Elixir / PHP × Mongo / Redis / Postgres /
 
 ## What’s new in 0.5
 
-- **Repos & risk** — scan linked repos, exposed risks, **MD / PDF** reports (internal or RSSI)
+- **Repos · risques · CVE** — scan linked repos, exposed risks, [OpenCVE](https://www.opencve.io/), **MD / PDF** reports (internal or RSSI)
 - **Instant estimate** — local cache + tariffs page
 - **OKS logs** — `kubectl` pod logs from the app
 
-**In progress / next:** fuller vuln scan · credits & account · on-demand CLI tooling — [roadmap on the site](https://bige.dev/#feuille-de-route).
+**Feature board** (stable / WIP / backlog): [bige.dev/#features](https://bige.dev/#features) · [public issues](https://github.com/simondelamarre/bige-ops-releases/issues)
+
+**Outscale first** — other clouds (Fly.io, Scaleway, OVH, AWS, Azure, GCP…) listed as WIP / soon: [bige.dev/#outscale](https://bige.dev/#outscale)
 
 ---
 

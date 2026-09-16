@@ -283,6 +283,110 @@
       line-height: 1.7;
     }
 
+    .feat-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      margin: 0 0 1rem;
+      padding: 0;
+      list-style: none;
+      font-size: 0.85rem;
+      color: var(--mist);
+    }
+    .feat-legend li {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .feat-group { margin: 0 0 1.15rem; }
+    .feat-group:last-of-type { margin-bottom: 0.75rem; }
+    .feat-group h3 {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 0 0 0.5rem;
+      color: var(--mist);
+    }
+    .feat-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .feat-list li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.5rem 0.7rem;
+      align-items: start;
+      padding: 0.6rem 0.7rem;
+      border: 1px solid var(--ink-700);
+      border-radius: 8px;
+      background: rgba(18, 21, 26, 0.55);
+      font-size: 0.98rem;
+      color: var(--mist);
+      line-height: 1.45;
+    }
+    .feat-list .feat-body { min-width: 0; }
+    .feat-list .feat-body strong { color: var(--white); }
+    .badge {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.18rem 0.4rem;
+      border-radius: 4px;
+      line-height: 1.2;
+      white-space: nowrap;
+      margin-top: 0.1rem;
+    }
+    .badge-stable {
+      color: #0b0d10;
+      background: #5ec4b4;
+    }
+    .badge-wip {
+      color: #f5d78a;
+      background: rgba(245, 215, 138, 0.12);
+      border: 1px solid rgba(245, 215, 138, 0.35);
+    }
+    .badge-backlog {
+      color: #9aa3b2;
+      background: rgba(154, 163, 178, 0.1);
+      border: 1px solid rgba(154, 163, 178, 0.28);
+    }
+    .provider-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0.75rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .provider-row li {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.35rem 0.55rem;
+      border-radius: 6px;
+      border: 1px solid var(--ink-600);
+      color: var(--mist);
+    }
+    .provider-row li.is-live {
+      color: #0b0d10;
+      background: #5ec4b4;
+      border-color: #5ec4b4;
+    }
+    .provider-row li.is-wip {
+      color: #f5d78a;
+      border-color: rgba(245, 215, 138, 0.4);
+      background: rgba(245, 215, 138, 0.08);
+    }
+
     /* Links: native visited + focus (a11y first) */
     a {
       color: #5ec4b4;
@@ -654,8 +758,8 @@
       <h2>Sommaire</h2>
       <ul>
         <li><a href="#produit">Le produit</a></li>
-        <li><a href="#nouveautes">Nouveautés 0.5</a></li>
-        <li><a href="#feuille-de-route">En cours</a></li>
+        <li><a href="#outscale">Outscale</a></li>
+        <li><a href="#features">Features</a></li>
         <li><a href="#visual">Visual</a></li>
         <li><a href="#securite">Sécurité</a></li>
         <li><a href="#oks-warn">OKS</a></li>
@@ -666,13 +770,14 @@
 
     <section class="block" id="produit">
       <h2>Le produit</h2>
-      <h1>Design · € · deploy — sur votre compte Outscale.</h1>
+      <h1>Design · € · deploy — d’abord sur Outscale.</h1>
       <p>
-        App <strong>gratuite</strong>, 100&nbsp;% locale.
+        App <strong>gratuite</strong>, 100&nbsp;% locale, conçue pour
+        <a href="https://www.outscale.com/"><strong>Outscale</strong></a>
+        et <a href="https://www.outscale.com/fr/secnumcloud/"><strong>SecNumCloud</strong></a>.
         Composez un layout (VMs et/ou <a class="term" href="#g-oks">OKS</a>),
         lisez une <a class="term" href="#g-estimate">estimation</a> catalogue €&nbsp;HT/mois,
-        puis plan / apply / deploy quand vous êtes prêt —
-        y compris <a class="term" href="#g-secnumcloud">SecNumCloud</a>.
+        puis plan / apply / deploy sur <em>votre</em> compte.
       </p>
       <p>
         <strong>Pas de compte Outscale pour commencer</strong> :
@@ -688,44 +793,136 @@
       </p>
     </section>
 
-    <section class="block" id="nouveautes">
-      <h2>Nouveautés — 0.5.0</h2>
-      <p class="title">Ce qui vient de sortir.</p>
-      <ul>
-        <li>
-          <strong>Repos &amp; risques</strong> — scan des dépôts liés à la simulation,
-          risques exposés, rapport <strong>MD / PDF</strong> (interne ou RSSI).
-        </li>
-        <li>
-          <strong>Estimate instantanée</strong> — cache local + page tarifs ;
-          le € s’affiche sans attendre un recalcul CLI à chaque visite.
-        </li>
-        <li>
-          <strong>Logs OKS</strong> — suivi <code>kubectl</code> des pods
-          depuis l’app (suite des logs compose).
-        </li>
-      </ul>
-    </section>
-
-    <section class="block" id="feuille-de-route">
-      <h2>En cours / bientôt</h2>
-      <p class="title">Sans date promise — on livre quand c’est prêt.</p>
-      <ul>
-        <li>
-          <strong>Full scan vulns</strong> — couverture monorepo plus large,
-          boucle agent + gestion des faux positifs.
-        </li>
-        <li>
-          <strong>Crédits &amp; compte</strong> — free tier clair, paiements
-          légers (sans infra SaaS lourde), compte GitHub / GitLab.
-        </li>
-        <li>
-          <strong>Tooling CLI à la demande</strong> — installer / mettre à jour
-          les binaires ops quand il le faut.
-        </li>
+    <section class="block" id="outscale">
+      <h2>Outscale d’abord</h2>
+      <p class="title">Cloud souverain en production. Autres providers en intégration.</p>
+      <p>
+        Aujourd’hui le moteur pricing / apply / OKS est branché sur
+        <strong>Outscale</strong> (régions classiques + SecNumCloud).
+        C’est le chemin nominal — pas un multi-cloud fantôme.
+      </p>
+      <ul class="provider-row" aria-label="Cloud providers">
+        <li class="is-live">Outscale · live</li>
+        <li class="is-wip">Fly.io · connect</li>
+        <li class="is-wip">Scaleway · bientôt</li>
+        <li class="is-wip">OVHcloud · bientôt</li>
+        <li class="is-wip">AWS · bientôt</li>
+        <li class="is-wip">Azure · bientôt</li>
+        <li class="is-wip">GCP · bientôt</li>
       </ul>
       <p>
-        Idées et bugs : <a href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">ouvrir une issue</a>
+        Les providers « bientôt » sont déjà listés à la création de compte ;
+        catalogue pricing et materialization complète restent Outscale-only pour l’instant.
+        Suivi : <a href="https://github.com/simondelamarre/bige-ops-releases/issues">issues publiques</a>.
+      </p>
+    </section>
+
+    <section class="block" id="features">
+      <h2>Features</h2>
+      <p class="title">Stable · WIP · backlog — pas de vapourware.</p>
+      <ul class="feat-legend" aria-label="Légende des statuts">
+        <li><span class="badge badge-stable">Stable</span> utilisable aujourd’hui</li>
+        <li><span class="badge badge-wip">WIP</span> en cours, encore imparfait</li>
+        <li><span class="badge badge-backlog">Backlog</span> prévu, pas commencé</li>
+      </ul>
+
+      <div class="feat-group">
+        <h3>Stable</h3>
+        <ul class="feat-list">
+          <li>
+            <span class="badge badge-stable">Stable</span>
+            <div class="feat-body">
+              <strong>Visual + estimate Outscale</strong> —
+              canvas topologie, catalogue € HT/mois, projection offline.
+            </div>
+          </li>
+          <li>
+            <span class="badge badge-stable">Stable</span>
+            <div class="feat-body">
+              <strong>Apply / deploy</strong> —
+              plan · apply (Terraform / OKS) puis deploy apps sur <em>votre</em> tenant.
+            </div>
+          </li>
+          <li>
+            <span class="badge badge-stable">Stable</span>
+            <div class="feat-body">
+              <strong>Repos · risques · CVE</strong> —
+              scan des dépôts liés, risques exposés, croisement
+              <a href="https://www.opencve.io/" rel="noopener noreferrer">OpenCVE</a>,
+              rapport <strong>MD / PDF</strong> (interne ou RSSI).
+            </div>
+          </li>
+          <li>
+            <span class="badge badge-stable">Stable</span>
+            <div class="feat-body">
+              <strong>Estimate cache + tarifs</strong> —
+              € instantané au rechargement · page tarifs.
+            </div>
+          </li>
+          <li>
+            <span class="badge badge-stable">Stable</span>
+            <div class="feat-body">
+              <strong>Logs OKS</strong> —
+              suivi <code>kubectl</code> des pods depuis l’app.
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="feat-group">
+        <h3>En cours / WIP</h3>
+        <ul class="feat-list">
+          <li>
+            <span class="badge badge-wip">WIP</span>
+            <div class="feat-body">
+              <strong>Mode agent</strong> —
+              copilote config avec <em>vos</em> clés API (édite le layout,
+              jamais apply / secrets). Encore limité, itération ouverte.
+            </div>
+          </li>
+          <li>
+            <span class="badge badge-wip">WIP</span>
+            <div class="feat-body">
+              <strong>Full scan vulns</strong> —
+              couverture monorepo plus large, tools agent, boucle faux positifs.
+            </div>
+          </li>
+          <li>
+            <span class="badge badge-wip">WIP</span>
+            <div class="feat-body">
+              <strong>Autres cloud providers</strong> —
+              Fly.io, Scaleway, OVH, AWS, Azure, GCP… — câblage progressif
+              (Outscale reste le chemin nominal).
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="feat-group">
+        <h3>Backlog</h3>
+        <ul class="feat-list">
+          <li>
+            <span class="badge badge-backlog">Backlog</span>
+            <div class="feat-body">
+              <strong>Crédits &amp; compte</strong> —
+              free tier, paiements légers, compte GitHub / GitLab.
+            </div>
+          </li>
+          <li>
+            <span class="badge badge-backlog">Backlog</span>
+            <div class="feat-body">
+              <strong>Tooling CLI à la demande</strong> —
+              installer / mettre à jour les binaires ops quand il le faut.
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <p>
+        Idées, bugs, votes :
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">toutes les issues</a>
+        ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">en ouvrir une</a>
         (aussi depuis l’app → Paramètres).
       </p>
     </section>
@@ -759,7 +956,7 @@
 
     <section class="block" id="securite">
       <h2>Sécurité</h2>
-      <p class="title">Local-first. Pas de coffre SaaS à nous.</p>
+      <p class="title">Local-first. CVE &amp; surface — sans coffre SaaS à nous.</p>
       <p>
         Credentials et secrets restent sur <strong>votre poste</strong>
         (ou chez Outscale après deploy). Rien n’est synchronisé vers un backend bige-ops.
@@ -767,7 +964,8 @@
       </p>
       <p>
         Sur les repos liés à la simulation : scan de surface, risques exposés,
-        export de rapport pour les équipes internes ou un RSSI.
+        croisement <a href="https://www.opencve.io/" rel="noopener noreferrer"><strong>OpenCVE</strong></a>
+        (CVE connues), export de rapport MD/PDF pour les équipes ou un RSSI.
       </p>
     </section>
 
@@ -781,9 +979,11 @@
         <a href="inventory.html">inventory</a> (lire l’existant sur le compte).
       </p>
       <p>
-        Assistant IA optionnel avec <strong>vos</strong> clés API —
+        <span class="badge badge-wip">WIP</span>
+        <strong>Mode agent</strong> — copilote optionnel avec <strong>vos</strong> clés API :
         il édite la config, jamais apply / deploy / secrets.
-        Voir <a href="agent.html">assistant IA</a>.
+        Voir <a href="agent.html">assistant IA</a> ·
+        <a href="#features">features</a>.
       </p>
     </section>
 
