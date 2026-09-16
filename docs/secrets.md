@@ -21,13 +21,25 @@ Où vit quoi :
 
 `build.secrets` = secrets de build des images Docker, injectés au deploy depuis le coffre.
 
-**Warn :** vos secrets = votre responsabilité. Chiffrez le disque, verrouillez la session. Si vous avez déjà un vault d’entreprise, utilisez-le en dehors de bige-ops.
+**Warn :** vos secrets = votre responsabilité. Chiffrez le disque, verrouillez la session.
+
+## Solutions actuelles (`#backends`)
+
+| Backend | Rôle | Statut |
+| --- | --- | --- |
+| **Local** | Coffre `vault.local.json` → `.env` au deploy | Prêt · primary |
+| **GitHub Actions secrets** | Sync vers un repo choisi | Prêt · optionnelle |
+| **HashiCorp Vault** | KV sur *ton* Vault (token local) | Prêt · optionnelle |
+| **Fly.io secrets** | Secrets d’une app Fly (token local) | Prêt · optionnelle |
+
+Config : `bige-ops/vault.config.json`. Tokens dans Settings desktop. **Pas** de vault SaaS bige-ops.
 
 ```mermaid
 flowchart LR
   V[Coffre local] --> E[.env]
   E --> D[Deploy VM]
   V -.exclu.-> G[config-history]
+  V -.sync opt.-> GH[GitHub / Vault / Fly]
 ```
 
-HTML : [secrets.html](https://bige.dev/secrets.html)
+HTML : [secrets.html#backends](https://bige.dev/secrets.html#backends)
