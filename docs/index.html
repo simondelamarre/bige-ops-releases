@@ -15,12 +15,12 @@
   <meta property="og:url" content="https://bige.dev/" />
   <meta property="og:title" content="bige-ops — le starter kit Outscale" />
   <meta property="og:description" content="Gratuit · 100 % local · pas de control plane SaaS. Design, €, deploy sur votre compte Outscale." />
-  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
-  <meta property="og:image:alt" content="bige-ops — design & deploy in three clicks" />
+  <meta property="og:image" content="https://bige.dev/shot-hero.png" />
+  <meta property="og:image:alt" content="bige-ops — Visual Outscale, topologie et coût" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="bige-ops — le starter kit Outscale" />
   <meta name="twitter:description" content="Gratuit · 100 % local · pas de control plane SaaS." />
-  <meta name="twitter:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta name="twitter:image" content="https://bige.dev/shot-hero.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -145,6 +145,21 @@
       border: 1px solid var(--ink-700);
       border-radius: 10px;
       background: var(--ink-900);
+    }
+
+    .shot figcaption {
+      margin: 0.45rem 0 0;
+      font-size: 0.85rem;
+      color: var(--mist);
+      line-height: 1.35;
+    }
+
+    .shot-secondary {
+      margin: 0.85rem 0 0;
+    }
+
+    .shot-secondary img {
+      border-radius: 8px;
     }
 
     .download-inline {
@@ -574,15 +589,16 @@
       <li>Terraform = materialization, pas le produit</li>
     </ul>
 
-    <figure class="shot">
+    <figure class="shot" id="shot-hero">
       <img
-        src="bige-ops-three-clicks.png"
-        width="1100"
-        height="620"
+        src="shot-hero.png"
+        width="1200"
+        height="750"
         loading="eager"
         decoding="async"
-        alt="bige-ops — design, estimate, deploy en trois clics"
+        alt="Canvas Visual bige-ops : topologie Outscale et estimation € HT/mois"
       />
+      <figcaption>Visual — layout + €. Remplacez <code>shot-hero.png</code> par un vrai screen.</figcaption>
     </figure>
 
     <div id="download" class="download-inline">
@@ -683,6 +699,19 @@
           <li><span class="badge badge-stable">Stable</span> <span><strong>Visual + estimate</strong> — canvas, € HT/mois, projection offline</span></li>
           <li><span class="badge badge-stable">Stable</span> <span><strong>Apply / deploy</strong> — plan · apply · deploy sur votre tenant</span></li>
           <li><span class="badge badge-stable">Stable</span> <span><strong>Repos · risques · CVE</strong> — scan + <a href="https://www.opencve.io/" rel="noopener noreferrer">OpenCVE</a> · rapport MD/PDF</span></li>
+        </ul>
+        <figure class="shot shot-secondary" id="shot-repos">
+          <img
+            src="shot-repos.png"
+            width="1200"
+            height="750"
+            loading="lazy"
+            decoding="async"
+            alt="Panneau Repos : findings, risques exposés, OpenCVE"
+          />
+          <figcaption>Repos / CVE — remplacez <code>shot-repos.png</code>.</figcaption>
+        </figure>
+        <ul class="feat-list" style="margin-top:0.85rem">
           <li><span class="badge badge-stable">Stable</span> <span><strong>Estimate cache</strong> + page tarifs</span></li>
           <li><span class="badge badge-stable">Stable</span> <span><strong>Logs OKS</strong> — pods via kubectl</span></li>
         </ul>
