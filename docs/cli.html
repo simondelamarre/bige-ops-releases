@@ -93,7 +93,7 @@ flowchart LR
       1. Simulation topologie <strong>oks</strong> (Visual ou
       <code>bige-ops add stack --topology oks</code>).
       2. <code>generate</code> → specs sous <code>bige-ops/oks/</code> +
-      apps YAML.
+      apps YAML (réplicas, HPA, expose HTTP/TLS).
       3. <code>apply --target oks</code> → <strong>oks-cli</strong>.
       4. <code>deploy</code> → <strong>kubectl apply</strong> des Deployments
       (réplicas = pods).
@@ -103,6 +103,26 @@ flowchart LR
       <a href="oks.html">OKS &amp; pods</a>.
       Doc CLI complète : dans l’app (Docs) — pages <code>cli/oks</code>,
       <code>cli/overview</code>.
+    </p>
+
+    <h2>Terminal de l’app</h2>
+    <p>
+      Vrai shell PTY (<code>$SHELL</code>) : <code>ls</code>, <code>git</code>,
+      <code>bige-ops …</code>. Le binaire est sur le PATH. Onglets + KeepAlive
+      quand vous changez de vue.
+    </p>
+
+    <h2>Commandes utiles (0.6)</h2>
+<pre>bige-ops live status [--sample] [--oks]
+bige-ops live sample --id i-xxxxxxxx
+bige-ops inventory destroy --id … --cascade [--plan|--yes]
+bige-ops inventory forget --terminated
+bige-ops pricing catalog-sync
+bige-ops mcp                        # stdio pour Cursor / Claude Code</pre>
+    <p>
+      Live = état OAPI + capacité Tina ; % guest seulement avec sample SSH.
+      Inventaire : badges status, destroy vérifié, forget local.
+      Tarifs : sync catalogue public OAPI (page Tarifs dans l’app).
     </p>
 
     <h2>Ce que ce n’est pas</h2>
@@ -121,7 +141,6 @@ flowchart LR
             <li><a href="documentation.html">Toute la doc</a></li>
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="savoir.html">Sait / ne sait pas</a></li>
-            <li><a href="outscale.html">Catalogue Outscale</a></li>
             <li><a href="install.html">Installer &amp; mettre à jour</a></li>
             <li><a href="index.html#glossaire">Glossaire</a></li>
           </ul>

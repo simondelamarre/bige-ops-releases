@@ -1,6 +1,6 @@
 # Installer & mettre à jour
 
-App desktop locale et gratuite, version **0.4.1**. Distribution via GitHub Releases : [simondelamarre/bige-ops-releases](https://github.com/simondelamarre/bige-ops-releases).
+App desktop locale et gratuite, version **0.6.0**. Distribution via GitHub Releases : [simondelamarre/bige-ops-releases](https://github.com/simondelamarre/bige-ops-releases).
 
 **Plateformes :** macOS (DMG ou cask) et Linux. **Windows : non supporté** aujourd’hui.
 

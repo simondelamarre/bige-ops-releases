@@ -81,13 +81,19 @@ Scan repos / CVE (suite crédits) · tes clés LLM (BYOK) · [ouvrir une issue](
 
 ---
 
-## Nouveautés 0.5
+## Nouveautés 0.6
 
-- **Vulns & risques** — scan repos, CVE, rapports MD / PDF
-- **Estimate cache** — € local
-- **Logs OKS** — kubectl depuis l’app
+**Vulns & OpenCVE** — scan repos, risques exposés, CVE via [OpenCVE](https://www.opencve.io/), rapports MD/PDF. Open source, pas un produit sécurité SaaS.
 
-**Ensuite :** full scan · crédits · autres clouds · CLI tooling — [features](https://bige.dev/#features).
+**Agent (WIP)** — copilote config (vos clés) · MCP local Cursor/Claude · traces JSONL. Jamais apply / secrets. Encore WIP.
+
+**App & CLI**
+- Terminal PTY · Live VMs/pods · inventaire (status, destroy vérifié, forget)
+- OKS scale H/V + HPA · HTTPS via ORN EIM
+- Tarifs : sync catalogue OAPI · formulaires VM par cloud · Fly (WIP)
+- Fixes divers : Visual (drag, nodes, confirm), Hub clouds, estimate persist, sim delete/init
+
+Issues : [bige-ops-releases](https://github.com/simondelamarre/bige-ops-releases/issues).
 
 ---
 

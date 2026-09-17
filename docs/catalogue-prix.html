@@ -29,19 +29,18 @@
       <span class="brand-badge">Beta démo</span>
     </div>
     <h1>Catalogue de prix &amp; estimation</h1>
-    <p class="lead">L’estimation est calculée <strong>en local</strong>, contre un catalogue public embarqué dans l’app. Ce n’est pas un devis, ce n’est pas branché sur votre contrat, et il y a des lignes qu’elle ne compte pas. Les voici toutes.</p>
+    <p class="lead">L’estimation est calculée <strong>en local</strong>. Catalogue bootstrap embarqué, ou sync du catalogue public OAPI (<code>pricing catalog-sync</code> / Sync Tarifs). Ce n’est pas un devis, pas votre contrat — et certaines lignes ne sont pas comptées.</p>
     <h2>Comment le chiffre est fabriqué</h2>
     <p>
       Un type de VM Outscale s’écrit <code>tinav6.c4r8p2</code> : génération,
       cœurs, RAM, profil de performance. bige-ops décompose cette chaîne, puis
-      multiplie chaque dimension par le tarif de la région, lu dans le
-      catalogue public embarqué. Tout se passe sur votre machine : aucune
-      requête, aucune donnée envoyée.
+      multiplie chaque dimension par le tarif de la région. Calcul local.
     </p>
     <div class="callout">
-      <strong>Conséquence directe.</strong>
-      Le catalogue est figé à la version de l’app. Si Outscale change ses
-      prix, votre estimation ne bouge pas tant que vous ne mettez pas à jour.
+      <strong>Sync catalogue (0.6).</strong>
+      <code>bige-ops pricing catalog-sync</code> (ou Sync sur Tarifs) tire
+      <code>ReadPublicCatalog</code> et remplace le bootstrap embarqué.
+      Sinon l’estimation reste sur le catalogue figé de l’app.
     </div>
 
     <h2>Ce qui est compté</h2>
@@ -69,14 +68,8 @@
       <li><strong>DirectLink</strong> — présent au catalogue, sans aucun modèle derrière. N’en tirez aucune estimation.</li>
       <li><strong>Le surcoût <code>io1</code> du disque racine</strong> d’une base, toujours chiffré en <code>gp2</code> — voir <a href="volumes-bsu.html">Volumes BSU</a>.</li>
       <li><strong>Un bucket OOS sans taille renseignée</strong>, qui vaut 0 € dans le total.</li>
-      <li><strong>Licences, hôtes dédiés, GPU (FGPU)</strong> — tarifés au catalogue, absents du modèle de composition. Voir <a href="outscale.html">Catalogue Outscale</a>.</li>
-      <li><strong>OSU</strong> (legacy) — ≠ OOS ; hors périmètre.</li>
+      <li><strong>Licences, hôtes dédiés, GPU</strong> — tarifés au catalogue, absents du modèle de composition.</li>
     </ul>
-
-    <p>
-      Matrice complète service par service :
-      <a href="outscale.html">Catalogue Outscale</a>.
-    </p>
 
     <h2>Ce que ça n’est pas</h2>
     <p>
@@ -105,7 +98,6 @@
             <li><a href="documentation.html">Toute la doc</a></li>
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="savoir.html">Sait / ne sait pas</a></li>
-            <li><a href="outscale.html">Catalogue Outscale</a></li>
             <li><a href="install.html">Installer &amp; mettre à jour</a></li>
             <li><a href="index.html#glossaire">Glossaire</a></li>
           </ul>

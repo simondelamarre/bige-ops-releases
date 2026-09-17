@@ -129,6 +129,22 @@ bige-ops import plan</pre>
       migration.
     </div>
 
+    <h2>Status, destroy, forget</h2>
+    <p>
+      L’UI Inventaire montre des <strong>badges d’état</strong>
+      (running / terminated / …) et un coût billable. Pour supprimer une
+      ressource cloud avec vérification :
+    </p>
+<pre>bige-ops inventory destroy --id vpc-xxx --cascade --plan
+bige-ops inventory destroy --id i-xxx --cascade --yes
+bige-ops inventory forget --terminated</pre>
+    <p>
+      Sans <code>--yes</code> : plan seulement. Avec <code>--yes</code> :
+      delete + re-fetch ; le succès exige que la ressource ait disparu
+      (ou soit un tombeau oublié). <code>forget</code> = snapshot local
+      seulement (zombies API).
+    </p>
+
     <div class="callout callout-warn">
       <strong>Danger — <code>inventory clean --yes</code> est destructif.</strong>
       Cette commande importe tout ce qui est importable, vide le projet, puis
@@ -174,7 +190,6 @@ bige-ops import plan</pre>
             <li><a href="documentation.html">Toute la doc</a></li>
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="savoir.html">Sait / ne sait pas</a></li>
-            <li><a href="outscale.html">Catalogue Outscale</a></li>
             <li><a href="install.html">Installer &amp; mettre à jour</a></li>
             <li><a href="index.html#glossaire">Glossaire</a></li>
           </ul>
