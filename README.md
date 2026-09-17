@@ -33,7 +33,7 @@
 
 ## Pourquoi
 
-Même texte que le tour dans l’app et que [bige.dev/#pourquoi](https://bige.dev/#pourquoi).
+Dessine, projette le €, déploie — sans te noyer dans Terraform à la main.
 
 ### Less is more.
 
