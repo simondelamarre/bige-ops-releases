@@ -107,7 +107,22 @@ flowchart TB
   mongodb:
     replicas: 1
   api:
-    replicas: 2</pre>
+    replicas: 2
+    hpa:
+      enabled: true
+      min: 2
+      max: 8
+      target_cpu: 70
+    memory_mb: 512</pre>
+    <p>
+      Scale : réplicas fixes, HPA CPU, mémoire vertical, nodepools count/type
+      (formulaires Visual + <code>generate</code>).
+    </p>
+    <p>
+      HTTPS public : Service LoadBalancer +
+      <code>expose.tls.server_certificate_id</code> (ORN EIM) — pas
+      cert-manager / Ingress inventés.
+    </p>
 
     <h2>Ce que ça n’est pas</h2>
     <p>
@@ -133,7 +148,6 @@ flowchart TB
             <li><a href="documentation.html">Toute la doc</a></li>
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="savoir.html">Sait / ne sait pas</a></li>
-            <li><a href="outscale.html">Catalogue Outscale</a></li>
             <li><a href="install.html">Installer &amp; mettre à jour</a></li>
             <li><a href="index.html#glossaire">Glossaire</a></li>
           </ul>

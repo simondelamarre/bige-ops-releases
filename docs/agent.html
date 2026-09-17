@@ -101,6 +101,27 @@ flowchart LR
       détaillé dans <a href="repos-vms-docker.html">repos, VMs &amp; Dockerfiles</a>.
     </p>
 
+    <h2>MCP local (Cursor / Claude Code)</h2>
+    <p>
+      Même moteur que le chat : <code>bige-ops mcp</code> en stdio (binaire
+      embarqué — pas de pip). Settings → <strong>Agents / MCP</strong> →
+      copier le snippet. Apply / deploy / auth restent refusés. Visual se
+      rafraîchit après écriture.
+    </p>
+
+    <h2>Traces</h2>
+    <p>
+      Chaque tour agent est journalisé en JSONL sous
+      <code>chats/traces/</code> (hors repo). Utile pour audit / debug.
+    </p>
+
+    <h2>Exposition HTTPS</h2>
+    <p>
+      L’agent écrit <code>expose</code> / ORN EIM dans
+      <code>project.yaml</code> — pas de recettes Ingress / cert-manager.
+      Voir <a href="oks.html">OKS</a> et <a href="lbu.html">LBU</a>.
+    </p>
+
     <h2>Comment bien s’en servir</h2>
     <ul>
       <li>Donnez une intention et une contrainte : « API + Postgres, budget sous X € HT/mois, région eu-west-2 ».</li>
@@ -132,7 +153,6 @@ flowchart LR
             <li><a href="documentation.html">Toute la doc</a></li>
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="savoir.html">Sait / ne sait pas</a></li>
-            <li><a href="outscale.html">Catalogue Outscale</a></li>
             <li><a href="install.html">Installer &amp; mettre à jour</a></li>
             <li><a href="index.html#glossaire">Glossaire</a></li>
           </ul>
