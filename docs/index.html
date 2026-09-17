@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <title>bige-ops — Outscale IaaS, VMs (VPS), OKS Kubernetes managé</title>
-  <meta name="description" content="App gratuite, 100 % locale. Fini le blank Terraform — design · € · deploy sur votre Outscale (VMs / OKS)." />
+  <title>bige-ops — dessiner, projeter, déployer (local, gratuit)</title>
+  <meta name="description" content="App desktop gratuite, 100 % locale. Dessine ta stack, projette le €, déploie sur ton cloud — sans SaaS au milieu." />
   <link rel="canonical" href="https://bige.dev/" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,13 +13,13 @@
   <meta property="og:site_name" content="bige-ops" />
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/" />
-  <meta property="og:title" content="bige-ops — Outscale, une vitesse au-dessus" />
-  <meta property="og:description" content="Gratuit · local · sans SaaS. Fini le blank Terraform : design, €, deploy (VMs / OKS) sur votre compte." />
+  <meta property="og:title" content="bige-ops — less is more" />
+  <meta property="og:description" content="Gratuit · local · sans plan de contrôle SaaS. Dessine, projette, déploie sur ton compte cloud." />
   <meta property="og:image" content="https://bige.dev/shot-hero.png" />
   <meta property="og:image:alt" content="bige-ops — Visual Outscale, topologie et coût" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="bige-ops — Outscale, une vitesse au-dessus" />
-  <meta name="twitter:description" content="Gratuit · local · sans SaaS. Design → € → deploy (VMs / OKS)." />
+  <meta name="twitter:title" content="bige-ops — less is more" />
+  <meta name="twitter:description" content="Gratuit · local · sans SaaS. Dessine, projette, déploie." />
   <meta name="twitter:image" content="https://bige.dev/shot-hero.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -619,8 +619,8 @@
 
     <ul class="pitch">
       <li><strong>Less is more.</strong> Une app desktop gratuite pour déployer sans te noyer.</li>
-      <li><strong>Outscale &amp; SecNumCloud.</strong> C’est prêt. Le reste vient après.</li>
-      <li><strong>L’outil déploie. Le cloud héberge.</strong> Ce n’est pas un Docker sur ton poste.</li>
+      <li><strong>L’outil déploie. Le cloud héberge.</strong> Pas un Docker sur ton poste.</li>
+      <li><strong>Un cloud prêt, d’autres en route.</strong> Outscale live · Scaleway, OVH, AWS, Azure, GCP, Fly… bientôt.</li>
     </ul>
 
     <figure class="shot" id="shot-hero">
@@ -656,55 +656,43 @@
       <article class="why-card" id="why-less">
         <h3>Less is more.</h3>
         <p class="why-sub">Une app desktop gratuite pour déployer sans te noyer.</p>
-        <p>Tu dessines ta stack — VMs ou cluster Kubernetes — tu la projettes, puis tu la déploies sur ton compte. Les fichiers Terraform ou YAML sortent derrière : ce n’est pas ce que tu viens écrire à la main.</p>
-      </article>
-
-      <article class="why-card" id="why-outscale">
-        <h3>Outscale &amp; SecNumCloud.</h3>
-        <p class="why-sub">C’est prêt. Le reste vient après.</p>
-        <p>Aujourd’hui tu peux appliquer et suivre le pricing sur Outscale, y compris SecNumCloud. D’autres clouds arriveront. On ne prétend pas les supporter tous tant que ce n’est pas vrai.</p>
+        <p>Tu dessines ta stack — VMs ou Kubernetes — tu projettes le €, puis tu déploies sur ton compte. Terraform / YAML sortent derrière : ce n’est pas ce que tu viens écrire à la main.</p>
       </article>
 
       <article class="why-card" id="why-deploy">
         <h3>L’outil déploie. Le cloud héberge.</h3>
         <p class="why-sub">Ce n’est pas un Docker sur ton poste.</p>
-        <p>bige-ops tourne sur ta machine pour piloter le déploiement. Ta stack, elle, vit sur ton cloud. Tes secrets restent chez toi — coffre local, avec sync optionnelle vers GitHub, HashiCorp Vault ou Fly si tu le veux.</p>
+        <p>bige-ops tourne sur ta machine. Ta stack vit sur ton cloud. Secrets en local (sync optionnelle Vault / GitHub / Fly si tu le veux).</p>
         <p><a href="secrets.html">Secrets →</a></p>
       </article>
 
       <article class="why-card" id="why-projection">
         <h3>Tu peux commencer sans compte.</h3>
         <p class="why-sub">Tu projettes d’abord. Tu te connectes quand tu appliques.</p>
-        <p>Sans identifiants Outscale, tu explores et tu projettes. Tu te connectes seulement pour l’inventaire, le plan et l’apply — quand tu es prêt.</p>
+        <p>Sans credentials cloud : explore et projette. Login seulement pour inventaire, plan et apply.</p>
         <p><a href="install.html">Installer →</a></p>
       </article>
 
       <article class="why-card" id="why-vulns">
         <h3>Vulns et risques.</h3>
         <p class="why-sub">On regarde tes repos, pas seulement un dashboard.</p>
-        <p>Déployer reste gratuit. Scanner tes dépôts, voir les CVE et remédier, c’est la suite — et c’est là que les crédits entrent.</p>
+        <p>Déployer reste gratuit. Scanner les dépôts, CVE et remédiation : la suite (crédits).</p>
         <p><a href="#features">Features →</a></p>
       </article>
 
       <article class="why-card" id="why-byok">
         <h3>Tes clés LLM.</h3>
         <p class="why-sub">Les tiennes. Rien n’est gardé chez nous.</p>
-        <p>Tu branches ta propre clé — Anthropic, OpenAI, Google Gemini, Mistral. Les appels partent de ton poste vers le fournisseur. bige-ops ne stocke pas et ne réutilise pas ces échanges.</p>
+        <p>Anthropic, OpenAI, Gemini, Mistral — depuis ton poste. Pas de rétention côté bige-ops.</p>
         <p><a href="agent.html">Agent →</a></p>
-      </article>
-
-      <article class="why-card" id="why-ecoute">
-        <h3>On t’écoute.</h3>
-        <p class="why-sub">Un bug ou une idée : tu l’ouvres sur GitHub.</p>
-        <p>Le dépôt public reçoit tes issues et tes demandes de features. On les lit, on priorise, on répond — sans toucher à ton graphe ni à tes secrets.</p>
       </article>
     </section>
 
     <section class="block" id="ecoute">
       <h2>On t’écoute</h2>
-      <p class="why-sub" style="color:#5ec4b4;font-family:var(--font-display);font-weight:500">Un bug ou une idée : tu l’ouvres sur GitHub.</p>
       <p>
-        Le dépôt public reçoit tes issues et tes demandes de features. On les lit, on priorise, on répond — sans toucher à ton graphe ni à tes secrets.
+        Bug ou idée : ouvre une issue sur le dépôt public. On lit, on priorise, on répond —
+        sans toucher à ton graphe ni à tes secrets.
       </p>
       <p class="actions" style="margin-top:1rem">
         <a class="primary" href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">Ouvrir une issue</a>
@@ -772,12 +760,16 @@
       </ul>
     </section>
 
-    <section class="block" id="outscale">
+    <section class="block" id="clouds">
       <h2>Clouds</h2>
       <p>
-        <strong>Outscale</strong> (régions + SecNumCloud) : pricing, apply, OKS — <em>prêt</em>.
-        Autres clouds : en cours. On construit pour que changer de cible ne soit plus
-        tout recommencer — pas pour te vendre un généraliste fictif.
+        <strong>Aujourd’hui :</strong> Outscale (régions classiques + SecNumCloud) —
+        pricing, apply, OKS.
+      </p>
+      <p>
+        <strong>En cours :</strong> Scaleway, OVHcloud, AWS, Azure, GCP, Fly.io —
+        listés dans l’app, pas encore materialization / pricing complets.
+        On ne se vend pas multi-cloud tant que ce n’est pas vrai.
       </p>
       <ul class="provider-row" aria-label="Cloud providers">
         <li class="is-live">Outscale · live</li>
@@ -822,7 +814,7 @@
         <ul class="feat-list">
           <li><span class="badge badge-wip">WIP</span> <span><strong>Agent</strong> — copilote (vos clés) ; édite le layout, jamais apply / secrets</span></li>
           <li><span class="badge badge-wip">WIP</span> <span><strong>Full scan vulns</strong> — couverture monorepo élargie</span></li>
-          <li><span class="badge badge-wip">WIP</span> <span><strong>Autres clouds</strong> — Fly, Scaleway, OVH, AWS, Azure, GCP</span></li>
+          <li><span class="badge badge-wip">WIP</span> <span><strong>Autres clouds</strong> — Scaleway, OVHcloud, AWS, Azure, GCP, Fly.io</span></li>
         </ul>
       </div>
 
@@ -844,16 +836,16 @@
     <section class="block" id="faq">
       <h2>FAQ</h2>
       <dl class="faq">
-        <dt>Faut-il un compte Outscale&nbsp;?</dt>
-        <dd>Non pour commencer : projection offline. Oui pour inventory / plan / apply.</dd>
+        <dt>Faut-il un compte cloud&nbsp;?</dt>
+        <dd>Non pour commencer : projection offline. Oui pour inventaire / plan / apply (aujourd’hui : Outscale).</dd>
         <dt>Où sont les secrets&nbsp;?</dt>
         <dd>Sur votre poste (coffre local). Rien synchronisé vers un backend bige-ops. <a href="secrets.html">Détail</a>.</dd>
         <dt>Gatekeeper macOS bloque l’app&nbsp;?</dt>
         <dd>Pas notarisé. Voir <a href="install.html#gatekeeper">installer &amp; Gatekeeper</a>.</dd>
         <dt>Et les autres clouds&nbsp;?</dt>
-        <dd>Outscale d’abord (prêt). Autres providers en WIP — on ne se présente pas comme généraliste tant que ce n’est pas vrai. Suivi sur les <a href="https://github.com/simondelamarre/bige-ops-releases/issues">issues</a>.</dd>
+        <dd>Outscale est live. Suivent Scaleway, OVHcloud, AWS, Azure, GCP, Fly.io — voir <a href="#clouds">Clouds</a>. Suivi sur les <a href="https://github.com/simondelamarre/bige-ops-releases/issues">issues</a>.</dd>
         <dt>Où vont mes clés LLM&nbsp;?</dt>
-        <dd>Chez toi (Settings), puis chez le provider (Anthropic, OpenAI…). Pas de rétention côté bige-ops. <a href="agent.html">Agent</a> · <a href="secrets.html">Secrets</a>.</dd>
+        <dd>Chez toi (Settings), puis chez le provider. Pas de rétention côté bige-ops. <a href="agent.html">Agent</a>.</dd>
       </dl>
     </section>
 
