@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>bige-ops — concevoir, chiffrer et déployer votre infrastructure cloud (gratuit, local)</title>
-  <meta name="description" content="Gratuit et 100 % local : dessinez votre stack, vérifiez ses failles, voyez son prix ligne par ligne, puis déployez-la sur votre compte cloud. Sans équipe DevOps." />
+  <title>bige-ops — concevoir, chiffrer et déployer ton infrastructure cloud (gratuit, local)</title>
+  <meta name="description" content="Gratuit et 100 % local : dessine ta stack, vérifie ses failles, vois son prix ligne par ligne, puis déploie-la sur ton compte cloud. Sans équipe DevOps." />
   <link rel="canonical" href="https://bige.dev/" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -12,13 +12,13 @@
   <meta property="og:site_name" content="bige-ops" />
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/" />
-  <meta property="og:title" content="bige-ops — concevoir, chiffrer et déployer votre infrastructure cloud" />
-  <meta property="og:description" content="Gratuit · 100 % local. Simulez votre stack, vérifiez-la, voyez son coût, puis déployez-la sur votre compte." />
+  <meta property="og:title" content="bige-ops — concevoir, chiffrer et déployer ton infrastructure cloud" />
+  <meta property="og:description" content="Gratuit · 100 % local. Simule ta stack, vérifie-la, vois son coût, puis déploie-la sur ton compte." />
   <meta property="og:image" content="https://bige.dev/screens/shot-simule.png" />
   <meta property="og:image:alt" content="Capture de bige-ops : une stack sur une machine estimée à 74,50 € HT par mois" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="bige-ops — concevoir, chiffrer et déployer votre infrastructure cloud" />
-  <meta name="twitter:description" content="Gratuit · 100 % local. Simulez, vérifiez, voyez le prix, puis déployez." />
+  <meta name="twitter:title" content="bige-ops — concevoir, chiffrer et déployer ton infrastructure cloud" />
+  <meta name="twitter:description" content="Gratuit · 100 % local. Simule, vérifie, vois le prix, puis déploie." />
   <meta name="twitter:image" content="https://bige.dev/screens/shot-simule.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -111,8 +111,8 @@
     </header>
 
     <main id="contenu" class="page">
-      <h1>Dessinez votre stack. Voyez le prix. Déployez.</h1>
-      <p class="lead"><strong>bige-ops est une application gratuite, installée sur votre poste.</strong> Elle conçoit votre infrastructure cloud, la chiffre, vérifie ses failles et la déploie sur votre compte, aujourd’hui chez <a href="pourquoi-outscale.html">Outscale</a>. Sans équipe DevOps.</p>
+      <h1>Dessine ta stack. Vois le prix. Déploie.</h1>
+      <p class="lead"><strong>bige-ops est une application gratuite, installée sur ton poste.</strong> Elle conçoit ton infrastructure cloud, la chiffre, vérifie ses failles et la déploie sur ton compte, aujourd’hui chez <a href="pourquoi-outscale.html">Outscale</a>. Sans équipe DevOps.</p>
 
       <div class="install" id="download">
         <div class="cmd">
@@ -134,7 +134,7 @@
           </figure>
           <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="3 sur 4">
             <img src="screens/shot-failles.png" width="2068" height="957" loading="lazy" alt="Capture de bige-ops : l’arbre des routes de Juice Shop jusqu’à login.ts, et la ligne 34 surlignée, une requête SQL construite avec l’email et le mot de passe saisis." />
-            <figcaption><strong>Sécuriser.</strong> Une vraie injection SQL dans <a href="https://owasp.org/projects/juice-shop">OWASP Juice Shop</a>, ligne&nbsp;34 de <code>routes/login.ts</code>, trouvée sur votre poste, sans clé ni IA.</figcaption>
+            <figcaption><strong>Sécuriser.</strong> Une vraie injection SQL dans <a href="https://owasp.org/projects/juice-shop">OWASP Juice Shop</a>, ligne&nbsp;34 de <code>routes/login.ts</code>, trouvée sur ton poste, sans clé ni IA.</figcaption>
           </figure>
           <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="4 sur 4">
             <img src="screens/shot-deps.png" width="2068" height="957" loading="lazy" alt="Capture de bige-ops : la fiche CVE-2022-25887 sur sanitize-html 1.4.2, exposée à Internet, priorité 1, avec son lien OpenCVE et le bouton Proposer une issue GitHub." />
@@ -148,72 +148,56 @@
         </div>
       </section>
 
-      <section id="en-clair" aria-labelledby="h-clair">
-        <span id="features"></span><span id="faq"></span><span id="why-less"></span><span id="why-deploy"></span><span id="pourquoi"></span><span id="demarrer"></span><span id="aussi"></span>
-        <h2 id="h-clair">En clair</h2>
-        <p><strong>Le sujet.</strong> Mettre une application en ligne sur un vrai cloud&nbsp;: réseau, machines, bases de données, sauvegardes, sécurité. Un métier à part entière, d’habitude confié à une équipe DevOps.</p>
-        <p><strong>Pourquoi s’en occuper.</strong> C’est là que se jouent votre facture, l’endroit où vivent vos données et la sécurité de vos clients. Un mauvais réglage se paie chaque mois, ou le jour d’un incident.</p>
-        <p><strong>Utile pour vous&nbsp;?</strong> Sans équipe DevOps, bige-ops fait le travail de départ&nbsp;: il dessine votre stack, la chiffre, vérifie ses failles et la déploie sur votre compte. Avec une équipe et une infrastructure qui tournent déjà, il apporte un second regard sur le prix et sur les failles.</p>
-        <p><strong>Soyons honnêtes.</strong> bige-ops ne remplace pas un expert sur une infra critique. Il estime sur les prix publics, hors remises négociées. Il déploie des applications en conteneurs, et le HTTPS passe par un load balancer avec votre certificat. Tout est écrit dans <a href="savoir.html">ce qu’il sait faire, et ce qu’il ne sait pas</a>.</p>
-        <p><strong>Pourquoi le faire.</strong> Pour connaître le prix avant la facture, garder vos données en France sur un cloud qualifié, et corriger vos failles avant qu’un client ne les trouve.</p>
-        <p><strong>Et pourquoi pas.</strong> C’est gratuit, cela tourne sur votre poste, sans compte cloud pour commencer, et vos secrets restent dans un coffre local. Si vous arrêtez, votre stack reste un simple fichier dans votre Git.</p>
-      </section>
-
-      <section id="pour-qui" aria-labelledby="h-qui">
-        <h2 id="h-qui">Pour qui</h2>
-        <p>Pas d’équipe DevOps, pas de rendez-vous&nbsp;: vous choisissez votre cas, vous voyez le prix, vous déployez.</p>
+      <section id="simple" aria-labelledby="h-simple">
+        <span id="features"></span><span id="why-less"></span><span id="why-deploy"></span><span id="pourquoi"></span>
+        <h2 id="h-simple">Simple, facile et pratique</h2>
+        <p>Tu pars d’une stack prête ou tu dessines la tienne. bige-ops pose le réseau, les machines, les bases et les sauvegardes, affiche le prix de chaque brique et déploie sur ton compte. Pas besoin d’équipe DevOps.</p>
+        <p id="failles"><span id="why-vulns"></span>Il vérifie aussi tes failles, sur ton poste, sans clé ni IA&nbsp;:</p>
         <ul>
-          <li><strong>TPE sans informaticien.</strong> Un site, un outil métier, une petite boutique, et personne pour gérer des serveurs. Une machine avec ses sauvegardes&nbsp;: environ 75&nbsp;€ HT par mois. <a href="layouts.html">Par où commencer</a></li>
-          <li><strong>Startup qui lance son produit.</strong> Deux à cinq développeurs, pas de DevOps, une démo client dans un mois. L’application et ses données séparées, les failles vérifiées avant la démo&nbsp;: environ 382&nbsp;€ HT par mois. <a href="stacks.html">Stacks et langages</a></li>
-          <li><strong>Scale-up qui passe à Kubernetes.</strong> Plusieurs services, de la charge, des clients qui veulent de la disponibilité. Kubernetes managé, un cluster dédié&nbsp;: dès 458&nbsp;€ HT par mois. <a href="stack-express-mongodb-redis-oks.html">Node.js sur Kubernetes</a></li>
-          <li><strong>Éditeur qui vend aux grands comptes.</strong> Vos clients demandent SecNumCloud, HDS ou ISO&nbsp;27001 dans leurs appels d’offres. Les mêmes stacks sur un cloud qualifié, et un rapport de failles à joindre au dossier&nbsp;: Spring Boot, Kafka et Keycloak pour environ 919&nbsp;€ HT par mois. <a href="stack-spring-boot-oks-kafka-keycloak.html">Voir la stack</a></li>
-          <li><strong>Agence ou ESN.</strong> Un nouveau projet chaque mois, un devis à chiffrer à chaque fois. Chaque stack chiffrée ligne par ligne pour votre devis, déployée sur le compte de votre client. <a href="stacks.html">Les 13 stacks prêtes</a></li>
+          <li>les pages et les API ouvertes sans connexion&nbsp;;</li>
+          <li>les mots de passe écrits en clair et les requêtes SQL construites avec ce que tape l’utilisateur&nbsp;;</li>
+          <li>tes bibliothèques face aux failles connues (<a href="https://osv.dev/">OSV</a>) et, avec ta clé <a href="https://www.opencve.io/">OpenCVE</a>, ta stack face au registre des CVE.</li>
         </ul>
-        <p class="muted">13 stacks prêtes, 12 langages, de la machine unique à Kubernetes. 0&nbsp;€ pour commencer.</p>
-      </section>
-
-      <section id="vrai-cloud" aria-labelledby="h-cloud">
-        <span id="why-outscale"></span><span id="outscale"></span><span id="clouds"></span>
-        <h2 id="h-cloud">Où déployer</h2>
-        <p>Ne perdez pas votre temps sur Heroku, Fly.io, Render, Railway, Vercel, Netlify, Clever Cloud, Koyeb, Northflank, DigitalOcean, Linode, Vultr, Hetzner, Contabo, Hostinger…</p>
-        <p><strong>Si vous cherchez un vrai cloud provider pour avancer&nbsp;: <a href="pourquoi-outscale.html">Outscale</a>.</strong></p>
-        <ul>
-          <li><strong>Premier cloud qualifié SecNumCloud&nbsp;3.2</strong>, le visa de l’ANSSI (<a href="https://www.3ds.com/newsroom/press-releases/outscale-first-cloud-qualified-secnumcloud-32">source</a>).</li>
-          <li><strong>Kubernetes dédié</strong>&nbsp;: votre cluster, votre control plane, rien de partagé.</li>
-          <li><strong>13&nbsp;000 IOPS garanties</strong> par volume pour vos bases.</li>
-          <li><strong>Un prix public</strong>, ligne par ligne, sans devis.</li>
-        </ul>
-      </section>
-
-      <section id="failles" aria-labelledby="h-failles">
-        <span id="why-vulns"></span>
-        <h2 id="h-failles">Comment bige-ops trouve vos failles</h2>
-        <ol>
-          <li>Il lit le code de vos dépôts, sur votre poste.</li>
-          <li>Il repère les pages et les API que votre application expose, et vérifie qu’elles demandent une connexion.</li>
-          <li>Il cherche les erreurs classiques&nbsp;: mots de passe écrits en clair, requêtes à la base construites avec ce que tape l’utilisateur, API ouverte à n’importe quel site.</li>
-          <li>Il compare vos bibliothèques à la base publique des failles connues (<a href="https://osv.dev/">OSV</a>) et, avec votre clé <a href="https://www.opencve.io/">OpenCVE</a>, votre stack au registre mondial des failles (CVE).</li>
-          <li>Il classe tout par urgence&nbsp;: ce qui est exposé à Internet d’abord.</li>
-        </ol>
-        <p><strong>Pourquoi le refaire vous-même&nbsp;?</strong> C’est chez vous, et c’est gratuit.</p>
-        <p id="why-byok">Pour aller plus loin, bige-ops advanced lit votre code plus en profondeur avec votre propre clé d’IA et classe chaque faille par type. <a href="agent.html">Voir l’audit approfondi</a></p>
+        <p>Ce qui est exposé à Internet passe en premier. <span id="why-byok"></span>Pour aller plus loin, bige-ops advanced lit ton code en profondeur avec ta propre clé d’IA. <a href="agent.html">Voir l’audit approfondi</a></p>
       </section>
 
       <section id="prix" aria-labelledby="h-prix">
-        <span id="why-projection"></span>
-        <h2 id="h-prix">Combien cela coûte</h2>
-        <p><strong>bige-ops&nbsp;: 0&nbsp;€.</strong> Votre cloud, vous le payez au prix public, et vous le voyez avant chaque déploiement. Une application et sa base sur une machine démarrent autour de 75&nbsp;€ HT par mois.</p>
-        <p><a href="layouts.html">Le budget selon votre topologie</a> · <a href="catalogue-prix.html">Catalogue de prix</a></p>
+        <span id="why-projection"></span><span id="pour-qui"></span>
+        <h2 id="h-prix">Pas cher, maîtrisé et sans VPS</h2>
+        <p>bige-ops est gratuit. Ton cloud, tu le paies au prix public, et tu vois chaque ligne avant de déployer.</p>
+        <ul>
+          <li><strong>TPE sans informaticien</strong>&nbsp;: une machine avec ses sauvegardes, environ 75&nbsp;€ HT par mois. <a href="layouts.html">Par où commencer</a></li>
+          <li><strong>Startup qui lance son produit</strong>&nbsp;: l’app et ses données séparées, environ 382&nbsp;€ HT par mois. <a href="stacks.html">Stacks et langages</a></li>
+          <li><strong>Scale-up qui passe à Kubernetes</strong>&nbsp;: un cluster dédié, dès 458&nbsp;€ HT par mois. <a href="stack-express-mongodb-redis-oks.html">Node.js sur Kubernetes</a></li>
+          <li><strong>Éditeur qui vend aux grands comptes</strong>&nbsp;: SecNumCloud, HDS et ISO&nbsp;27001 pour tes appels d’offres, et un rapport de failles pour le dossier. Spring Boot, Kafka et Keycloak pour environ 919&nbsp;€ HT par mois. <a href="stack-spring-boot-oks-kafka-keycloak.html">Voir la stack</a></li>
+          <li><strong>Agence ou ESN</strong>&nbsp;: chaque stack chiffrée pour ton devis, déployée sur le compte de ton client. <a href="stacks.html">Les 13 stacks prêtes</a></li>
+        </ul>
+        <p id="vrai-cloud"><span id="why-outscale"></span><span id="outscale"></span><span id="clouds"></span>Ne perds pas ton temps sur Heroku, Fly.io, Render, Railway, Vercel, Netlify, Clever Cloud, Koyeb, Northflank, DigitalOcean, Linode, Vultr, Hetzner, Contabo, Hostinger…</p>
+        <p><strong>Si tu cherches un vrai cloud provider pour avancer&nbsp;: <a href="pourquoi-outscale.html">Outscale</a>.</strong></p>
+        <ul>
+          <li><strong>Premier cloud qualifié SecNumCloud&nbsp;3.2</strong>, le visa de l’ANSSI (<a href="https://www.3ds.com/newsroom/press-releases/outscale-first-cloud-qualified-secnumcloud-32">source</a>).</li>
+          <li><strong>Kubernetes dédié</strong>&nbsp;: ton cluster, ton control plane, rien de partagé.</li>
+          <li><strong>13&nbsp;000 IOPS garanties</strong> par volume pour tes bases.</li>
+          <li><strong>Un prix public</strong>, ligne par ligne, sans devis.</li>
+        </ul>
+        <p><a href="layouts.html">Le budget selon ta topologie</a> · <a href="catalogue-prix.html">Catalogue de prix</a></p>
+      </section>
+
+      <section id="en-clair" aria-labelledby="h-plus-simple">
+        <span id="faq"></span><span id="demarrer"></span><span id="aussi"></span>
+        <h2 id="h-plus-simple">Encore plus simple, basique et pratique</h2>
+        <p>Une commande pour l’installer, rien à payer, pas de compte cloud pour commencer. Ta stack est un simple fichier dans ton Git&nbsp;: tu la relis, tu la versionnes, tu la jettes si tu veux. Tes secrets restent dans un coffre local.</p>
+        <p>Ce qu’il ne fait pas&nbsp;: remplacer un expert sur une infra critique. Il estime sur les prix publics, hors remises négociées, déploie des apps en conteneurs, et le HTTPS passe par un load balancer avec ton certificat. Tout est écrit dans <a href="savoir.html">ce qu’il sait faire, et ce qu’il ne sait pas</a>.</p>
       </section>
 
       <section id="a-venir" aria-labelledby="h-venir">
         <h2 id="h-venir">Bientôt d’autres providers SecNumCloud et français</h2>
-        <p><strong>Le prix compte, mais pas seul&nbsp;: où vivent vos données, qui les protège et qui vous répond comptent autant.</strong></p>
-        <p>bige-ops est indépendant. Votre stack est décrite une fois, dans un format ouvert, versionné dans votre Git. Quand d’autres clouds français arriveront dans bige-ops, vous comparerez la même stack, prix à l’appui, et vous migrerez si cela vaut le coup. Installez maintenant, vous choisirez ensuite.</p>
+        <p><strong>Le prix compte, mais pas seul&nbsp;: où vivent tes données, qui les protège et qui te répond comptent autant.</strong></p>
+        <p>bige-ops est indépendant. Ta stack est décrite une fois, dans un format ouvert. Quand d’autres clouds français arriveront dans bige-ops, tu compareras la même stack, prix à l’appui, et tu migreras si ça vaut le coup. Installe maintenant, tu choisiras ensuite.</p>
         <p><a href="https://www.ovhcloud.com/fr/">OVHcloud</a> · <a href="https://www.scaleway.com/fr/">Scaleway</a></p>
       </section>
 
-      <p id="why-ecoute"><span id="ecoute"></span>Une idée, un bug&nbsp;? <a href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">Ouvrez une issue</a>, nous lisons tout.</p>
+      <p id="why-ecoute"><span id="ecoute"></span>Une idée, un bug&nbsp;? <a href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">Ouvre une issue</a>, on lit tout.</p>
     </main>
 
     <footer class="site-footer">
