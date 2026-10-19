@@ -28,7 +28,7 @@ bige-ops add layout custom --runtime php --web same --worker \
 
 ## Scan bige-ops
 
-Mode direct : tree-sitter PHP ; routes Laravel (`Route::`) et WordPress (`register_rest_route`), signal `middleware('auth')` ; secrets, eval/exec (Blade `{!! !!}` préparé pour l’audit approfondi) ; Packagist (composer.json) → OSV. Clé OpenCVE : MySQL, MariaDB, Redis, nginx mappés ; runtime PHP en référence : [PHP sur OpenCVE](https://app.opencve.io/cve/?vendor=php&product=php).
+Mode direct : routes Laravel (`Route::`) et WordPress (`register_rest_route`), signal `middleware('auth')` ; secrets, eval/exec (Blade `{!! !!}` préparé pour l’audit approfondi) ; Packagist (composer.json) → OSV. Clé OpenCVE : MySQL, MariaDB, Redis, nginx mappés ; runtime PHP en référence : [PHP sur OpenCVE](https://app.opencve.io/cve/?vendor=php&product=php).
 
 ## Bases de données
 

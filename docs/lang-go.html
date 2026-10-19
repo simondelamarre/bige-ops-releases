@@ -67,7 +67,7 @@ bige-ops add layout custom --runtime go --web none --worker \
 
     <h2 id="scan">Ce que le scan bige-ops fait pour Go</h2>
     <ul>
-      <li><strong>Routes</strong> : net/http (<code>HandleFunc</code>) et Gin (<code>GET</code>, <code>POST</code>, groupes), parsées avec la grammaire Go de <a href="https://tree-sitter.github.io/tree-sitter/" target="_blank" rel="noopener noreferrer">tree-sitter</a>  ; une route marquée publique, ou une route sensible (<code>/admin</code>, <code>/account</code>, <code>/payment</code>, <code>/billing</code>…) sans signal d’authentification à proximité, ressort « non sécurisée » (CWE-639).</li>
+      <li><strong>Routes</strong> : net/http (<code>HandleFunc</code>) et Gin (<code>GET</code>, <code>POST</code>, groupes), repérées directement dans ton code ; une route marquée publique, ou une route sensible (<code>/admin</code>, <code>/account</code>, <code>/payment</code>, <code>/billing</code>…) sans signal d’authentification à proximité, ressort « non sécurisée » (CWE-639).</li>
       <li><strong>Code</strong> : secrets en dur (CWE-798), <code>InsecureSkipVerify: true</code> (TLS non vérifié, CWE-295), traversée de chemin (CWE-22), en-tête CORS <code>*</code> (CWE-942).</li>
       <li><strong>Dépendances</strong> : chaque module de <code>go.mod</code> est rapproché d’<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>, qui reprend la base de vulnérabilités Go.</li>
     </ul>

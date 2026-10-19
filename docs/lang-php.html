@@ -69,7 +69,7 @@ bige-ops add layout custom --runtime php --web same --worker \
     <p>Le layout <code>php-app</code> part sur PostgreSQL + Redis ; le bâtisseur <code>custom</code> te laisse choisir MySQL ou MariaDB. Détail : <a href="layouts.html">layouts &amp; topologies</a>.</p>
 
     <h2 id="scan">Ce que le scan bige-ops fait pour PHP</h2>
-    <p>En mode direct, sans clé ni LLM, bige-ops parse tes sources PHP avec <a href="https://tree-sitter.github.io/tree-sitter/" target="_blank" rel="noopener noreferrer">tree-sitter</a> :</p>
+    <p>En mode direct, sans clé ni LLM, bige-ops lit ton code PHP et ressort ce qui compte :</p>
     <ul>
       <li><strong>Routes</strong> : Laravel (<code>Route::get</code>, <code>Route::match</code>, préfixes) et WordPress (<code>register_rest_route</code>). <code>-&gt;middleware('auth')</code> marque une route protégée ; une route sensible (<code>/admin</code>, <code>/account</code>, <code>/payment</code>…) sans signal d’authentification ressort « non sécurisée » (CWE-639).</li>
       <li><strong>Code</strong> : secrets en dur (CWE-798), <code>eval()</code> et <code>exec()</code> (CWE-78), et les sorties Blade <code>{!! !!}</code> pour l’audit approfondi.</li>

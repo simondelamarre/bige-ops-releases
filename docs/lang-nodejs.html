@@ -83,7 +83,7 @@ bige-ops estimate --json</pre>
     <p>Le layout nommé <code>node-app</code> pose directement une stack Node prod-like (MongoDB, Redis, Weaviate, LBU) ; <code>node-lite</code> reste le démarrage le plus rapide. Détail : <a href="layouts.html">layouts &amp; topologies</a>.</p>
 
     <h2 id="scan">Ce que le scan bige-ops fait pour Node.js</h2>
-    <p>Le mode direct tourne sans clé ni LLM, sur ton poste : bige-ops clone le dépôt, le parse avec <a href="https://tree-sitter.github.io/tree-sitter/" target="_blank" rel="noopener noreferrer">tree-sitter</a> (grammaires JavaScript, TypeScript et TSX) et croise trois analyses.</p>
+    <p>Le mode direct tourne sans clé ni LLM, sur ton poste : bige-ops lit le code JavaScript et TypeScript de ton dépôt et croise trois analyses.</p>
     <ul>
       <li><strong>Routes exposées</strong> : un module par framework (Express, Fastify, Hono, Koa, LoopBack, NestJS, Next.js, tRPC). Pour chaque route, bige-ops cherche un signal d’authentification proche (passport, JWT, session, guards, <code>preHandler</code>, <code>protectedProcedure</code>…)  ; une route marquée publique, ou une route sensible (<code>/admin</code>, <code>/account</code>, <code>/payment</code>, <code>/billing</code>…) sans signal d’authentification à proximité, ressort « non sécurisée » (CWE-639), en priorité haute pour l’admin et le paiement.</li>
       <li><strong>Failles de code</strong> : secrets en dur (CWE-798), <code>eval</code> et <code>child_process</code> (CWE-78), SQL construit par concaténation ou template string (CWE-89), CORS <code>*</code> (CWE-942), <code>NODE_TLS_REJECT_UNAUTHORIZED=0</code> (CWE-295), XSS DOM (CWE-79), redirection ouverte (CWE-601), traversée de chemin (CWE-22).</li>
