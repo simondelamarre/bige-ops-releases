@@ -39,7 +39,7 @@
 - **Le prix avant la facture.** VMs, Kubernetes, bases, stockage : chaque ligne chiffrée sur la grille publique.
 - **La simplicité d’une plateforme, sur ton cloud.** Tu relies ton dépôt, bige-ops déploie. Pas besoin de DevOps.
 - **Des bases réglées pour leur usage.** Disque, IOPS, sauvegardes : les bons défauts, ajustables en voyant le coût.
-- **Tes failles en direct.** Routes exposées, injections, secrets, CVE des dépendances. Sans LLM, sans clé.
+- **Tes failles, par ordre d’urgence.** Il y en aura toujours : bige-ops les affiche et met en tête celles que ta stack expose. Routes ouvertes, injections, secrets, CVE des dépendances. Sans LLM, sans clé.
 - **L’audit profond en option.** bige-ops advanced, avec ta propre clé LLM : failles classées par CWE, une issue GitHub par problème.
 - **La main sur tout.** Outil local, secrets chez toi, infra sur ton compte.
 
