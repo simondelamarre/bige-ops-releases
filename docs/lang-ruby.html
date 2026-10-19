@@ -74,7 +74,7 @@ worker:
 
     <h2 id="scan">Ce que le scan bige-ops fait pour Ruby</h2>
     <ul>
-      <li><strong>Routes</strong> : DSL Rails et <code>namespace</code>, parsés avec la grammaire Ruby de <a href="https://tree-sitter.github.io/tree-sitter/" target="_blank" rel="noopener noreferrer">tree-sitter</a> ; <code>skip_before_action :authenticate</code>, ou une route sensible (<code>/admin</code>, <code>/account</code>…) sans <code>before_action :authenticate</code> ni autre signal, ressort « non sécurisée » (CWE-639).</li>
+      <li><strong>Routes</strong> : DSL Rails et <code>namespace</code>, repérés directement dans ton code ; <code>skip_before_action :authenticate</code>, ou une route sensible (<code>/admin</code>, <code>/account</code>…) sans <code>before_action :authenticate</code> ni autre signal, ressort « non sécurisée » (CWE-639).</li>
       <li><strong>Code</strong> : secrets en dur (CWE-798).</li>
       <li><strong>Dépendances</strong> : OSV est interrogé pour npm, PyPI, les modules Go et Packagist ; côté Rails, c’est ton <code>package.json</code> (jsbundling, cssbundling) qui en profite. Pour les gems, garde <code>Gemfile.lock</code> à jour et suis le <a href="https://guides.rubyonrails.org/security.html" target="_blank" rel="noopener noreferrer">guide sécurité Rails</a>.</li>
     </ul>

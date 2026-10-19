@@ -70,7 +70,7 @@ bige-ops add layout custom --runtime python --web none --worker \
 
     <h2 id="scan">Ce que le scan bige-ops fait pour Python</h2>
     <ul>
-      <li><strong>Routes</strong> : Django, FastAPI et Flask, parsées avec la grammaire Python de <a href="https://tree-sitter.github.io/tree-sitter/" target="_blank" rel="noopener noreferrer">tree-sitter</a> ; une vue sensible (<code>/admin</code>, <code>/account</code>…) sans <code>login_required</code>, <code>IsAuthenticated</code> ni autre signal d’authentification ressort « non sécurisée » (CWE-639).</li>
+      <li><strong>Routes</strong> : Django, FastAPI et Flask, repérées directement dans ton code ; une vue sensible (<code>/admin</code>, <code>/account</code>…) sans <code>login_required</code>, <code>IsAuthenticated</code> ni autre signal d’authentification ressort « non sécurisée » (CWE-639).</li>
       <li><strong>Code</strong> : secrets en dur (CWE-798), <code>os.system</code>, <code>subprocess(..., shell=True)</code>, <code>eval</code> / <code>exec</code> (CWE-78), SQL en f-string, <code>.format()</code> ou <code>%</code> (CWE-89), <code>verify=False</code> (CWE-295), <code>DEBUG = True</code>, redirection depuis <code>request</code> (CWE-601), traversée de chemin (CWE-22).</li>
       <li><strong>Dépendances PyPI</strong> : lignes épinglées en <code>==</code> de tes <code>requirements*.txt</code> et de <code>pyproject.toml</code>, rapprochées d’<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>. Épingle tes versions (pip-tools, uv, Poetry export) : c’est ce qui rend le contrôle précis.</li>
     </ul>

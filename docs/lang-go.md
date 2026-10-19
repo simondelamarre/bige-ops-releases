@@ -27,7 +27,7 @@ bige-ops add layout custom --runtime go --web none --worker \
 
 ## Scan bige-ops
 
-Mode direct : routes net/http et Gin (tree-sitter Go), secrets, InsecureSkipVerify, path traversal, CORS * ; go.mod → OSV. Clé OpenCVE : image `golang` → [Go sur OpenCVE](https://app.opencve.io/cve/?vendor=golang&product=go).
+Mode direct : routes net/http et Gin, secrets, InsecureSkipVerify, path traversal, CORS * ; go.mod → OSV. Clé OpenCVE : image `golang` → [Go sur OpenCVE](https://app.opencve.io/cve/?vendor=golang&product=go).
 
 ## Bases de données
 

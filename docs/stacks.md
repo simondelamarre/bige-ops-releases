@@ -53,7 +53,7 @@ Mappés automatiquement sur OpenCVE : [postgresql](https://app.opencve.io/cve/?v
 
 Avec ta clé OpenCVE, chaque composant reconnu (image, package) est rapproché de sa fiche fournisseur/produit (une requête par produit). Classement : sévérité CVSS (KEV ⇒ au moins haute), puis exposition dans la simulation (Internet ou derrière LBU : sévérité pleine ; subnet privé : un cran de moins, sauf KEV), départage KEV → CVSS → EPSS. Rapprochement au niveau produit, à recouper avec la version épinglée ; `latest` signalé comme version non épinglée.
 
-Mode direct (sans clé) : tree-sitter JS/TS/Python/Go/PHP/Ruby, routes par framework + signaux d’auth, failles de code, dépendances npm / PyPI / Go / Packagist → [OSV](https://osv.dev/). Audit approfondi avec ta clé LLM (CWE).
+Mode direct (sans clé) : lecture du code JS/TS/Python/Go/PHP/Ruby, routes par framework + signaux d’auth, failles de code, dépendances npm / PyPI / Go / Packagist → [OSV](https://osv.dev/). Audit approfondi avec ta clé LLM (CWE).
 
 ## OpenCVE, le référentiel CVE de bige-ops
 

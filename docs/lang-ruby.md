@@ -32,7 +32,7 @@ worker:
 
 ## Scan bige-ops
 
-Mode direct : routes Rails + namespace (tree-sitter Ruby), signal `before_action :authenticate`, secrets ; OSV via le package.json éventuel. Clé OpenCVE : PostgreSQL et Redis mappés ; Ruby et Rails en référence : [Ruby sur OpenCVE](https://app.opencve.io/cve/?vendor=ruby-lang&product=ruby) · [Rails sur OpenCVE](https://app.opencve.io/cve/?vendor=rubyonrails&product=rails).
+Mode direct : routes Rails + namespace, signal `before_action :authenticate`, secrets ; OSV via le package.json éventuel. Clé OpenCVE : PostgreSQL et Redis mappés ; Ruby et Rails en référence : [Ruby sur OpenCVE](https://app.opencve.io/cve/?vendor=ruby-lang&product=ruby) · [Rails sur OpenCVE](https://app.opencve.io/cve/?vendor=rubyonrails&product=rails).
 
 ## Bases de données
 

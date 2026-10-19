@@ -32,7 +32,7 @@ bige-ops estimate --json
 
 ## Scan bige-ops
 
-Mode direct (sans clé) : tree-sitter JS/TS/TSX ; routes Express, Fastify, Hono, Koa, LoopBack, NestJS, Next.js, tRPC avec signaux d’auth (route publique ou sensible sans signal = CWE-639) ; secrets, eval/child_process, SQL concaténé, CORS *, TLS désactivé, XSS DOM, open redirect, path traversal ; dépendances npm → OSV. Clé OpenCVE : image `node` → [Node.js sur OpenCVE](https://app.opencve.io/cve/?vendor=nodejs&product=node.js).
+Mode direct (sans clé) : routes Express, Fastify, Hono, Koa, LoopBack, NestJS, Next.js, tRPC avec signaux d’auth (route publique ou sensible sans signal = CWE-639) ; secrets, eval/child_process, SQL concaténé, CORS *, TLS désactivé, XSS DOM, open redirect, path traversal ; dépendances npm → OSV. Clé OpenCVE : image `node` → [Node.js sur OpenCVE](https://app.opencve.io/cve/?vendor=nodejs&product=node.js).
 
 ## Bases de données
 

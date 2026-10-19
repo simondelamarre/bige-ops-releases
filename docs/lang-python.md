@@ -28,7 +28,7 @@ bige-ops add layout custom --runtime python --web none --worker \
 
 ## Scan bige-ops
 
-Mode direct : routes Django/FastAPI/Flask (tree-sitter Python) avec signaux d’auth ; secrets, shell=True/eval, SQL en f-string, verify=False, DEBUG=True, open redirect, path traversal ; PyPI épinglé (`==`) → OSV. Clé OpenCVE : image `python` → [Python sur OpenCVE](https://app.opencve.io/cve/?vendor=python&product=python).
+Mode direct : routes Django/FastAPI/Flask avec signaux d’auth ; secrets, shell=True/eval, SQL en f-string, verify=False, DEBUG=True, open redirect, path traversal ; PyPI épinglé (`==`) → OSV. Clé OpenCVE : image `python` → [Python sur OpenCVE](https://app.opencve.io/cve/?vendor=python&product=python).
 
 ## Bases de données
 
