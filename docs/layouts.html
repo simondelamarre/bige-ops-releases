@@ -59,6 +59,48 @@
       un cluster OKS de trois nœuds de 4 vCPU et 6 Gio. Ta simulation te donne le montant exact, ligne par ligne.
     </p>
 
+    <h2>Optimise tes bases à tes usages</h2>
+    <p>
+      Chaque base démarre avec des réglages pensés pour son usage : tu gagnes le temps du réglage fin,
+      et tu ajustes ensuite en voyant le coût changer dans ta simulation.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Usage</th><th>Ce que bige-ops met en place (app et données séparées)</th><th>À ajuster selon ton activité</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Données de l’app</strong><br/>PostgreSQL, MySQL, MariaDB, MongoDB</td>
+          <td>Une VM dédiée dans le réseau privé, un disque io1 à 3 000 IOPS garanties, la sauvegarde vers l’Object Storage en un clic</td>
+          <td>Les IOPS (de 100 à 13 000 par volume), la RAM de la VM (c’est elle qui garde les données chaudes en cache), la rétention des sauvegardes</td>
+        </tr>
+        <tr>
+          <td><strong>Cache et files de jobs</strong><br/>Redis</td>
+          <td>Une petite VM (2 vCPU, 2 Gio) et 20 Gio en gp2 : pour un cache, la mémoire compte plus que le disque</td>
+          <td>La RAM, selon la taille de ta file ou de ton cache</td>
+        </tr>
+        <tr>
+          <td><strong>Recherche et vecteurs</strong><br/>Weaviate</td>
+          <td>Une VM dédiée sur disque io1 ; l’index vit en mémoire</td>
+          <td>La RAM, selon le nombre de vecteurs</td>
+        </tr>
+        <tr>
+          <td><strong>Graphes</strong><br/>Neo4j</td>
+          <td>Une VM dédiée sur disque io1</td>
+          <td>La RAM et les IOPS, selon la taille du graphe</td>
+        </tr>
+        <tr>
+          <td><strong>Pour démarrer</strong><br/>une seule machine</td>
+          <td>La base tourne sur la même machine que l’app, la sauvegarde part vers l’Object Storage</td>
+          <td>Le passage à « l’app et ses données séparées » quand la base grossit</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Repère de prix : un disque io1 coûte 0,13 € par Gio et par mois, plus 0,01 € par IOPS : 3 000 IOPS garanties
+      reviennent à 30 € par mois. Ta simulation affiche le total exact. <a href="volumes-bsu.html">Volumes et IOPS</a> · <a href="bases.html">Bases de données</a>
+    </p>
+
     <h2>Quand passer à l’étape suivante</h2>
     <ul>
       <li><strong>D’une machine à l’app et ses données séparées</strong> : quand une panne de la machine devient un vrai problème pour tes clients, ou quand ta base grossit et mérite sa propre machine.</li>
