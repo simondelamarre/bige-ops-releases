@@ -39,8 +39,8 @@
 - **Le prix avant la facture.** VMs, Kubernetes, bases, stockage : chaque ligne chiffrée sur la grille publique.
 - **La simplicité d’une plateforme, sur ton cloud.** Tu relies ton dépôt, bige-ops déploie. Pas besoin de DevOps.
 - **Des bases réglées pour leur usage.** Disque, IOPS, sauvegardes : les bons défauts, ajustables en voyant le coût.
-- **Tes failles, par ordre d’urgence.** Il y en aura toujours : bige-ops les affiche et met en tête celles que ta stack expose. Routes ouvertes, injections, secrets, CVE des dépendances. Sans LLM, sans clé.
-- **L’audit profond en option.** bige-ops advanced, avec ta propre clé LLM : failles classées par CWE, une issue GitHub par problème.
+- **Tes failles, par ordre d’urgence.** Il y en aura toujours : bige-ops les affiche et met en tête celles que ta stack expose. Pages ouvertes sans connexion, mots de passe en clair, failles connues de tes bibliothèques. Sur ton poste, sans clé ni IA.
+- **L’audit profond en option.** bige-ops advanced lit ton code plus en profondeur avec ta propre clé d’IA, classe chaque faille par type (catalogue CWE) et propose une issue GitHub par problème.
 - **La main sur tout.** Outil local, secrets chez toi, infra sur ton compte.
 
 <p align="center">
@@ -50,13 +50,23 @@
 
 <p align="center">
   <img src="docs/screens/vulns-sqli.png" alt="Injection SQL réelle détectée dans routes/login.ts d’OWASP Juice Shop, exposée à Internet" width="820" /><br/>
-  <em>Une injection SQL réelle dans <a href="https://owasp.org/projects/juice-shop">OWASP Juice Shop</a>, exposée à Internet. Vérifiable par tous.</em>
+  <em>Une faille réelle dans <a href="https://owasp.org/projects/juice-shop">OWASP Juice Shop</a> : une requête à la base construite avec ce que tape l’utilisateur (injection SQL), exposée à Internet. Vérifiable par tous.</em>
 </p>
 
 <p align="center">
   <img src="docs/screens/vulns-deps.png" alt="CVE-2022-25887 sur sanitize-html 1.4.2, avec son lien OpenCVE" width="820" /><br/>
-  <em>CVE-2022-25887 sur sanitize-html, avec son lien <a href="https://www.opencve.io/">OpenCVE</a>.</em>
+  <em>Une faille connue (CVE-2022-25887) dans la bibliothèque sanitize-html, avec son lien <a href="https://www.opencve.io/">OpenCVE</a>.</em>
 </p>
+
+## Comment bige-ops trouve tes failles
+
+1. Il lit le code de tes dépôts, sur ton poste.
+2. Il repère les pages et les API que ton app expose, et vérifie qu’elles demandent une connexion.
+3. Il cherche les erreurs classiques : mots de passe écrits en clair, requêtes à la base construites avec ce que tape l’utilisateur, API ouverte à n’importe quel site.
+4. Il compare tes bibliothèques à la base publique des failles connues ([OSV](https://osv.dev/)) et, avec ta clé [OpenCVE](https://www.opencve.io/), ta stack au registre mondial des failles (CVE).
+5. Il classe tout par urgence : ce qui est exposé à Internet d’abord.
+
+**Pourquoi le refaire toi-même ?** C’est chez toi, et c’est gratuit.
 
 ## Bientôt : ta conso réelle face à ta simulation
 

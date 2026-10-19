@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <title>bige-ops — le simulateur de stack pour Outscale (gratuit, local)</title>
-  <meta name="description" content="Simulateur de stack pour Outscale, gratuit et 100 % local. Dessine ta stack, teste-la, mesure son coût, puis déploie-la sur ton compte Outscale." />
+  <meta name="description" content="Simulateur de stack pour Outscale, gratuit et 100 % local. Dessine ta stack, vérifie-la, vois son coût, puis déploie-la sur ton compte Outscale." />
   <link rel="canonical" href="https://bige.dev/" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -14,12 +14,12 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/" />
   <meta property="og:title" content="bige-ops — le simulateur de stack pour Outscale" />
-  <meta property="og:description" content="Gratuit · 100 % local. Simule ta stack Outscale, teste-la, mesure son coût, puis déploie-la sur ton compte." />
+  <meta property="og:description" content="Gratuit · 100 % local. Simule ta stack, vérifie-la, vois son coût, puis déploie-la sur ton compte." />
   <meta property="og:image" content="https://bige.dev/screens/hero.png" />
   <meta property="og:image:alt" content="bige-ops — Visual Outscale, topologie et coût" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="bige-ops — le simulateur de stack pour Outscale" />
-  <meta name="twitter:description" content="Gratuit · 100 % local. Simule, teste, mesure, puis déploie sur Outscale." />
+  <meta name="twitter:description" content="Gratuit · 100 % local. Simule, vérifie, vois le prix, puis déploie." />
   <meta name="twitter:image" content="https://bige.dev/screens/hero.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -676,11 +676,11 @@
         </figure>
         <figure class="slide" aria-roledescription="slide" aria-label="2 sur 5">
           <img src="screens/vulns-sqli.png" width="1440" height="900" loading="lazy" alt="Injection SQL réelle détectée dans routes/login.ts d’OWASP Juice Shop, exposée à Internet" />
-          <figcaption>Une faille réelle, trouvée sans LLM ni clé (<a href="https://owasp.org/projects/juice-shop" target="_blank" rel="noopener">OWASP Juice Shop</a>).</figcaption>
+          <figcaption>Une faille réelle, trouvée sur ton poste, sans clé ni IA (<a href="https://owasp.org/projects/juice-shop" target="_blank" rel="noopener">OWASP Juice Shop</a>).</figcaption>
         </figure>
         <figure class="slide" aria-roledescription="slide" aria-label="3 sur 5">
           <img src="screens/vulns-deps.png" width="1440" height="900" loading="lazy" alt="CVE-2022-25887 sur sanitize-html 1.4.2, avec son lien OpenCVE" />
-          <figcaption>Les CVE de tes dépendances, reliées à <a href="https://www.opencve.io/" target="_blank" rel="noopener">OpenCVE</a>.</figcaption>
+          <figcaption>Les failles connues de tes bibliothèques, reliées à <a href="https://www.opencve.io/" target="_blank" rel="noopener">OpenCVE</a>.</figcaption>
         </figure>
         <figure class="slide" aria-roledescription="slide" aria-label="4 sur 5">
           <img src="screens/visual-oks.png" width="1440" height="900" loading="lazy" alt="Le Visual : une stack Kubernetes avec ses services, ses bases et son coût" />
@@ -714,10 +714,22 @@
         </article>
         <article class="fact" id="why-vulns">
           <h3>Sécurise</h3>
-          <p>Des failles, il y en aura toujours. bige-ops les affiche et met en tête celles que ta stack expose : routes ouvertes, injections, secrets, CVE des dépendances. Sans LLM, sans clé.</p>
-          <p><a href="documentation.html">Documentation →</a></p>
+          <p>Des failles, il y en aura toujours. bige-ops les affiche et met en tête celles que ta stack expose. Sur ton poste, sans clé ni IA.</p>
+          <p><a href="#failles">Comment ça marche →</a></p>
         </article>
       </div>
+    </section>
+
+    <section class="block" id="failles">
+      <h2>Comment bige-ops trouve tes failles</h2>
+      <ol>
+        <li>Il lit le code de tes dépôts, sur ton poste.</li>
+        <li>Il repère les pages et les API que ton app expose, et vérifie qu’elles demandent une connexion.</li>
+        <li>Il cherche les erreurs classiques : mots de passe écrits en clair, requêtes à la base construites avec ce que tape l’utilisateur, API ouverte à n’importe quel site.</li>
+        <li>Il compare tes bibliothèques à la base publique des failles connues (<a href="https://osv.dev/" target="_blank" rel="noopener">OSV</a>) et, avec ta clé <a href="https://www.opencve.io/" target="_blank" rel="noopener">OpenCVE</a>, ta stack au registre mondial des failles (CVE).</li>
+        <li>Il classe tout par urgence : ce qui est exposé à Internet d’abord.</li>
+      </ol>
+      <p><strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, et c’est gratuit.</p>
     </section>
 
     <section class="block" id="prix">
@@ -739,7 +751,7 @@
       <h2>Et aussi</h2>
       <ul>
         <li><strong>Des bases réglées pour leur usage</strong> : disque, IOPS, sauvegardes. <a href="layouts.html">Voir</a></li>
-        <li id="why-byok"><strong>L’audit profond en option</strong> : bige-ops advanced, avec ta propre clé LLM. <a href="agent.html">Voir</a></li>
+        <li id="why-byok"><strong>L’audit profond en option</strong> : bige-ops advanced lit ton code plus en profondeur avec ta propre clé d’IA, et classe chaque faille par type. <a href="agent.html">Voir</a></li>
         <li><strong>Tes secrets chez toi</strong> : coffre local, jamais dans tes fichiers. <a href="secrets.html">Voir</a></li>
         <li><strong>Bientôt</strong> : ta conso réelle face à ta simulation.</li>
       </ul>
