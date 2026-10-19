@@ -615,13 +615,13 @@
       <p class="brand">bige<span class="ops">-ops</span></p>
       <span class="brand-badge">Gratuit</span>
     </div>
-    <p class="baseline">Le simulateur de stack pour Outscale · gratuit · installé en une commande</p>
+    <p class="baseline">Le simulateur de stack pour <a href="pourquoi-outscale.html">Outscale</a> · gratuit · installé en une commande</p>
 
     <ul class="pitch">
-      <li><strong>Simule avant de déployer.</strong> Dessine ta stack Outscale, teste-la et mesure son coût avant de dépenser quoi que ce soit.</li>
+      <li><strong>Simule avant de déployer.</strong> Dessine ta stack, teste-la et mesure son coût avant de dépenser quoi que ce soit.</li>
       <li><strong>Analyse ce que tu déploies.</strong> Coût détaillé, risques sur tes données, CVE de tes dépôts.</li>
-      <li><strong>Déploie comme sur une plateforme, chez toi.</strong> Tu relies ton dépôt, bige-ops déploie sur ton compte Outscale : cloud souverain français, régions classiques et SecNumCloud.</li>
-      <li><strong>Gratuit, installé en une commande.</strong> Pas d’abonnement, pas de compte Outscale pour commencer : tu installes, tu te connectes avec GitHub, tu simules.</li>
+      <li><strong>Déploie comme sur une plateforme, chez toi.</strong> Tu relies ton dépôt, bige-ops déploie sur ton compte : cloud souverain français, régions classiques et SecNumCloud.</li>
+      <li><strong>Gratuit, installé en une commande.</strong> Pas d’abonnement, pas de compte cloud pour commencer : tu installes, tu te connectes avec GitHub, tu simules.</li>
       <!-- Other clouds hidden for now (ENABLED_PROVIDER_IDS in desktop/src/lib/providers.ts). Previous copy:
       <li><strong>Un cloud prêt, d’autres en route.</strong> Outscale live · Scaleway, OVH, AWS, Azure, GCP, Fly… bientôt.</li> -->
     </ul>
@@ -650,7 +650,7 @@
         <!-- macOS DMG download hidden until the app is notarized:
         <a class="primary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger macOS</a> -->
       </div>
-      <p><strong>Gratuit.</strong> macOS (Apple Silicon) : une commande Homebrew. Linux : AppImage ou paquet .deb. Tu simules tout de suite, sans compte Outscale ; tu le connectes quand tu déploies.</p>
+      <p><strong>Gratuit.</strong> macOS (Apple Silicon) : une commande Homebrew. Linux : AppImage ou paquet .deb. Tu simules tout de suite, sans compte cloud ; tu le connectes quand tu déploies.</p>
     </div>
 
     <section class="block" id="demarrer">
@@ -658,40 +658,40 @@
       <ol>
         <li><strong>Installe</strong>, c’est gratuit : <code>brew install --cask simondelamarre/bige-ops/bige-ops</code> sur macOS, ou l’AppImage / le .deb sur Linux.</li>
         <li><strong>Ouvre bige-ops</strong>, connecte-toi avec GitHub (tes configurations y sont versionnées), choisis un dossier de travail et pars d’une topologie prête : mono-VM, multi-VM ou Kubernetes (OKS).</li>
-        <li><strong>Lis le résultat</strong> : coût mensuel, risques et vulnérabilités. Tu connectes ton compte Outscale seulement quand tu veux déployer.</li>
+        <li><strong>Lis le résultat</strong> : coût mensuel, risques et vulnérabilités. Tu connectes ton compte cloud seulement quand tu veux déployer.</li>
       </ol>
     </section>
 
     <section class="block" id="pourquoi">
       <h2>Pourquoi bige-ops</h2>
-      <p>Tu simules, tu testes, tu déploies sur Outscale — puis tu analyses et tu corriges.</p>
+      <p>Tu simules, tu testes, tu déploies — puis tu analyses et tu corriges.</p>
 
       <article class="why-card" id="why-less">
         <h3>Simule avant de déployer.</h3>
-        <p class="why-sub">bige-ops est un simulateur de stack pour Outscale.</p>
+        <p class="why-sub">bige-ops est un simulateur de stack.</p>
         <p>Tu dessines ta stack (VMs, cluster OKS, stockage, réseau), tu vois son coût mensuel et tu la testes avant de dépenser un euro. Quand elle te convient, tu la déploies sur ton compte : Terraform et manifests Kubernetes sont générés pour toi.</p>
         <p><a href="layouts.html">Par où commencer →</a></p>
       </article>
 
       <article class="why-card" id="why-outscale">
-        <h3>Construit pour Outscale.</h3>
+        <h3>Construit pour un cloud souverain.</h3>
         <p class="why-sub">Cloud souverain français, régions classiques et SecNumCloud.</p>
-        <p>Chaque brique du simulateur correspond à un service Outscale (VMs Tina, OKS, volumes BSU, Object Storage, LBU), avec son prix public. Tu planifies, tu appliques et tu suis tes coûts sur Outscale, y compris en SecNumCloud.</p>
-        <p><a href="#outscale">100 % Outscale →</a></p>
+        <p>Chaque brique du simulateur correspond à un service du cloud (VMs, Kubernetes managé, volumes, Object Storage, load balancer), avec son prix public. Tu planifies, tu appliques et tu suis tes coûts, y compris en SecNumCloud.</p>
+        <p><a href="#outscale">Le cloud →</a></p>
       </article>
 
       <article class="why-card" id="why-deploy">
         <h3>La simplicité d’une plateforme, sur ton cloud.</h3>
-        <p class="why-sub">Ce n’est pas un Docker sur ton poste : c’est ta prod, sur Outscale.</p>
-        <p>Un Docker sur ton poste fait tourner des conteneurs pour toi, en local. bige-ops, lui, pilote ta production : tu relies ton dépôt Git, il génère l’infra et déploie tes services sur des VMs ou un cluster OKS de ton compte Outscale. Tu gardes la simplicité d’une plateforme managée, avec la main sur ton infra et le prix public d’Outscale. Tes secrets restent chez toi : coffre local, sync optionnelle vers GitHub ou HashiCorp Vault.</p>
+        <p class="why-sub">Ce n’est pas un Docker sur ton poste : c’est ta prod, sur ton cloud.</p>
+        <p>Un Docker sur ton poste fait tourner des conteneurs pour toi, en local. bige-ops, lui, pilote ta production : tu relies ton dépôt Git, il génère l’infra et déploie tes services sur des VMs ou un cluster Kubernetes managé de ton compte. Tu gardes la simplicité d’une plateforme managée, avec la main sur ton infra et le prix public de ton cloud. Tes secrets restent chez toi : coffre local, sync optionnelle vers GitHub ou HashiCorp Vault.</p>
         <!-- Other clouds hidden for now. Previous: (sync optionnelle Vault / GitHub / Fly si tu le veux). -->
         <p><a href="secrets.html">Secrets →</a></p>
       </article>
 
       <article class="why-card" id="why-projection">
-        <h3>Tu peux commencer sans compte Outscale.</h3>
+        <h3>Tu peux commencer sans compte cloud.</h3>
         <p class="why-sub">Tu simules d’abord. Tu te connectes quand tu appliques.</p>
-        <p>Sans identifiants Outscale, tu explores, tu simules et tu estimes. Tu te connectes seulement pour l’inventaire, le plan et l’apply, quand tu es prêt.</p>
+        <p>Sans identifiants cloud, tu explores, tu simules et tu estimes. Tu te connectes seulement pour l’inventaire, le plan et l’apply, quand tu es prêt.</p>
         <p><a href="simulations.html">Simulations →</a></p>
       </article>
 
@@ -702,9 +702,9 @@
           height="900"
           loading="lazy"
           decoding="async"
-          alt="Détail de l’estimation mensuelle d’une stack OKS sur le catalogue public Outscale"
+          alt="Détail de l’estimation mensuelle d’une stack OKS sur le catalogue public"
         />
-        <figcaption>Estimation détaillée sur le catalogue public Outscale</figcaption>
+        <figcaption>Estimation détaillée sur le catalogue public</figcaption>
       </figure>
 
       <article class="why-card" id="why-vulns">
@@ -747,10 +747,10 @@
 
     <section class="block" id="outscale">
       <span id="clouds"></span>
-      <h2>100 % Outscale</h2>
+      <h2>Un cloud souverain</h2>
       <p>
-        bige-ops est construit pour Outscale, cloud souverain français, sur les régions classiques
-        comme sur SecNumCloud. Chaque brique du simulateur correspond à un service Outscale, avec son prix public.
+        bige-ops est construit pour un cloud souverain français, sur les régions classiques
+        comme sur SecNumCloud. Chaque brique du simulateur correspond à un service, avec son prix public.
       </p>
       <ul class="provider-row" aria-label="Services Outscale couverts">
         <li class="is-live">VMs Tina</li>
@@ -761,7 +761,7 @@
         <li class="is-live">Net · Security Groups</li>
         <li class="is-live">SecNumCloud</li>
       </ul>
-      <p><a href="pourquoi-outscale.html"><strong>Pourquoi Outscale →</strong></a> · <a href="outscale.html">Outscale dans bige-ops →</a> · <a href="oks.html">OKS →</a> · <a href="regions.html">Régions →</a></p>
+      <p><a href="pourquoi-outscale.html"><strong>Pourquoi ce cloud →</strong></a> · <a href="outscale.html">Le cloud dans bige-ops →</a> · <a href="oks.html">OKS →</a> · <a href="regions.html">Régions →</a></p>
       <!-- Other clouds hidden for now (ENABLED_PROVIDER_IDS in desktop/src/lib/providers.ts). Previous copy:
       <p><strong>En cours :</strong> Scaleway, OVHcloud, AWS, Azure, GCP, Fly.io — listés dans l’app, pas encore materialization / pricing complets.</p>
       <li class="is-wip">Fly.io · connect</li> <li class="is-wip">Scaleway · bientôt</li> <li class="is-wip">OVHcloud · bientôt</li>
@@ -776,9 +776,9 @@
         <ul class="feat-list">
           <li><span class="badge badge-stable">Stable</span> <span><strong>Visual et estimation</strong> : canvas, € HT/mois, hors ligne</span></li>
           <li><span class="badge badge-stable">Stable</span> <span><strong>Simulations</strong> : brouillon et live, promote, snapshots, retour arrière</span></li>
-          <li><span class="badge badge-stable">Stable</span> <span><strong>Apply et deploy</strong> : plan, apply et deploy sur ton compte Outscale</span></li>
+          <li><span class="badge badge-stable">Stable</span> <span><strong>Apply et deploy</strong> : plan, apply et deploy sur ton compte</span></li>
           <li><span class="badge badge-stable">Stable</span> <span><strong>OKS</strong> : nodepools, scale horizontal et vertical, HPA, HTTPS via certificat EIM, logs kubectl</span></li>
-          <li><span class="badge badge-stable">Stable</span> <span><strong>Tarifs</strong> : catalogue public Outscale, synchronisé via l’API</span></li>
+          <li><span class="badge badge-stable">Stable</span> <span><strong>Tarifs</strong> : catalogue public, synchronisé via l’API</span></li>
           <li id="vulns"><span class="badge badge-stable">Stable</span> <span><strong>Vulnérabilités</strong> : mode direct sans clé (dépendances OSV, failles de code), référentiel OpenCVE pour les images de la stack (clé OpenCVE), rapport MD/PDF</span></li>
           <li><span class="badge badge-stable">Stable</span> <span><strong>Live</strong> : terminal, inventaire, statut, destroy vérifié</span></li>
         </ul>
@@ -826,7 +826,7 @@
         <li>
           <a href="catalogue-prix.html">
             <span class="lg-title">Catalogue de prix</span>
-            <span class="lg-sub">Grille publique Outscale, € HT/mois</span>
+            <span class="lg-sub">Grille publique, € HT/mois</span>
           </a>
         </li>
         <li>
@@ -838,7 +838,7 @@
         <li>
           <a href="oks.html">
             <span class="lg-title">OKS</span>
-            <span class="lg-sub">Kubernetes managé Outscale</span>
+            <span class="lg-sub">Kubernetes managé</span>
           </a>
         </li>
         <li>
@@ -865,10 +865,10 @@
     <section class="block" id="faq">
       <h2>FAQ</h2>
       <dl class="faq">
-        <dt>Faut-il un compte Outscale&nbsp;?</dt>
-        <dd>Pas pour commencer : la simulation et l’estimation fonctionnent hors ligne. Ton compte Outscale sert pour l’inventaire, le plan et l’apply.</dd>
-        <dt>Pourquoi Outscale&nbsp;?</dt>
-        <dd>bige-ops est conçu pour Outscale : un cloud souverain français, avec des régions SecNumCloud et Kubernetes managé (OKS). Le simulateur couvre ses services un par un, avec leur prix public. <a href="pourquoi-outscale.html">Pourquoi Outscale</a>.</dd>
+        <dt>Faut-il un compte cloud&nbsp;?</dt>
+        <dd>Pas pour commencer : la simulation et l’estimation fonctionnent hors ligne. Ton compte cloud sert pour l’inventaire, le plan et l’apply.</dd>
+        <dt>Pourquoi ce cloud&nbsp;?</dt>
+        <dd>bige-ops est conçu pour un cloud souverain français, avec des régions SecNumCloud et Kubernetes managé (OKS). Le simulateur couvre ses services un par un, avec leur prix public. <a href="pourquoi-outscale.html">Pourquoi ce choix</a>.</dd>
         <!-- Other clouds hidden for now. Previous FAQ: Et les autres clouds ? Outscale est live. Suivent Scaleway, OVHcloud, AWS, Azure, GCP, Fly.io. -->
         <dt>Comment l’installer sur macOS&nbsp;?</dt>
         <dd>Par Homebrew : la commande ci-dessus installe l’app et la prépare pour le premier lancement. <a href="install.html">Guide d’installation</a>.</dd>
@@ -885,27 +885,27 @@
       <h2>Glossaire</h2>
       <dl class="faq">
         <dt id="g-tina">Tina</dt>
-        <dd>Le nom des types de VM Outscale sur mesure, au format <code>tinavW.cXrYpZ</code> : génération de CPU, vCPU, RAM en GiB et niveau de performance (<code>p1</code> le plus haut). Exemple : <code>tinav6.c4r16p1</code>.</dd>
+        <dd>Le nom des types de VM sur mesure, au format <code>tinavW.cXrYpZ</code> : génération de CPU, vCPU, RAM en GiB et niveau de performance (<code>p1</code> le plus haut). Exemple : <code>tinav6.c4r16p1</code>.</dd>
         <dt id="g-vm">VM</dt>
-        <dd>Une machine virtuelle Outscale, taillée à la demande par son type Tina, démarrée depuis une OMI, avec un disque racine BSU. L’API historique FCU l’appelle « instance ».</dd>
+        <dd>Une machine virtuelle, taillée à la demande par son type Tina, démarrée depuis une OMI, avec un disque racine BSU. L’API historique FCU l’appelle « instance ».</dd>
         <dt id="g-vps">VPS</dt>
-        <dd>Virtual Private Server : le terme générique pour un serveur virtuel loué. Chez Outscale, c’est une VM, et sa taille se compose librement (vCPU, RAM, performance) au lieu d’être choisie dans une grille fixe.</dd>
+        <dd>Virtual Private Server : le terme générique pour un serveur virtuel loué. Ici, c’est une VM, et sa taille se compose librement (vCPU, RAM, performance) au lieu d’être choisie dans une grille fixe.</dd>
         <dt id="g-omi">OMI</dt>
-        <dd>OUTSCALE Machine Image : l’image qui sert de modèle à une VM (système et configuration). Les OMI officielles sont maintenues par Outscale ; un identifiant d’OMI est propre à une Région.</dd>
+        <dd>Machine Image : l’image qui sert de modèle à une VM (système et configuration). Les OMI officielles sont maintenues par le cloud ; un identifiant d’OMI est propre à une Région.</dd>
         <dt id="g-bsu">BSU</dt>
-        <dd>Les volumes bloc Outscale, attachés à une VM de la même Subregion : <code>standard</code> (Magnetic), <code>gp2</code> (Performance, SSD) ou <code>io1</code> (Enterprise, SSD à IOPS provisionnées), avec snapshots.</dd>
+        <dd>Les volumes bloc, attachés à une VM de la même Subregion : <code>standard</code> (Magnetic), <code>gp2</code> (Performance, SSD) ou <code>io1</code> (Enterprise, SSD à IOPS provisionnées), avec snapshots.</dd>
         <dt id="g-oos">OOS</dt>
-        <dd>OUTSCALE Object Storage, compatible S3 : buckets régionaux pour fichiers applicatifs, sauvegardes et exports d’OMI ou de snapshots.</dd>
+        <dd>Object Storage compatible S3 : buckets régionaux pour fichiers applicatifs, sauvegardes et exports d’OMI ou de snapshots.</dd>
         <dt id="g-net">Net</dt>
-        <dd>Le réseau privé virtuel d’un compte Outscale dans une Région, découpé en Subnets, avec route tables, security groups, internet service et NAT service.</dd>
+        <dd>Le réseau privé virtuel d’un compte dans une Région, découpé en Subnets, avec route tables, security groups, internet service et NAT service.</dd>
         <dt id="g-lbu">LBU</dt>
-        <dd>Load Balancer Unit, le load balancer Outscale : HTTP/HTTPS ou TCP/SSL, health checks, et terminaison TLS avec un certificat serveur stocké dans EIM.</dd>
+        <dd>Load Balancer Unit, le load balancer : HTTP/HTTPS ou TCP/SSL, health checks, et terminaison TLS avec un certificat serveur stocké dans EIM.</dd>
         <dt id="g-eim">EIM</dt>
-        <dd>Elastic Identity Management : utilisateurs, politiques d’accès et certificats serveur du compte Outscale. Un certificat y est référencé par son ORN.</dd>
+        <dd>Elastic Identity Management : utilisateurs, politiques d’accès et certificats serveur du compte. Un certificat y est référencé par son ORN.</dd>
         <dt id="g-oks">OKS</dt>
-        <dd>OUTSCALE Kubernetes as a Service : control plane managé par Outscale, nodepools de VMs Tina, Services de type LoadBalancer adossés au LBU.</dd>
+        <dd>Kubernetes as a Service : control plane managé, nodepools de VMs Tina, Services de type LoadBalancer adossés au LBU.</dd>
         <dt id="g-secnumcloud">SecNumCloud</dt>
-        <dd>Le référentiel de sécurité de l’ANSSI. Outscale est qualifié SecNumCloud 3.2 ; la région correspondante est <code>cloudgouv-eu-west-1</code>.</dd>
+        <dd>Le référentiel de sécurité de l’ANSSI. Le cloud est qualifié SecNumCloud 3.2 ; la région correspondante est <code>cloudgouv-eu-west-1</code>.</dd>
         <dt id="g-mono-vm">Mono-VM</dt>
         <dd>La topologie <code>single-vm</code> de bige-ops : une seule VM <code>{nom}-all</code> porte les apps et leurs bases, avec une IP publique. Le point de départ le plus simple.</dd>
         <dt id="g-multi-vm">Multi-VM</dt>
@@ -913,9 +913,9 @@
         <dt id="g-simulation">Simulation</dt>
         <dd>Une variante de ta stack dans bige-ops : brouillon (draft) ou live, avec son coût estimé.</dd>
         <dt id="g-estimate">Estimation</dt>
-        <dd>Le coût mensuel € HT d’une simulation, calculé sur ton poste à partir du catalogue public Outscale, synchronisable par l’API <code>ReadPublicCatalog</code>.</dd>
+        <dd>Le coût mensuel € HT d’une simulation, calculé sur ton poste à partir du catalogue public, synchronisable par l’API <code>ReadPublicCatalog</code>.</dd>
         <dt id="g-apply">Apply</dt>
-        <dd>Créer ou mettre à jour l’infrastructure sur ton compte Outscale : Terraform généré pour le Net, les VMs, les volumes, le LBU et OOS, oks-cli pour OKS. Le plan montre les changements avant.</dd>
+        <dd>Créer ou mettre à jour l’infrastructure sur ton compte : Terraform généré pour le Net, les VMs, les volumes, le LBU et OOS, oks-cli pour OKS. Le plan montre les changements avant.</dd>
         <dt id="g-deploy">Deploy</dt>
         <dd>Déployer les applications sur l’infrastructure en place : Docker Compose sur les VMs, <code>kubectl apply</code> sur OKS.</dd>
         <dt id="g-promote">Promote</dt>
@@ -976,7 +976,7 @@
         </div>
       </div>
       <p class="meta">
-        Gratuit · simulateur local pour Outscale ·
+        Gratuit · simulateur local ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>
