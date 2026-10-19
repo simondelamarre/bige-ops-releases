@@ -30,4 +30,10 @@ Outscale publie sa grille tarifaire. C’est elle que bige-ops embarque : chaque
 
 Avant de construire bige-ops, nous avons étudié l’offre en détail : le catalogue, l’API, OKS, les régions. Nous y avons trouvé un cloud qui maîtrise sa technique, fixe des prix justes et protège les données de ses clients. Un potentiel fort, pour les équipes qui veulent un cloud souverain et solide.
 
+## La prochaine étape : valider en conditions réelles
+
+bige-ops simule, chiffre et analyse sur la grille publique et sur des dépôts publics vérifiables. La prochaine étape, c’est la preuve en production : déployer un cluster OKS de bout en bout, mesurer les paliers d’IOPS sur io1, restaurer une base depuis l’Object Storage.
+
+**Équipes Outscale** : un accès de test suffit pour lancer cette validation. Nous publierons les résultats ici, chiffres à l’appui. [Écrivez-nous](https://github.com/simondelamarre/bige-ops-releases/issues/new/choose).
+
 HTML : [pourquoi-outscale.html](https://bige.dev/pourquoi-outscale.html)

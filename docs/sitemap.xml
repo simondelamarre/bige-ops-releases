@@ -8,9 +8,22 @@
   <url><loc>https://bige.dev/documentation.html</loc><priority>0.8</priority></url>
   <url><loc>https://bige.dev/expert-config.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/github-config.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/glossaire.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/</loc><priority>1.0</priority></url>
   <url><loc>https://bige.dev/install.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/inventory.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/lang-dotnet.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/lang-elixir.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/lang-go.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/lang-java.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/lang-kotlin.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/lang-nodejs.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/lang-ocaml.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/lang-php.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/lang-python.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/lang-ruby.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/lang-rust.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/lang-scala.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/layouts.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/lbu.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/oks.html</loc><priority>0.7</priority></url>
@@ -26,6 +39,20 @@
   <url><loc>https://bige.dev/savoir.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/secrets.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/simulations.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/stack-ai-fastapi-pgvector-gpu.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/stack-django-celery-postgresql-redis.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/stack-dotnet-postgresql-rabbitmq.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/stack-express-mongodb-redis-oks.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/stack-go-postgresql-nats.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/stack-jakarta-ee-opensearch-postgresql.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/stack-laravel-horizon-mysql-redis.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/stack-nextjs-nestjs-postgresql-redis.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/stack-phoenix-postgresql.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/stack-quarkus-oks-postgresql-kafka.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/stack-rails-sidekiq-postgresql-redis.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/stack-spring-boot-oks-kafka-keycloak.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/stack-wordpress-mariadb.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/stacks.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/vms.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/volumes-bsu.html</loc><priority>0.7</priority></url>
 </urlset>

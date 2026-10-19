@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elixir et Phoenix sur Outscale : LiveView, Ecto, PostgreSQL — bige-ops</title>
+  <meta name="description" content="Elixir et Phoenix sur Outscale avec bige-ops : LiveView, Ecto, Oban, mix release, PostgreSQL derrière un LBU. Stack suivie sur OpenCVE, coût réel." />
+  <link rel="canonical" href="https://bige.dev/lang-elixir.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="bige-ops" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:url" content="https://bige.dev/lang-elixir.html" />
+  <meta property="og:title" content="Elixir et Phoenix sur Outscale : LiveView, Ecto, PostgreSQL — bige-ops" />
+  <meta property="og:description" content="Elixir et Phoenix sur Outscale avec bige-ops : LiveView, Ecto, Oban, mix release, PostgreSQL derrière un LBU. Stack suivie sur OpenCVE, coût réel." />
+  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Elixir et Phoenix sur Outscale : LiveView, Ecto, PostgreSQL", "description": "Elixir et Phoenix sur Outscale avec bige-ops : LiveView, Ecto, Oban, mix release, PostgreSQL derrière un LBU. Stack suivie sur OpenCVE, coût réel.", "inLanguage": "fr", "url": "https://bige.dev/lang-elixir.html", "keywords": "Elixir, Phoenix, LiveView, Ecto, Oban, Erlang, OTP, BEAM, mix release, PostgreSQL, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Elixir et Phoenix sur Outscale : LiveView, Ecto, PostgreSQL", "item": "https://bige.dev/lang-elixir.html"}]}]}</script>
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="stacks.html">Stacks &amp; langages</a> · <a href="documentation.html">Toute la doc</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Gratuit</span>
+    </div>
+    <h1>Elixir et Phoenix sur Outscale</h1>
+    <p class="lead">
+      Phoenix et LiveView donnent du temps réel sans JavaScript à écrire, sur la machine virtuelle Erlang qui tient des millions de connexions. bige-ops pose ta release Phoenix sur Outscale avec PostgreSQL en subnet privé et la chiffre au catalogue public.
+    </p>
+
+    <div class="callout">
+      <strong>En bref.</strong>
+      Runtime <code>elixir</code> dans bige-ops : port 4000, 512 MiB, <code>MIX_ENV=prod</code>, image construite avec <code>mix release</code>. Layout prêt à l’emploi : <code>elixir-phoenix</code>.
+    </div>
+
+    <h2 id="frameworks">Frameworks et bibliothèques</h2>
+    <p>Phoenix s’appuie sur Ecto pour les données et sur l’OTP d’Erlang pour la tolérance aux pannes.</p>
+    <h3 id="phoenix">Phoenix et LiveView</h3>
+    <p>Le framework web d’Elixir : routeur, contrôleurs, channels, et LiveView pour des interfaces temps réel rendues côté serveur.</p>
+    <p><a href="https://hexdocs.pm/phoenix/overview.html" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=phoenixframework&amp;product=phoenix" target="_blank" rel="noopener noreferrer">Phoenix sur OpenCVE</a></p>
+    <h3 id="ecto">Ecto</h3>
+    <p>La couche données : schémas, changesets, requêtes composables, migrations ; PostgreSQL en premier lieu.</p>
+    <p><a href="https://hexdocs.pm/ecto/Ecto.html" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">PostgreSQL sur OpenCVE</a></p>
+    <h3 id="oban">Oban</h3>
+    <p>Les jobs de fond persistés dans PostgreSQL : pas de broker en plus, la base fait la file.</p>
+    <p><a href="https://hexdocs.pm/oban/Oban.html" target="_blank" rel="noopener noreferrer">documentation officielle</a></p>
+    <h3 id="otp">Erlang/OTP et mix release</h3>
+    <p><code>mix release</code> produit une release autonome (runtime Erlang inclus), idéale dans une image Docker légère. Voir aussi <a href="https://hexdocs.pm/phoenix/releases.html" target="_blank" rel="noopener noreferrer">Phoenix et les releases</a>.</p>
+    <p><a href="https://hexdocs.pm/mix/Mix.Tasks.Release.html" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=elixir-lang&amp;product=elixir" target="_blank" rel="noopener noreferrer">Elixir sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=erlang&amp;product=otp" target="_blank" rel="noopener noreferrer">Erlang/OTP sur OpenCVE</a></p>
+
+    <h2 id="outscale">Faire tourner Elixir sur Outscale avec bige-ops</h2>
+<p>Le runtime <code>elixir</code> de bige-ops expose Phoenix sur le port 4000 avec 512 MiB et <code>MIX_ENV=prod</code>. Ton Dockerfile construit la release (<code>mix release</code>) ; le LBU termine le TLS et parle HTTP à Phoenix.</p>
+    <table>
+      <tr><th>Topologie</th><th>Sur Outscale</th><th>Pour</th></tr>
+      <tr><td><code>single-vm</code></td><td>une VM <code>{name}-all</code> avec IP publique : apps et bases en Docker Compose</td><td>prototype, démo, environnement de test</td></tr>
+      <tr><td><code>multi-vm</code></td><td>VM app en subnet public derrière un LBU, une VM privée par base (security groups au CIDR du Net), NAT pour la sortie</td><td>la production simple et lisible</td></tr>
+      <tr><td><code>oks</code></td><td>cluster OKS (control plane managé + nodepools), un Deployment par service, Service LoadBalancer → LBU</td><td>le scale horizontal, les microservices, l’HPA</td></tr>
+    </table>
+    <pre>bige-ops add layout elixir-phoenix --name live
+# ou sur mesure :
+bige-ops add layout custom --runtime elixir --web none --no-worker \
+  --db postgres --topology multi-vm --lbu</pre>
+    <p>Le layout <code>elixir-phoenix</code> ajoute un worker et Redis ; avec Oban, PostgreSQL suffit souvent.</p>
+
+    <h2 id="scan">Ce que le scan bige-ops fait pour Elixir</h2>
+    <p>L’analyse du code Elixir arrive ; ta stack est déjà couverte : composants et images (y compris celles de tes Dockerfile et docker-compose) confrontés à OpenCVE, exposition dans la simulation et coût sur Outscale. PostgreSQL et Redis sont rapprochés automatiquement de leurs fiches et classés selon leur exposition ; garde <a href="https://app.opencve.io/cve/?vendor=elixir-lang&amp;product=elixir" target="_blank" rel="noopener noreferrer">Elixir sur OpenCVE</a>, <a href="https://app.opencve.io/cve/?vendor=erlang&amp;product=otp" target="_blank" rel="noopener noreferrer">Erlang/OTP sur OpenCVE</a> et <a href="https://app.opencve.io/cve/?vendor=phoenixframework&amp;product=phoenix" target="_blank" rel="noopener noreferrer">Phoenix sur OpenCVE</a> en référence pour le runtime et le framework. Si ton dépôt embarque un <code>package.json</code> (assets), ses dépendances npm passent par <a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>.</p>
+
+    <h2 id="bases">Bases de données typiques</h2>
+    <p>PostgreSQL est la base naturelle de Phoenix : Ecto et Oban s’y appuient.</p>
+    <table>
+      <tr><th>Base</th><th>Avec ce langage</th><th>CVE</th></tr>
+      <tr><td>PostgreSQL</td><td>Ecto, Oban (files de jobs). Stack : <a href="stack-phoenix-postgresql.html">Phoenix + PostgreSQL</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+      <tr><td>Redis</td><td>PubSub ou cache selon tes besoins.</td><td><a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+    </table>
+    <p>
+      Règle d’or, quelle que soit la base : jamais exposée à Internet. En multi-VM elle vit
+      dans le subnet privé, sans IP publique, derrière un security group limité au CIDR du
+      Net ; sur OKS elle reste un Service interne (ClusterIP). Détail :
+      <a href="reseau.html">réseau · ouvrir ou non</a> et <a href="bases.html">bases de données</a>.
+    </p>
+
+    <h2 id="versions">Versions à épingler</h2>
+    <p>Épingle Elixir et Erlang/OTP dans l’image de build (les images officielles <code>elixir</code> et <code>hexpm/elixir</code> les combinent) et la version de Phoenix dans <code>mix.lock</code>. Docs : <a href="https://elixir-lang.org/docs.html" target="_blank" rel="noopener noreferrer">Elixir</a> · <a href="https://www.erlang.org/doc/" target="_blank" rel="noopener noreferrer">Erlang/OTP</a> · CVE : <a href="https://app.opencve.io/cve/?vendor=elixir-lang&amp;product=elixir" target="_blank" rel="noopener noreferrer">Elixir sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=erlang&amp;product=otp" target="_blank" rel="noopener noreferrer">Erlang/OTP sur OpenCVE</a>.</p>
+
+    <h2 id="opencve">OpenCVE, le référentiel CVE de bige-ops</h2>
+    <p>
+      Pour savoir quelles vulnérabilités touchent les briques de ta stack, bige-ops
+      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE agrège les CVE publiées
+      (NVD, MITRE, catalogue KEV de la CISA…), les enrichit avec les scores CVSS et EPSS
+      et les range par fournisseur et par produit, consultables dans son
+      <a href="https://app.opencve.io/" target="_blank" rel="noopener noreferrer">explorateur</a>. Le projet est open source : son code, ses
+      issues et les contributions de sa communauté vivent sur
+      <a href="https://github.com/opencve/opencve" target="_blank" rel="noopener noreferrer">GitHub</a>, et il s’installe aussi chez toi. Merci à ses
+      mainteneurs et à tous ceux qui font vivre ce référentiel : c’est grâce à eux que
+      chaque composant de ta simulation a sa fiche CVE à jour.
+    </p>
+
+    <h2 id="stacks">Stacks Elixir chiffrées</h2>
+    <ul>
+      <li><a href="stack-phoenix-postgresql.html">Phoenix + PostgreSQL</a> (368,30 € HT/mois estimés)</li>
+    </ul>
+
+    <h2 id="docs">Docs officielles</h2>
+    <ul>
+      <li><a href="https://elixir-lang.org/docs.html" target="_blank" rel="noopener noreferrer">Elixir</a></li>
+      <li><a href="https://hexdocs.pm/phoenix/overview.html" target="_blank" rel="noopener noreferrer">Phoenix</a></li>
+      <li><a href="https://hexdocs.pm/phoenix/deployment.html" target="_blank" rel="noopener noreferrer">Déployer Phoenix</a></li>
+      <li><a href="https://hexdocs.pm/ecto/Ecto.html" target="_blank" rel="noopener noreferrer">Ecto</a></li>
+      <li><a href="https://hexdocs.pm/oban/Oban.html" target="_blank" rel="noopener noreferrer">Oban</a></li>
+    </ul>
+    <p>Pour aller plus loin : <a href="layouts.html">layouts &amp; topologies</a>, <a href="vms.html">VMs</a>, <a href="oks.html">OKS</a>, <a href="volumes-bsu.html">volumes BSU</a>, <a href="oos.html">OOS</a>, <a href="lbu.html">LBU</a>, <a href="reseau.html">réseau</a>, <a href="regions.html">régions</a>, <a href="bases.html">bases de données</a>, <a href="catalogue-prix.html">catalogue de prix</a>. Toutes les stacks : <a href="stacks.html">stacks &amp; langages</a>.</p>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="documentation.html">Toute la doc</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="glossaire.html">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
+            <li><a href="omi.html">OMI · images</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Réseau &amp; région</h3>
+          <ul>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="reseau-avance.html">Réseau avancé</a></li>
+            <li><a href="lbu.html">LBU · entrée publique</a></li>
+            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · simulateur local pour Outscale ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

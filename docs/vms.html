@@ -23,7 +23,7 @@
 </head>
 <body>
   <main>
-    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a> · <a href="index.html#g-vm">Glossaire</a></p>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a> · <a href="glossaire.html#g-vm">Glossaire</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
       <span class="brand-badge">Gratuit</span>
@@ -38,9 +38,9 @@
 
     <div class="callout">
       <strong>VM, pas VPS.</strong>
-      Outscale parle de <a href="index.html#g-vm"><strong>VM</strong></a>
+      Outscale parle de <a href="glossaire.html#g-vm"><strong>VM</strong></a>
       (l’API historique FCU dit « instance »). Le mot
-      <a href="index.html#g-vps"><strong>VPS</strong></a> désigne en général un
+      <a href="glossaire.html#g-vps"><strong>VPS</strong></a> désigne en général un
       serveur pris dans une grille de tailles fixes ; une VM Outscale, elle, se
       <a href="https://fr.outscale.com/machines-virtuelles-sur-mesure/" target="_blank" rel="noopener noreferrer">compose sur mesure</a>.
     </div>
@@ -82,11 +82,11 @@ flowchart TB
 
     <h2>Mono-VM ou multi-VM</h2>
     <p>
-      En <a href="index.html#g-mono-vm"><strong>mono-VM</strong></a>
+      En <a href="glossaire.html#g-mono-vm"><strong>mono-VM</strong></a>
       (code <code>single-vm</code>), les apps et souvent la data partagent
       <strong>une</strong> VM (<code>*-all</code>) : simple pour démarrer, un
       seul blast radius.
-      En <a href="index.html#g-multi-vm"><strong>multi-VM</strong></a>
+      En <a href="glossaire.html#g-multi-vm"><strong>multi-VM</strong></a>
       (<code>multi-vm</code>), tu sépares les rôles (app, data…) sur plusieurs
       VMs dans le même Net, toujours via le layout, toujours avec l’estimation
       du sizing choisi.
@@ -111,10 +111,10 @@ flowchart LR
       Type Tina (génération, vCPU, RAM, performance), taille et type du disque
       racine, volumes attachés, subnet public ou privé, IP publique et LBU
       selon le canvas. Chaque changement réécrit la
-      <a href="index.html#g-simulation">simulation</a> ;
+      <a href="glossaire.html#g-simulation">simulation</a> ;
       <code>generate</code> produit le Terraform. Tu relis, tu
-      <a href="index.html#g-apply">apply</a>, puis tu
-      <a href="index.html#g-deploy">deploy</a> les apps.
+      <a href="glossaire.html#g-apply">apply</a>, puis tu
+      <a href="glossaire.html#g-deploy">deploy</a> les apps.
       Pour <strong>ouvrir ou non</strong> une face (publique ou data privée) :
       <a href="reseau.html">réseau · ouvrir ou non</a>.
     </p>
@@ -136,7 +136,7 @@ flowchart LR
       <a href="oos.html">OOS</a>.
       Repos app et Dockerfile :
       <a href="repos-vms-docker.html">repos · VMs · Docker</a>.
-      Vocabulaire : <a href="index.html#glossaire">glossaire</a>.
+      Vocabulaire : <a href="glossaire.html">glossaire</a>.
       Doc Outscale : <a href="https://docs.outscale.com/fr/userguide/À-propos-des-VM.html" target="_blank" rel="noopener noreferrer">À propos des VM</a>.
     </p>
     <footer class="site-footer">
@@ -149,13 +149,14 @@ flowchart LR
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="savoir.html">Sait / ne sait pas</a></li>
             <li><a href="install.html">Installer &amp; mettre à jour</a></li>
-            <li><a href="index.html#glossaire">Glossaire</a></li>
+            <li><a href="glossaire.html">Glossaire</a></li>
           </ul>
         </div>
         <div>
           <h3>Composer</h3>
           <ul>
-            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="layouts.html">Par où commencer</a></li>
+            <li><a href="stacks.html">Stacks &amp; langages</a></li>
             <li><a href="vms.html">VMs · VPS</a></li>
             <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
             <li><a href="omi.html">OMI · images</a></li>

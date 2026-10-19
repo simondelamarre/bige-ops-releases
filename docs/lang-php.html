@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PHP sur Outscale : Laravel, WordPress, Symfony — bige-ops</title>
+  <meta name="description" content="PHP sur Outscale avec bige-ops : Laravel, WordPress, Symfony, MySQL, MariaDB. Routes Laravel et WordPress scannées, paquets Composer via OSV, coût réel." />
+  <link rel="canonical" href="https://bige.dev/lang-php.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="bige-ops" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:url" content="https://bige.dev/lang-php.html" />
+  <meta property="og:title" content="PHP sur Outscale : Laravel, WordPress, Symfony — bige-ops" />
+  <meta property="og:description" content="PHP sur Outscale avec bige-ops : Laravel, WordPress, Symfony, MySQL, MariaDB. Routes Laravel et WordPress scannées, paquets Composer via OSV, coût réel." />
+  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "PHP sur Outscale : Laravel, WordPress, Symfony", "description": "PHP sur Outscale avec bige-ops : Laravel, WordPress, Symfony, MySQL, MariaDB. Routes Laravel et WordPress scannées, paquets Composer via OSV, coût réel.", "inLanguage": "fr", "url": "https://bige.dev/lang-php.html", "keywords": "PHP, Laravel, WordPress, Symfony, Composer, Packagist, PHP-FPM, MySQL, MariaDB, Outscale, LBU, OpenCVE, OSV", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "PHP sur Outscale : Laravel, WordPress, Symfony", "item": "https://bige.dev/lang-php.html"}]}]}</script>
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="stacks.html">Stacks &amp; langages</a> · <a href="documentation.html">Toute la doc</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Gratuit</span>
+    </div>
+    <h1>PHP sur Outscale</h1>
+    <p class="lead">
+      Laravel pour les produits SaaS, WordPress pour les sites et la publication, Symfony pour les applications d’entreprise : PHP reste partout. bige-ops le pose sur Outscale avec ses bases MySQL ou MariaDB en subnet privé, chiffre la stack et lit tes routes Laravel et WordPress.
+    </p>
+
+    <div class="callout">
+      <strong>En bref.</strong>
+      Runtime <code>php</code> dans bige-ops : API sur le port 8080, front sur le 80, 512 MiB par défaut. Scan : routes Laravel et WordPress, Blade non échappé, dépendances Composer (Packagist) via OSV.
+    </div>
+
+    <h2 id="frameworks">Frameworks et bibliothèques</h2>
+    <p>Les deux frameworks PHP les plus déployés ont leur module de routes dans bige-ops ; Symfony se déploie de la même façon.</p>
+    <h3 id="laravel">Laravel</h3>
+    <p>Le framework PHP des équipes produit : Eloquent, files, Horizon, Sanctum. bige-ops lit <code>Route::get()</code>, <code>Route::match()</code> et les groupes <code>Route::prefix()</code> ; <code>-&gt;middleware('auth')</code> marque une route protégée, et les sorties Blade non échappées <code>{!! !!}</code> sont relevées pour l’audit.</p>
+    <p><a href="https://laravel.com/docs" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=laravel&amp;product=framework" target="_blank" rel="noopener noreferrer">Laravel sur OpenCVE</a></p>
+    <h3 id="wordpress">WordPress</h3>
+    <p>Le CMS le plus utilisé du web, et son écosystème d’extensions (WooCommerce en tête). bige-ops reconnaît un site WordPress à son <code>wp-config.php</code> et lit les routes de l’<a href="https://developer.wordpress.org/rest-api/" target="_blank" rel="noopener noreferrer">API REST</a> déclarées par <code>register_rest_route()</code>.</p>
+    <p><a href="https://developer.wordpress.org/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=wordpress&amp;product=wordpress" target="_blank" rel="noopener noreferrer">WordPress sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=woocommerce&amp;product=woocommerce" target="_blank" rel="noopener noreferrer">WooCommerce sur OpenCVE</a></p>
+    <h3 id="symfony">Symfony</h3>
+    <p>Les composants et le framework derrière une large part du PHP d’entreprise. Il se conteneurise et se déploie sur Outscale comme Laravel (PHP-FPM ou serveur web intégré à l’image) ; ses dépendances Composer passent par OSV comme les autres.</p>
+    <p><a href="https://symfony.com/doc/current/index.html" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=symfony&amp;product=symfony" target="_blank" rel="noopener noreferrer">Symfony sur OpenCVE</a></p>
+    <h3 id="composer">Composer et PHP-FPM</h3>
+    <p>Composer gère les paquets Packagist ; <a href="https://www.php.net/manual/en/install.fpm.php" target="_blank" rel="noopener noreferrer">PHP-FPM</a> sert l’application derrière nginx ou Apache dans l’image. bige-ops lit <code>require</code> et <code>require-dev</code> de chaque <code>composer.json</code>.</p>
+    <p><a href="https://getcomposer.org/doc/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=php&amp;product=php" target="_blank" rel="noopener noreferrer">PHP sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=guzzlephp&amp;product=guzzle" target="_blank" rel="noopener noreferrer">Guzzle sur OpenCVE</a></p>
+
+    <h2 id="outscale">Faire tourner PHP sur Outscale avec bige-ops</h2>
+<p>Le runtime <code>php</code> de bige-ops construit ton image depuis le Dockerfile du dépôt (PHP-FPM, Apache ou FrankenPHP : c’est ton choix d’image) et l’expose sur le port 8080, avec un front sur le port 80 si tu en déclares un. Les workers (queues Laravel, Horizon, Symfony Messenger) partagent la VM app.</p>
+    <table>
+      <tr><th>Topologie</th><th>Sur Outscale</th><th>Pour</th></tr>
+      <tr><td><code>single-vm</code></td><td>une VM <code>{name}-all</code> avec IP publique : apps et bases en Docker Compose</td><td>prototype, démo, environnement de test</td></tr>
+      <tr><td><code>multi-vm</code></td><td>VM app en subnet public derrière un LBU, une VM privée par base (security groups au CIDR du Net), NAT pour la sortie</td><td>la production simple et lisible</td></tr>
+      <tr><td><code>oks</code></td><td>cluster OKS (control plane managé + nodepools), un Deployment par service, Service LoadBalancer → LBU</td><td>le scale horizontal, les microservices, l’HPA</td></tr>
+    </table>
+    <pre>bige-ops add layout php-app --name shop
+# ou sur mesure :
+bige-ops add layout custom --runtime php --web same --worker \
+  --db mysql --db redis --topology multi-vm --lbu</pre>
+    <p>Le layout <code>php-app</code> part sur PostgreSQL + Redis ; le bâtisseur <code>custom</code> te laisse choisir MySQL ou MariaDB. Détail : <a href="layouts.html">layouts &amp; topologies</a>.</p>
+
+    <h2 id="scan">Ce que le scan bige-ops fait pour PHP</h2>
+    <p>En mode direct, sans clé ni LLM, bige-ops parse tes sources PHP avec <a href="https://tree-sitter.github.io/tree-sitter/" target="_blank" rel="noopener noreferrer">tree-sitter</a> :</p>
+    <ul>
+      <li><strong>Routes</strong> : Laravel (<code>Route::get</code>, <code>Route::match</code>, préfixes) et WordPress (<code>register_rest_route</code>). <code>-&gt;middleware('auth')</code> marque une route protégée ; une route sensible (<code>/admin</code>, <code>/account</code>, <code>/payment</code>…) sans signal d’authentification ressort « non sécurisée » (CWE-639).</li>
+      <li><strong>Code</strong> : secrets en dur (CWE-798), <code>eval()</code> et <code>exec()</code> (CWE-78), et les sorties Blade <code>{!! !!}</code> pour l’audit approfondi.</li>
+      <li><strong>Dépendances</strong> : paquets Packagist de <code>composer.json</code> rapprochés d’<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a> ; un front JavaScript (<code>package.json</code>) passe aussi par OSV et par l’analyse XSS.</li>
+    </ul>
+    <p>Avec ta clé OpenCVE, MySQL, MariaDB, Redis et une image <code>nginx</code> sont rapprochés automatiquement de leur fiche. Pour le runtime PHP lui-même, garde la fiche <a href="https://app.opencve.io/cve/?vendor=php&amp;product=php" target="_blank" rel="noopener noreferrer">PHP sur OpenCVE</a> en référence.</p>
+
+    <h2 id="bases">Bases de données typiques</h2>
+    <p>PHP s’accorde naturellement avec la famille MySQL, et Laravel parle aussi très bien PostgreSQL.</p>
+    <table>
+      <tr><th>Base</th><th>Avec ce langage</th><th>CVE</th></tr>
+      <tr><td>MySQL</td><td>Eloquent, Doctrine ; MySQL 8.4 LTS. Stack : <a href="stack-laravel-horizon-mysql-redis.html">Laravel + Horizon + MySQL + Redis</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=oracle&amp;product=mysql" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+      <tr><td>MariaDB</td><td>prise en charge par WordPress dès la 10.11 (voir les <a href="https://wordpress.org/about/requirements/" target="_blank" rel="noopener noreferrer">prérequis</a>). Stack : <a href="stack-wordpress-mariadb.html">WordPress + MariaDB</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=mariadb&amp;product=mariadb" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+      <tr><td>Redis</td><td>cache, sessions, queues Laravel et Horizon. Stack : <a href="stack-laravel-horizon-mysql-redis.html">Laravel + Horizon + MySQL + Redis</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+      <tr><td>PostgreSQL</td><td>pris en charge par Laravel et Doctrine.</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+    </table>
+    <p>
+      Règle d’or, quelle que soit la base : jamais exposée à Internet. En multi-VM elle vit
+      dans le subnet privé, sans IP publique, derrière un security group limité au CIDR du
+      Net ; sur OKS elle reste un Service interne (ClusterIP). Détail :
+      <a href="reseau.html">réseau · ouvrir ou non</a> et <a href="bases.html">bases de données</a>.
+    </p>
+
+    <h2 id="versions">Versions à épingler</h2>
+    <p>PHP publie ses dates de support : <strong>8.4</strong> (sécurité jusqu’au 31 décembre 2028) et <strong>8.5</strong> (jusqu’au 31 décembre 2029) sont les bons choix ; 8.3 reste couvert jusqu’à fin 2027 et 8.2 jusqu’au 31 décembre 2026. WordPress demande PHP 8.3 ou plus. Laravel corrige les bugs 18 mois et la sécurité 2 ans par version majeure. Sources : <a href="https://www.php.net/supported-versions.php" target="_blank" rel="noopener noreferrer">versions supportées de PHP</a> · <a href="https://laravel.com/docs/releases" target="_blank" rel="noopener noreferrer">politique de support Laravel</a> · CVE : <a href="https://app.opencve.io/cve/?vendor=php&amp;product=php" target="_blank" rel="noopener noreferrer">PHP sur OpenCVE</a>.</p>
+
+    <h2 id="opencve">OpenCVE, le référentiel CVE de bige-ops</h2>
+    <p>
+      Pour savoir quelles vulnérabilités touchent les briques de ta stack, bige-ops
+      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE agrège les CVE publiées
+      (NVD, MITRE, catalogue KEV de la CISA…), les enrichit avec les scores CVSS et EPSS
+      et les range par fournisseur et par produit, consultables dans son
+      <a href="https://app.opencve.io/" target="_blank" rel="noopener noreferrer">explorateur</a>. Le projet est open source : son code, ses
+      issues et les contributions de sa communauté vivent sur
+      <a href="https://github.com/opencve/opencve" target="_blank" rel="noopener noreferrer">GitHub</a>, et il s’installe aussi chez toi. Merci à ses
+      mainteneurs et à tous ceux qui font vivre ce référentiel : c’est grâce à eux que
+      chaque composant de ta simulation a sa fiche CVE à jour.
+    </p>
+
+    <h2 id="stacks">Stacks PHP chiffrées</h2>
+    <ul>
+      <li><a href="stack-laravel-horizon-mysql-redis.html">Laravel + Horizon + MySQL + Redis</a> (423,06 € HT/mois estimés)</li>
+      <li><a href="stack-wordpress-mariadb.html">WordPress + MariaDB</a> (236,90 € HT/mois estimés)</li>
+    </ul>
+
+    <h2 id="docs">Docs officielles</h2>
+    <ul>
+      <li><a href="https://www.php.net/docs.php" target="_blank" rel="noopener noreferrer">PHP</a></li>
+      <li><a href="https://laravel.com/docs" target="_blank" rel="noopener noreferrer">Laravel</a></li>
+      <li><a href="https://laravel.com/docs/horizon" target="_blank" rel="noopener noreferrer">Laravel Horizon</a></li>
+      <li><a href="https://developer.wordpress.org/" target="_blank" rel="noopener noreferrer">WordPress Developer</a></li>
+      <li><a href="https://symfony.com/doc/current/index.html" target="_blank" rel="noopener noreferrer">Symfony</a></li>
+      <li><a href="https://getcomposer.org/doc/" target="_blank" rel="noopener noreferrer">Composer</a></li>
+    </ul>
+    <p>Pour aller plus loin : <a href="layouts.html">layouts &amp; topologies</a>, <a href="vms.html">VMs</a>, <a href="oks.html">OKS</a>, <a href="volumes-bsu.html">volumes BSU</a>, <a href="oos.html">OOS</a>, <a href="lbu.html">LBU</a>, <a href="reseau.html">réseau</a>, <a href="regions.html">régions</a>, <a href="bases.html">bases de données</a>, <a href="catalogue-prix.html">catalogue de prix</a>. Toutes les stacks : <a href="stacks.html">stacks &amp; langages</a>.</p>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="documentation.html">Toute la doc</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="glossaire.html">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
+            <li><a href="omi.html">OMI · images</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Réseau &amp; région</h3>
+          <ul>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="reseau-avance.html">Réseau avancé</a></li>
+            <li><a href="lbu.html">LBU · entrée publique</a></li>
+            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · simulateur local pour Outscale ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>
