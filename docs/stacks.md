@@ -1,6 +1,6 @@
 # Stacks et langages sur Outscale
 
-Les architectures que les équipes font vraiment tourner, posées sur Outscale par bige-ops : coût mensuel calculé avec la CLI (catalogue public synchronisé le 17 septembre 2026, `eu-west-2`, € HT, 730 h), versions à épingler, exposition, vulnérabilités suivies avec OpenCVE.
+Les architectures que les équipes font vraiment tourner, posées sur Outscale par bige-ops : coût mensuel calculé avec la CLI (catalogue public synchronisé le 17 septembre 2026, `eu-west-2`, € HT, 730 h), versions à épingler, exposition, failles connues suivies avec OpenCVE.
 
 ## Startups
 
@@ -49,14 +49,27 @@ Sur OKS, chaque Service exposé crée un LBU (21,90 € HT/mois l’unité).
 
 ## Ce que bige-ops vérifie
 
-Mappés automatiquement sur OpenCVE : [postgresql](https://app.opencve.io/cve/?vendor=postgresql&product=postgresql) · [mysql](https://app.opencve.io/cve/?vendor=oracle&product=mysql) · [mariadb](https://app.opencve.io/cve/?vendor=mariadb&product=mariadb) · [mongodb](https://app.opencve.io/cve/?vendor=mongodb&product=mongodb) · [redis](https://app.opencve.io/cve/?vendor=redis&product=redis) · [nginx](https://app.opencve.io/cve/?vendor=f5&product=nginx) · [node](https://app.opencve.io/cve/?vendor=nodejs&product=node.js) · [python](https://app.opencve.io/cve/?vendor=python&product=python) · [go](https://app.opencve.io/cve/?vendor=golang&product=go) · [kubernetes](https://app.opencve.io/cve/?vendor=kubernetes&product=kubernetes) · [docker](https://app.opencve.io/cve/?vendor=docker&product=docker).
+Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. La méthode, sans rien cacher :
 
-Avec ta clé OpenCVE, chaque composant reconnu (image, package) est rapproché de sa fiche fournisseur/produit (une requête par produit). Classement : sévérité CVSS (KEV ⇒ au moins haute), puis exposition dans la simulation (Internet ou derrière LBU : sévérité pleine ; subnet privé : un cran de moins, sauf KEV), départage KEV → CVSS → EPSS. Rapprochement au niveau produit, à recouper avec la version épinglée ; `latest` signalé comme version non épinglée.
+1. Il lit le code de tes dépôts, sur ton poste, sans clé ni IA (le « mode direct ») : JavaScript, TypeScript, Python, Go, PHP et Ruby ; les tests et suites e2e sont écartés pour éviter les fausses alertes.
+2. Il repère les pages et les API que ton app expose, avec un module par framework (Express, Fastify, Hono, Koa, LoopBack, NestJS, Next.js, tRPC, Django, FastAPI, Flask, net/http, Gin, Laravel, WordPress, Rails), et regarde si chacune demande une connexion. Une route marquée publique, ou une page sensible (admin, compte, paiement…) sans vérification visible, ressort comme « page ou API accessible sans être connecté ».
+3. Il cherche les erreurs classiques : mots de passe ou clés écrits en clair dans le code, requête à la base construite avec ce que tape l’utilisateur (injection SQL), exécution de commandes construites avec des données externes, code injecté qui s’exécute dans le navigateur de tes utilisateurs (XSS), API ouverte à n’importe quel site, vérification des certificats HTTPS désactivée.
+4. Il compare tes bibliothèques (npm, PyPI, modules Go, Packagist) à la base publique des failles connues des bibliothèques open source ([OSV](https://osv.dev/)).
+5. Avec ta clé OpenCVE, il compare ta stack (composants de la simulation, images de tes Dockerfile et docker-compose) au registre mondial des vulnérabilités (CVE).
+6. Il classe tout par urgence : ce qui est exposé à Internet d’abord.
 
-Mode direct (sans clé) : lecture du code JS/TS/Python/Go/PHP/Ruby, routes par framework + signaux d’auth, failles de code, dépendances npm / PyPI / Go / Packagist → [OSV](https://osv.dev/). Audit approfondi avec ta clé LLM (CWE).
+En mode direct, ton code ne quitte pas ton poste : vers OSV et OpenCVE ne partent que des noms de bibliothèques et de composants (avec leur version, pour OSV). Pourquoi le refaire toi-même ? C’est chez toi, sur ton poste, et c’est gratuit.
 
-## OpenCVE, le référentiel CVE de bige-ops
+Pour Java, .NET, Kotlin, Scala, Rust, Elixir et OCaml, la lecture du code arrive ; leurs stacks sont déjà couvertes : composants et images comparés aux failles connues avec OpenCVE, exposition et coût.
 
-bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : CVE publiées (NVD, MITRE, KEV de la CISA…) enrichies CVSS / EPSS et rangées par fournisseur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
+Reconnus automatiquement sur OpenCVE : [postgresql](https://app.opencve.io/cve/?vendor=postgresql&product=postgresql) · [mysql](https://app.opencve.io/cve/?vendor=oracle&product=mysql) · [mariadb](https://app.opencve.io/cve/?vendor=mariadb&product=mariadb) · [mongodb](https://app.opencve.io/cve/?vendor=mongodb&product=mongodb) · [redis](https://app.opencve.io/cve/?vendor=redis&product=redis) · [nginx](https://app.opencve.io/cve/?vendor=f5&product=nginx) · [node](https://app.opencve.io/cve/?vendor=nodejs&product=node.js) · [python](https://app.opencve.io/cve/?vendor=python&product=python) · [go](https://app.opencve.io/cve/?vendor=golang&product=go) · [kubernetes](https://app.opencve.io/cve/?vendor=kubernetes&product=kubernetes) · [docker](https://app.opencve.io/cve/?vendor=docker&product=docker).
+
+Avec ta clé OpenCVE, chaque composant reconnu (image, paquet installé) est rapproché de sa fiche éditeur/produit (une requête par produit). Classement : gravité notée sur 10 (CVSS), au moins haute si la faille est déjà exploitée (liste KEV de la CISA) ; puis exposition dans la simulation (Internet ou derrière le LBU : gravité pleine ; subnet privé : un cran de moins, sauf faille déjà exploitée) ; départage : déjà exploitée, puis note, puis probabilité d’exploitation (EPSS). Rapprochement au niveau du produit, pas de la version : à recouper avec ta version épinglée ; `latest` signalé comme version non épinglée.
+
+Audit approfondi, en option (bige-ops advanced, ta propre clé d’IA) : il relit les pistes repérées, confirme les vraies failles, écarte les fausses alertes et classe chacune par type de faille, selon le catalogue de référence (CWE), avec un ticket GitHub prêt à ouvrir. Seuls des extraits ciblés de ton code partent, avec ta clé, chez le fournisseur d’IA choisi.
+
+## OpenCVE, la source des failles connues
+
+bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : les failles publiées dans le registre mondial des vulnérabilités (CVE) et ses sources (NVD, MITRE, liste KEV des failles déjà exploitées tenue par la CISA…), avec leur note de gravité sur 10 (CVSS) et leur probabilité d’être exploitées (EPSS), rangées par éditeur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
 
 HTML : [stacks.html](https://bige.dev/stacks.html)

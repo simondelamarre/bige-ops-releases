@@ -31,24 +31,24 @@
     </div>
     <h1>PHP sur Outscale</h1>
     <p class="lead">
-      Laravel pour les produits SaaS, WordPress pour les sites et la publication, Symfony pour les applications d’entreprise : PHP reste partout. bige-ops le pose sur Outscale avec ses bases MySQL ou MariaDB en subnet privé, chiffre la stack et lit tes routes Laravel et WordPress.
+      Laravel pour les produits SaaS, WordPress pour les sites et la publication, Symfony pour les applications d’entreprise : PHP reste partout. bige-ops le pose sur Outscale avec ses bases MySQL ou MariaDB en subnet privé, chiffre la stack et vérifie si tes routes Laravel et WordPress demandent une connexion.
     </p>
 
     <div class="callout">
       <strong>En bref.</strong>
-      Runtime <code>php</code> dans bige-ops : API sur le port 8080, front sur le 80, 512 MiB par défaut. Scan : routes Laravel et WordPress, Blade non échappé, dépendances Composer (Packagist) via OSV.
+      Runtime <code>php</code> dans bige-ops : API sur le port 8080, front sur le 80, 512 MiB par défaut. Côté failles : routes Laravel et WordPress accessibles sans connexion, HTML Blade affiché sans échappement, bibliothèques Composer (Packagist) comparées aux failles connues.
     </div>
 
     <h2 id="frameworks">Frameworks et bibliothèques</h2>
     <p>Les deux frameworks PHP les plus déployés ont leur module de routes dans bige-ops ; Symfony se déploie de la même façon.</p>
     <h3 id="laravel">Laravel</h3>
-    <p>Le framework PHP des équipes produit : Eloquent, files, Horizon, Sanctum. bige-ops lit <code>Route::get()</code>, <code>Route::match()</code> et les groupes <code>Route::prefix()</code> ; <code>-&gt;middleware('auth')</code> marque une route protégée, et les sorties Blade non échappées <code>{!! !!}</code> sont relevées pour l’audit.</p>
+    <p>Le framework PHP des équipes produit : Eloquent, files, Horizon, Sanctum. bige-ops repère les routes <code>Route::get()</code>, <code>Route::match()</code> et les groupes <code>Route::prefix()</code> ; <code>-&gt;middleware('auth')</code> marque une route protégée (connexion exigée), et le HTML affiché sans échappement par Blade (<code>{!! !!}</code>) est transmis à l’audit approfondi.</p>
     <p><a href="https://laravel.com/docs" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=laravel&amp;product=framework" target="_blank" rel="noopener noreferrer">Laravel sur OpenCVE</a></p>
     <h3 id="wordpress">WordPress</h3>
-    <p>Le CMS le plus utilisé du web, et son écosystème d’extensions (WooCommerce en tête). bige-ops reconnaît un site WordPress à son <code>wp-config.php</code> et lit les routes de l’<a href="https://developer.wordpress.org/rest-api/" target="_blank" rel="noopener noreferrer">API REST</a> déclarées par <code>register_rest_route()</code>.</p>
+    <p>Le CMS le plus utilisé du web, et son écosystème d’extensions (WooCommerce en tête). bige-ops reconnaît un site WordPress à son <code>wp-config.php</code> et repère les routes de l’<a href="https://developer.wordpress.org/rest-api/" target="_blank" rel="noopener noreferrer">API REST</a> déclarées par <code>register_rest_route()</code>.</p>
     <p><a href="https://developer.wordpress.org/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=wordpress&amp;product=wordpress" target="_blank" rel="noopener noreferrer">WordPress sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=woocommerce&amp;product=woocommerce" target="_blank" rel="noopener noreferrer">WooCommerce sur OpenCVE</a></p>
     <h3 id="symfony">Symfony</h3>
-    <p>Les composants et le framework derrière une large part du PHP d’entreprise. Il se conteneurise et se déploie sur Outscale comme Laravel (PHP-FPM ou serveur web intégré à l’image) ; ses dépendances Composer passent par OSV comme les autres.</p>
+    <p>Les composants et le framework derrière une large part du PHP d’entreprise. Il se conteneurise et se déploie sur Outscale comme Laravel (PHP-FPM ou serveur web intégré à l’image) ; ses dépendances Composer sont comparées aux failles connues, comme les autres.</p>
     <p><a href="https://symfony.com/doc/current/index.html" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=symfony&amp;product=symfony" target="_blank" rel="noopener noreferrer">Symfony sur OpenCVE</a></p>
     <h3 id="composer">Composer et PHP-FPM</h3>
     <p>Composer gère les paquets Packagist ; <a href="https://www.php.net/manual/en/install.fpm.php" target="_blank" rel="noopener noreferrer">PHP-FPM</a> sert l’application derrière nginx ou Apache dans l’image. bige-ops lit <code>require</code> et <code>require-dev</code> de chaque <code>composer.json</code>.</p>
@@ -68,19 +68,20 @@ bige-ops add layout custom --runtime php --web same --worker \
   --db mysql --db redis --topology multi-vm --lbu</pre>
     <p>Le layout <code>php-app</code> part sur PostgreSQL + Redis ; le bâtisseur <code>custom</code> te laisse choisir MySQL ou MariaDB. Détail : <a href="layouts.html">layouts &amp; topologies</a>.</p>
 
-    <h2 id="scan">Ce que le scan bige-ops fait pour PHP</h2>
-    <p>En mode direct, sans clé ni LLM, bige-ops lit ton code PHP et ressort ce qui compte :</p>
+    <h2 id="scan">Ce que bige-ops vérifie dans ton code PHP</h2>
+    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. Sans clé ni IA (le « mode direct »), bige-ops lit ton code PHP sur ton poste et ressort ce qui compte :</p>
     <ul>
-      <li><strong>Routes</strong> : Laravel (<code>Route::get</code>, <code>Route::match</code>, préfixes) et WordPress (<code>register_rest_route</code>). <code>-&gt;middleware('auth')</code> marque une route protégée ; une route sensible (<code>/admin</code>, <code>/account</code>, <code>/payment</code>…) sans signal d’authentification ressort « non sécurisée » (CWE-639).</li>
-      <li><strong>Code</strong> : secrets en dur (CWE-798), <code>eval()</code> et <code>exec()</code> (CWE-78), et les sorties Blade <code>{!! !!}</code> pour l’audit approfondi.</li>
-      <li><strong>Dépendances</strong> : paquets Packagist de <code>composer.json</code> rapprochés d’<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a> ; un front JavaScript (<code>package.json</code>) passe aussi par OSV et par l’analyse XSS.</li>
+      <li><strong>Les pages et les API exposées</strong> : routes Laravel (<code>Route::get</code>, <code>Route::match</code>, préfixes) et WordPress (<code>register_rest_route</code>). <code>-&gt;middleware('auth')</code> marque une route protégée ; une route sensible (<code>/admin</code>, <code>/account</code>, <code>/payment</code>…) sans vérification de connexion visible ressort comme « page ou API accessible sans être connecté ».</li>
+      <li><strong>Les erreurs classiques</strong> : mots de passe ou clés écrits en clair dans le code ; exécution de commandes construites avec des données externes ; le HTML affiché sans échappement par Blade (<code>{!! !!}</code>) est transmis à l’audit approfondi.</li>
+      <li><strong>Tes bibliothèques</strong> : les paquets Packagist de <code>composer.json</code> sont comparés à la base publique des failles connues des bibliothèques open source (<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>) ; un front JavaScript (<code>package.json</code>) passe aussi par OSV et par la recherche de code injecté qui s’exécute dans le navigateur de tes utilisateurs (XSS).</li>
+      <li><strong>Ta stack</strong> : avec ta clé OpenCVE, MySQL, MariaDB, Redis et une image <code>nginx</code> sont comparés automatiquement aux failles connues publiées dans le registre mondial des vulnérabilités (CVE). Pour le runtime PHP lui-même, garde la fiche <a href="https://app.opencve.io/cve/?vendor=php&amp;product=php" target="_blank" rel="noopener noreferrer">PHP sur OpenCVE</a> en référence.</li>
     </ul>
-    <p>Avec ta clé OpenCVE, MySQL, MariaDB, Redis et une image <code>nginx</code> sont rapprochés automatiquement de leur fiche. Pour le runtime PHP lui-même, garde la fiche <a href="https://app.opencve.io/cve/?vendor=php&amp;product=php" target="_blank" rel="noopener noreferrer">PHP sur OpenCVE</a> en référence.</p>
+    <p>Tout est ensuite classé par urgence : ce qui est exposé à Internet d’abord. <strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, sur ton poste, et c’est gratuit. En option, l’<a href="agent.html#audit">audit approfondi</a> de bige-ops advanced relit ces pistes avec ta propre clé d’IA, écarte les fausses alertes et classe chaque faille par type, selon le catalogue de référence (CWE). La méthode complète : <a href="stacks.html#verifications">ce que bige-ops vérifie</a>.</p>
 
     <h2 id="bases">Bases de données typiques</h2>
     <p>PHP s’accorde naturellement avec la famille MySQL, et Laravel parle aussi très bien PostgreSQL.</p>
     <table>
-      <tr><th>Base</th><th>Avec ce langage</th><th>CVE</th></tr>
+      <tr><th>Base</th><th>Avec ce langage</th><th>Failles connues</th></tr>
       <tr><td>MySQL</td><td>Eloquent, Doctrine ; MySQL 8.4 LTS. Stack : <a href="stack-laravel-horizon-mysql-redis.html">Laravel + Horizon + MySQL + Redis</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=oracle&amp;product=mysql" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
       <tr><td>MariaDB</td><td>prise en charge par WordPress dès la 10.11 (voir les <a href="https://wordpress.org/about/requirements/" target="_blank" rel="noopener noreferrer">prérequis</a>). Stack : <a href="stack-wordpress-mariadb.html">WordPress + MariaDB</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=mariadb&amp;product=mariadb" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
       <tr><td>Redis</td><td>cache, sessions, queues Laravel et Horizon. Stack : <a href="stack-laravel-horizon-mysql-redis.html">Laravel + Horizon + MySQL + Redis</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
@@ -94,19 +95,22 @@ bige-ops add layout custom --runtime php --web same --worker \
     </p>
 
     <h2 id="versions">Versions à épingler</h2>
-    <p>PHP publie ses dates de support : <strong>8.4</strong> (sécurité jusqu’au 31 décembre 2028) et <strong>8.5</strong> (jusqu’au 31 décembre 2029) sont les bons choix ; 8.3 reste couvert jusqu’à fin 2027 et 8.2 jusqu’au 31 décembre 2026. WordPress demande PHP 8.3 ou plus. Laravel corrige les bugs 18 mois et la sécurité 2 ans par version majeure. Sources : <a href="https://www.php.net/supported-versions.php" target="_blank" rel="noopener noreferrer">versions supportées de PHP</a> · <a href="https://laravel.com/docs/releases" target="_blank" rel="noopener noreferrer">politique de support Laravel</a> · CVE : <a href="https://app.opencve.io/cve/?vendor=php&amp;product=php" target="_blank" rel="noopener noreferrer">PHP sur OpenCVE</a>.</p>
+    <p>PHP publie ses dates de support : <strong>8.4</strong> (sécurité jusqu’au 31 décembre 2028) et <strong>8.5</strong> (jusqu’au 31 décembre 2029) sont les bons choix ; 8.3 reste couvert jusqu’à fin 2027 et 8.2 jusqu’au 31 décembre 2026. WordPress demande PHP 8.3 ou plus. Laravel corrige les bugs 18 mois et la sécurité 2 ans par version majeure. Sources : <a href="https://www.php.net/supported-versions.php" target="_blank" rel="noopener noreferrer">versions supportées de PHP</a> · <a href="https://laravel.com/docs/releases" target="_blank" rel="noopener noreferrer">politique de support Laravel</a> · Failles connues : <a href="https://app.opencve.io/cve/?vendor=php&amp;product=php" target="_blank" rel="noopener noreferrer">PHP sur OpenCVE</a>.</p>
 
-    <h2 id="opencve">OpenCVE, le référentiel CVE de bige-ops</h2>
+    <h2 id="opencve">OpenCVE, la source des failles connues</h2>
     <p>
-      Pour savoir quelles vulnérabilités touchent les briques de ta stack, bige-ops
-      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE agrège les CVE publiées
-      (NVD, MITRE, catalogue KEV de la CISA…), les enrichit avec les scores CVSS et EPSS
-      et les range par fournisseur et par produit, consultables dans son
+      Pour savoir quelles failles connues touchent les briques de ta stack, bige-ops
+      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE rassemble les failles publiées
+      dans le registre mondial des vulnérabilités (CVE) et ses sources officielles (NVD,
+      MITRE, liste KEV des failles déjà exploitées tenue par la CISA, l’agence américaine
+      de cybersécurité…), donne à chacune sa note de gravité sur 10 (CVSS) et sa
+      probabilité d’être exploitée (EPSS), et les range par éditeur et par produit,
+      consultables dans son
       <a href="https://app.opencve.io/" target="_blank" rel="noopener noreferrer">explorateur</a>. Le projet est open source : son code, ses
       issues et les contributions de sa communauté vivent sur
       <a href="https://github.com/opencve/opencve" target="_blank" rel="noopener noreferrer">GitHub</a>, et il s’installe aussi chez toi. Merci à ses
       mainteneurs et à tous ceux qui font vivre ce référentiel : c’est grâce à eux que
-      chaque composant de ta simulation a sa fiche CVE à jour.
+      chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
     <h2 id="stacks">Stacks PHP chiffrées</h2>

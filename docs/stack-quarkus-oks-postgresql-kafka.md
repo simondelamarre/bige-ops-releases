@@ -4,6 +4,13 @@ Quarkus démarre en millisecondes et consomme peu de mémoire : sur Kubernetes, 
 
 **En bref.** Topologie oks : control plane cp.3.masters.small, nodepool de 3 nœuds tinav6.c4r8p2. API Quarkus (512 MiB, HPA de 2 à 8), consumers Kafka, Kafka et PostgreSQL en Deployments. Estimation bige-ops : **523,35 € HT/mois**, plus le LBU de l’API.
 
+## Pourquoi cette stack tourne bien sur Outscale
+
+- **Kubernetes managé, rien qu’à toi** : OKS te donne un cluster dédié, avec son control plane isolé et sans partage de ressources. Tu déploies tes services, Outscale opère le cluster. [OKS](https://docs.outscale.com/fr/userguide/%C3%80-propos-d-OKS.html)
+- **Des bases rapides et stables** : Les volumes io1 garantissent jusqu’à 13 000 IOPS par volume : tes requêtes gardent des temps de réponse réguliers, même sous charge. [Volumes](https://docs.outscale.com/en/userguide/About-Volumes.html)
+- **Un réseau privé et des sauvegardes sûres** : Tes bases restent dans le réseau privé de ton projet, jamais exposées à Internet. Les sauvegardes partent vers l’Object Storage, compatible S3 et répliqué entre plusieurs zones.
+- **Prêt pour les clients exigeants** : Régions qualifiées SecNumCloud 3.2 pour le secteur public, certification HDS pour la santé. [Pourquoi Outscale](pourquoi-outscale.html) · [SecNumCloud 3.2](https://www.3ds.com/newsroom/press-releases/outscale-first-cloud-qualified-secnumcloud-32)
+
 ## Architecture
 
 OKS cp.3.masters.small, nodepool 3 × tinav6.c4r8p2 ; api Quarkus (512 MiB, HPA 2→8), worker consumers Kafka ; Kafka 4.3.1 (custom, KRaft) et PostgreSQL 17 internes ; backup OOS.
@@ -51,7 +58,7 @@ components:
 
 ## Données
 
-| Base | Image épinglée | Backup | CVE |
+| Base | Image épinglée | Backup | Failles connues |
 | --- | --- | --- | --- |
 | PostgreSQL | `postgres:17` | pg_dump → gzip → bucket OOS | [OpenCVE](https://app.opencve.io/cve/?vendor=postgresql&product=postgresql) |
 | Apache Kafka | `apache/kafka:4.3.1` | réplication et rétention Kafka | [OpenCVE](https://app.opencve.io/cve/?vendor=apache&product=kafka) |
@@ -68,28 +75,30 @@ Backup activé (`backup.enabled` + bucket OOS protégé) ; `backup.sh` préparé
 
 ## Vulnérabilités
 
-Avec ta clé OpenCVE, chaque composant reconnu (image, package) est rapproché de sa fiche fournisseur/produit (une requête par produit). Classement : sévérité CVSS (KEV ⇒ au moins haute), puis exposition dans la simulation (Internet ou derrière LBU : sévérité pleine ; subnet privé : un cran de moins, sauf KEV), départage KEV → CVSS → EPSS. Rapprochement au niveau produit, à recouper avec la version épinglée ; `latest` signalé comme version non épinglée.
+Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. Avec ta clé OpenCVE, bige-ops compare les composants de ta stack, images de tes Dockerfile et docker-compose comprises, au registre mondial des vulnérabilités (CVE), puis classe tout par urgence, l’exposé à Internet d’abord. Pourquoi le refaire toi-même ? C’est chez toi, sur ton poste, et c’est gratuit.
+
+Avec ta clé OpenCVE, chaque composant reconnu (image, paquet installé) est rapproché de sa fiche éditeur/produit (une requête par produit). Classement : gravité notée sur 10 (CVSS), au moins haute si la faille est déjà exploitée (liste KEV de la CISA) ; puis exposition dans la simulation (Internet ou derrière le LBU : gravité pleine ; subnet privé : un cran de moins, sauf faille déjà exploitée) ; départage : déjà exploitée, puis note, puis probabilité d’exploitation (EPSS). Rapprochement au niveau du produit, pas de la version : à recouper avec ta version épinglée ; `latest` signalé comme version non épinglée.
 
 | Composant | Fiche OpenCVE | Dans bige-ops |
 | --- | --- | --- |
-| PostgreSQL | [PostgreSQL](https://app.opencve.io/cve/?vendor=postgresql&product=postgresql) | mappé automatiquement depuis l’image postgres:17 · exposition : privée (pod interne) |
-| Kubernetes (OKS) | [Kubernetes](https://app.opencve.io/cve/?vendor=kubernetes&product=kubernetes) | mappé automatiquement (topologie oks) · exposé via les LBU |
-| Apache Kafka | [Apache Kafka](https://app.opencve.io/cve/?vendor=apache&product=kafka) | fiche de référence (composant hors table de correspondance automatique) |
-| Quarkus, Hibernate ORM | [Quarkus](https://app.opencve.io/cve/?vendor=redhat&product=quarkus) · [Hibernate ORM](https://app.opencve.io/cve/?vendor=hibernate&product=hibernate_orm) | fiche de référence (composant hors table de correspondance automatique) |
-| JDK | [OpenJDK](https://app.opencve.io/cve/?vendor=oracle&product=openjdk) | fiche de référence (composant hors table de correspondance automatique) |
+| PostgreSQL | [PostgreSQL](https://app.opencve.io/cve/?vendor=postgresql&product=postgresql) | reconnu automatiquement depuis l’image postgres:17 · exposition : privée (pod interne) |
+| Kubernetes (OKS) | [Kubernetes](https://app.opencve.io/cve/?vendor=kubernetes&product=kubernetes) | reconnu automatiquement (topologie oks) · exposé par les LBU |
+| Apache Kafka | [Apache Kafka](https://app.opencve.io/cve/?vendor=apache&product=kafka) | fiche de référence (pas encore reconnu automatiquement) |
+| Quarkus, Hibernate ORM | [Quarkus](https://app.opencve.io/cve/?vendor=redhat&product=quarkus) · [Hibernate ORM](https://app.opencve.io/cve/?vendor=hibernate&product=hibernate_orm) | fiche de référence (pas encore reconnu automatiquement) |
+| JDK | [OpenJDK](https://app.opencve.io/cve/?vendor=oracle&product=openjdk) | fiche de référence (pas encore reconnu automatiquement) |
 
-L’analyse du code Java arrive ; la stack est déjà couverte : composants et images confrontés à OpenCVE, exposition sur OKS et coût sur Outscale. Détail : Java sur Outscale.
+L’analyse du code Java arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE, exposition sur OKS et coût sur Outscale. Détail : Java sur Outscale.
 
 ## Avant le deploy
 
 - `validate` (image requise pour un pod, HTTPS via `expose.tls`)
 - `preflight` : clés Outscale, OMI, stack, IP des hôtes, Dockerfile, secrets build/runtime, jeton GitHub, alerte backup OOS ; une erreur bloque le deploy
 - `plan` : Terraform + specs OKS, risques de perte de données ; buckets OOS protégés
-- Vulnérabilités : OpenCVE classé par exposition, `latest` signalé, dépôts en mode direct
+- Vulnérabilités : failles connues des composants (OpenCVE) classées selon leur exposition, `latest` signalé, dépôts relus sur ton poste, sans clé ni IA
 
-## OpenCVE, le référentiel CVE de bige-ops
+## OpenCVE, la source des failles connues
 
-bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : CVE publiées (NVD, MITRE, KEV de la CISA…) enrichies CVSS / EPSS et rangées par fournisseur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
+bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : les failles publiées dans le registre mondial des vulnérabilités (CVE) et ses sources (NVD, MITRE, liste KEV des failles déjà exploitées tenue par la CISA…), avec leur note de gravité sur 10 (CVSS) et leur probabilité d’être exploitées (EPSS), rangées par éditeur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
 
 Docs : [Quarkus](https://quarkus.io/guides/) · [Quarkus + Kafka](https://quarkus.io/guides/kafka) · [Apache Kafka](https://kafka.apache.org/documentation/) · [PostgreSQL](https://www.postgresql.org/docs/) · [OKS](https://docs.outscale.com/fr/userguide/À-propos-d-OKS.html)
 

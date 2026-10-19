@@ -4,6 +4,13 @@ Une API Express, MongoDB pour la souplesse du document, Redis et BullMQ pour les
 
 **En bref.** Topologie oks : control plane cp.mono.master, nodepool de 3 nœuds tinav6.c4r8p2, Kubernetes 1.34. Deployments api, web, worker BullMQ, MongoDB et Redis ; backups MongoDB vers OOS. Estimation bige-ops : **457,65 € HT/mois**, plus les LBU créés par les Services exposés.
 
+## Pourquoi cette stack tourne bien sur Outscale
+
+- **Kubernetes managé, rien qu’à toi** : OKS te donne un cluster dédié, avec son control plane isolé et sans partage de ressources. Tu déploies tes services, Outscale opère le cluster. [OKS](https://docs.outscale.com/fr/userguide/%C3%80-propos-d-OKS.html)
+- **Des bases rapides et stables** : Les volumes io1 garantissent jusqu’à 13 000 IOPS par volume : tes requêtes gardent des temps de réponse réguliers, même sous charge. [Volumes](https://docs.outscale.com/en/userguide/About-Volumes.html)
+- **Un réseau privé et des sauvegardes sûres** : Tes bases restent dans le réseau privé de ton projet, jamais exposées à Internet. Les sauvegardes partent vers l’Object Storage, compatible S3 et répliqué entre plusieurs zones.
+- **Prêt pour les clients exigeants** : Régions qualifiées SecNumCloud 3.2 pour le secteur public, certification HDS pour la santé. [Pourquoi Outscale](pourquoi-outscale.html) · [SecNumCloud 3.2](https://www.3ds.com/newsroom/press-releases/outscale-first-cloud-qualified-secnumcloud-32)
+
 ## Architecture
 
 OKS (cp.mono.master, Kubernetes 1.34), nodepool 3 × tinav6.c4r8p2 ; Deployments api (Express, HPA), web, worker BullMQ ; MongoDB 8.0 et Redis 8 en ClusterIP sur emptyDir, backup MongoDB vers OOS.
@@ -45,7 +52,7 @@ components:
 
 ## Données
 
-| Base | Image épinglée | Backup | CVE |
+| Base | Image épinglée | Backup | Failles connues |
 | --- | --- | --- | --- |
 | MongoDB | `mongo:8.0` | mongodump → tar → bucket OOS | [OpenCVE](https://app.opencve.io/cve/?vendor=mongodb&product=mongodb) |
 | Redis | `redis:8-alpine` | snapshot RDB / AOF → bucket OOS | [OpenCVE](https://app.opencve.io/cve/?vendor=redis&product=redis) |
@@ -64,28 +71,32 @@ Backup activé (`backup.enabled` + bucket OOS protégé) ; `backup.sh` préparé
 
 ## Vulnérabilités
 
-Avec ta clé OpenCVE, chaque composant reconnu (image, package) est rapproché de sa fiche fournisseur/produit (une requête par produit). Classement : sévérité CVSS (KEV ⇒ au moins haute), puis exposition dans la simulation (Internet ou derrière LBU : sévérité pleine ; subnet privé : un cran de moins, sauf KEV), départage KEV → CVSS → EPSS. Rapprochement au niveau produit, à recouper avec la version épinglée ; `latest` signalé comme version non épinglée.
+Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. bige-ops lit le code de tes dépôts sur ton poste, compare tes bibliothèques à la base publique des failles connues des bibliothèques open source ([OSV](https://osv.dev/)) et, avec ta clé OpenCVE, les composants de ta stack au registre mondial des vulnérabilités (CVE) ; puis il classe tout par urgence, l’exposé à Internet d’abord. Pourquoi le refaire toi-même ? C’est chez toi, sur ton poste, et c’est gratuit.
+
+Avec ta clé OpenCVE, chaque composant reconnu (image, paquet installé) est rapproché de sa fiche éditeur/produit (une requête par produit). Classement : gravité notée sur 10 (CVSS), au moins haute si la faille est déjà exploitée (liste KEV de la CISA) ; puis exposition dans la simulation (Internet ou derrière le LBU : gravité pleine ; subnet privé : un cran de moins, sauf faille déjà exploitée) ; départage : déjà exploitée, puis note, puis probabilité d’exploitation (EPSS). Rapprochement au niveau du produit, pas de la version : à recouper avec ta version épinglée ; `latest` signalé comme version non épinglée.
 
 | Composant | Fiche OpenCVE | Dans bige-ops |
 | --- | --- | --- |
-| MongoDB | [MongoDB](https://app.opencve.io/cve/?vendor=mongodb&product=mongodb) | mappé automatiquement depuis l’image mongo:8.0 · exposition : privée (pod interne) |
-| Redis | [Redis](https://app.opencve.io/cve/?vendor=redis&product=redis) | mappé automatiquement depuis l’image redis:8-alpine · exposition : privée (pod interne) |
-| Kubernetes (OKS) | [Kubernetes](https://app.opencve.io/cve/?vendor=kubernetes&product=kubernetes) | mappé automatiquement (topologie oks) · exposé via les LBU |
-| Node.js | [Node.js](https://app.opencve.io/cve/?vendor=nodejs&product=node.js) | mappé depuis le FROM node de ton Dockerfile (scan des dépôts) |
-| Express | [Express](https://app.opencve.io/cve/?vendor=openjsf&product=express) | fiche de référence (composant hors table de correspondance automatique) ; version npm contrôlée par OSV |
+| MongoDB | [MongoDB](https://app.opencve.io/cve/?vendor=mongodb&product=mongodb) | reconnu automatiquement depuis l’image mongo:8.0 · exposition : privée (pod interne) |
+| Redis | [Redis](https://app.opencve.io/cve/?vendor=redis&product=redis) | reconnu automatiquement depuis l’image redis:8-alpine · exposition : privée (pod interne) |
+| Kubernetes (OKS) | [Kubernetes](https://app.opencve.io/cve/?vendor=kubernetes&product=kubernetes) | reconnu automatiquement (topologie oks) · exposé par les LBU |
+| Node.js | [Node.js](https://app.opencve.io/cve/?vendor=nodejs&product=node.js) | reconnu depuis l’image de base de ton Dockerfile (FROM node), à la lecture de tes dépôts |
+| Express | [Express](https://app.opencve.io/cve/?vendor=openjsf&product=express) | fiche de référence (pas encore reconnu automatiquement) ; version npm vérifiée dans OSV |
 
-Mode direct, sans clé : routes Express (et Fastify, Koa, Hono si tu les mélanges), signaux d’authentification, failles de code, dépendances npm (Express, Mongoose, BullMQ…) rapprochées d’OSV. Détail : Node.js sur Outscale.
+Sur ton poste, sans clé ni IA (mode direct) : routes Express (et Fastify, Koa, Hono si tu les mélanges) et connexion exigée ou non, erreurs classiques dans le code, dépendances npm (Express, Mongoose, BullMQ…) vérifiées dans OSV. Détail : Node.js sur Outscale.
+
+Audit approfondi (bige-ops advanced, ta propre clé d’IA) : relit les pistes repérées, confirme les vraies failles, écarte les fausses alertes et classe chacune par type de faille, selon le catalogue de référence (CWE), avec son urgence et un ticket GitHub prêt à ouvrir.
 
 ## Avant le deploy
 
 - `validate` (image requise pour un pod, HTTPS via `expose.tls`)
 - `preflight` : clés Outscale, OMI, stack, IP des hôtes, Dockerfile, secrets build/runtime, jeton GitHub, alerte backup OOS ; une erreur bloque le deploy
 - `plan` : Terraform + specs OKS, risques de perte de données ; buckets OOS protégés
-- Vulnérabilités : OpenCVE classé par exposition, `latest` signalé, dépôts en mode direct
+- Vulnérabilités : failles connues des composants (OpenCVE) classées selon leur exposition, `latest` signalé, dépôts relus sur ton poste, sans clé ni IA
 
-## OpenCVE, le référentiel CVE de bige-ops
+## OpenCVE, la source des failles connues
 
-bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : CVE publiées (NVD, MITRE, KEV de la CISA…) enrichies CVSS / EPSS et rangées par fournisseur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
+bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : les failles publiées dans le registre mondial des vulnérabilités (CVE) et ses sources (NVD, MITRE, liste KEV des failles déjà exploitées tenue par la CISA…), avec leur note de gravité sur 10 (CVSS) et leur probabilité d’être exploitées (EPSS), rangées par éditeur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
 
 Docs : [Express](https://expressjs.com/) · [BullMQ](https://docs.bullmq.io/) · [MongoDB](https://www.mongodb.com/docs/manual/) · [Redis](https://redis.io/docs/latest/) · [OKS](https://docs.outscale.com/fr/userguide/À-propos-d-OKS.html) · [HPA Kubernetes](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
 

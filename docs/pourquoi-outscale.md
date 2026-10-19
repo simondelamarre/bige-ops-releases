@@ -26,14 +26,11 @@ C’est aussi ce qui nous plaît chez Outscale : une équipe soudée, à taille 
 
 Outscale publie sa grille tarifaire. C’est elle que bige-ops embarque : chaque estimation part du prix public, ligne par ligne, et les engagements sur 1 à 3 ans réduisent encore la facture. [Tarifs Outscale](https://fr.outscale.com/tarifs/)
 
-## Pourquoi nous y croyons
+## Ce que ça change pour toi
 
-Avant de construire bige-ops, nous avons étudié l’offre en détail : le catalogue, l’API, OKS, les régions. Nous y avons trouvé un cloud qui maîtrise sa technique, fixe des prix justes et protège les données de ses clients. Un potentiel fort, pour les équipes qui veulent un cloud souverain et solide.
-
-## La prochaine étape : valider en conditions réelles
-
-bige-ops simule, chiffre et analyse sur la grille publique et sur des dépôts publics vérifiables. La prochaine étape, c’est la preuve en production : déployer un cluster OKS de bout en bout, mesurer les paliers d’IOPS sur io1, restaurer une base depuis l’Object Storage.
-
-**Équipes Outscale** : un accès de test suffit pour lancer cette validation. Nous publierons les résultats ici, chiffres à l’appui. [Écrivez-nous](https://github.com/simondelamarre/bige-ops-releases/issues/new/choose).
+- **Tu sais où sont tes données** : en France, chez un opérateur qualifié SecNumCloud 3.2.
+- **Tu sais ce que tu paies** : une grille publique, ligne par ligne, et des remises quand tu t’engages sur 1 à 3 ans.
+- **Tu grandis sans changer de cloud** : d’une machine à Kubernetes managé, avec la même API et les mêmes outils.
+- **Tu réponds aux exigences de tes clients** : santé (HDS), secteur public (SecNumCloud), industrie automobile (TISAX).
 
 HTML : [pourquoi-outscale.html](https://bige.dev/pourquoi-outscale.html)

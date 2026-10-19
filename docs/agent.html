@@ -26,7 +26,8 @@
       simulation : lire le contexte, éditer <code>project.yaml</code>, lancer
       des commandes en lecture, préparer un Dockerfile. Il ne touche jamais à
       ton cloud : <strong>c’est toi qui fais <code>plan</code> et
-      <code>apply</code></strong>.
+      <code>apply</code></strong>. En option, un agent d’audit relit aussi les
+      failles de ton code (<a href="#audit">audit approfondi</a>).
     </p>
 
     <div class="callout">
@@ -98,6 +99,25 @@ flowchart LR
     <p>
       Le partage des rôles entre config-history, repos applicatifs et VMs est
       détaillé dans <a href="repos-vms-docker.html">repos, VMs &amp; Dockerfiles</a>.
+    </p>
+
+    <h2 id="audit">L’audit approfondi des failles (en option)</h2>
+    <p>
+      Sans clé ni IA, bige-ops repère déjà les failles de tes dépôts, sur ton poste :
+      pages ou API accessibles sans être connecté, erreurs classiques dans le code,
+      bibliothèques qui ont une faille connue (<a href="stacks.html#verifications">la méthode</a>).
+      Avec <strong>bige-ops advanced</strong> et ta propre clé d’IA, un agent d’audit va plus loin :
+    </p>
+    <ul>
+      <li>il relit les pistes déjà repérées : pages ou API accessibles sans être connecté, passages de code à risque, pièges connus de ton framework ;</li>
+      <li>il confirme les vraies failles et écarte les fausses alertes ;</li>
+      <li>il classe chaque faille par type, selon le catalogue de référence (CWE), avec son urgence (de P0, la plus urgente, à P3) et son exposition ;</li>
+      <li>chaque faille peut devenir un ticket GitHub (issue) prêt à ouvrir : c’est toi qui l’ouvres, rien n’est corrigé à ta place.</li>
+    </ul>
+    <p>
+      Seuls des extraits ciblés de ton code partent, avec ta clé, chez le fournisseur d’IA
+      choisi ; la consommation est facturée sur ton compte chez lui. Comme le chat, l’agent
+      d’audit n’applique rien et ne lit pas tes secrets.
     </p>
 
     <h2>MCP local (Cursor / Claude Code)</h2>

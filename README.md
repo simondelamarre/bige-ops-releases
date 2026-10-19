@@ -14,20 +14,70 @@ brew install --cask simondelamarre/bige-ops/bige-ops
 
 <p align="center"><strong>Gratuit · local · sans compte cloud pour commencer</strong> · <a href="https://bige.dev/">bige.dev</a></p>
 
-| Simule | Sécurise | Bientôt |
-|:---:|:---:|:---:|
-| <img src="docs/screens/visual-oks.png" alt="Le Visual : une stack avec ses services et son coût" width="280" /> | <img src="docs/screens/vulns-sqli.png" alt="Une faille réelle trouvée dans un dépôt public, exposée à Internet" width="280" /> | <img src="docs/screens/conso.png" alt="Aperçu : coût réel face au budget simulé" width="280" /> |
-| Ta stack et son prix, ligne par ligne. | Tes failles, les plus exposées d’abord. Sans clé ni IA. | Ta conso réelle face à ta simulation. |
+---
+
+## Le cloud français qui tient ses promesses
+
+bige-ops est construit pour **[Outscale](https://bige.dev/pourquoi-outscale.html)**. Pas par hasard :
+
+- **Premier cloud qualifié SecNumCloud 3.2.** Visa de l’ANSSI pour son cloud public, en décembre 2023. Pionnier depuis 2019, premier IaaS à obtenir SecNumCloud. ([source](https://www.3ds.com/newsroom/press-releases/outscale-first-cloud-qualified-secnumcloud-32))
+- **Kubernetes managé, rien qu’à toi.** Avec OKS, chaque client a son cluster dédié, son control plane isolé, sans partage de ressources.
+- **Des bases qui tiennent la charge.** Jusqu’à 13 000 IOPS garanties par volume io1.
+- **Un prix public, ligne par ligne.** Pas besoin de devis pour savoir combien coûte ta stack.
+- **Prêt pour les clients exigeants.** HDS pour la santé, ISO 27001, 27017 et 27018, CISPE, TISAX.
+- **Une marque de Dassault Systèmes.** La même infrastructure porte la plateforme 3DEXPERIENCE.
+
+## Ce que fait bige-ops
+
+### Simule : ta stack et son prix, avant de déployer
+<p align="center"><img src="docs/screens/visual-oks.png" alt="Le Visual : une stack Kubernetes avec ses services, ses bases et son coût" width="880" /></p>
+
+### Sécurise : tes failles, les plus exposées d’abord, sans clé ni IA
+<p align="center"><img src="docs/screens/vulns-sqli.png" alt="Une faille réelle trouvée dans le dépôt public OWASP Juice Shop, exposée à Internet" width="880" /></p>
+
+### Bientôt : ta conso réelle face à ta simulation
+<p align="center"><img src="docs/screens/conso.png" alt="Aperçu : coût réel quotidien face au budget simulé" width="880" /></p>
+
+## Des stacks prêtes, chiffrées sur Outscale
+
+| Stack | Pour qui | Budget indicatif |
+|---|---|---|
+| [Une app et sa base sur une machine](https://bige.dev/layouts.html) | TPE, outil métier, premier produit | ~75 €/mois |
+| [WordPress + MariaDB](https://bige.dev/stack-wordpress-mariadb.html) | Site, e-commerce léger | ~237 €/mois |
+| [Go + PostgreSQL + NATS](https://bige.dev/stack-go-postgresql-nats.html) | API rapide, événements | ~303 €/mois |
+| [Phoenix + PostgreSQL](https://bige.dev/stack-phoenix-postgresql.html) | Temps réel | ~368 €/mois |
+| [Django + Celery](https://bige.dev/stack-django-celery-postgresql-redis.html) · [Rails + Sidekiq](https://bige.dev/stack-rails-sidekiq-postgresql-redis.html) · [Laravel + Horizon](https://bige.dev/stack-laravel-horizon-mysql-redis.html) | SaaS avec tâches de fond | ~423 €/mois |
+| [Next.js + NestJS + PostgreSQL + Redis](https://bige.dev/stack-nextjs-nestjs-postgresql-redis.html) | SaaS TypeScript | ~428 €/mois |
+| [.NET + PostgreSQL + RabbitMQ](https://bige.dev/stack-dotnet-postgresql-rabbitmq.html) | Applications métier | ~438 €/mois |
+| [Node.js + MongoDB + Redis sur Kubernetes](https://bige.dev/stack-express-mongodb-redis-oks.html) | Scale-up | ~458 €/mois |
+| [Quarkus + Kafka sur Kubernetes](https://bige.dev/stack-quarkus-oks-postgresql-kafka.html) | Microservices Java | ~523 €/mois |
+| [Jakarta EE + OpenSearch](https://bige.dev/stack-jakarta-ee-opensearch-postgresql.html) | Grands comptes, recherche | ~715 €/mois |
+| [Spring Boot + Kafka + Keycloak sur Kubernetes](https://bige.dev/stack-spring-boot-oks-kafka-keycloak.html) | Grands comptes | ~919 €/mois |
+| [IA : FastAPI + pgvector + GPU](https://bige.dev/stack-ai-fastapi-pgvector-gpu.html) | Produit IA | ~2 655 €/mois |
+
+Estimations HT calculées par bige-ops sur la grille publique (eu-west-2). [Toutes les stacks et les langages →](https://bige.dev/stacks.html)
 
 ## En 3 étapes
 
 1. **Installe.** C’est gratuit.
-2. **Simule.** Pars d’un modèle (une machine, app et données séparées, Kubernetes) et vois le prix.
+2. **Simule.** Pars d’une stack prête et vois le prix.
 3. **Déploie** sur ton compte, quand tu veux. Pas besoin de DevOps.
 
-Construit pour [Outscale](https://bige.dev/pourquoi-outscale.html). D’autres clouds français arrivent ([OVHcloud](https://www.ovhcloud.com/fr/), [Scaleway](https://www.scaleway.com/fr/)) : installe maintenant, tu choisiras ensuite.
+---
 
-[Par où commencer](https://bige.dev/layouts.html) · [Stacks et langages](https://bige.dev/stacks.html) · [Comment on trouve tes failles](https://bige.dev/#failles) · [Une idée ?](https://github.com/simondelamarre/bige-ops-releases/issues/new/choose)
+<h3 align="center">Bientôt d’autres providers SecNumCloud et français</h3>
+
+<p align="center">
+  Ta stack est décrite une fois. Quand d’autres clouds français arriveront dans bige-ops,<br/>
+  tu compareras la même stack, prix à l’appui. <strong>Installe maintenant, tu choisiras ensuite.</strong><br/>
+  <a href="https://www.ovhcloud.com/fr/">OVHcloud</a> · <a href="https://www.scaleway.com/fr/">Scaleway</a>
+</p>
+
+<p align="center">
+  <a href="https://bige.dev/layouts.html">Par où commencer</a> ·
+  <a href="https://bige.dev/#failles">Comment on trouve tes failles</a> ·
+  <a href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">Une idée ?</a>
+</p>
 
 <!-- Other clouds hidden for now (see ENABLED_PROVIDER_IDS in desktop/src/lib/providers.ts).
 Previous copy, to restore with them:

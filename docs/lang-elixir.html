@@ -68,13 +68,14 @@ bige-ops add layout custom --runtime elixir --web none --no-worker \
   --db postgres --topology multi-vm --lbu</pre>
     <p>Le layout <code>elixir-phoenix</code> ajoute un worker et Redis ; avec Oban, PostgreSQL suffit souvent.</p>
 
-    <h2 id="scan">Ce que le scan bige-ops fait pour Elixir</h2>
-    <p>L’analyse du code Elixir arrive ; ta stack est déjà couverte : composants et images (y compris celles de tes Dockerfile et docker-compose) confrontés à OpenCVE, exposition dans la simulation et coût sur Outscale. PostgreSQL et Redis sont rapprochés automatiquement de leurs fiches et classés selon leur exposition ; garde <a href="https://app.opencve.io/cve/?vendor=elixir-lang&amp;product=elixir" target="_blank" rel="noopener noreferrer">Elixir sur OpenCVE</a>, <a href="https://app.opencve.io/cve/?vendor=erlang&amp;product=otp" target="_blank" rel="noopener noreferrer">Erlang/OTP sur OpenCVE</a> et <a href="https://app.opencve.io/cve/?vendor=phoenixframework&amp;product=phoenix" target="_blank" rel="noopener noreferrer">Phoenix sur OpenCVE</a> en référence pour le runtime et le framework. Si ton dépôt embarque un <code>package.json</code> (assets), ses dépendances npm passent par <a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>.</p>
+    <h2 id="scan">Ce que bige-ops vérifie pour Elixir</h2>
+    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code Elixir arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation et le coût sur Outscale sont calculés à côté. PostgreSQL et Redis sont reconnus automatiquement ; garde <a href="https://app.opencve.io/cve/?vendor=elixir-lang&amp;product=elixir" target="_blank" rel="noopener noreferrer">Elixir sur OpenCVE</a>, <a href="https://app.opencve.io/cve/?vendor=erlang&amp;product=otp" target="_blank" rel="noopener noreferrer">Erlang/OTP sur OpenCVE</a> et <a href="https://app.opencve.io/cve/?vendor=phoenixframework&amp;product=phoenix" target="_blank" rel="noopener noreferrer">Phoenix sur OpenCVE</a> en référence pour le runtime et le framework. Si ton dépôt embarque un <code>package.json</code> (assets), ses dépendances npm sont comparées à la base publique des failles connues des bibliothèques open source (<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>).</p>
+    <p>Tout est classé par urgence : ce qui est exposé à Internet d’abord. <strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, sur ton poste, et c’est gratuit. La méthode complète : <a href="stacks.html#verifications">ce que bige-ops vérifie</a>.</p>
 
     <h2 id="bases">Bases de données typiques</h2>
     <p>PostgreSQL est la base naturelle de Phoenix : Ecto et Oban s’y appuient.</p>
     <table>
-      <tr><th>Base</th><th>Avec ce langage</th><th>CVE</th></tr>
+      <tr><th>Base</th><th>Avec ce langage</th><th>Failles connues</th></tr>
       <tr><td>PostgreSQL</td><td>Ecto, Oban (files de jobs). Stack : <a href="stack-phoenix-postgresql.html">Phoenix + PostgreSQL</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
       <tr><td>Redis</td><td>PubSub ou cache selon tes besoins.</td><td><a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
     </table>
@@ -86,19 +87,22 @@ bige-ops add layout custom --runtime elixir --web none --no-worker \
     </p>
 
     <h2 id="versions">Versions à épingler</h2>
-    <p>Épingle Elixir et Erlang/OTP dans l’image de build (les images officielles <code>elixir</code> et <code>hexpm/elixir</code> les combinent) et la version de Phoenix dans <code>mix.lock</code>. Docs : <a href="https://elixir-lang.org/docs.html" target="_blank" rel="noopener noreferrer">Elixir</a> · <a href="https://www.erlang.org/doc/" target="_blank" rel="noopener noreferrer">Erlang/OTP</a> · CVE : <a href="https://app.opencve.io/cve/?vendor=elixir-lang&amp;product=elixir" target="_blank" rel="noopener noreferrer">Elixir sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=erlang&amp;product=otp" target="_blank" rel="noopener noreferrer">Erlang/OTP sur OpenCVE</a>.</p>
+    <p>Épingle Elixir et Erlang/OTP dans l’image de build (les images officielles <code>elixir</code> et <code>hexpm/elixir</code> les combinent) et la version de Phoenix dans <code>mix.lock</code>. Docs : <a href="https://elixir-lang.org/docs.html" target="_blank" rel="noopener noreferrer">Elixir</a> · <a href="https://www.erlang.org/doc/" target="_blank" rel="noopener noreferrer">Erlang/OTP</a> · Failles connues : <a href="https://app.opencve.io/cve/?vendor=elixir-lang&amp;product=elixir" target="_blank" rel="noopener noreferrer">Elixir sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=erlang&amp;product=otp" target="_blank" rel="noopener noreferrer">Erlang/OTP sur OpenCVE</a>.</p>
 
-    <h2 id="opencve">OpenCVE, le référentiel CVE de bige-ops</h2>
+    <h2 id="opencve">OpenCVE, la source des failles connues</h2>
     <p>
-      Pour savoir quelles vulnérabilités touchent les briques de ta stack, bige-ops
-      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE agrège les CVE publiées
-      (NVD, MITRE, catalogue KEV de la CISA…), les enrichit avec les scores CVSS et EPSS
-      et les range par fournisseur et par produit, consultables dans son
+      Pour savoir quelles failles connues touchent les briques de ta stack, bige-ops
+      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE rassemble les failles publiées
+      dans le registre mondial des vulnérabilités (CVE) et ses sources officielles (NVD,
+      MITRE, liste KEV des failles déjà exploitées tenue par la CISA, l’agence américaine
+      de cybersécurité…), donne à chacune sa note de gravité sur 10 (CVSS) et sa
+      probabilité d’être exploitée (EPSS), et les range par éditeur et par produit,
+      consultables dans son
       <a href="https://app.opencve.io/" target="_blank" rel="noopener noreferrer">explorateur</a>. Le projet est open source : son code, ses
       issues et les contributions de sa communauté vivent sur
       <a href="https://github.com/opencve/opencve" target="_blank" rel="noopener noreferrer">GitHub</a>, et il s’installe aussi chez toi. Merci à ses
       mainteneurs et à tous ceux qui font vivre ce référentiel : c’est grâce à eux que
-      chaque composant de ta simulation a sa fiche CVE à jour.
+      chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
     <h2 id="stacks">Stacks Elixir chiffrées</h2>

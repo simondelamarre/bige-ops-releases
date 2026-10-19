@@ -31,7 +31,7 @@
     </div>
     <h1>Stacks et langages sur Outscale</h1>
     <p class="lead">
-      Next.js et NestJS, Django, Rails, Laravel, Go, Spring Boot sur Kubernetes, Quarkus, Jakarta EE, .NET, une stack IA avec GPU : les architectures que les équipes font vraiment tourner, posées sur Outscale par bige-ops. Pour chacune, le coût mensuel calculé au catalogue public, les versions à épingler, l’exposition réseau et les vulnérabilités suivies avec OpenCVE.
+      Next.js et NestJS, Django, Rails, Laravel, Go, Spring Boot sur Kubernetes, Quarkus, Jakarta EE, .NET, une stack IA avec GPU : les architectures que les équipes font vraiment tourner, posées sur Outscale par bige-ops. Pour chacune, le coût mensuel calculé au catalogue public, les versions à épingler, l’exposition réseau et les failles connues suivies avec OpenCVE.
     </p>
 
     <div class="callout">
@@ -39,8 +39,9 @@
       Chaque page de stack donne une architecture sur Outscale, un coût mensuel calculé avec
       la CLI bige-ops sur le catalogue public Outscale (synchronisé le 17 septembre 2026,
       Région <code>eu-west-2</code>, € HT, 730 heures), les versions à épingler, les règles
-      d’exposition et les vulnérabilités suivies avec OpenCVE. Chaque page de langage donne
-      les frameworks, la façon de les faire tourner avec bige-ops et ce que le scan couvre.
+      d’exposition et les failles connues suivies avec OpenCVE. Chaque page de langage donne
+      les frameworks, la façon de les faire tourner avec bige-ops et ce que bige-ops vérifie
+      dans ton code.
     </div>
 
     <h2 id="startups">Startups : livrer vite, sur une base saine</h2>
@@ -92,40 +93,54 @@
     </table>
 
     <h2 id="verifications">Ce que bige-ops vérifie, pour toutes les stacks</h2>
+    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. Voici comment bige-ops les cherche, sans rien cacher de la méthode.</p>
+    <ol>
+      <li><strong>Il lit le code de tes dépôts, sur ton poste.</strong> Les dépôts de ta stack sont copiés sur ta machine et relus là, sans clé ni IA : c’est le « mode direct ». Langages lus : JavaScript, TypeScript, Python, Go, PHP et Ruby ; les tests et les suites e2e sont écartés pour éviter les fausses alertes.</li>
+      <li><strong>Il repère les pages et les API que ton app expose</strong>, avec un module par framework (Express, Fastify, Hono, Koa, LoopBack, NestJS, Next.js, tRPC, Django, FastAPI, Flask, net/http, Gin, Laravel, WordPress, Rails), et regarde si chacune demande une connexion : session, jeton, middleware ou décorateur d’authentification juste à côté. Une route marquée publique, ou une page sensible (admin, compte, paiement…) sans aucune vérification visible, ressort comme « page ou API accessible sans être connecté ».</li>
+      <li><strong>Il cherche les erreurs classiques dans le code</strong> : mots de passe ou clés écrits en clair dans le code, requête à la base construite avec ce que tape l’utilisateur (injection SQL), exécution de commandes construites avec des données externes, code injecté qui s’exécute dans le navigateur de tes utilisateurs (XSS), API ouverte à n’importe quel site, vérification des certificats HTTPS désactivée.</li>
+      <li><strong>Il compare tes bibliothèques</strong> (npm, PyPI, modules Go et Packagist) à la base publique des failles connues des bibliothèques open source (<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>).</li>
+      <li><strong>Avec ta clé OpenCVE, il compare ta stack au registre mondial des vulnérabilités (CVE)</strong> : les composants de ta simulation et les images de tes Dockerfile et docker-compose (détail ci-dessous).</li>
+      <li><strong>Il classe tout par urgence</strong> : ce qui est exposé à Internet d’abord.</li>
+    </ol>
+    <p>En mode direct, ton code ne quitte pas ton poste : vers OSV et OpenCVE ne partent que des noms de bibliothèques et de composants (avec leur version, pour OSV). <strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, sur ton poste, et c’est gratuit.</p>
+    <p>Pour Java, .NET, Kotlin, Scala, Rust, Elixir et OCaml, la lecture du code arrive ; leurs stacks sont déjà couvertes : composants et images comparés aux failles connues avec OpenCVE, exposition et coût.</p>
+
     <p><strong>La stack, avec OpenCVE.</strong> Les composants de ta simulation sont rapprochés automatiquement de leur fiche OpenCVE quand bige-ops les reconnaît : <a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">PostgreSQL</a>, <a href="https://app.opencve.io/cve/?vendor=oracle&amp;product=mysql" target="_blank" rel="noopener noreferrer">MySQL</a>, <a href="https://app.opencve.io/cve/?vendor=mariadb&amp;product=mariadb" target="_blank" rel="noopener noreferrer">MariaDB</a>, <a href="https://app.opencve.io/cve/?vendor=mongodb&amp;product=mongodb" target="_blank" rel="noopener noreferrer">MongoDB</a>, <a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">Redis</a>, <a href="https://app.opencve.io/cve/?vendor=f5&amp;product=nginx" target="_blank" rel="noopener noreferrer">nginx</a>, <a href="https://app.opencve.io/cve/?vendor=nodejs&amp;product=node.js" target="_blank" rel="noopener noreferrer">Node.js</a>, <a href="https://app.opencve.io/cve/?vendor=python&amp;product=python" target="_blank" rel="noopener noreferrer">Python</a>, <a href="https://app.opencve.io/cve/?vendor=golang&amp;product=go" target="_blank" rel="noopener noreferrer">Go</a>, <a href="https://app.opencve.io/cve/?vendor=kubernetes&amp;product=kubernetes" target="_blank" rel="noopener noreferrer">Kubernetes</a>, <a href="https://app.opencve.io/cve/?vendor=docker&amp;product=docker" target="_blank" rel="noopener noreferrer">Docker</a>. Les autres briques (Kafka, Keycloak, RabbitMQ, NATS, OpenSearch, frameworks…) ont leurs fiches de référence sur chaque page.</p>
 
     <p>
       Avec ta clé API OpenCVE (Settings), l’onglet Vulnérabilités lit ta simulation :
-      chaque composant reconnu, image Docker ou package, est rapproché de sa fiche
-      fournisseur / produit, à raison d’une requête par produit. Les CVE remontées sont
-      classées par risque :
+      chaque composant reconnu, image Docker ou paquet installé, est rapproché de sa fiche
+      éditeur / produit, à raison d’une requête par produit. Les failles connues qui
+      remontent sont classées par risque :
     </p>
     <ul>
-      <li><strong>Sévérité</strong> : score CVSS (critique dès 9, haute dès 7, moyenne dès 4), relevée au moins à « haute » quand la faille figure au <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener noreferrer">catalogue KEV</a> des vulnérabilités exploitées.</li>
-      <li><strong>Exposition dans ta simulation</strong> : un composant joignable depuis Internet ou derrière le LBU garde sa sévérité ; un composant en subnet privé descend d’un cran, sauf s’il est KEV.</li>
-      <li><strong>Départage</strong> : à risque égal, KEV d’abord, puis CVSS, puis <a href="https://www.first.org/epss/" target="_blank" rel="noopener noreferrer">EPSS</a>. Un filtre « important » ne garde que KEV ou CVSS ≥ 7.</li>
+      <li><strong>Gravité</strong> : chaque faille a une note sur 10 (CVSS) ; critique dès 9, haute dès 7, moyenne dès 4. Une faille déjà exploitée par des attaquants (elle figure sur la <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener noreferrer">liste KEV</a> de la CISA, l’agence américaine de cybersécurité) compte au moins comme haute.</li>
+      <li><strong>Exposition dans ta simulation</strong> : un composant joignable depuis Internet, directement ou derrière le LBU, garde sa gravité ; un composant en subnet privé descend d’un cran, sauf si la faille est déjà exploitée.</li>
+      <li><strong>Départage</strong> : à risque égal, les failles déjà exploitées d’abord, puis la note sur 10, puis la probabilité d’être exploitée prochainement (<a href="https://www.first.org/epss/" target="_blank" rel="noopener noreferrer">EPSS</a>). Le filtre « important » ne garde que les failles déjà exploitées ou notées 7 et plus.</li>
     </ul>
     <p>
-      Le rapprochement se fait au niveau du produit : tu recoupes ensuite avec la version
-      que tu as épinglée. Une image en <code>latest</code> ressort en plus comme
-      « version non épinglée ». Le résultat est mis en cache dans la simulation et se
+      Le rapprochement se fait au niveau du produit, pas de la version : à toi de recouper
+      avec la version que tu as épinglée. Une image en <code>latest</code> ressort en plus
+      comme « version non épinglée ». Le résultat est mis en cache dans la simulation et se
       rafraîchit à la demande.
     </p>
 
-    <p><strong>Les dépôts, en mode direct.</strong> Sans clé ni LLM, sur ton poste : lecture du code JavaScript, TypeScript, Python, Go, PHP et Ruby, routes HTTP détectées par framework (Express, Fastify, Hono, Koa, LoopBack, NestJS, Next.js, tRPC, Django, FastAPI, Flask, net/http, Gin, Laravel, WordPress, Rails) avec leurs signaux d’authentification, failles de code courantes (injections, XSS, secrets, CORS, TLS désactivé), et dépendances npm, PyPI, modules Go et Packagist rapprochées d’<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>. Les images de tes Dockerfile et docker-compose passent par OpenCVE.</p>
-    <p><strong>L’audit approfondi.</strong> bige-ops advanced, avec ta propre clé LLM, confirme les failles, écarte les faux positifs et classe chaque trouvaille par CWE, avec une issue GitHub proposée.</p>
+    <p><strong>L’audit approfondi, en option.</strong> bige-ops advanced, avec ta propre clé d’IA, relit plus en profondeur les pistes repérées : il confirme les vraies failles, écarte les fausses alertes et classe chacune par type de faille, selon le catalogue de référence (CWE), avec un ticket GitHub (issue) prêt à ouvrir. Seuls des extraits ciblés de ton code partent, avec ta clé, chez le fournisseur d’IA que tu choisis. <a href="agent.html#audit">L’audit approfondi en détail</a>.</p>
 
-    <h2 id="opencve">OpenCVE, le référentiel CVE de bige-ops</h2>
+    <h2 id="opencve">OpenCVE, la source des failles connues</h2>
     <p>
-      Pour savoir quelles vulnérabilités touchent les briques de ta stack, bige-ops
-      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE agrège les CVE publiées
-      (NVD, MITRE, catalogue KEV de la CISA…), les enrichit avec les scores CVSS et EPSS
-      et les range par fournisseur et par produit, consultables dans son
+      Pour savoir quelles failles connues touchent les briques de ta stack, bige-ops
+      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE rassemble les failles publiées
+      dans le registre mondial des vulnérabilités (CVE) et ses sources officielles (NVD,
+      MITRE, liste KEV des failles déjà exploitées tenue par la CISA, l’agence américaine
+      de cybersécurité…), donne à chacune sa note de gravité sur 10 (CVSS) et sa
+      probabilité d’être exploitée (EPSS), et les range par éditeur et par produit,
+      consultables dans son
       <a href="https://app.opencve.io/" target="_blank" rel="noopener noreferrer">explorateur</a>. Le projet est open source : son code, ses
       issues et les contributions de sa communauté vivent sur
       <a href="https://github.com/opencve/opencve" target="_blank" rel="noopener noreferrer">GitHub</a>, et il s’installe aussi chez toi. Merci à ses
       mainteneurs et à tous ceux qui font vivre ce référentiel : c’est grâce à eux que
-      chaque composant de ta simulation a sa fiche CVE à jour.
+      chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
     <h2 id="estimations">D’où viennent les chiffres</h2>

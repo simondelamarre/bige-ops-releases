@@ -80,13 +80,14 @@ bige-ops add layout custom --runtime java --web spa --worker \
   --db postgres --db redis --topology oks --lbu</pre>
     <p>Sur OKS, un Service exposé devient un LBU Outscale et le HTTPS se branche avec <code>expose.tls.server_certificate_id</code> (ORN d’un certificat EIM). Détail : <a href="oks.html">OKS &amp; pods</a>.</p>
 
-    <h2 id="scan">Ce que le scan bige-ops fait pour Java</h2>
-    <p>L’analyse du code Java arrive ; ta stack est déjà couverte : composants et images (y compris celles de tes Dockerfile et docker-compose) confrontés à OpenCVE, exposition dans la simulation et coût sur Outscale. PostgreSQL, Redis et Kubernetes (topologie OKS) sont rapprochés automatiquement de leurs fiches ; Kafka, Keycloak, OpenSearch et les frameworks Java ont leurs fiches de référence ci-dessus et dans chaque page de stack.</p>
+    <h2 id="scan">Ce que bige-ops vérifie pour Java</h2>
+    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code Java arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation et le coût sur Outscale sont calculés à côté. PostgreSQL, Redis et Kubernetes (topologie OKS) sont reconnus automatiquement ; Kafka, Keycloak, OpenSearch et les frameworks Java ont leurs fiches de référence ci-dessus et dans chaque page de stack.</p>
+    <p>Tout est classé par urgence : ce qui est exposé à Internet d’abord. <strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, sur ton poste, et c’est gratuit. La méthode complète : <a href="stacks.html#verifications">ce que bige-ops vérifie</a>.</p>
 
     <h2 id="bases">Bases de données typiques</h2>
     <p>PostgreSQL domine les nouveaux projets Java ; Kafka porte les événements entre microservices ; Redis le cache et les sessions.</p>
     <table>
-      <tr><th>Base</th><th>Avec ce langage</th><th>CVE</th></tr>
+      <tr><th>Base</th><th>Avec ce langage</th><th>Failles connues</th></tr>
       <tr><td>PostgreSQL</td><td>JDBC, Hibernate / JPA, Spring Data, Panache. Stack : <a href="stack-spring-boot-oks-kafka-keycloak.html">Spring Boot sur OKS + Kafka + Keycloak</a>, <a href="stack-quarkus-oks-postgresql-kafka.html">Quarkus sur OKS + PostgreSQL + Kafka</a>, <a href="stack-jakarta-ee-opensearch-postgresql.html">Jakarta EE + OpenSearch + PostgreSQL</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
       <tr><td>Apache Kafka</td><td>événements et intégration entre services (<a href="https://kafka.apache.org/documentation/" target="_blank" rel="noopener noreferrer">doc Kafka</a>). Stack : <a href="stack-spring-boot-oks-kafka-keycloak.html">Spring Boot sur OKS + Kafka + Keycloak</a>, <a href="stack-quarkus-oks-postgresql-kafka.html">Quarkus sur OKS + PostgreSQL + Kafka</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=apache&amp;product=kafka" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
       <tr><td>Redis</td><td>cache Spring, sessions, rate limiting. Stack : <a href="stack-spring-boot-oks-kafka-keycloak.html">Spring Boot sur OKS + Kafka + Keycloak</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
@@ -101,19 +102,22 @@ bige-ops add layout custom --runtime java --web spa --worker \
     </p>
 
     <h2 id="versions">Versions à épingler</h2>
-    <p>Vise un JDK LTS : <strong>25</strong> (septembre 2025) ou <strong>21</strong>, distribués notamment par <a href="https://adoptium.net/" target="_blank" rel="noopener noreferrer">Eclipse Temurin</a> (<a href="https://hub.docker.com/_/eclipse-temurin" target="_blank" rel="noopener noreferrer">images Docker</a>). Reste sur une branche Spring Boot encore supportée (onglet Support de la <a href="https://spring.io/projects/spring-boot" target="_blank" rel="noopener noreferrer">page projet</a>) et épingle tes BOM Maven ou Gradle. Projets JDK : <a href="https://openjdk.org/projects/jdk/" target="_blank" rel="noopener noreferrer">OpenJDK</a> · CVE : <a href="https://app.opencve.io/cve/?vendor=oracle&amp;product=openjdk" target="_blank" rel="noopener noreferrer">OpenJDK sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=vmware&amp;product=spring_framework" target="_blank" rel="noopener noreferrer">Spring Framework sur OpenCVE</a>.</p>
+    <p>Vise un JDK LTS : <strong>25</strong> (septembre 2025) ou <strong>21</strong>, distribués notamment par <a href="https://adoptium.net/" target="_blank" rel="noopener noreferrer">Eclipse Temurin</a> (<a href="https://hub.docker.com/_/eclipse-temurin" target="_blank" rel="noopener noreferrer">images Docker</a>). Reste sur une branche Spring Boot encore supportée (onglet Support de la <a href="https://spring.io/projects/spring-boot" target="_blank" rel="noopener noreferrer">page projet</a>) et épingle tes BOM Maven ou Gradle. Projets JDK : <a href="https://openjdk.org/projects/jdk/" target="_blank" rel="noopener noreferrer">OpenJDK</a> · Failles connues : <a href="https://app.opencve.io/cve/?vendor=oracle&amp;product=openjdk" target="_blank" rel="noopener noreferrer">OpenJDK sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=vmware&amp;product=spring_framework" target="_blank" rel="noopener noreferrer">Spring Framework sur OpenCVE</a>.</p>
 
-    <h2 id="opencve">OpenCVE, le référentiel CVE de bige-ops</h2>
+    <h2 id="opencve">OpenCVE, la source des failles connues</h2>
     <p>
-      Pour savoir quelles vulnérabilités touchent les briques de ta stack, bige-ops
-      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE agrège les CVE publiées
-      (NVD, MITRE, catalogue KEV de la CISA…), les enrichit avec les scores CVSS et EPSS
-      et les range par fournisseur et par produit, consultables dans son
+      Pour savoir quelles failles connues touchent les briques de ta stack, bige-ops
+      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE rassemble les failles publiées
+      dans le registre mondial des vulnérabilités (CVE) et ses sources officielles (NVD,
+      MITRE, liste KEV des failles déjà exploitées tenue par la CISA, l’agence américaine
+      de cybersécurité…), donne à chacune sa note de gravité sur 10 (CVSS) et sa
+      probabilité d’être exploitée (EPSS), et les range par éditeur et par produit,
+      consultables dans son
       <a href="https://app.opencve.io/" target="_blank" rel="noopener noreferrer">explorateur</a>. Le projet est open source : son code, ses
       issues et les contributions de sa communauté vivent sur
       <a href="https://github.com/opencve/opencve" target="_blank" rel="noopener noreferrer">GitHub</a>, et il s’installe aussi chez toi. Merci à ses
       mainteneurs et à tous ceux qui font vivre ce référentiel : c’est grâce à eux que
-      chaque composant de ta simulation a sa fiche CVE à jour.
+      chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
     <h2 id="stacks">Stacks Java chiffrées</h2>
