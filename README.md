@@ -7,7 +7,7 @@
 <p align="center">
   <strong>Le simulateur de stack pour Outscale</strong><br/>
   Dessine ta stack, teste-la, mesure son coût, puis déploie-la sur ton compte Outscale.<br/>
-  <em>Gratuit · 100 % local · aucun service intermédiaire</em>
+  <em>Gratuit · installé en une commande · ta stack sur ton compte Outscale</em>
 </p>
 
 <p align="center">
@@ -41,8 +41,8 @@ Tu simules, tu testes, tu déploies sur Outscale — puis tu analyses et tu corr
 ### 2. Construit pour Outscale.
 **Cloud souverain français, régions classiques et SecNumCloud.** Chaque brique du simulateur correspond à un service Outscale (VMs Tina, OKS, volumes BSU, Object Storage, LBU), avec son prix public. Tu planifies, tu appliques et tu suis tes coûts sur Outscale, y compris en SecNumCloud.
 
-### 3. L’outil déploie. Outscale héberge.
-**Ce n’est pas un Docker sur ton poste.** bige-ops tourne sur ta machine pour piloter le déploiement. Ta stack vit sur ton compte Outscale. Tes secrets restent chez toi : coffre local, avec sync optionnelle vers GitHub ou HashiCorp Vault.
+### 3. La simplicité d’une plateforme, sur ton cloud.
+**Ce n’est pas un Docker sur ton poste : c’est ta prod, sur Outscale.** Un Docker sur ton poste fait tourner des conteneurs pour toi, en local. bige-ops, lui, pilote ta production : tu relies ton dépôt Git, il génère l’infra et déploie tes services sur des VMs ou un cluster OKS de ton compte Outscale. Tu gardes la simplicité d’une plateforme managée, avec la main sur ton infra et le prix public d’Outscale. Tes secrets restent chez toi : coffre local, sync optionnelle vers GitHub ou HashiCorp Vault.
 
 ### 4. Tu peux commencer sans compte.
 **Tu simules d’abord. Tu te connectes quand tu appliques.** Sans identifiants Outscale, tu explores, tu simules et tu estimes. Tu te connectes seulement pour l’inventaire, le plan et l’apply, quand tu es prêt.
