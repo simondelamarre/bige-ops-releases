@@ -15,12 +15,12 @@
   <meta property="og:url" content="https://bige.dev/" />
   <meta property="og:title" content="bige-ops — le simulateur de stack pour Outscale" />
   <meta property="og:description" content="Gratuit · 100 % local. Simule ta stack Outscale, teste-la, mesure son coût, puis déploie-la sur ton compte." />
-  <meta property="og:image" content="https://bige.dev/screens/visual-oks.png" />
+  <meta property="og:image" content="https://bige.dev/screens/hero.png" />
   <meta property="og:image:alt" content="bige-ops — Visual Outscale, topologie et coût" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="bige-ops — le simulateur de stack pour Outscale" />
   <meta name="twitter:description" content="Gratuit · 100 % local. Simule, teste, mesure, puis déploie sur Outscale." />
-  <meta name="twitter:image" content="https://bige.dev/screens/visual-oks.png" />
+  <meta name="twitter:image" content="https://bige.dev/screens/hero.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -621,26 +621,26 @@
       <li><strong>Simule avant de déployer.</strong> Dessine ta stack Outscale, teste-la et mesure son coût avant de dépenser quoi que ce soit.</li>
       <li><strong>Analyse ce que tu déploies.</strong> Coût détaillé, risques sur tes données, CVE de tes dépôts.</li>
       <li><strong>Déploie comme sur une plateforme, chez toi.</strong> Tu relies ton dépôt, bige-ops déploie sur ton compte Outscale : cloud souverain français, régions classiques et SecNumCloud.</li>
-      <li><strong>Gratuit, installé en une commande.</strong> Pas d’abonnement, pas de compte à créer pour commencer : tu installes, tu simules.</li>
+      <li><strong>Gratuit, installé en une commande.</strong> Pas d’abonnement, pas de compte Outscale pour commencer : tu installes, tu te connectes avec GitHub, tu simules.</li>
       <!-- Other clouds hidden for now (ENABLED_PROVIDER_IDS in desktop/src/lib/providers.ts). Previous copy:
       <li><strong>Un cloud prêt, d’autres en route.</strong> Outscale live · Scaleway, OVH, AWS, Azure, GCP, Fly… bientôt.</li> -->
     </ul>
 
     <figure class="shot" id="shot-hero">
       <img
-        src="screens/visual-oks.png"
-        width="1440"
+        src="screens/hero.png"
+        width="1600"
         height="900"
         loading="eager"
         decoding="async"
-        alt="Canvas bige-ops : une stack OKS simulée sur Outscale et son coût mensuel estimé"
+        alt="bige-ops : une stack Kubernetes simulée, ses services et son coût mensuel estimé à environ 500 € HT, avec la commande d’installation Homebrew"
       />
-      <figcaption>Une stack OKS simulée sur Outscale, avec son coût mensuel estimé</figcaption>
+      <figcaption>Ta stack et son prix, avant de déployer</figcaption>
     </figure>
 
     <div id="download" class="download-inline">
       <p class="brew">
-        <code id="brew-cmd" title="brew tap simondelamarre/bige-ops &amp;&amp; brew install --cask bige-ops">brew tap simondelamarre/bige-ops &amp;&amp; brew install --cask bige-ops</code>
+        <code id="brew-cmd" title="brew install --cask simondelamarre/bige-ops/bige-ops">brew install --cask simondelamarre/bige-ops/bige-ops</code>
         <button type="button" class="copy-btn" id="brew-copy"
                 data-target="brew-cmd" aria-label="Copier la commande Homebrew">Copier</button>
       </p>
@@ -650,8 +650,17 @@
         <!-- macOS DMG download hidden until the app is notarized:
         <a class="primary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger macOS</a> -->
       </div>
-      <p><strong>Gratuit.</strong> macOS (Apple Silicon) : une commande Homebrew. Linux : AppImage ou paquet .deb. Tu simules tout de suite, sans compte ; tu connectes Outscale quand tu déploies.</p>
+      <p><strong>Gratuit.</strong> macOS (Apple Silicon) : une commande Homebrew. Linux : AppImage ou paquet .deb. Tu simules tout de suite, sans compte Outscale ; tu le connectes quand tu déploies.</p>
     </div>
+
+    <section class="block" id="demarrer">
+      <h2>Démarrer en 3 étapes</h2>
+      <ol>
+        <li><strong>Installe</strong>, c’est gratuit : <code>brew install --cask simondelamarre/bige-ops/bige-ops</code> sur macOS, ou l’AppImage / le .deb sur Linux.</li>
+        <li><strong>Ouvre bige-ops</strong>, connecte-toi avec GitHub (tes configurations y sont versionnées), choisis un dossier de travail et pars d’une topologie prête : mono-VM, multi-VM ou Kubernetes (OKS).</li>
+        <li><strong>Lis le résultat</strong> : coût mensuel, risques et vulnérabilités. Tu connectes ton compte Outscale seulement quand tu veux déployer.</li>
+      </ol>
+    </section>
 
     <section class="block" id="pourquoi">
       <h2>Pourquoi bige-ops</h2>
@@ -680,7 +689,7 @@
       </article>
 
       <article class="why-card" id="why-projection">
-        <h3>Tu peux commencer sans compte.</h3>
+        <h3>Tu peux commencer sans compte Outscale.</h3>
         <p class="why-sub">Tu simules d’abord. Tu te connectes quand tu appliques.</p>
         <p>Sans identifiants Outscale, tu explores, tu simules et tu estimes. Tu te connectes seulement pour l’inventaire, le plan et l’apply, quand tu es prêt.</p>
         <p><a href="simulations.html">Simulations →</a></p>

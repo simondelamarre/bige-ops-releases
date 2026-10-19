@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/screens/visual-oks.png" alt="bige-ops : une stack OKS simulée sur Outscale, avec son coût mensuel estimé" width="920" />
+  <img src="docs/screens/hero.png" alt="bige-ops : une stack Kubernetes simulée, ses services et son coût mensuel estimé, avec la commande d’installation" width="920" />
 </p>
 
 <h1 align="center">bige-ops</h1>
@@ -18,7 +18,7 @@
 
 <p align="center">
   <strong>macOS (Apple Silicon)</strong><br/>
-  <code>brew tap simondelamarre/bige-ops && brew install --cask bige-ops</code>
+  <code>brew install --cask simondelamarre/bige-ops/bige-ops</code>
 </p>
 
 <p align="center">
@@ -30,6 +30,12 @@
 </p>
 
 ---
+
+## Démarrer en 3 étapes
+
+1. **Installe**, c’est gratuit : `brew install --cask simondelamarre/bige-ops/bige-ops` sur macOS, ou l’AppImage / le .deb sur Linux ([dernière release](https://github.com/simondelamarre/bige-ops-releases/releases/latest)).
+2. **Ouvre bige-ops**, connecte-toi avec GitHub (tes configurations y sont versionnées), choisis un dossier de travail et pars d’une topologie prête : mono-VM, multi-VM ou Kubernetes (OKS).
+3. **Lis le résultat** : coût mensuel, risques et vulnérabilités. Tu connectes ton compte Outscale seulement quand tu veux déployer.
 
 ## Pourquoi bige-ops
 
@@ -44,7 +50,7 @@ Tu simules, tu testes, tu déploies sur Outscale — puis tu analyses et tu corr
 ### 3. La simplicité d’une plateforme, sur ton cloud.
 **Ce n’est pas un Docker sur ton poste : c’est ta prod, sur Outscale.** Un Docker sur ton poste fait tourner des conteneurs pour toi, en local. bige-ops, lui, pilote ta production : tu relies ton dépôt Git, il génère l’infra et déploie tes services sur des VMs ou un cluster OKS de ton compte Outscale. Tu gardes la simplicité d’une plateforme managée, avec la main sur ton infra et le prix public d’Outscale. Tes secrets restent chez toi : coffre local, sync optionnelle vers GitHub ou HashiCorp Vault.
 
-### 4. Tu peux commencer sans compte.
+### 4. Tu peux commencer sans compte Outscale.
 **Tu simules d’abord. Tu te connectes quand tu appliques.** Sans identifiants Outscale, tu explores, tu simules et tu estimes. Tu te connectes seulement pour l’inventaire, le plan et l’apply, quand tu es prêt.
 
 <p align="center">
@@ -110,7 +116,7 @@ Previous copy, to restore with them:
 
 | | |
 |---|---|
-| **macOS** (Apple Silicon) | `brew tap simondelamarre/bige-ops && brew install --cask bige-ops` |
+| **macOS** (Apple Silicon) | `brew install --cask simondelamarre/bige-ops/bige-ops` |
 | **Linux** (x86_64) | AppImage ou .deb : [dernière release](https://github.com/simondelamarre/bige-ops-releases/releases/latest) |
 
 Le cask Homebrew prépare l’app pour le premier lancement : elle s’ouvre directement. Guide complet : [bige.dev/install.html](https://bige.dev/install.html).
