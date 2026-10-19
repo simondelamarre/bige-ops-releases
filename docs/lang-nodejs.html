@@ -31,21 +31,21 @@
     </div>
     <h1>Node.js sur Outscale</h1>
     <p class="lead">
-      Express, Fastify, NestJS, Next.js : l’écosystème Node.js fait tourner une bonne part des API et des fronts modernes. Sur Outscale, bige-ops le pose en mono-VM, en multi-VM derrière un LBU ou sur OKS, chiffre la stack au catalogue public et lit tes dépôts pour trouver routes ouvertes et dépendances vulnérables.
+      Express, Fastify, NestJS, Next.js : l’écosystème Node.js fait tourner une bonne part des API et des fronts modernes. Sur Outscale, bige-ops le pose en mono-VM, en multi-VM derrière un LBU ou sur OKS, chiffre la stack au catalogue public et lit tes dépôts pour trouver les pages et les API accessibles sans connexion, et les bibliothèques qui ont une faille connue.
     </p>
 
     <div class="callout">
       <strong>En bref.</strong>
-      Runtime <code>nodejs</code> dans bige-ops : API sur le port 3001, front sur le 3000, 512 MiB par service par défaut. Scan le plus complet de bige-ops : routes de huit frameworks back, failles front (React, Vue, Svelte) et dépendances npm rapprochées d’OSV.
+      Runtime <code>nodejs</code> dans bige-ops : API sur le port 3001, front sur le 3000, 512 MiB par service par défaut. C’est le langage que bige-ops analyse le plus en détail : routes de huit frameworks back, failles côté navigateur (React, Vue, Svelte) et bibliothèques npm comparées aux failles connues.
     </div>
 
     <h2 id="frameworks">Frameworks et bibliothèques</h2>
     <p>bige-ops reconnaît ces frameworks dans ton <code>package.json</code> et dans le code : chacun a son module de détection de routes.</p>
     <h3 id="express">Express</h3>
-    <p>Le socle minimaliste de l’écosystème : middlewares, <code>app.get()</code>, <code>router.route()</code>. bige-ops lit les routes déclarées sur <code>app</code> et <code>router</code>, y compris typées en TypeScript ; les réponses qui renvoient la requête telle quelle sont préparées pour l’audit approfondi.</p>
+    <p>Le socle minimaliste de l’écosystème : middlewares, <code>app.get()</code>, <code>router.route()</code>. bige-ops repère les routes déclarées sur <code>app</code> et <code>router</code>, y compris en TypeScript ; les réponses qui renvoient telles quelles les données envoyées par l’utilisateur sont transmises à l’audit approfondi.</p>
     <p><a href="https://expressjs.com/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=openjsf&amp;product=express" target="_blank" rel="noopener noreferrer">Express sur OpenCVE</a></p>
     <h3 id="fastify">Fastify</h3>
-    <p>Le framework orienté performance et schémas JSON. Routes courtes (<code>fastify.get</code>), <code>.route({ url, method })</code> et préfixes de plugins (<code>register(plugin, { prefix })</code>) sont détectés ; <code>preHandler</code> et <code>onRequest</code> comptent comme signaux d’authentification.</p>
+    <p>Le framework orienté performance et schémas JSON. Routes courtes (<code>fastify.get</code>), <code>.route({ url, method })</code> et préfixes de plugins (<code>register(plugin, { prefix })</code>) sont détectés ; <code>preHandler</code> et <code>onRequest</code> comptent comme une vérification de connexion.</p>
     <p><a href="https://fastify.dev/docs/latest/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=fastify&amp;product=fastify" target="_blank" rel="noopener noreferrer">Fastify sur OpenCVE</a></p>
     <h3 id="hono">Hono</h3>
     <p>Léger, standard Web, multi-runtime. <code>app.get()</code>, <code>app.on(['GET','POST'], path)</code> et <code>basePath()</code> sont lus.</p>
@@ -57,16 +57,16 @@
     <p>Framework d’API orienté OpenAPI. Les décorateurs LoopBack 4 (<code>@get</code>, <code>@post</code>, <code>@operation</code>) deviennent des routes.</p>
     <p><a href="https://loopback.io/doc/en/lb4/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=ibm&amp;product=loopback" target="_blank" rel="noopener noreferrer">LoopBack sur OpenCVE</a></p>
     <h3 id="nestjs">NestJS</h3>
-    <p>L’architecture modulaire et typée des équipes produit. <code>@Controller()</code> donne le préfixe, <code>@Get()</code> / <code>@Post()</code> les routes ; <code>@UseGuards()</code> marque une route protégée, <code>@Public</code> une route ouverte, et un contrôleur sans guard visible ressort pour l’audit.</p>
+    <p>L’architecture modulaire et typée des équipes produit. <code>@Controller()</code> donne le préfixe, <code>@Get()</code> / <code>@Post()</code> les routes ; <code>@UseGuards()</code> marque une route protégée (connexion exigée), <code>@Public</code> une route ouverte à tous, et un contrôleur sans guard visible ressort pour l’audit.</p>
     <p><a href="https://docs.nestjs.com/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=nestjs&amp;product=nest" target="_blank" rel="noopener noreferrer">NestJS sur OpenCVE</a></p>
     <h3 id="nextjs">Next.js</h3>
-    <p>Le framework React full-stack. Les route handlers (<code>app/**/route.ts</code>) et les routes <code>pages/api</code> sont lus depuis l’arborescence ; une route API Next.js est marquée « à vérifier » côté session.</p>
+    <p>Le framework React full-stack. Les route handlers (<code>app/**/route.ts</code>) et les routes <code>pages/api</code> sont lus depuis l’arborescence ; une route API Next.js est marquée « à vérifier » : à toi de confirmer qu’elle exige une connexion.</p>
     <p><a href="https://nextjs.org/docs" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=vercel&amp;product=next.js" target="_blank" rel="noopener noreferrer">Next.js sur OpenCVE</a></p>
     <h3 id="trpc">tRPC</h3>
     <p>Des API typées de bout en bout sans schéma séparé. Les routeurs tRPC sont lus ; <code>protectedProcedure</code> et <code>publicProcedure</code> disent qui est protégé.</p>
     <p><a href="https://trpc.io/docs" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=trpc&amp;product=trpc" target="_blank" rel="noopener noreferrer">tRPC sur OpenCVE</a></p>
     <h3 id="front">React, Vue, Svelte</h3>
-    <p>Côté front, bige-ops cherche les injections HTML : <code>dangerouslySetInnerHTML</code> (React, Next.js), <code>v-html</code> (Vue), <code>{@html}</code> (Svelte) et les affectations <code>innerHTML</code>. Docs : <a href="https://vuejs.org/guide/introduction.html" target="_blank" rel="noopener noreferrer">Vue</a>, <a href="https://svelte.dev/docs" target="_blank" rel="noopener noreferrer">Svelte</a>.</p>
+    <p>Côté front, bige-ops cherche le code injecté qui s’exécute dans le navigateur de tes utilisateurs (XSS) : <code>dangerouslySetInnerHTML</code> (React, Next.js), <code>v-html</code> (Vue), <code>{@html}</code> (Svelte) et les affectations <code>innerHTML</code>. Docs : <a href="https://vuejs.org/guide/introduction.html" target="_blank" rel="noopener noreferrer">Vue</a>, <a href="https://svelte.dev/docs" target="_blank" rel="noopener noreferrer">Svelte</a>.</p>
     <p><a href="https://react.dev/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=facebook&amp;product=react" target="_blank" rel="noopener noreferrer">React sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=vuejs&amp;product=vue" target="_blank" rel="noopener noreferrer">Vue sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=svelte&amp;product=svelte" target="_blank" rel="noopener noreferrer">Svelte sur OpenCVE</a></p>
 
     <h2 id="outscale">Faire tourner Node.js sur Outscale avec bige-ops</h2>
@@ -82,19 +82,20 @@
 bige-ops estimate --json</pre>
     <p>Le layout nommé <code>node-app</code> pose directement une stack Node prod-like (MongoDB, Redis, Weaviate, LBU) ; <code>node-lite</code> reste le démarrage le plus rapide. Détail : <a href="layouts.html">layouts &amp; topologies</a>.</p>
 
-    <h2 id="scan">Ce que le scan bige-ops fait pour Node.js</h2>
-    <p>Le mode direct tourne sans clé ni LLM, sur ton poste : bige-ops lit le code JavaScript et TypeScript de ton dépôt et croise trois analyses.</p>
+    <h2 id="scan">Ce que bige-ops vérifie dans ton code Node.js</h2>
+    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. Sans clé ni IA (le « mode direct »), bige-ops lit le code JavaScript et TypeScript de tes dépôts sur ton poste et croise trois analyses.</p>
     <ul>
-      <li><strong>Routes exposées</strong> : un module par framework (Express, Fastify, Hono, Koa, LoopBack, NestJS, Next.js, tRPC). Pour chaque route, bige-ops cherche un signal d’authentification proche (passport, JWT, session, guards, <code>preHandler</code>, <code>protectedProcedure</code>…)  ; une route marquée publique, ou une route sensible (<code>/admin</code>, <code>/account</code>, <code>/payment</code>, <code>/billing</code>…) sans signal d’authentification à proximité, ressort « non sécurisée » (CWE-639), en priorité haute pour l’admin et le paiement.</li>
-      <li><strong>Failles de code</strong> : secrets en dur (CWE-798), <code>eval</code> et <code>child_process</code> (CWE-78), SQL construit par concaténation ou template string (CWE-89), CORS <code>*</code> (CWE-942), <code>NODE_TLS_REJECT_UNAUTHORIZED=0</code> (CWE-295), XSS DOM (CWE-79), redirection ouverte (CWE-601), traversée de chemin (CWE-22).</li>
-      <li><strong>Dépendances npm</strong> : <code>dependencies</code>, <code>optionalDependencies</code> et <code>peerDependencies</code> de chaque <code>package.json</code> sont rapprochées d’<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>, avec l’identifiant CVE quand il existe.</li>
+      <li><strong>Les pages et les API exposées</strong> : un module par framework (Express, Fastify, Hono, Koa, LoopBack, NestJS, Next.js, tRPC). Pour chaque route, bige-ops regarde si le code juste à côté vérifie la connexion (passport, JWT, session, guards, <code>preHandler</code>, <code>protectedProcedure</code>…). Une route marquée publique, ou une route sensible (<code>/admin</code>, <code>/account</code>, <code>/payment</code>, <code>/billing</code>…) sans vérification visible, ressort comme « page ou API accessible sans être connecté », en priorité haute pour l’admin et le paiement.</li>
+      <li><strong>Les erreurs classiques</strong> : mots de passe ou clés écrits en clair dans le code ; exécution de commandes construites avec des données externes ; requête à la base construite avec ce que tape l’utilisateur (injection SQL) ; API ouverte à n’importe quel site ; vérification des certificats HTTPS désactivée ; code injecté qui s’exécute dans le navigateur de tes utilisateurs (XSS) ; redirection vers n’importe quel site ; lecture de fichiers hors du dossier prévu.</li>
+      <li><strong>Tes bibliothèques npm</strong> : les <code>dependencies</code>, <code>optionalDependencies</code> et <code>peerDependencies</code> de chaque <code>package.json</code> sont comparées à la base publique des failles connues des bibliothèques open source (<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>), avec le numéro de la faille dans le registre mondial des vulnérabilités (CVE) quand il existe.</li>
     </ul>
-    <p>Avec ta clé OpenCVE, l’image <code>node</code> de tes Dockerfile est rapprochée de <a href="https://app.opencve.io/cve/?vendor=nodejs&amp;product=node.js" target="_blank" rel="noopener noreferrer">Node.js sur OpenCVE</a> ; une image en <code>latest</code> est signalée. Les tests, specs et suites e2e sont écartés pour éviter les faux positifs.</p>
+    <p>Avec ta clé OpenCVE, l’image <code>node</code> de tes Dockerfile est comparée aux failles connues de <a href="https://app.opencve.io/cve/?vendor=nodejs&amp;product=node.js" target="_blank" rel="noopener noreferrer">Node.js sur OpenCVE</a> ; une image en <code>latest</code> est signalée. Les tests, specs et suites e2e sont écartés pour éviter les fausses alertes.</p>
+    <p>Tout est ensuite classé par urgence : ce qui est exposé à Internet d’abord. <strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, sur ton poste, et c’est gratuit. En option, l’<a href="agent.html#audit">audit approfondi</a> de bige-ops advanced relit ces pistes avec ta propre clé d’IA, écarte les fausses alertes et classe chaque faille par type, selon le catalogue de référence (CWE). La méthode complète : <a href="stacks.html#verifications">ce que bige-ops vérifie</a>.</p>
 
     <h2 id="bases">Bases de données typiques</h2>
     <p>Les drivers et ORM Node (Mongoose, Prisma, Sequelize, ioredis, BullMQ) couvrent toutes les bases du catalogue bige-ops.</p>
     <table>
-      <tr><th>Base</th><th>Avec ce langage</th><th>CVE</th></tr>
+      <tr><th>Base</th><th>Avec ce langage</th><th>Failles connues</th></tr>
       <tr><td>PostgreSQL</td><td>Prisma, TypeORM, Drizzle ; <a href="https://www.prisma.io/docs" target="_blank" rel="noopener noreferrer">Prisma</a> est le plus courant avec NestJS. Stack : <a href="stack-nextjs-nestjs-postgresql-redis.html">Next.js + NestJS + PostgreSQL + Redis + OOS</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
       <tr><td>MongoDB</td><td>le duo historique avec <a href="https://mongoosejs.com/docs/" target="_blank" rel="noopener noreferrer">Mongoose</a>. Stack : <a href="stack-express-mongodb-redis-oks.html">Express + MongoDB + Redis + BullMQ sur OKS</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=mongodb&amp;product=mongodb" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
       <tr><td>Redis</td><td>cache, sessions et files <a href="https://docs.bullmq.io/" target="_blank" rel="noopener noreferrer">BullMQ</a>. Stack : <a href="stack-express-mongodb-redis-oks.html">Express + MongoDB + Redis + BullMQ sur OKS</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
@@ -108,19 +109,22 @@ bige-ops estimate --json</pre>
     </p>
 
     <h2 id="versions">Versions à épingler</h2>
-    <p>En production, Node.js recommande une version LTS : aujourd’hui <strong>Node.js 24</strong> (LTS active) ou <strong>22</strong> (LTS de maintenance) ; Node.js 26 est en phase Current et Node.js 20 n’est plus maintenu. Épingle la majeure dans ton Dockerfile (<code>FROM node:24-alpine</code>) plutôt que <code>node:latest</code>. Calendrier : <a href="https://nodejs.org/en/about/previous-releases" target="_blank" rel="noopener noreferrer">versions de Node.js</a> · CVE du runtime : <a href="https://app.opencve.io/cve/?vendor=nodejs&amp;product=node.js" target="_blank" rel="noopener noreferrer">Node.js sur OpenCVE</a>.</p>
+    <p>En production, Node.js recommande une version LTS : aujourd’hui <strong>Node.js 24</strong> (LTS active) ou <strong>22</strong> (LTS de maintenance) ; Node.js 26 est en phase Current et Node.js 20 n’est plus maintenu. Épingle la majeure dans ton Dockerfile (<code>FROM node:24-alpine</code>) plutôt que <code>node:latest</code>. Calendrier : <a href="https://nodejs.org/en/about/previous-releases" target="_blank" rel="noopener noreferrer">versions de Node.js</a> · Failles connues du runtime : <a href="https://app.opencve.io/cve/?vendor=nodejs&amp;product=node.js" target="_blank" rel="noopener noreferrer">Node.js sur OpenCVE</a>.</p>
 
-    <h2 id="opencve">OpenCVE, le référentiel CVE de bige-ops</h2>
+    <h2 id="opencve">OpenCVE, la source des failles connues</h2>
     <p>
-      Pour savoir quelles vulnérabilités touchent les briques de ta stack, bige-ops
-      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE agrège les CVE publiées
-      (NVD, MITRE, catalogue KEV de la CISA…), les enrichit avec les scores CVSS et EPSS
-      et les range par fournisseur et par produit, consultables dans son
+      Pour savoir quelles failles connues touchent les briques de ta stack, bige-ops
+      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE rassemble les failles publiées
+      dans le registre mondial des vulnérabilités (CVE) et ses sources officielles (NVD,
+      MITRE, liste KEV des failles déjà exploitées tenue par la CISA, l’agence américaine
+      de cybersécurité…), donne à chacune sa note de gravité sur 10 (CVSS) et sa
+      probabilité d’être exploitée (EPSS), et les range par éditeur et par produit,
+      consultables dans son
       <a href="https://app.opencve.io/" target="_blank" rel="noopener noreferrer">explorateur</a>. Le projet est open source : son code, ses
       issues et les contributions de sa communauté vivent sur
       <a href="https://github.com/opencve/opencve" target="_blank" rel="noopener noreferrer">GitHub</a>, et il s’installe aussi chez toi. Merci à ses
       mainteneurs et à tous ceux qui font vivre ce référentiel : c’est grâce à eux que
-      chaque composant de ta simulation a sa fiche CVE à jour.
+      chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
     <h2 id="stacks">Stacks Node.js chiffrées</h2>

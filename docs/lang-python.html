@@ -31,24 +31,24 @@
     </div>
     <h1>Python sur Outscale</h1>
     <p class="lead">
-      Django pour les produits complets, FastAPI pour les API et l’IA, Flask pour aller vite : Python couvre le web comme la data. bige-ops le pose sur Outscale, des VMs aux GPU, chiffre la stack et lit tes routes et tes dépendances PyPI.
+      Django pour les produits complets, FastAPI pour les API et l’IA, Flask pour aller vite : Python couvre le web comme la data. bige-ops le pose sur Outscale, des VMs aux GPU, chiffre la stack et cherche les failles de ton code et de tes bibliothèques PyPI.
     </p>
 
     <div class="callout">
       <strong>En bref.</strong>
-      Runtime <code>python</code> dans bige-ops : port 8000, 512 MiB par défaut, Gunicorn, Uvicorn ou serveur intégré selon ton Dockerfile. Scan : routes Django, FastAPI et Flask, réglages risqués, dépendances PyPI épinglées via OSV.
+      Runtime <code>python</code> dans bige-ops : port 8000, 512 MiB par défaut, Gunicorn, Uvicorn ou serveur intégré selon ton Dockerfile. Côté failles : pages Django, FastAPI et Flask accessibles sans connexion, réglages risqués, bibliothèques PyPI épinglées comparées aux failles connues.
     </div>
 
     <h2 id="frameworks">Frameworks et bibliothèques</h2>
     <p>Les trois frameworks web Python majeurs ont chacun leur module de routes dans bige-ops.</p>
     <h3 id="django">Django</h3>
-    <p>Le framework « batteries incluses » : ORM, admin, auth, migrations. bige-ops lit <code>path()</code>, <code>re_path()</code> et l’ancien <code>url()</code> ; <code>login_required</code>, <code>IsAuthenticated</code> et <code>permission_classes</code> marquent une vue protégée. <code>DEBUG = True</code> est relevé ; les filtres <code>|safe</code> et <code>mark_safe</code> sont préparés pour l’audit approfondi.</p>
+    <p>Le framework « batteries incluses » : ORM, admin, auth, migrations. bige-ops repère tes pages déclarées par <code>path()</code>, <code>re_path()</code> et l’ancien <code>url()</code> ; une vue avec <code>login_required</code>, <code>IsAuthenticated</code> ou <code>permission_classes</code> compte comme protégée (connexion exigée). Le mode debug laissé actif en production (<code>DEBUG = True</code>) est signalé ; le HTML affiché sans échappement (<code>|safe</code>, <code>mark_safe</code>) est transmis à l’audit approfondi.</p>
     <p><a href="https://docs.djangoproject.com/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=djangoproject&amp;product=django" target="_blank" rel="noopener noreferrer">Django sur OpenCVE</a></p>
     <h3 id="fastapi">FastAPI</h3>
-    <p>Les API typées et asynchrones, sur Starlette et Pydantic, servies par Uvicorn. bige-ops lit <code>@app.get()</code>, <code>@router.post()</code> et <code>@app.api_route()</code>.</p>
+    <p>Les API typées et asynchrones, sur Starlette et Pydantic, servies par Uvicorn. bige-ops repère les routes déclarées par <code>@app.get()</code>, <code>@router.post()</code> et <code>@app.api_route()</code>.</p>
     <p><a href="https://fastapi.tiangolo.com/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=tiangolo&amp;product=fastapi" target="_blank" rel="noopener noreferrer">FastAPI sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=encode&amp;product=starlette" target="_blank" rel="noopener noreferrer">Starlette sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=pydantic&amp;product=pydantic" target="_blank" rel="noopener noreferrer">Pydantic sur OpenCVE</a></p>
     <h3 id="flask">Flask</h3>
-    <p>Le micro-framework sur Werkzeug et Jinja. <code>@app.route()</code> et les raccourcis <code>@app.get()</code> sont lus ; les appels <code>eval</code> sont relevés, le mode debug est préparé pour l’audit approfondi.</p>
+    <p>Le micro-framework sur Werkzeug et Jinja. bige-ops repère les routes <code>@app.route()</code> et les raccourcis <code>@app.get()</code> ; les appels <code>eval</code> (exécution de code construit avec des données externes) sont signalés, et le mode debug est transmis à l’audit approfondi.</p>
     <p><a href="https://flask.palletsprojects.com/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=palletsprojects&amp;product=flask" target="_blank" rel="noopener noreferrer">Flask sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=palletsprojects&amp;product=werkzeug" target="_blank" rel="noopener noreferrer">Werkzeug sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=palletsprojects&amp;product=jinja" target="_blank" rel="noopener noreferrer">Jinja sur OpenCVE</a></p>
     <h3 id="workers">Celery, Gunicorn, Uvicorn, SQLAlchemy</h3>
     <p>Celery pour les tâches de fond (avec Redis comme broker), <a href="https://gunicorn.org/" target="_blank" rel="noopener noreferrer">Gunicorn</a> et <a href="https://uvicorn.dev/" target="_blank" rel="noopener noreferrer">Uvicorn</a> comme serveurs, <a href="https://www.sqlalchemy.org/" target="_blank" rel="noopener noreferrer">SQLAlchemy</a> comme ORM hors Django.</p>
@@ -68,18 +68,20 @@ bige-ops add layout custom --runtime python --web none --worker \
   --db postgres --db redis --topology multi-vm --lbu</pre>
     <p>Le layout <code>python-app</code> ajoute une SPA Node ; <code>python-ml</code> ajoute Weaviate pour la recherche vectorielle.</p>
 
-    <h2 id="scan">Ce que le scan bige-ops fait pour Python</h2>
+    <h2 id="scan">Ce que bige-ops vérifie dans ton code Python</h2>
+    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. Sans clé ni IA (le « mode direct »), bige-ops lit le code de tes dépôts sur ton poste :</p>
     <ul>
-      <li><strong>Routes</strong> : Django, FastAPI et Flask, repérées directement dans ton code ; une vue sensible (<code>/admin</code>, <code>/account</code>…) sans <code>login_required</code>, <code>IsAuthenticated</code> ni autre signal d’authentification ressort « non sécurisée » (CWE-639).</li>
-      <li><strong>Code</strong> : secrets en dur (CWE-798), <code>os.system</code>, <code>subprocess(..., shell=True)</code>, <code>eval</code> / <code>exec</code> (CWE-78), SQL en f-string, <code>.format()</code> ou <code>%</code> (CWE-89), <code>verify=False</code> (CWE-295), <code>DEBUG = True</code>, redirection depuis <code>request</code> (CWE-601), traversée de chemin (CWE-22).</li>
-      <li><strong>Dépendances PyPI</strong> : lignes épinglées en <code>==</code> de tes <code>requirements*.txt</code> et de <code>pyproject.toml</code>, rapprochées d’<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>. Épingle tes versions (pip-tools, uv, Poetry export) : c’est ce qui rend le contrôle précis.</li>
+      <li><strong>Les pages et les API exposées</strong> : bige-ops repère les routes Django, FastAPI et Flask et regarde si chacune demande une connexion. Une vue sensible (<code>/admin</code>, <code>/account</code>…) sans protection visible ressort comme « page ou API accessible sans être connecté ».</li>
+      <li><strong>Les erreurs classiques</strong> : mots de passe ou clés écrits en clair dans le code ; exécution de commandes construites avec des données externes ; requête à la base construite avec ce que tape l’utilisateur (injection SQL) ; vérification des certificats HTTPS désactivée ; mode debug laissé actif en production ; redirection vers n’importe quel site ; lecture de fichiers hors du dossier prévu.</li>
+      <li><strong>Tes bibliothèques PyPI</strong> : les versions épinglées en <code>==</code> de tes <code>requirements*.txt</code> et de <code>pyproject.toml</code> sont comparées à la base publique des failles connues des bibliothèques open source (<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>). Épingle tes versions (pip-tools, uv, Poetry export) : c’est ce qui rend le contrôle précis.</li>
+      <li><strong>Ta stack</strong> : avec ta clé OpenCVE, l’image <code>python</code> de ton Dockerfile est comparée aux failles connues publiées dans le registre mondial des vulnérabilités (CVE), via <a href="https://app.opencve.io/cve/?vendor=python&amp;product=python" target="_blank" rel="noopener noreferrer">Python sur OpenCVE</a> ; PostgreSQL et Redis, via leurs fiches.</li>
     </ul>
-    <p>Avec ta clé OpenCVE, l’image <code>python</code> de ton Dockerfile est rapprochée de <a href="https://app.opencve.io/cve/?vendor=python&amp;product=python" target="_blank" rel="noopener noreferrer">Python sur OpenCVE</a>, et PostgreSQL et Redis de leurs fiches.</p>
+    <p>Tout est ensuite classé par urgence : ce qui est exposé à Internet d’abord. <strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, sur ton poste, et c’est gratuit. En option, l’<a href="agent.html#audit">audit approfondi</a> de bige-ops advanced relit ces pistes avec ta propre clé d’IA, écarte les fausses alertes et classe chaque faille par type, selon le catalogue de référence (CWE). La méthode complète : <a href="stacks.html#verifications">ce que bige-ops vérifie</a>.</p>
 
     <h2 id="bases">Bases de données typiques</h2>
     <p>PostgreSQL est la base de référence de Django et de SQLAlchemy ; Redis sert Celery et le cache ; pgvector ajoute la recherche vectorielle.</p>
     <table>
-      <tr><th>Base</th><th>Avec ce langage</th><th>CVE</th></tr>
+      <tr><th>Base</th><th>Avec ce langage</th><th>Failles connues</th></tr>
       <tr><td>PostgreSQL</td><td>ORM Django, SQLAlchemy, psycopg. Stack : <a href="stack-django-celery-postgresql-redis.html">Django + Celery + PostgreSQL + Redis</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
       <tr><td>PostgreSQL + pgvector</td><td>embeddings et RAG dans la même base. Stack : <a href="stack-ai-fastapi-pgvector-gpu.html">IA : FastAPI + pgvector + GPU</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=pgvector&amp;product=pgvector" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
       <tr><td>Redis</td><td>broker Celery, cache, sessions. Stack : <a href="stack-django-celery-postgresql-redis.html">Django + Celery + PostgreSQL + Redis</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
@@ -93,19 +95,22 @@ bige-ops add layout custom --runtime python --web none --worker \
     </p>
 
     <h2 id="versions">Versions à épingler</h2>
-    <p>Python publie son calendrier : <strong>3.14</strong> et <strong>3.15</strong> reçoivent les corrections, 3.11 à 3.13 les correctifs de sécurité, et 3.10 est en fin de vie depuis octobre 2026. Django <strong>5.2</strong> est la LTS en cours (6.1 la version courante). Épingle l’image (<code>FROM python:3.14-slim</code>) et tes paquets. Sources : <a href="https://devguide.python.org/versions/" target="_blank" rel="noopener noreferrer">versions de Python</a> · CVE : <a href="https://app.opencve.io/cve/?vendor=python&amp;product=python" target="_blank" rel="noopener noreferrer">Python sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=djangoproject&amp;product=django" target="_blank" rel="noopener noreferrer">Django sur OpenCVE</a>.</p>
+    <p>Python publie son calendrier : <strong>3.14</strong> et <strong>3.15</strong> reçoivent les corrections, 3.11 à 3.13 les correctifs de sécurité, et 3.10 est en fin de vie depuis octobre 2026. Django <strong>5.2</strong> est la LTS en cours (6.1 la version courante). Épingle l’image (<code>FROM python:3.14-slim</code>) et tes paquets. Sources : <a href="https://devguide.python.org/versions/" target="_blank" rel="noopener noreferrer">versions de Python</a> · Failles connues : <a href="https://app.opencve.io/cve/?vendor=python&amp;product=python" target="_blank" rel="noopener noreferrer">Python sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=djangoproject&amp;product=django" target="_blank" rel="noopener noreferrer">Django sur OpenCVE</a>.</p>
 
-    <h2 id="opencve">OpenCVE, le référentiel CVE de bige-ops</h2>
+    <h2 id="opencve">OpenCVE, la source des failles connues</h2>
     <p>
-      Pour savoir quelles vulnérabilités touchent les briques de ta stack, bige-ops
-      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE agrège les CVE publiées
-      (NVD, MITRE, catalogue KEV de la CISA…), les enrichit avec les scores CVSS et EPSS
-      et les range par fournisseur et par produit, consultables dans son
+      Pour savoir quelles failles connues touchent les briques de ta stack, bige-ops
+      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE rassemble les failles publiées
+      dans le registre mondial des vulnérabilités (CVE) et ses sources officielles (NVD,
+      MITRE, liste KEV des failles déjà exploitées tenue par la CISA, l’agence américaine
+      de cybersécurité…), donne à chacune sa note de gravité sur 10 (CVSS) et sa
+      probabilité d’être exploitée (EPSS), et les range par éditeur et par produit,
+      consultables dans son
       <a href="https://app.opencve.io/" target="_blank" rel="noopener noreferrer">explorateur</a>. Le projet est open source : son code, ses
       issues et les contributions de sa communauté vivent sur
       <a href="https://github.com/opencve/opencve" target="_blank" rel="noopener noreferrer">GitHub</a>, et il s’installe aussi chez toi. Merci à ses
       mainteneurs et à tous ceux qui font vivre ce référentiel : c’est grâce à eux que
-      chaque composant de ta simulation a sa fiche CVE à jour.
+      chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
     <h2 id="stacks">Stacks Python chiffrées</h2>

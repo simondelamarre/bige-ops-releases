@@ -56,6 +56,13 @@ flowchart LR
       <figcaption>L’API derrière le LBU ; PostgreSQL et RabbitMQ en subnet privé.</figcaption>
     </figure>
 
+    <h2 id="pourquoi-outscale">Pourquoi cette stack tourne bien sur Outscale</h2>
+    <ul>
+      <li><strong>Des bases rapides et stables</strong> : Les volumes io1 garantissent jusqu’à 13 000 IOPS par volume : tes requêtes gardent des temps de réponse réguliers, même sous charge. <a href="https://docs.outscale.com/en/userguide/About-Volumes.html" target="_blank" rel="noopener noreferrer">Volumes</a></li>
+      <li><strong>Un réseau privé et des sauvegardes sûres</strong> : Tes bases restent dans le réseau privé de ton projet, jamais exposées à Internet. Les sauvegardes partent vers l’Object Storage, compatible S3 et répliqué entre plusieurs zones.</li>
+      <li><strong>Prêt pour les clients exigeants</strong> : Régions qualifiées SecNumCloud 3.2 pour le secteur public, certification HDS pour la santé. <a href="pourquoi-outscale.html">Pourquoi Outscale</a> · <a href="https://www.3ds.com/newsroom/press-releases/outscale-first-cloud-qualified-secnumcloud-32" target="_blank" rel="noopener noreferrer">SecNumCloud 3.2</a></li>
+    </ul>
+
     <h2 id="architecture">Architecture sur Outscale</h2>
     <ul>
       <li><strong>VM app</strong> <code>tinav6.c4r8p2</code> : l’API ASP.NET Core (Kestrel, port 8080, 1 GiB, <code>ASPNETCORE_ENVIRONMENT=Production</code>) et un worker (<code>BackgroundService</code> consommateur), en runtime <code>custom</code> construits depuis ton Dockerfile.</li>
@@ -107,10 +114,10 @@ components:
 - {type: oos_bucket, name: dotnet-backups, bucket: dotnet-backups, size: 50, purpose: backups}
 </pre>
 
-    <h2 id="donnees">Données et messagerie : versions, backups, CVE</h2>
+    <h2 id="donnees">Données et messagerie : versions, backups, failles connues</h2>
 
     <table>
-      <tr><th>Base</th><th>Image épinglée</th><th>Backup vers OOS</th><th>CVE</th></tr>
+      <tr><th>Base</th><th>Image épinglée</th><th>Backup vers OOS</th><th>Failles connues</th></tr>
       <tr><td>PostgreSQL</td><td><code>postgres:17</code></td><td><code>pg_dump</code> → gzip → bucket OOS</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
       <tr><td>RabbitMQ</td><td><code>rabbitmq:4.3</code></td><td>export des définitions ; files durables sur le disque de la VM</td><td><a href="https://app.opencve.io/cve/?vendor=rabbitmq&amp;product=rabbitmq" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
     </table>
@@ -130,33 +137,41 @@ components:
     <p>Rappel Outscale : deux VMs d’un même subnet se parlent sans passer par les security groups ; séparer l’app (public) et la data (privé) les remet dans le chemin. Détail : <a href="reseau.html">réseau · ouvrir ou non</a>, <a href="https://docs.outscale.com/fr/userguide/À-propos-des-security-groups.html" target="_blank" rel="noopener noreferrer">security groups Outscale</a>.</p>
 
     <h2 id="vulnerabilites">Vulnérabilités : ce que bige-ops vérifie</h2>
+    <p>
+      Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont
+      exposées. Avec ta clé OpenCVE, bige-ops compare les composants de ta stack, y compris
+      les images de tes Dockerfile et docker-compose, au registre mondial des vulnérabilités
+      (CVE), puis classe tout par urgence : ce qui est exposé à Internet d’abord.
+      <strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, sur ton poste, et c’est gratuit.
+      La méthode complète : <a href="stacks.html#verifications">ce que bige-ops vérifie</a>.
+    </p>
 
     <p>
       Avec ta clé API OpenCVE (Settings), l’onglet Vulnérabilités lit ta simulation :
-      chaque composant reconnu, image Docker ou package, est rapproché de sa fiche
-      fournisseur / produit, à raison d’une requête par produit. Les CVE remontées sont
-      classées par risque :
+      chaque composant reconnu, image Docker ou paquet installé, est rapproché de sa fiche
+      éditeur / produit, à raison d’une requête par produit. Les failles connues qui
+      remontent sont classées par risque :
     </p>
     <ul>
-      <li><strong>Sévérité</strong> : score CVSS (critique dès 9, haute dès 7, moyenne dès 4), relevée au moins à « haute » quand la faille figure au <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener noreferrer">catalogue KEV</a> des vulnérabilités exploitées.</li>
-      <li><strong>Exposition dans ta simulation</strong> : un composant joignable depuis Internet ou derrière le LBU garde sa sévérité ; un composant en subnet privé descend d’un cran, sauf s’il est KEV.</li>
-      <li><strong>Départage</strong> : à risque égal, KEV d’abord, puis CVSS, puis <a href="https://www.first.org/epss/" target="_blank" rel="noopener noreferrer">EPSS</a>. Un filtre « important » ne garde que KEV ou CVSS ≥ 7.</li>
+      <li><strong>Gravité</strong> : chaque faille a une note sur 10 (CVSS) ; critique dès 9, haute dès 7, moyenne dès 4. Une faille déjà exploitée par des attaquants (elle figure sur la <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener noreferrer">liste KEV</a> de la CISA, l’agence américaine de cybersécurité) compte au moins comme haute.</li>
+      <li><strong>Exposition dans ta simulation</strong> : un composant joignable depuis Internet, directement ou derrière le LBU, garde sa gravité ; un composant en subnet privé descend d’un cran, sauf si la faille est déjà exploitée.</li>
+      <li><strong>Départage</strong> : à risque égal, les failles déjà exploitées d’abord, puis la note sur 10, puis la probabilité d’être exploitée prochainement (<a href="https://www.first.org/epss/" target="_blank" rel="noopener noreferrer">EPSS</a>). Le filtre « important » ne garde que les failles déjà exploitées ou notées 7 et plus.</li>
     </ul>
     <p>
-      Le rapprochement se fait au niveau du produit : tu recoupes ensuite avec la version
-      que tu as épinglée. Une image en <code>latest</code> ressort en plus comme
-      « version non épinglée ». Le résultat est mis en cache dans la simulation et se
+      Le rapprochement se fait au niveau du produit, pas de la version : à toi de recouper
+      avec la version que tu as épinglée. Une image en <code>latest</code> ressort en plus
+      comme « version non épinglée ». Le résultat est mis en cache dans la simulation et se
       rafraîchit à la demande.
     </p>
 
     <table>
       <tr><th>Composant</th><th>Fiche OpenCVE</th><th>Dans bige-ops</th></tr>
-      <tr><td>PostgreSQL</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">PostgreSQL</a></td><td>mappé automatiquement depuis l’image <code>postgres:17</code> · exposition : privée</td></tr>
-      <tr><td>Docker (VM RabbitMQ)</td><td><a href="https://app.opencve.io/cve/?vendor=docker&amp;product=docker" target="_blank" rel="noopener noreferrer">Docker</a></td><td>mappé automatiquement depuis les packages de la VM dédiée</td></tr>
-      <tr><td>RabbitMQ</td><td><a href="https://app.opencve.io/cve/?vendor=rabbitmq&amp;product=rabbitmq" target="_blank" rel="noopener noreferrer">RabbitMQ</a></td><td>fiche de référence (composant hors table de correspondance automatique)</td></tr>
-      <tr><td>.NET, ASP.NET Core, Npgsql</td><td><a href="https://app.opencve.io/cve/?vendor=microsoft&amp;product=.net" target="_blank" rel="noopener noreferrer">.NET</a> · <a href="https://app.opencve.io/cve/?vendor=microsoft&amp;product=asp.net_core" target="_blank" rel="noopener noreferrer">ASP.NET Core</a> · <a href="https://app.opencve.io/cve/?vendor=npgsql&amp;product=npgsql" target="_blank" rel="noopener noreferrer">Npgsql</a></td><td>fiche de référence (composant hors table de correspondance automatique)</td></tr>
+      <tr><td>PostgreSQL</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">PostgreSQL</a></td><td>reconnu automatiquement depuis l’image <code>postgres:17</code> · exposition : privée</td></tr>
+      <tr><td>Docker (VM RabbitMQ)</td><td><a href="https://app.opencve.io/cve/?vendor=docker&amp;product=docker" target="_blank" rel="noopener noreferrer">Docker</a></td><td>reconnu automatiquement depuis les paquets installés sur la VM dédiée</td></tr>
+      <tr><td>RabbitMQ</td><td><a href="https://app.opencve.io/cve/?vendor=rabbitmq&amp;product=rabbitmq" target="_blank" rel="noopener noreferrer">RabbitMQ</a></td><td>fiche de référence (pas encore reconnu automatiquement)</td></tr>
+      <tr><td>.NET, ASP.NET Core, Npgsql</td><td><a href="https://app.opencve.io/cve/?vendor=microsoft&amp;product=.net" target="_blank" rel="noopener noreferrer">.NET</a> · <a href="https://app.opencve.io/cve/?vendor=microsoft&amp;product=asp.net_core" target="_blank" rel="noopener noreferrer">ASP.NET Core</a> · <a href="https://app.opencve.io/cve/?vendor=npgsql&amp;product=npgsql" target="_blank" rel="noopener noreferrer">Npgsql</a></td><td>fiche de référence (pas encore reconnu automatiquement)</td></tr>
     </table>
-    <p>L’analyse du code .NET arrive ; la stack est déjà couverte : composants et images confrontés à OpenCVE, exposition et coût. Détail : <a href="lang-dotnet.html">.NET sur Outscale</a>.</p>
+    <p>L’analyse du code .NET arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE, exposition et coût. Détail : <a href="lang-dotnet.html">.NET sur Outscale</a>.</p>
 
 
     <h2 id="avant-deploy">Ce que bige-ops vérifie avant le deploy</h2>
@@ -164,21 +179,24 @@ components:
       <li><code>bige-ops validate</code> : structure du projet, services custom (image ou dépôt requis), listener HTTPS refusé sans ORN de certificat EIM, et rappel du NAT dès qu’une VM privée existe (c’est lui qui permet <code>docker pull</code> et <code>apt</code> depuis le subnet privé).</li>
       <li><code>bige-ops preflight</code> : clés Outscale présentes, OMI résolue, stack déclarée, IP des hôtes après l’apply, Dockerfile trouvé, secrets de build et d’exécution présents dans le coffre, jeton GitHub pour les dépôts privés, et alerte si une base n’a pas de backup vers OOS. Une erreur bloque le deploy.</li>
       <li><code>bige-ops plan</code> : le plan Terraform avant tout apply, avec les risques de perte de données signalés ; les buckets OOS sont protégés contre la destruction.</li>
-      <li><strong>Vulnérabilités</strong> : composants de la stack confrontés à OpenCVE et classés par exposition, tags <code>latest</code> signalés, dépôts analysés en mode direct.</li>
+      <li><strong>Vulnérabilités</strong> : composants de la stack comparés aux failles connues avec OpenCVE et classés selon leur exposition, images en <code>latest</code> signalées, dépôts relus sur ton poste, sans clé ni IA.</li>
     </ul>
 
 
-    <h2 id="opencve">OpenCVE, le référentiel CVE de bige-ops</h2>
+    <h2 id="opencve">OpenCVE, la source des failles connues</h2>
     <p>
-      Pour savoir quelles vulnérabilités touchent les briques de ta stack, bige-ops
-      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE agrège les CVE publiées
-      (NVD, MITRE, catalogue KEV de la CISA…), les enrichit avec les scores CVSS et EPSS
-      et les range par fournisseur et par produit, consultables dans son
+      Pour savoir quelles failles connues touchent les briques de ta stack, bige-ops
+      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE rassemble les failles publiées
+      dans le registre mondial des vulnérabilités (CVE) et ses sources officielles (NVD,
+      MITRE, liste KEV des failles déjà exploitées tenue par la CISA, l’agence américaine
+      de cybersécurité…), donne à chacune sa note de gravité sur 10 (CVSS) et sa
+      probabilité d’être exploitée (EPSS), et les range par éditeur et par produit,
+      consultables dans son
       <a href="https://app.opencve.io/" target="_blank" rel="noopener noreferrer">explorateur</a>. Le projet est open source : son code, ses
       issues et les contributions de sa communauté vivent sur
       <a href="https://github.com/opencve/opencve" target="_blank" rel="noopener noreferrer">GitHub</a>, et il s’installe aussi chez toi. Merci à ses
       mainteneurs et à tous ceux qui font vivre ce référentiel : c’est grâce à eux que
-      chaque composant de ta simulation a sa fiche CVE à jour.
+      chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
     <h2 id="docs">Docs officielles</h2>

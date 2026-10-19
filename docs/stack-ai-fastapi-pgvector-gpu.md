@@ -4,6 +4,13 @@ Un assistant RAG ou une API d’inférence qui reste sur un cloud souverain : Fa
 
 **En bref.** Topologie multi-vm : VM app tinav6.c4r8p2 (FastAPI, front, worker d’ingestion) derrière un LBU, PostgreSQL + pgvector et Redis privés, VM d’inférence privée tinav7.c16r64p1 avec un GPU NVIDIA L40, 500 GiB de documents dans OOS, backups, NAT. Estimation bige-ops : **2 654,65 € HT/mois**.
 
+## Pourquoi cette stack tourne bien sur Outscale
+
+- **Des bases rapides et stables** : Les volumes io1 garantissent jusqu’à 13 000 IOPS par volume : tes requêtes gardent des temps de réponse réguliers, même sous charge. [Volumes](https://docs.outscale.com/en/userguide/About-Volumes.html)
+- **Des GPU à la demande** : Des cartes NVIDIA récentes (L40, H100…) au catalogue public : tu ajoutes la puissance de calcul quand ton modèle en a besoin.
+- **Un réseau privé et des sauvegardes sûres** : Tes bases restent dans le réseau privé de ton projet, jamais exposées à Internet. Les sauvegardes partent vers l’Object Storage, compatible S3 et répliqué entre plusieurs zones.
+- **Prêt pour les clients exigeants** : Régions qualifiées SecNumCloud 3.2 pour le secteur public, certification HDS pour la santé. [Pourquoi Outscale](pourquoi-outscale.html) · [SecNumCloud 3.2](https://www.3ds.com/newsroom/press-releases/outscale-first-cloud-qualified-secnumcloud-32)
+
 ## Architecture
 
 VM app tinav6.c4r8p2 (FastAPI :8000, front, worker d’ingestion) derrière LBU ; PostgreSQL 17 + pgvector et Redis 8 privés ; VM d’inférence privée tinav7.c16r64p1 + 1 GPU NVIDIA L40 (fGPU) ; OOS 500 GiB documents + 100 GiB backups ; NAT.
@@ -61,7 +68,7 @@ components:
 
 ## Données
 
-| Base | Image épinglée | Backup | CVE |
+| Base | Image épinglée | Backup | Failles connues |
 | --- | --- | --- | --- |
 | PostgreSQL | `pgvector/pgvector:pg17` | pg_dump → gzip → bucket OOS | [OpenCVE](https://app.opencve.io/cve/?vendor=postgresql&product=postgresql) |
 | Redis | `redis:8-alpine` | snapshot RDB / AOF → bucket OOS | [OpenCVE](https://app.opencve.io/cve/?vendor=redis&product=redis) |
@@ -83,28 +90,32 @@ Backup activé (`backup.enabled` + bucket OOS protégé) ; `backup.sh` préparé
 
 ## Vulnérabilités
 
-Avec ta clé OpenCVE, chaque composant reconnu (image, package) est rapproché de sa fiche fournisseur/produit (une requête par produit). Classement : sévérité CVSS (KEV ⇒ au moins haute), puis exposition dans la simulation (Internet ou derrière LBU : sévérité pleine ; subnet privé : un cran de moins, sauf KEV), départage KEV → CVSS → EPSS. Rapprochement au niveau produit, à recouper avec la version épinglée ; `latest` signalé comme version non épinglée.
+Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. bige-ops lit le code de tes dépôts sur ton poste, compare tes bibliothèques à la base publique des failles connues des bibliothèques open source ([OSV](https://osv.dev/)) et, avec ta clé OpenCVE, les composants de ta stack au registre mondial des vulnérabilités (CVE) ; puis il classe tout par urgence, l’exposé à Internet d’abord. Pourquoi le refaire toi-même ? C’est chez toi, sur ton poste, et c’est gratuit.
+
+Avec ta clé OpenCVE, chaque composant reconnu (image, paquet installé) est rapproché de sa fiche éditeur/produit (une requête par produit). Classement : gravité notée sur 10 (CVSS), au moins haute si la faille est déjà exploitée (liste KEV de la CISA) ; puis exposition dans la simulation (Internet ou derrière le LBU : gravité pleine ; subnet privé : un cran de moins, sauf faille déjà exploitée) ; départage : déjà exploitée, puis note, puis probabilité d’exploitation (EPSS). Rapprochement au niveau du produit, pas de la version : à recouper avec ta version épinglée ; `latest` signalé comme version non épinglée.
 
 | Composant | Fiche OpenCVE | Dans bige-ops |
 | --- | --- | --- |
-| Redis | [Redis](https://app.opencve.io/cve/?vendor=redis&product=redis) | mappé automatiquement depuis l’image redis:8-alpine · exposition : privée |
-| PostgreSQL + pgvector | [PostgreSQL](https://app.opencve.io/cve/?vendor=postgresql&product=postgresql) · [pgvector](https://app.opencve.io/cve/?vendor=pgvector&product=pgvector) | image pgvector/pgvector hors table de correspondance automatique : ces deux fiches sont tes références |
-| Docker (VM d’inférence) | [Docker](https://app.opencve.io/cve/?vendor=docker&product=docker) | mappé automatiquement depuis les packages de la VM dédiée |
-| Python | [Python](https://app.opencve.io/cve/?vendor=python&product=python) | mappé depuis le FROM python de ton Dockerfile (scan des dépôts) |
-| FastAPI, Starlette, Pydantic | [FastAPI](https://app.opencve.io/cve/?vendor=tiangolo&product=fastapi) · [Starlette](https://app.opencve.io/cve/?vendor=encode&product=starlette) · [Pydantic](https://app.opencve.io/cve/?vendor=pydantic&product=pydantic) | fiche de référence (composant hors table de correspondance automatique) ; versions PyPI épinglées contrôlées par OSV |
+| Redis | [Redis](https://app.opencve.io/cve/?vendor=redis&product=redis) | reconnu automatiquement depuis l’image redis:8-alpine · exposition : privée |
+| PostgreSQL + pgvector | [PostgreSQL](https://app.opencve.io/cve/?vendor=postgresql&product=postgresql) · [pgvector](https://app.opencve.io/cve/?vendor=pgvector&product=pgvector) | image pgvector/pgvector pas encore reconnue automatiquement : ces deux fiches sont tes références |
+| Docker (VM d’inférence) | [Docker](https://app.opencve.io/cve/?vendor=docker&product=docker) | reconnu automatiquement depuis les paquets installés sur la VM dédiée |
+| Python | [Python](https://app.opencve.io/cve/?vendor=python&product=python) | reconnu depuis l’image de base de ton Dockerfile (FROM python), à la lecture de tes dépôts |
+| FastAPI, Starlette, Pydantic | [FastAPI](https://app.opencve.io/cve/?vendor=tiangolo&product=fastapi) · [Starlette](https://app.opencve.io/cve/?vendor=encode&product=starlette) · [Pydantic](https://app.opencve.io/cve/?vendor=pydantic&product=pydantic) | fiche de référence (pas encore reconnu automatiquement) ; versions PyPI épinglées vérifiées dans OSV |
 
-Mode direct, sans clé : routes FastAPI (@app.get, @router.post), secrets en dur (clés d’API de modèles comprises), verify=False, SQL en f-string, dépendances PyPI épinglées rapprochées d’OSV. Détail : Python sur Outscale.
+Sur ton poste, sans clé ni IA (mode direct) : routes FastAPI (@app.get, @router.post) et pages accessibles sans être connecté, mots de passe ou clés écrits en clair dans le code (clés d’API de modèles comprises), vérification des certificats HTTPS désactivée, requêtes à la base construites avec ce que tape l’utilisateur (injection SQL), dépendances PyPI épinglées vérifiées dans OSV. Détail : Python sur Outscale.
+
+Audit approfondi (bige-ops advanced, ta propre clé d’IA) : relit les pistes repérées, confirme les vraies failles, écarte les fausses alertes et classe chacune par type de faille, selon le catalogue de référence (CWE), avec son urgence et un ticket GitHub prêt à ouvrir.
 
 ## Avant le deploy
 
 - `validate` (services custom, HTTPS sans ORN EIM refusé, rappel NAT pour les VMs privées)
 - `preflight` : clés Outscale, OMI, stack, IP des hôtes, Dockerfile, secrets build/runtime, jeton GitHub, alerte backup OOS ; une erreur bloque le deploy
 - `plan` : Terraform, risques de perte de données ; buckets OOS protégés
-- Vulnérabilités : OpenCVE classé par exposition, `latest` signalé, dépôts en mode direct
+- Vulnérabilités : failles connues des composants (OpenCVE) classées selon leur exposition, `latest` signalé, dépôts relus sur ton poste, sans clé ni IA
 
-## OpenCVE, le référentiel CVE de bige-ops
+## OpenCVE, la source des failles connues
 
-bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : CVE publiées (NVD, MITRE, KEV de la CISA…) enrichies CVSS / EPSS et rangées par fournisseur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
+bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : les failles publiées dans le registre mondial des vulnérabilités (CVE) et ses sources (NVD, MITRE, liste KEV des failles déjà exploitées tenue par la CISA…), avec leur note de gravité sur 10 (CVSS) et leur probabilité d’être exploitées (EPSS), rangées par éditeur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
 
 Docs : [FastAPI](https://fastapi.tiangolo.com/) · [pgvector](https://github.com/pgvector/pgvector) · [GPU flexibles Outscale](https://docs.outscale.com/fr/userguide/À-propos-des-flexible-GPU.html) · [OOS](https://docs.outscale.com/fr/userguide/À-propos-d-OOS.html) · [Redis](https://redis.io/docs/latest/) · [SecNumCloud](https://fr.outscale.com/secnumcloud/)
 

@@ -4,6 +4,12 @@ Le choix de nombreuses startups SaaS : Next.js pour le front et le rendu serveur
 
 **En bref.** Topologie multi-vm en eu-west-2 : une VM app (Next.js, NestJS, worker BullMQ) derrière un LBU, PostgreSQL et Redis sur deux VMs privées, deux buckets OOS (uploads et backups), un NAT pour la sortie du subnet privé. Estimation bige-ops : **428,06 € HT/mois**.
 
+## Pourquoi cette stack tourne bien sur Outscale
+
+- **Des bases rapides et stables** : Les volumes io1 garantissent jusqu’à 13 000 IOPS par volume : tes requêtes gardent des temps de réponse réguliers, même sous charge. [Volumes](https://docs.outscale.com/en/userguide/About-Volumes.html)
+- **Un réseau privé et des sauvegardes sûres** : Tes bases restent dans le réseau privé de ton projet, jamais exposées à Internet. Les sauvegardes partent vers l’Object Storage, compatible S3 et répliqué entre plusieurs zones.
+- **Prêt pour les clients exigeants** : Régions qualifiées SecNumCloud 3.2 pour le secteur public, certification HDS pour la santé. [Pourquoi Outscale](pourquoi-outscale.html) · [SecNumCloud 3.2](https://www.3ds.com/newsroom/press-releases/outscale-first-cloud-qualified-secnumcloud-32)
+
 ## Architecture
 
 VM app tinav6.c4r8p2 (Next.js :3000, NestJS :3001, worker BullMQ) derrière un LBU HTTPS ; PostgreSQL 17 (tinav6.c4r8p2, io1 60 GiB / 3 000 IOPS) et Redis 8 (tinav6.c2r2p3) en subnet privé ; OOS 200 GiB (uploads) + 50 GiB (backups) ; NAT pour la sortie du privé.
@@ -58,7 +64,7 @@ components:
 
 ## Données
 
-| Base | Image épinglée | Backup | CVE |
+| Base | Image épinglée | Backup | Failles connues |
 | --- | --- | --- | --- |
 | PostgreSQL | `postgres:17` | pg_dump → gzip → bucket OOS | [OpenCVE](https://app.opencve.io/cve/?vendor=postgresql&product=postgresql) |
 | Redis | `redis:8-alpine` | snapshot RDB / AOF → bucket OOS | [OpenCVE](https://app.opencve.io/cve/?vendor=redis&product=redis) |
@@ -79,27 +85,31 @@ Backup activé (`backup.enabled` + bucket OOS protégé) ; `backup.sh` préparé
 
 ## Vulnérabilités
 
-Avec ta clé OpenCVE, chaque composant reconnu (image, package) est rapproché de sa fiche fournisseur/produit (une requête par produit). Classement : sévérité CVSS (KEV ⇒ au moins haute), puis exposition dans la simulation (Internet ou derrière LBU : sévérité pleine ; subnet privé : un cran de moins, sauf KEV), départage KEV → CVSS → EPSS. Rapprochement au niveau produit, à recouper avec la version épinglée ; `latest` signalé comme version non épinglée.
+Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. bige-ops lit le code de tes dépôts sur ton poste, compare tes bibliothèques à la base publique des failles connues des bibliothèques open source ([OSV](https://osv.dev/)) et, avec ta clé OpenCVE, les composants de ta stack au registre mondial des vulnérabilités (CVE) ; puis il classe tout par urgence, l’exposé à Internet d’abord. Pourquoi le refaire toi-même ? C’est chez toi, sur ton poste, et c’est gratuit.
+
+Avec ta clé OpenCVE, chaque composant reconnu (image, paquet installé) est rapproché de sa fiche éditeur/produit (une requête par produit). Classement : gravité notée sur 10 (CVSS), au moins haute si la faille est déjà exploitée (liste KEV de la CISA) ; puis exposition dans la simulation (Internet ou derrière le LBU : gravité pleine ; subnet privé : un cran de moins, sauf faille déjà exploitée) ; départage : déjà exploitée, puis note, puis probabilité d’exploitation (EPSS). Rapprochement au niveau du produit, pas de la version : à recouper avec ta version épinglée ; `latest` signalé comme version non épinglée.
 
 | Composant | Fiche OpenCVE | Dans bige-ops |
 | --- | --- | --- |
-| PostgreSQL | [PostgreSQL](https://app.opencve.io/cve/?vendor=postgresql&product=postgresql) | mappé automatiquement depuis l’image postgres:17 · exposition : privée (descend d’un cran) |
-| Redis | [Redis](https://app.opencve.io/cve/?vendor=redis&product=redis) | mappé automatiquement depuis l’image redis:8-alpine · exposition : privée |
-| Node.js | [Node.js](https://app.opencve.io/cve/?vendor=nodejs&product=node.js) | mappé depuis le FROM node de ton Dockerfile (scan des dépôts) |
-| Next.js, NestJS | [Next.js](https://app.opencve.io/cve/?vendor=vercel&product=next.js) · [NestJS](https://app.opencve.io/cve/?vendor=nestjs&product=nest) | fiche de référence (composant hors table de correspondance automatique) ; leurs versions npm passent par OSV |
+| PostgreSQL | [PostgreSQL](https://app.opencve.io/cve/?vendor=postgresql&product=postgresql) | reconnu automatiquement depuis l’image postgres:17 · exposition : privée (descend d’un cran) |
+| Redis | [Redis](https://app.opencve.io/cve/?vendor=redis&product=redis) | reconnu automatiquement depuis l’image redis:8-alpine · exposition : privée |
+| Node.js | [Node.js](https://app.opencve.io/cve/?vendor=nodejs&product=node.js) | reconnu depuis l’image de base de ton Dockerfile (FROM node), à la lecture de tes dépôts |
+| Next.js, NestJS | [Next.js](https://app.opencve.io/cve/?vendor=vercel&product=next.js) · [NestJS](https://app.opencve.io/cve/?vendor=nestjs&product=nest) | fiche de référence (pas encore reconnu automatiquement) ; leurs versions npm sont vérifiées dans OSV |
 
-Mode direct, sans clé : routes Next.js (route handlers, pages/api) et NestJS (@Controller, @Get, @UseGuards), failles de code et XSS front, dépendances npm rapprochées d’OSV. Détail : Node.js sur Outscale.
+Sur ton poste, sans clé ni IA (mode direct) : routes Next.js (route handlers, pages/api) et NestJS (@Controller, @Get) et connexion exigée (@UseGuards), erreurs classiques dans le code, code injecté qui s’exécute dans le navigateur de tes utilisateurs (XSS), dépendances npm vérifiées dans OSV. Détail : Node.js sur Outscale.
+
+Audit approfondi (bige-ops advanced, ta propre clé d’IA) : relit les pistes repérées, confirme les vraies failles, écarte les fausses alertes et classe chacune par type de faille, selon le catalogue de référence (CWE), avec son urgence et un ticket GitHub prêt à ouvrir.
 
 ## Avant le deploy
 
 - `validate` (services custom, HTTPS sans ORN EIM refusé, rappel NAT pour les VMs privées)
 - `preflight` : clés Outscale, OMI, stack, IP des hôtes, Dockerfile, secrets build/runtime, jeton GitHub, alerte backup OOS ; une erreur bloque le deploy
 - `plan` : Terraform, risques de perte de données ; buckets OOS protégés
-- Vulnérabilités : OpenCVE classé par exposition, `latest` signalé, dépôts en mode direct
+- Vulnérabilités : failles connues des composants (OpenCVE) classées selon leur exposition, `latest` signalé, dépôts relus sur ton poste, sans clé ni IA
 
-## OpenCVE, le référentiel CVE de bige-ops
+## OpenCVE, la source des failles connues
 
-bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : CVE publiées (NVD, MITRE, KEV de la CISA…) enrichies CVSS / EPSS et rangées par fournisseur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
+bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : les failles publiées dans le registre mondial des vulnérabilités (CVE) et ses sources (NVD, MITRE, liste KEV des failles déjà exploitées tenue par la CISA…), avec leur note de gravité sur 10 (CVSS) et leur probabilité d’être exploitées (EPSS), rangées par éditeur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
 
 Docs : [Next.js](https://nextjs.org/docs) · [NestJS](https://docs.nestjs.com/) · [BullMQ](https://docs.bullmq.io/) · [PostgreSQL](https://www.postgresql.org/docs/) · [Redis](https://redis.io/docs/latest/) · [OOS](https://docs.outscale.com/fr/userguide/À-propos-d-OOS.html) · [LBU Outscale](https://docs.outscale.com/fr/userguide/À-propos-des-load-balancers.html)
 

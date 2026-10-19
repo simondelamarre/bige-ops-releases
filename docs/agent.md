@@ -4,6 +4,8 @@ Chat intégré sur la **config** de la simulation. Modèle par défaut : **Claud
 
 **Il peut :** simulations, contexte, estimation, fichiers, patch `project.yaml`, stacks, CLI en lecture (`validate`, `generate`, `estimate`, `status`…), doc, Dockerfile + PR.
 
+**Audit approfondi des failles (option, bige-ops advanced) :** avec ta propre clé d’IA, un agent relit les pistes que bige-ops a repérées sur ton poste (pages ou API accessibles sans être connecté, code à risque, pièges du framework), confirme les vraies failles, écarte les fausses alertes et classe chacune par type de faille, selon le catalogue de référence (CWE), avec son urgence (P0 à P3). Chaque faille peut devenir un ticket GitHub que tu ouvres toi-même. Seuls des extraits ciblés de ton code partent chez le fournisseur d’IA ; rien n’est appliqué, aucun secret n’est lu.
+
 **MCP local :** `bige-ops mcp` (stdio) pour Cursor / Claude Code — Settings → Agents / MCP. Mêmes garde-fous.
 
 **Traces :** `chats/traces/*.jsonl` (hors repo).

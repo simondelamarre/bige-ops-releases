@@ -28,9 +28,11 @@ api:
     ASPNETCORE_ENVIRONMENT: {mode: literal, value: Production}
 ```
 
-## Scan bige-ops
+## Ce que bige-ops vérifie pour .NET
 
-L’analyse du code .NET arrive ; ta stack est déjà couverte : composants et images (y compris celles de tes Dockerfile et docker-compose) confrontés à OpenCVE, exposition dans la simulation et coût sur Outscale.
+Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code .NET arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation et le coût sur Outscale sont calculés à côté.
+
+Tout est classé par urgence : ce qui est exposé à Internet d’abord. Pourquoi le refaire toi-même ? C’est chez toi, sur ton poste, et c’est gratuit. Méthode complète : [ce que bige-ops vérifie](https://bige.dev/stacks.html#verifications).
 
 ## Bases de données
 
@@ -42,11 +44,11 @@ Jamais de base exposée à Internet : subnet privé + security group au CIDR du 
 
 ## Versions à épingler
 
-.NET 10 est la version LTS active, supportée jusqu’au 14 novembre 2028. .NET 8 (LTS) et .NET 9 (STS) arrivent tous deux en fin de support le 10 novembre 2026 : c’est le moment de passer à .NET 10. Source : politique de support .NET · CVE : .NET sur OpenCVE · ASP.NET Core sur OpenCVE.
+.NET 10 est la version LTS active, supportée jusqu’au 14 novembre 2028. .NET 8 (LTS) et .NET 9 (STS) arrivent tous deux en fin de support le 10 novembre 2026 : c’est le moment de passer à .NET 10. Source : politique de support .NET · Failles connues : .NET sur OpenCVE · ASP.NET Core sur OpenCVE.
 
-## OpenCVE, le référentiel CVE de bige-ops
+## OpenCVE, la source des failles connues
 
-bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : CVE publiées (NVD, MITRE, KEV de la CISA…) enrichies CVSS / EPSS et rangées par fournisseur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
+bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : les failles publiées dans le registre mondial des vulnérabilités (CVE) et ses sources (NVD, MITRE, liste KEV des failles déjà exploitées tenue par la CISA…), avec leur note de gravité sur 10 (CVSS) et leur probabilité d’être exploitées (EPSS), rangées par éditeur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
 
 ## Stacks chiffrées
 

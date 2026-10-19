@@ -31,24 +31,24 @@
     </div>
     <h1>Go sur Outscale</h1>
     <p class="lead">
-      Un binaire statique, une empreinte mémoire minuscule, une concurrence native : Go est taillé pour les API et les services réseau. Sur Outscale, une VM modeste suffit souvent ; bige-ops la dimensionne, la chiffre et lit tes routes Gin et net/http.
+      Un binaire statique, une empreinte mémoire minuscule, une concurrence native : Go est taillé pour les API et les services réseau. Sur Outscale, une VM modeste suffit souvent ; bige-ops la dimensionne, la chiffre et vérifie si tes routes Gin et net/http demandent une connexion.
     </p>
 
     <div class="callout">
       <strong>En bref.</strong>
-      Runtime <code>go</code> dans bige-ops : port 8080, 256 MiB par service par défaut. Scan : routes net/http et Gin, modules Go (<code>go.mod</code>) via OSV, image <code>golang</code> rapprochée d’OpenCVE.
+      Runtime <code>go</code> dans bige-ops : port 8080, 256 MiB par service par défaut. Côté failles : routes net/http et Gin accessibles sans connexion, modules Go (<code>go.mod</code>) et image <code>golang</code> comparés aux failles connues.
     </div>
 
     <h2 id="frameworks">Frameworks et bibliothèques</h2>
     <p>La bibliothèque standard suffit souvent ; Gin reste le framework le plus répandu.</p>
     <h3 id="nethttp">net/http</h3>
-    <p>Le serveur HTTP de la bibliothèque standard, avec le routage par motifs (méthode et chemin) depuis Go 1.22. bige-ops lit <code>http.HandleFunc()</code> et <code>mux.HandleFunc()</code>.</p>
+    <p>Le serveur HTTP de la bibliothèque standard, avec le routage par motifs (méthode et chemin) depuis Go 1.22. bige-ops repère les routes déclarées par <code>http.HandleFunc()</code> et <code>mux.HandleFunc()</code>.</p>
     <p><a href="https://pkg.go.dev/net/http" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=golang&amp;product=go" target="_blank" rel="noopener noreferrer">Go sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=golang&amp;product=net" target="_blank" rel="noopener noreferrer">golang.org/x/net sur OpenCVE</a></p>
     <h3 id="gin">Gin</h3>
-    <p>Le framework web Go le plus utilisé : routeur rapide, middlewares, binding. bige-ops lit <code>r.GET()</code>, <code>group.POST()</code> et les groupes <code>r.Group()</code> ; un CORS ouvert à <code>*</code> est préparé pour l’audit approfondi.</p>
+    <p>Le framework web Go le plus utilisé : routeur rapide, middlewares, binding. bige-ops repère les routes <code>r.GET()</code>, <code>group.POST()</code> et les groupes <code>r.Group()</code> ; une API ouverte à n’importe quel site est transmise à l’audit approfondi.</p>
     <p><a href="https://gin-gonic.com/en/docs/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=gin-gonic&amp;product=gin" target="_blank" rel="noopener noreferrer">Gin sur OpenCVE</a></p>
     <h3 id="autres">chi, Echo, pgx</h3>
-    <p>chi et Echo sont d’autres routeurs courants ; pgx est le driver PostgreSQL de référence. Leurs versions dans <code>go.mod</code> passent par OSV comme tous tes modules.</p>
+    <p>chi et Echo sont d’autres routeurs courants ; pgx est le driver PostgreSQL de référence. Leurs versions dans <code>go.mod</code> sont comparées aux failles connues, comme tous tes modules.</p>
     <p><a href="https://pkg.go.dev/github.com/jackc/pgx/v5" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=go-chi&amp;product=chi" target="_blank" rel="noopener noreferrer">chi sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=labstack&amp;product=echo" target="_blank" rel="noopener noreferrer">Echo sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=jackc&amp;product=pgx" target="_blank" rel="noopener noreferrer">pgx sur OpenCVE</a></p>
 
     <h2 id="outscale">Faire tourner Go sur Outscale avec bige-ops</h2>
@@ -65,18 +65,20 @@ bige-ops add layout custom --runtime go --web none --worker \
   --db postgres --topology multi-vm --lbu</pre>
     <p>Le layout <code>go-app</code> ajoute une SPA Node, PostgreSQL et Redis derrière un LBU.</p>
 
-    <h2 id="scan">Ce que le scan bige-ops fait pour Go</h2>
+    <h2 id="scan">Ce que bige-ops vérifie dans ton code Go</h2>
+    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. Sans clé ni IA (le « mode direct »), bige-ops lit le code de tes dépôts sur ton poste :</p>
     <ul>
-      <li><strong>Routes</strong> : net/http (<code>HandleFunc</code>) et Gin (<code>GET</code>, <code>POST</code>, groupes), repérées directement dans ton code ; une route marquée publique, ou une route sensible (<code>/admin</code>, <code>/account</code>, <code>/payment</code>, <code>/billing</code>…) sans signal d’authentification à proximité, ressort « non sécurisée » (CWE-639).</li>
-      <li><strong>Code</strong> : secrets en dur (CWE-798), <code>InsecureSkipVerify: true</code> (TLS non vérifié, CWE-295), traversée de chemin (CWE-22), en-tête CORS <code>*</code> (CWE-942).</li>
-      <li><strong>Dépendances</strong> : chaque module de <code>go.mod</code> est rapproché d’<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>, qui reprend la base de vulnérabilités Go.</li>
+      <li><strong>Les pages et les API exposées</strong> : bige-ops repère les routes net/http (<code>HandleFunc</code>) et Gin (<code>GET</code>, <code>POST</code>, groupes) et regarde si le code juste à côté vérifie la connexion. Une route marquée publique, ou une route sensible (<code>/admin</code>, <code>/account</code>, <code>/payment</code>, <code>/billing</code>…) sans vérification visible, ressort comme « page ou API accessible sans être connecté ».</li>
+      <li><strong>Les erreurs classiques</strong> : mots de passe ou clés écrits en clair dans le code ; vérification des certificats HTTPS désactivée ; lecture de fichiers hors du dossier prévu ; API ouverte à n’importe quel site.</li>
+      <li><strong>Tes modules Go</strong> : chaque module de <code>go.mod</code> est comparé à la base publique des failles connues des bibliothèques open source (<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>), qui reprend la base de vulnérabilités Go.</li>
+      <li><strong>Ta stack</strong> : avec ta clé OpenCVE, l’image <code>golang</code> de ton Dockerfile est comparée aux failles connues publiées dans le registre mondial des vulnérabilités (CVE), via <a href="https://app.opencve.io/cve/?vendor=golang&amp;product=go" target="_blank" rel="noopener noreferrer">Go sur OpenCVE</a> ; PostgreSQL, via sa fiche.</li>
     </ul>
-    <p>Avec ta clé OpenCVE, l’image <code>golang</code> de ton Dockerfile est rapprochée de <a href="https://app.opencve.io/cve/?vendor=golang&amp;product=go" target="_blank" rel="noopener noreferrer">Go sur OpenCVE</a> et PostgreSQL de sa fiche.</p>
+    <p>Tout est ensuite classé par urgence : ce qui est exposé à Internet d’abord. <strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, sur ton poste, et c’est gratuit. En option, l’<a href="agent.html#audit">audit approfondi</a> de bige-ops advanced relit ces pistes avec ta propre clé d’IA, écarte les fausses alertes et classe chaque faille par type, selon le catalogue de référence (CWE). La méthode complète : <a href="stacks.html#verifications">ce que bige-ops vérifie</a>.</p>
 
     <h2 id="bases">Bases de données typiques</h2>
     <p>Go et PostgreSQL forment un duo classique ; Redis et NATS complètent pour le cache et la messagerie.</p>
     <table>
-      <tr><th>Base</th><th>Avec ce langage</th><th>CVE</th></tr>
+      <tr><th>Base</th><th>Avec ce langage</th><th>Failles connues</th></tr>
       <tr><td>PostgreSQL</td><td>pgx, database/sql, sqlc. Stack : <a href="stack-go-postgresql-nats.html">Go + PostgreSQL + NATS</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
       <tr><td>Redis</td><td>cache, rate limiting.</td><td><a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
       <tr><td>MongoDB</td><td>driver officiel Go.</td><td><a href="https://app.opencve.io/cve/?vendor=mongodb&amp;product=mongodb" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
@@ -89,19 +91,22 @@ bige-ops add layout custom --runtime go --web none --worker \
     </p>
 
     <h2 id="versions">Versions à épingler</h2>
-    <p>Chaque version majeure de Go est maintenue jusqu’à la sortie de deux versions plus récentes : aujourd’hui <strong>Go 1.27</strong> et <strong>1.26</strong>. Épingle la version dans <code>go.mod</code> (directive <code>go</code>) et dans l’image de build (<code>FROM golang:1.27</code>). Sources : <a href="https://go.dev/doc/devel/release" target="_blank" rel="noopener noreferrer">historique des versions Go</a> · <a href="https://go.dev/security/vuln/" target="_blank" rel="noopener noreferrer">gestion des vulnérabilités Go</a> · CVE : <a href="https://app.opencve.io/cve/?vendor=golang&amp;product=go" target="_blank" rel="noopener noreferrer">Go sur OpenCVE</a>.</p>
+    <p>Chaque version majeure de Go est maintenue jusqu’à la sortie de deux versions plus récentes : aujourd’hui <strong>Go 1.27</strong> et <strong>1.26</strong>. Épingle la version dans <code>go.mod</code> (directive <code>go</code>) et dans l’image de build (<code>FROM golang:1.27</code>). Sources : <a href="https://go.dev/doc/devel/release" target="_blank" rel="noopener noreferrer">historique des versions Go</a> · <a href="https://go.dev/security/vuln/" target="_blank" rel="noopener noreferrer">gestion des vulnérabilités Go</a> · Failles connues : <a href="https://app.opencve.io/cve/?vendor=golang&amp;product=go" target="_blank" rel="noopener noreferrer">Go sur OpenCVE</a>.</p>
 
-    <h2 id="opencve">OpenCVE, le référentiel CVE de bige-ops</h2>
+    <h2 id="opencve">OpenCVE, la source des failles connues</h2>
     <p>
-      Pour savoir quelles vulnérabilités touchent les briques de ta stack, bige-ops
-      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE agrège les CVE publiées
-      (NVD, MITRE, catalogue KEV de la CISA…), les enrichit avec les scores CVSS et EPSS
-      et les range par fournisseur et par produit, consultables dans son
+      Pour savoir quelles failles connues touchent les briques de ta stack, bige-ops
+      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE rassemble les failles publiées
+      dans le registre mondial des vulnérabilités (CVE) et ses sources officielles (NVD,
+      MITRE, liste KEV des failles déjà exploitées tenue par la CISA, l’agence américaine
+      de cybersécurité…), donne à chacune sa note de gravité sur 10 (CVSS) et sa
+      probabilité d’être exploitée (EPSS), et les range par éditeur et par produit,
+      consultables dans son
       <a href="https://app.opencve.io/" target="_blank" rel="noopener noreferrer">explorateur</a>. Le projet est open source : son code, ses
       issues et les contributions de sa communauté vivent sur
       <a href="https://github.com/opencve/opencve" target="_blank" rel="noopener noreferrer">GitHub</a>, et il s’installe aussi chez toi. Merci à ses
       mainteneurs et à tous ceux qui font vivre ce référentiel : c’est grâce à eux que
-      chaque composant de ta simulation a sa fiche CVE à jour.
+      chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
     <h2 id="stacks">Stacks Go chiffrées</h2>

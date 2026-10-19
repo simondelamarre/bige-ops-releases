@@ -66,13 +66,14 @@ api:
   memory_mb: 256</pre>
     <p>Pour une architecture complète avec PostgreSQL et un bus de messages, la page <a href="stack-go-postgresql-nats.html">Go + PostgreSQL + NATS</a> se transpose telle quelle à Rust.</p>
 
-    <h2 id="scan">Ce que le scan bige-ops fait pour Rust</h2>
-    <p>L’analyse du code Rust arrive ; ta stack est déjà couverte : composants et images (y compris celles de tes Dockerfile et docker-compose) confrontés à OpenCVE, exposition dans la simulation et coût sur Outscale.</p>
+    <h2 id="scan">Ce que bige-ops vérifie pour Rust</h2>
+    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code Rust arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation et le coût sur Outscale sont calculés à côté.</p>
+    <p>Tout est classé par urgence : ce qui est exposé à Internet d’abord. <strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, sur ton poste, et c’est gratuit. La méthode complète : <a href="stacks.html#verifications">ce que bige-ops vérifie</a>.</p>
 
     <h2 id="bases">Bases de données typiques</h2>
     <p>SQLx et Diesel couvrent PostgreSQL ; Redis et NATS ont des clients asynchrones solides.</p>
     <table>
-      <tr><th>Base</th><th>Avec ce langage</th><th>CVE</th></tr>
+      <tr><th>Base</th><th>Avec ce langage</th><th>Failles connues</th></tr>
       <tr><td>PostgreSQL</td><td>SQLx, Diesel, tokio-postgres. Stack : <a href="stack-go-postgresql-nats.html">Go + PostgreSQL + NATS</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
       <tr><td>Redis</td><td>redis-rs, fred.</td><td><a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
       <tr><td>NATS</td><td>async-nats. Stack : <a href="stack-go-postgresql-nats.html">Go + PostgreSQL + NATS</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=nats&amp;product=nats-server" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
@@ -85,19 +86,22 @@ api:
     </p>
 
     <h2 id="versions">Versions à épingler</h2>
-    <p>Rust publie une version stable toutes les six semaines, rétrocompatible : épingle la toolchain dans <code>rust-toolchain.toml</code> et les crates dans <code>Cargo.lock</code>. Docs : <a href="https://www.rust-lang.org/learn" target="_blank" rel="noopener noreferrer">Rust</a> · CVE : <a href="https://app.opencve.io/cve/?vendor=rust-lang&amp;product=rust" target="_blank" rel="noopener noreferrer">Rust sur OpenCVE</a>.</p>
+    <p>Rust publie une version stable toutes les six semaines, rétrocompatible : épingle la toolchain dans <code>rust-toolchain.toml</code> et les crates dans <code>Cargo.lock</code>. Docs : <a href="https://www.rust-lang.org/learn" target="_blank" rel="noopener noreferrer">Rust</a> · Failles connues : <a href="https://app.opencve.io/cve/?vendor=rust-lang&amp;product=rust" target="_blank" rel="noopener noreferrer">Rust sur OpenCVE</a>.</p>
 
-    <h2 id="opencve">OpenCVE, le référentiel CVE de bige-ops</h2>
+    <h2 id="opencve">OpenCVE, la source des failles connues</h2>
     <p>
-      Pour savoir quelles vulnérabilités touchent les briques de ta stack, bige-ops
-      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE agrège les CVE publiées
-      (NVD, MITRE, catalogue KEV de la CISA…), les enrichit avec les scores CVSS et EPSS
-      et les range par fournisseur et par produit, consultables dans son
+      Pour savoir quelles failles connues touchent les briques de ta stack, bige-ops
+      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE rassemble les failles publiées
+      dans le registre mondial des vulnérabilités (CVE) et ses sources officielles (NVD,
+      MITRE, liste KEV des failles déjà exploitées tenue par la CISA, l’agence américaine
+      de cybersécurité…), donne à chacune sa note de gravité sur 10 (CVSS) et sa
+      probabilité d’être exploitée (EPSS), et les range par éditeur et par produit,
+      consultables dans son
       <a href="https://app.opencve.io/" target="_blank" rel="noopener noreferrer">explorateur</a>. Le projet est open source : son code, ses
       issues et les contributions de sa communauté vivent sur
       <a href="https://github.com/opencve/opencve" target="_blank" rel="noopener noreferrer">GitHub</a>, et il s’installe aussi chez toi. Merci à ses
       mainteneurs et à tous ceux qui font vivre ce référentiel : c’est grâce à eux que
-      chaque composant de ta simulation a sa fiche CVE à jour.
+      chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
     <h2 id="stacks">Stacks Rust chiffrées</h2>

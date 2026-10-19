@@ -4,6 +4,12 @@ Le socle de nombreuses applications métier : un serveur Jakarta EE, PostgreSQL 
 
 **En bref.** Topologie multi-vm : VM app tinav6.c8r16p2 (serveur Jakarta EE) derrière un LBU, PostgreSQL 17 sur VM privée tinav6.c4r16p2, OpenSearch sur VM privée dédiée tinav6.c4r16p2 avec 200 GiB de BSU, backups OOS, NAT. Estimation bige-ops : **714,95 € HT/mois**.
 
+## Pourquoi cette stack tourne bien sur Outscale
+
+- **Des bases rapides et stables** : Les volumes io1 garantissent jusqu’à 13 000 IOPS par volume : tes requêtes gardent des temps de réponse réguliers, même sous charge. [Volumes](https://docs.outscale.com/en/userguide/About-Volumes.html)
+- **Un réseau privé et des sauvegardes sûres** : Tes bases restent dans le réseau privé de ton projet, jamais exposées à Internet. Les sauvegardes partent vers l’Object Storage, compatible S3 et répliqué entre plusieurs zones.
+- **Prêt pour les clients exigeants** : Régions qualifiées SecNumCloud 3.2 pour le secteur public, certification HDS pour la santé. [Pourquoi Outscale](pourquoi-outscale.html) · [SecNumCloud 3.2](https://www.3ds.com/newsroom/press-releases/outscale-first-cloud-qualified-secnumcloud-32)
+
 ## Architecture
 
 VM app tinav6.c8r16p2 (serveur Jakarta EE) derrière LBU ; PostgreSQL 17 (tinav6.c4r16p2, io1) privé ; OpenSearch sur VM privée dédiée tinav6.c4r16p2 + BSU gp2 200 GiB ; OOS backups ; NAT.
@@ -59,7 +65,7 @@ components:
 
 ## Données
 
-| Base | Image épinglée | Backup | CVE |
+| Base | Image épinglée | Backup | Failles connues |
 | --- | --- | --- | --- |
 | PostgreSQL | `postgres:17` | pg_dump → gzip → bucket OOS | [OpenCVE](https://app.opencve.io/cve/?vendor=postgresql&product=postgresql) |
 | OpenSearch | `opensearchproject/opensearch:3.9.0` | snapshots d’index vers un dépôt compatible S3 (OOS) | [OpenCVE](https://app.opencve.io/cve/?vendor=opensearch&product=opensearch) |
@@ -79,28 +85,30 @@ Backup activé (`backup.enabled` + bucket OOS protégé) ; `backup.sh` préparé
 
 ## Vulnérabilités
 
-Avec ta clé OpenCVE, chaque composant reconnu (image, package) est rapproché de sa fiche fournisseur/produit (une requête par produit). Classement : sévérité CVSS (KEV ⇒ au moins haute), puis exposition dans la simulation (Internet ou derrière LBU : sévérité pleine ; subnet privé : un cran de moins, sauf KEV), départage KEV → CVSS → EPSS. Rapprochement au niveau produit, à recouper avec la version épinglée ; `latest` signalé comme version non épinglée.
+Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. Avec ta clé OpenCVE, bige-ops compare les composants de ta stack, images de tes Dockerfile et docker-compose comprises, au registre mondial des vulnérabilités (CVE), puis classe tout par urgence, l’exposé à Internet d’abord. Pourquoi le refaire toi-même ? C’est chez toi, sur ton poste, et c’est gratuit.
+
+Avec ta clé OpenCVE, chaque composant reconnu (image, paquet installé) est rapproché de sa fiche éditeur/produit (une requête par produit). Classement : gravité notée sur 10 (CVSS), au moins haute si la faille est déjà exploitée (liste KEV de la CISA) ; puis exposition dans la simulation (Internet ou derrière le LBU : gravité pleine ; subnet privé : un cran de moins, sauf faille déjà exploitée) ; départage : déjà exploitée, puis note, puis probabilité d’exploitation (EPSS). Rapprochement au niveau du produit, pas de la version : à recouper avec ta version épinglée ; `latest` signalé comme version non épinglée.
 
 | Composant | Fiche OpenCVE | Dans bige-ops |
 | --- | --- | --- |
-| PostgreSQL | [PostgreSQL](https://app.opencve.io/cve/?vendor=postgresql&product=postgresql) | mappé automatiquement depuis l’image postgres:17 · exposition : privée |
-| Docker (VM OpenSearch) | [Docker](https://app.opencve.io/cve/?vendor=docker&product=docker) | mappé automatiquement depuis les packages de la VM dédiée |
-| OpenSearch, Elasticsearch | [OpenSearch](https://app.opencve.io/cve/?vendor=opensearch&product=opensearch) · [Elasticsearch](https://app.opencve.io/cve/?vendor=elastic&product=elasticsearch) | fiche de référence (composant hors table de correspondance automatique) |
-| WildFly, Payara, Open Liberty | [WildFly](https://app.opencve.io/cve/?vendor=redhat&product=wildfly) · [Payara](https://app.opencve.io/cve/?vendor=payara&product=payara) · [Open Liberty](https://app.opencve.io/cve/?vendor=ibm&product=open_liberty) | fiche de référence (composant hors table de correspondance automatique) |
-| JDK, Hibernate | [OpenJDK](https://app.opencve.io/cve/?vendor=oracle&product=openjdk) · [Hibernate ORM](https://app.opencve.io/cve/?vendor=hibernate&product=hibernate_orm) | fiche de référence (composant hors table de correspondance automatique) |
+| PostgreSQL | [PostgreSQL](https://app.opencve.io/cve/?vendor=postgresql&product=postgresql) | reconnu automatiquement depuis l’image postgres:17 · exposition : privée |
+| Docker (VM OpenSearch) | [Docker](https://app.opencve.io/cve/?vendor=docker&product=docker) | reconnu automatiquement depuis les paquets installés sur la VM dédiée |
+| OpenSearch, Elasticsearch | [OpenSearch](https://app.opencve.io/cve/?vendor=opensearch&product=opensearch) · [Elasticsearch](https://app.opencve.io/cve/?vendor=elastic&product=elasticsearch) | fiche de référence (pas encore reconnu automatiquement) |
+| WildFly, Payara, Open Liberty | [WildFly](https://app.opencve.io/cve/?vendor=redhat&product=wildfly) · [Payara](https://app.opencve.io/cve/?vendor=payara&product=payara) · [Open Liberty](https://app.opencve.io/cve/?vendor=ibm&product=open_liberty) | fiche de référence (pas encore reconnu automatiquement) |
+| JDK, Hibernate | [OpenJDK](https://app.opencve.io/cve/?vendor=oracle&product=openjdk) · [Hibernate ORM](https://app.opencve.io/cve/?vendor=hibernate&product=hibernate_orm) | fiche de référence (pas encore reconnu automatiquement) |
 
-L’analyse du code Java arrive ; la stack est déjà couverte : composants et images confrontés à OpenCVE, exposition et coût. Détail : Java sur Outscale.
+L’analyse du code Java arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE, exposition et coût. Détail : Java sur Outscale.
 
 ## Avant le deploy
 
 - `validate` (services custom, HTTPS sans ORN EIM refusé, rappel NAT pour les VMs privées)
 - `preflight` : clés Outscale, OMI, stack, IP des hôtes, Dockerfile, secrets build/runtime, jeton GitHub, alerte backup OOS ; une erreur bloque le deploy
 - `plan` : Terraform, risques de perte de données ; buckets OOS protégés
-- Vulnérabilités : OpenCVE classé par exposition, `latest` signalé, dépôts en mode direct
+- Vulnérabilités : failles connues des composants (OpenCVE) classées selon leur exposition, `latest` signalé, dépôts relus sur ton poste, sans clé ni IA
 
-## OpenCVE, le référentiel CVE de bige-ops
+## OpenCVE, la source des failles connues
 
-bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : CVE publiées (NVD, MITRE, KEV de la CISA…) enrichies CVSS / EPSS et rangées par fournisseur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
+bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : les failles publiées dans le registre mondial des vulnérabilités (CVE) et ses sources (NVD, MITRE, liste KEV des failles déjà exploitées tenue par la CISA…), avec leur note de gravité sur 10 (CVSS) et leur probabilité d’être exploitées (EPSS), rangées par éditeur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
 
 Docs : [Jakarta EE](https://jakarta.ee/) · [WildFly](https://docs.wildfly.org/) · [OpenSearch](https://docs.opensearch.org/) · [PostgreSQL](https://www.postgresql.org/docs/) · [Volumes BSU](https://docs.outscale.com/fr/userguide/À-propos-des-volumes.html) · [SecNumCloud](https://fr.outscale.com/secnumcloud/)
 

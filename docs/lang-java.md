@@ -30,9 +30,11 @@ bige-ops add layout custom --runtime java --web spa --worker \
   --db postgres --db redis --topology oks --lbu
 ```
 
-## Scan bige-ops
+## Ce que bige-ops vérifie pour Java
 
-L’analyse du code Java arrive ; ta stack est déjà couverte : composants et images (y compris celles de tes Dockerfile et docker-compose) confrontés à OpenCVE, exposition dans la simulation et coût sur Outscale. Mappés automatiquement : PostgreSQL, Redis, Kubernetes ; références : [Spring Boot sur OpenCVE](https://app.opencve.io/cve/?vendor=vmware&product=spring_boot) · [Quarkus sur OpenCVE](https://app.opencve.io/cve/?vendor=redhat&product=quarkus) · [Apache Kafka sur OpenCVE](https://app.opencve.io/cve/?vendor=apache&product=kafka) · [Keycloak sur OpenCVE](https://app.opencve.io/cve/?vendor=redhat&product=keycloak).
+Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code Java arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation et le coût sur Outscale sont calculés à côté. Reconnus automatiquement : PostgreSQL, Redis, Kubernetes ; références : [Spring Boot sur OpenCVE](https://app.opencve.io/cve/?vendor=vmware&product=spring_boot) · [Quarkus sur OpenCVE](https://app.opencve.io/cve/?vendor=redhat&product=quarkus) · [Apache Kafka sur OpenCVE](https://app.opencve.io/cve/?vendor=apache&product=kafka) · [Keycloak sur OpenCVE](https://app.opencve.io/cve/?vendor=redhat&product=keycloak).
+
+Tout est classé par urgence : ce qui est exposé à Internet d’abord. Pourquoi le refaire toi-même ? C’est chez toi, sur ton poste, et c’est gratuit. Méthode complète : [ce que bige-ops vérifie](https://bige.dev/stacks.html#verifications).
 
 ## Bases de données
 
@@ -46,11 +48,11 @@ Jamais de base exposée à Internet : subnet privé + security group au CIDR du 
 
 ## Versions à épingler
 
-Vise un JDK LTS : 25 (septembre 2025) ou 21, distribués notamment par Eclipse Temurin (images Docker). Reste sur une branche Spring Boot encore supportée (onglet Support de la page projet) et épingle tes BOM Maven ou Gradle. Projets JDK : OpenJDK · CVE : OpenJDK sur OpenCVE · Spring Framework sur OpenCVE.
+Vise un JDK LTS : 25 (septembre 2025) ou 21, distribués notamment par Eclipse Temurin (images Docker). Reste sur une branche Spring Boot encore supportée (onglet Support de la page projet) et épingle tes BOM Maven ou Gradle. Projets JDK : OpenJDK · Failles connues : OpenJDK sur OpenCVE · Spring Framework sur OpenCVE.
 
-## OpenCVE, le référentiel CVE de bige-ops
+## OpenCVE, la source des failles connues
 
-bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : CVE publiées (NVD, MITRE, KEV de la CISA…) enrichies CVSS / EPSS et rangées par fournisseur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
+bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : les failles publiées dans le registre mondial des vulnérabilités (CVE) et ses sources (NVD, MITRE, liste KEV des failles déjà exploitées tenue par la CISA…), avec leur note de gravité sur 10 (CVSS) et leur probabilité d’être exploitées (EPSS), rangées par éditeur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
 
 ## Stacks chiffrées
 
