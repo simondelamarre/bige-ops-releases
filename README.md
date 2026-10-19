@@ -19,6 +19,15 @@ brew install --cask simondelamarre/bige-ops/bige-ops
 
 ---
 
+## En clair
+
+- **Le sujet.** Mettre une application en ligne sur un vrai cloud : réseau, machines, bases de données, sauvegardes, sécurité. Un métier à part entière, d’habitude confié à une équipe DevOps.
+- **Pourquoi s’en occuper.** C’est là que se jouent ta facture, l’endroit où vivent tes données et la sécurité de tes clients.
+- **Utile pour toi ?** Sans équipe DevOps, bige-ops fait le travail de départ : il dessine ta stack, la chiffre, vérifie ses failles et la déploie sur ton compte. Avec une équipe en place, il t’apporte un second regard sur le prix et les failles.
+- **Soyons honnêtes.** Il ne remplace pas un expert sur une infra critique. Il estime sur les prix publics, hors remises négociées. Il déploie des applications en conteneurs, et le HTTPS passe par un load balancer avec ton certificat. [Ce qu’il sait faire, et ce qu’il ne sait pas →](https://bige.dev/savoir.html)
+- **Pourquoi le faire.** Connaître le prix avant la facture, garder tes données en France sur un cloud qualifié, corriger tes failles avant qu’un client ne les trouve.
+- **Et pourquoi pas.** C’est gratuit, ça tourne sur ton poste, sans compte cloud pour commencer. Si tu arrêtes, ta stack reste un simple fichier dans ton Git.
+
 ## Ce que fait bige-ops
 
 <p align="center"><img src="docs/screens/readme-grandis.png" alt="02 — Grandis. Sépare l’app et ses données quand tu grandis. Capture réelle : load balancer, app, PostgreSQL et Redis au privé, 381,66 € HT par mois, chaque VM avec son prix." width="920" /></p>
@@ -59,12 +68,6 @@ Pas d’équipe DevOps, pas de rendez-vous : tu choisis ton cas, tu vois le prix
 | [IA : FastAPI + pgvector + GPU](https://bige.dev/stack-ai-fastapi-pgvector-gpu.html) | Produit IA | ~2 655 €/mois |
 
 Estimations HT calculées par bige-ops sur la grille publique (eu-west-2). [Toutes les stacks et les langages →](https://bige.dev/stacks.html)
-
-## En 3 étapes
-
-1. **Installe.** C’est gratuit.
-2. **Simule.** Pars d’une stack prête et vois le prix.
-3. **Déploie** sur ton compte, quand tu veux. Pas besoin de DevOps.
 
 ---
 

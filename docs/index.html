@@ -628,6 +628,20 @@
     .slide-shot { position: relative; display: block; overflow: hidden; border: 1px solid #233038; border-radius: 14px; background: #0d1215; }
     .slide-shot:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
     .slide-shot img { display: block; width: 100%; height: auto; }
+    .clear { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 0; margin: .5rem 0 0; }
+    .clear dt, .clear dd { padding: .95rem 0; border-top: 1px solid var(--ink-700); margin: 0; }
+    .clear dt { font-family: var(--font-mono); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-bright); padding-right: 1.5rem; padding-top: 1.15rem; }
+    .clear dd { color: #d7dde2; font-size: 1.04rem; line-height: 1.6; }
+    .clear dd a { color: var(--accent-bright); }
+    .clear-close { margin-top: 1.2rem !important; color: #d7dde2 !important; }
+    .clear-close a { color: var(--accent-bright); margin-left: .4rem; }
+    .ecoute { margin: 1.5rem 0 0; text-align: center; color: var(--mist); }
+    .ecoute a { color: var(--accent-bright); }
+    @media (max-width: 640px) {
+      .clear { grid-template-columns: 1fr; }
+      .clear dt { padding-bottom: 0; }
+      .clear dd { border-top: 0; padding-top: .35rem; }
+    }
     .persona-lead { color: #d7dde2 !important; font-size: 1.1rem !important; }
     .persona h3 { font-size: 1.15rem; color: var(--white); }
     .persona-price { font-family: var(--font-mono); font-size: .9rem !important; color: var(--accent-bright) !important; }
@@ -678,7 +692,6 @@
       <p class="brand">bige<span class="ops">-ops</span></p>
       <span class="brand-badge">Gratuit</span>
     </div>
-    <span id="why-outscale"></span><span id="outscale"></span><span id="clouds"></span>
     <h1 class="hero-title">Dessine ta stack.<br>Vois le prix.<br><span>Déploie.</span></h1>
     <p class="baseline"><strong class="tagline">La puissance d’un vrai cloud, la simplicité d’un PaaS.</strong> bige-ops simule ton infra, te montre ce qu’elle coûte et la déploie sur ton compte, aujourd’hui chez <a href="pourquoi-outscale.html">Outscale</a>. Gratuit, installé en une commande.</p>
 
@@ -748,6 +761,26 @@
     </div>
 
 
+    <section class="block" id="en-clair">
+      <span id="features"></span><span id="faq"></span><span id="why-less"></span><span id="why-deploy"></span><span id="pourquoi"></span><span id="demarrer"></span><span id="aussi"></span>
+      <h2>En clair</h2>
+      <dl class="clear">
+        <dt>Le sujet</dt>
+        <dd>Mettre une application en ligne sur un vrai cloud&nbsp;: réseau, machines, bases de données, sauvegardes, sécurité. Un métier à part entière, d’habitude confié à une équipe DevOps.</dd>
+        <dt>Pourquoi s’en occuper</dt>
+        <dd>C’est là que se jouent ta facture, l’endroit où vivent tes données et la sécurité de tes clients. Un mauvais réglage se paie chaque mois, ou le jour d’un incident.</dd>
+        <dt>Utile pour toi&nbsp;?</dt>
+        <dd>Sans équipe DevOps, bige-ops fait le travail de départ&nbsp;: il dessine ta stack, la chiffre, vérifie ses failles et la déploie sur ton compte. Avec une équipe et une infra qui tournent déjà, il t’apporte un second regard sur le prix et sur les failles.</dd>
+        <dt>Soyons honnêtes</dt>
+        <dd>bige-ops ne remplace pas un expert sur une infra critique. Il estime sur les prix publics, hors remises négociées. Il déploie des applications en conteneurs, et le HTTPS passe par un load balancer avec ton certificat. Tout est écrit dans <a href="savoir.html">ce qu’il sait faire, et ce qu’il ne sait pas</a>.</dd>
+        <dt>Pourquoi le faire</dt>
+        <dd>Pour connaître le prix avant la facture, garder tes données en France sur un cloud qualifié, et corriger tes failles avant qu’un client ne les trouve.</dd>
+        <dt>Et pourquoi pas</dt>
+        <dd>C’est gratuit, ça tourne sur ton poste, sans compte cloud pour commencer, et tes secrets restent dans un coffre local. Si tu arrêtes, ta stack reste un simple fichier dans ton Git.</dd>
+      </dl>
+      <p class="clear-close"><strong>Le travail de départ d’une équipe DevOps, dans une app gratuite.</strong> <a href="#download">Installer</a></p>
+    </section>
+
     <section class="block" id="pour-qui">
       <h2>Pour qui</h2>
       <p class="persona-lead">Pas d’équipe DevOps, pas de rendez-vous&nbsp;: tu choisis ton cas, tu vois le prix, tu déploies.</p>
@@ -791,29 +824,8 @@
       <p class="persona-facts">13 stacks prêtes · 12 langages · de la machine unique à Kubernetes · 0&nbsp;€ pour commencer</p>
     </section>
 
-    <section class="block" id="pourquoi">
-      <span id="features"></span><span id="why-projection"></span>
-      <h2>Ce que fait bige-ops</h2>
-      <div class="facts">
-        <article class="fact" id="why-less">
-          <h3>Simule</h3>
-          <p>Dessine ta stack ou pars d’un modèle. Le prix s’affiche ligne par ligne, avant la facture.</p>
-          <p><a href="layouts.html">Par où commencer →</a></p>
-        </article>
-        <article class="fact" id="why-deploy">
-          <h3>Déploie</h3>
-          <p>Tu relies ton dépôt, bige-ops crée l’infra et déploie sur ton compte. Pas besoin de DevOps.</p>
-          <p><a href="stacks.html">Stacks et langages →</a></p>
-        </article>
-        <article class="fact" id="why-vulns">
-          <h3>Sécurise</h3>
-          <p>Des failles, il y en aura toujours. bige-ops les affiche et met en tête celles que ta stack expose. Sur ton poste, sans clé ni IA.</p>
-          <p><a href="#failles">Comment ça marche →</a></p>
-        </article>
-      </div>
-    </section>
-
     <section class="block" id="vrai-cloud">
+      <span id="why-outscale"></span><span id="outscale"></span><span id="clouds"></span>
       <p class="waste-lead">Ne perds pas ton temps sur</p>
       <p class="waste">Heroku · Fly.io · Render · Railway · Vercel · Netlify · Clever Cloud · Koyeb · Northflank · DigitalOcean · Linode · Vultr · Hetzner · Contabo · Hostinger…</p>
       <p class="real-title">Si tu cherches un vrai cloud provider pour avancer&nbsp;: <a href="pourquoi-outscale.html">Outscale</a>.</p>
@@ -826,6 +838,7 @@
     </section>
 
     <section class="block" id="failles">
+      <span id="why-vulns"></span>
       <h2>Comment bige-ops trouve tes failles</h2>
       <ol>
         <li>Il lit le code de tes dépôts, sur ton poste.</li>
@@ -835,45 +848,14 @@
         <li>Il classe tout par urgence : ce qui est exposé à Internet d’abord.</li>
       </ol>
       <p><strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, et c’est gratuit.</p>
+      <p id="why-byok"><strong>Pour aller plus loin</strong>, bige-ops advanced lit ton code plus en profondeur avec ta propre clé d’IA et classe chaque faille par type. <a href="agent.html">Voir</a></p>
     </section>
 
     <section class="block" id="prix">
+      <span id="why-projection"></span>
       <h2>Combien ça coûte&nbsp;?</h2>
       <p><strong>bige-ops : 0 €.</strong> Ton cloud, tu le paies au prix public, et tu le vois avant chaque déploiement. Une app et sa base sur une machine démarrent autour de <strong>75 € HT par mois</strong>.</p>
       <p><a href="layouts.html">Le budget selon ta topologie →</a> · <a href="catalogue-prix.html">Catalogue de prix →</a></p>
-    </section>
-
-    <section class="block" id="demarrer">
-      <h2>Démarrer en 3 étapes</h2>
-      <ol>
-        <li><strong>Installe</strong> : la commande ci-dessus sur macOS, l’AppImage ou le .deb sur Linux.</li>
-        <li><strong>Simule</strong> : connecte-toi avec GitHub, choisis un dossier, pars d’une topologie prête.</li>
-        <li><strong>Décide</strong> : coût, risques, vulnérabilités. Tu connectes ton compte cloud quand tu veux déployer.</li>
-      </ol>
-    </section>
-
-    <section class="block" id="aussi">
-      <h2>Et aussi</h2>
-      <ul>
-        <li><strong>Des bases réglées pour leur usage</strong> : disque, IOPS, sauvegardes. <a href="layouts.html">Voir</a></li>
-        <li id="why-byok"><strong>L’audit profond en option</strong> : bige-ops advanced lit ton code plus en profondeur avec ta propre clé d’IA, et classe chaque faille par type. <a href="agent.html">Voir</a></li>
-        <li><strong>Tes secrets chez toi</strong> : coffre local, jamais dans tes fichiers. <a href="secrets.html">Voir</a></li>
-        <li><strong>Bientôt</strong> : ta conso réelle face à ta simulation.</li>
-      </ul>
-    </section>
-
-    <section class="block" id="faq">
-      <h2>FAQ</h2>
-      <dl class="faq">
-        <dt>Faut-il un compte cloud&nbsp;?</dt>
-        <dd>Pas pour commencer : la simulation et l’estimation fonctionnent hors ligne. Ton compte sert au moment de déployer.</dd>
-        <dt>C’est vraiment gratuit&nbsp;?</dt>
-        <dd>Oui. Tu paies ton cloud au prix public, rien de plus.</dd>
-        <dt>Où sont mes secrets&nbsp;?</dt>
-        <dd>Sur ton poste, dans un coffre local. <a href="secrets.html">Détail</a>.</dd>
-        <dt id="why-ecoute">Une idée, un bug&nbsp;?</dt>
-        <dd><span id="ecoute"></span><a href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">Ouvre une issue</a>, on lit tout.</dd>
-      </dl>
     </section>
 
     <p class="panel-lead" style="margin-top:2.5rem;font-size:1.15rem;font-weight:600;color:#fff;text-align:center">Le prix compte, mais pas seul : où vivent tes données, qui les protège et qui te répond comptent autant.</p>
@@ -891,6 +873,8 @@
       </p>
       <p class="actions"><a class="primary panel-cta" href="#download">Installer gratuitement</a></p>
     </section>
+
+    <p class="ecoute" id="why-ecoute"><span id="ecoute"></span>Une idée, un bug&nbsp;? <a href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">Ouvre une issue</a>, on lit tout.</p>
 
     <footer class="site-footer">
       <div class="cols">
