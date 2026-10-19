@@ -1,6 +1,6 @@
 # Projets, simulations & promote
 
-Workspace (dossier local) → compte (`accounts/<id>/` = un tenant Outscale, credentials + inventory + `shared.yaml`) → simulations (`accounts/<id>/simulations/<name>/`).
+Workspace (dossier local) → compte (`accounts/<id>/` = un compte Outscale, credentials + inventory + `shared.yaml`) → simulations (`accounts/<id>/simulations/<name>/`).
 
 **Live** = `existing/` ou la simulation promue, orientée prod. **Draft** = variante parallèle, ne remplace rien tant qu’on ne fait pas `promote`.
 

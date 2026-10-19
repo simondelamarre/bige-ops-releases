@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Catalogue de prix &amp; estimation — bige-ops</title>
-  <meta name="description" content="Comment l’estimation est calculée en local, ce qu’elle compte, et surtout ce qu’elle ne compte pas." />
+  <meta name="description" content="Comment bige-ops calcule le coût mensuel d’une stack Outscale sur ton poste, à partir du catalogue public ReadPublicCatalog : ce qui est compté, ce qui se lit à côté." />
   <link rel="canonical" href="https://bige.dev/catalogue-prix.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/catalogue-prix.html" />
   <meta property="og:title" content="Catalogue de prix &amp; estimation — bige-ops" />
-  <meta property="og:description" content="Comment l’estimation est calculée en local, ce qu’elle compte, et surtout ce qu’elle ne compte pas." />
+  <meta property="og:description" content="Comment bige-ops calcule le coût mensuel d’une stack Outscale sur ton poste, à partir du catalogue public ReadPublicCatalog : ce qui est compté, ce qui se lit à côté." />
   <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,69 +23,72 @@
 </head>
 <body>
   <main>
-    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="index.html#pricing">Pricing</a> · <a href="savoir.html">Sait / ne sait pas</a></p>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="index.html#g-estimate">Estimation</a> · <a href="savoir.html">Sait / ne sait pas</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
     <h1>Catalogue de prix &amp; estimation</h1>
-    <p class="lead">L’estimation est calculée <strong>en local</strong>. Catalogue bootstrap embarqué, ou sync du catalogue public OAPI (<code>pricing catalog-sync</code> / Sync Tarifs). Ce n’est pas un devis, pas votre contrat — et certaines lignes ne sont pas comptées.</p>
+    <p class="lead">L’estimation est calculée <strong>sur ton poste</strong>, à partir du catalogue public Outscale : celui embarqué dans l’app, ou celui que tu synchronises depuis l’API. Elle te donne le coût mensuel € HT d’une simulation, ligne par ligne, avant toute dépense.</p>
+
+    <h2>D’où viennent les prix</h2>
+    <div class="callout">
+      <strong>Un catalogue public, en direct.</strong>
+      <code>bige-ops pricing catalog-sync</code> (ou Sync sur la page Tarifs)
+      appelle <a href="https://docs.outscale.com/api#readpubliccatalog" target="_blank" rel="noopener noreferrer"><code>ReadPublicCatalog</code></a>,
+      l’API Outscale qui publie la grille de prix d’une Région, sans
+      authentification. Le résultat remplace le catalogue embarqué ;
+      <code>bige-ops pricing catalog-status</code> indique la source en cours.
+    </div>
+
     <h2>Comment le chiffre est fabriqué</h2>
     <p>
-      Un type de VM Outscale s’écrit <code>tinav6.c4r8p2</code> : génération,
-      cœurs, RAM, profil de performance. bige-ops décompose cette chaîne, puis
-      multiplie chaque dimension par le tarif de la région. Calcul local.
+      Un type de VM s’écrit <code>tinav6.c4r8p2</code> : génération de CPU,
+      vCPU, RAM, niveau de performance. Outscale facture le vCPU à l’heure
+      selon le couple <strong>génération × performance</strong>, et la RAM au
+      GiB, au même prix quelle que soit la génération. bige-ops décompose le
+      type, applique le tarif de la Région et ramène le tout au mois
+      (730 heures). Le même calcul s’applique aux nœuds OKS.
     </p>
-    <div class="callout">
-      <strong>Sync catalogue (0.6).</strong>
-      <code>bige-ops pricing catalog-sync</code> (ou Sync sur Tarifs) tire
-      <code>ReadPublicCatalog</code> et remplace le bootstrap embarqué.
-      Sinon l’estimation reste sur le catalogue figé de l’app.
-    </div>
 
     <h2>Ce qui est compté</h2>
     <table>
       <tr><th>Ligne</th><th>Base de calcul</th></tr>
-      <tr><td>VM</td><td>cœurs + RAM + profil, selon le type Tina</td></tr>
-      <tr><td>Disque racine</td><td>taille — toujours au tarif <code>gp2</code></td></tr>
-      <tr><td>Volumes supplémentaires</td><td>taille et type, IOPS comprises si renseignées</td></tr>
+      <tr><td>VM</td><td>vCPU (génération × performance) + RAM, GPU si tu en déclares un</td></tr>
+      <tr><td>Disque racine</td><td>taille et type réels : <code>gp2</code>, ou <code>io1</code> avec ses IOPS</td></tr>
+      <tr><td>Volumes de données</td><td>taille et type, IOPS comprises en <code>io1</code></td></tr>
       <tr><td>LBU</td><td>à l’heure</td></tr>
-      <tr><td>NAT service</td><td>à l’heure, uniquement si le NAT est activé</td></tr>
-      <tr><td>EIP orpheline</td><td>à l’heure</td></tr>
-      <tr><td>OKS</td><td>profil du control plane + type et nombre de nœuds</td></tr>
-      <tr><td>Bucket OOS</td><td>seulement si vous renseignez une taille</td></tr>
-      <tr><td>Snapshots</td><td>dans la vue inventaire uniquement</td></tr>
+      <tr><td>NAT service</td><td>à l’heure, quand le NAT est activé</td></tr>
+      <tr><td>IP publique non associée</td><td>à l’heure</td></tr>
+      <tr><td>OKS</td><td>control plane à l’heure + type et nombre de nœuds</td></tr>
+      <tr><td>Bucket OOS</td><td>au GiB par mois, quand tu renseignes une taille</td></tr>
+      <tr><td>Snapshots</td><td>dans l’estimation d’inventaire</td></tr>
     </table>
 
-    <h2>Ce qui n’est pas compté</h2>
-    <div class="callout callout-warn">
-      <strong>Lisez l’estimation comme un plancher, pas comme une facture.</strong>
-      Les lignes ci-dessous sont absentes du total.
-    </div>
+    <h2>Ce qui se lit à côté</h2>
     <ul>
-      <li><strong>Le trafic sortant</strong> — VMs, OOS, LBU. Les tarifs sont dans le catalogue, mais le trafic n’est pas ajouté à l’estimation : on ne sait pas deviner votre volume.</li>
-      <li><strong>Le VPN</strong> — le tarif existe au catalogue, il n’est pas branché sur le modèle.</li>
-      <li><strong>DirectLink</strong> — présent au catalogue, sans aucun modèle derrière. N’en tirez aucune estimation.</li>
-      <li><strong>Le surcoût <code>io1</code> du disque racine</strong> d’une base, toujours chiffré en <code>gp2</code> — voir <a href="volumes-bsu.html">Volumes BSU</a>.</li>
-      <li><strong>Un bucket OOS sans taille renseignée</strong>, qui vaut 0 € dans le total.</li>
-      <li><strong>Licences, hôtes dédiés, GPU</strong> — tarifés au catalogue, absents du modèle de composition.</li>
+      <li><strong>Le trafic sortant.</strong> Au catalogue public, le trafic sortant des VMs, d’OOS et du LBU est à 0 € HT par GiB en <code>eu-west-2</code>, <code>cloudgouv-eu-west-1</code>, <code>us-east-2</code> et <code>us-west-1</code> ; seule <code>ap-northeast-1</code> le facture. L’estimation ne l’ajoute pas.</li>
+      <li><strong>Le VPN et DirectLink</strong> : tarifés au catalogue, sans composant dans la simulation.</li>
+      <li><strong>Les licences et les VM dédiées</strong> : tarifées au catalogue, hors du modèle de composition.</li>
+      <li><strong>Un bucket OOS sans taille</strong> vaut 0 € dans le total : renseigne le volume attendu pour le voir.</li>
     </ul>
 
-    <h2>Ce que ça n’est pas</h2>
+    <h2>Estimation et devis</h2>
     <p>
-      Pas un devis. Pas de remise contractuelle, pas d’engagement, pas de prix
-      en temps réel. Pour un vrai chiffre, il y a la
-      <a href="https://fr.outscale.com/tarifs/">grille publique Outscale</a> et
-      votre interlocuteur commercial. L’estimation de bige-ops sert à comparer
-      deux layouts entre eux et à éviter la mauvaise surprise d’ordre de
-      grandeur — c’est déjà beaucoup, ce n’est pas plus.
+      L’estimation s’appuie sur la grille publique, au tarif à la demande.
+      Elle sert à comparer deux layouts, à choisir un type Tina ou un type de
+      volume, et à connaître l’ordre de grandeur avant l’apply. Pour un devis,
+      des engagements ou des conditions propres à ton compte, la référence
+      reste la <a href="https://fr.outscale.com/tarifs/" target="_blank" rel="noopener noreferrer">grille publique Outscale</a>
+      et ton interlocuteur Outscale.
     </p>
 
-    <h2>Doc produit Outscale (référence)</h2>
+    <h2>Doc Outscale</h2>
     <ul>
-      <li><a href="https://docs.outscale.com/en/userguide/Instance-Types.html">Instance types</a></li>
-      <li><a href="https://docs.outscale.com/en/userguide/About-Volumes.html">About volumes</a></li>
-      <li><a href="https://docs.outscale.com/en/userguide/About-Regions-Endpoints-and-Availability-Zones.html">Regions and availability zones</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/Types-de-VM.html" target="_blank" rel="noopener noreferrer">Types de VM</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-volumes.html" target="_blank" rel="noopener noreferrer">À propos des volumes</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-Régions-et-Sous-régions.html" target="_blank" rel="noopener noreferrer">Régions et Sous-régions</a></li>
+      <li><a href="https://docs.outscale.com/api#readpubliccatalog" target="_blank" rel="noopener noreferrer">API ReadPublicCatalog</a></li>
     </ul>
 
     <p class="doc-nav" style="margin-top:2rem"><a href="savoir.html">Sait / ne sait pas</a> · <a href="regions.html">Régions</a> · <a href="volumes-bsu.html">Volumes BSU</a> · <a href="perimetre.html">Périmètre</a></p>
@@ -140,7 +143,7 @@
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

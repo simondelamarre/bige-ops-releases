@@ -17,10 +17,10 @@ Destroy vérifie via re-fetch. Forget = local seulement.
 | État | Ressources |
 | --- | --- |
 | Importé en composant | VMs, volumes, nets/subnets, SG, keypairs |
-| Observé seulement | route tables, NAT, IGW, EIP, peering, VPN, OOS reverse, LBU sketch, OKS listé |
+| Observé seulement | route tables, NAT, internet service, IP publiques, Net peering, VPN, buckets OOS listés, LBU importés, OKS listé |
 | Local seulement | `nic`, `dhcp_options` |
-| Pas modélisé | DirectLink |
+| Catalogue de prix | DirectLink |
 
-**Danger :** `inventory clean --yes` = destructif (comptes de test). OOS indestructible via bige-ops.
+**Danger :** `inventory clean --yes` = destructif (comptes de test). Il refuse de détruire les buckets OOS.
 
 HTML : [inventory.html](https://bige.dev/inventory.html)

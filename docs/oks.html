@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>OKS &amp; pods — bige-ops</title>
-  <meta name="description" content="OKS Kubernetes managé : nodepools, réplicas pods, deploy. Starter kit Outscale." />
+  <meta name="description" content="OKS, le Kubernetes managé d’Outscale : control planes, versions 1.32 à 1.36, nodepools, réplicas et HPA, HTTPS par certificat EIM. Disponible en eu-west-2 et SecNumCloud." />
   <link rel="canonical" href="https://bige.dev/oks.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/oks.html" />
   <meta property="og:title" content="OKS &amp; pods — bige-ops" />
-  <meta property="og:description" content="OKS Kubernetes managé : nodepools, réplicas pods, deploy. Starter kit Outscale." />
+  <meta property="og:description" content="OKS, le Kubernetes managé d’Outscale : control planes, versions 1.32 à 1.36, nodepools, réplicas et HPA, HTTPS par certificat EIM. Disponible en eu-west-2 et SecNumCloud." />
   <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,80 +26,102 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
     <h1>OKS &amp; pods</h1>
     <p class="lead">
-      <strong>OKS</strong> = Kubernetes managé Outscale. Vous dimensionnez
-      cluster et workloads ; Outscale opère le control plane.
-      bige-ops génère specs + manifests — pas votre SRE à la place.
+      <strong>OKS</strong> (OUTSCALE Kubernetes as a Service) est le Kubernetes
+      managé d’Outscale : Outscale opère le control plane, tu dimensionnes les
+      nodepools et les workloads. bige-ops génère les specs du cluster et les
+      manifests, puis les applique avec les outils officiels.
     </p>
 
-    <div class="callout callout-warn">
-      <strong>Point d’attention.</strong>
-      On peut estimer des fourchettes — votre compte n’offre pas forcément
-      OKS, toutes les régions, ni SecNumCloud. On ne maîtrise pas votre
-      contrat : simulate librement, la vérité passe par un dry run (erreurs
-      API). Contact :
-      <a href="https://www.outscale.com/fr/contactez-nous/">Outscale commercial</a>
-      ·
-      <a href="mailto:sales@outscale.com">sales@outscale.com</a>.
-      Détail landing :
-      <a href="index.html#oks-warn">OKS · point d’attention</a>.
+    <div class="callout">
+      <strong>Avant de commencer.</strong>
+      OKS est disponible dans les Régions <code>eu-west-2</code> et
+      <code>cloudgouv-eu-west-1</code> (SecNumCloud), et s’active sur demande
+      auprès du support Outscale
+      (<a href="mailto:support@outscale.com">support@outscale.com</a>).
+      Tu peux simuler et estimer un cluster sans cela ; l’activation compte au
+      moment de l’apply. Détail : <a href="regions.html#acces">régions &amp; accès aux services</a>.
     </div>
 
     <figure class="diagram">
       <pre class="mermaid">
 flowchart TB
-  subgraph oks [OKS — managé Outscale]
+  subgraph oks [OKS — managé par Outscale]
     CP[Control plane]
     NP[Nodepools]
   end
-  subgraph apps [Votre simulation]
+  subgraph apps [Ta simulation]
     DEP[Deployments / Services]
   end
   CP --- NP
   NP --> DEP
-  DEP -->|replicas formulaire| R[Pods]
+  DEP -->|réplicas du formulaire| R[Pods]
+  DEP -->|Service LoadBalancer| LBU[LBU]
       </pre>
-      <figcaption>Réplicas = scale de pods Deployment, pas un replica-set Mongo géré.</figcaption>
+      <figcaption>Réplicas = nombre de pods d’un Deployment. Un Service LoadBalancer devient un LBU.</figcaption>
     </figure>
+
+    <h2>Ce qu’OKS t’apporte</h2>
+    <ul>
+      <li><strong>Un control plane managé</strong> : Outscale le met à jour, le patche et le remplace si besoin. Ses nœuds peuvent donc changer d’IP : n’écris pas de règle de pare-feu sur leurs adresses.</li>
+      <li><strong>Des versions récentes</strong> : OKS prend en charge Kubernetes 1.32 à 1.36. Un cluster existant ne monte pas de version tout seul : la mise à jour se déclenche quand tu le décides.</li>
+      <li><strong>Des workers jetables</strong> : les nœuds des nodepools n’apparaissent pas comme des VMs dans ton compte. C’est voulu : un cluster se traite comme une infrastructure reproductible, pas comme des machines entretenues à la main.</li>
+      <li><strong>Des load balancers natifs</strong> : un Service de type LoadBalancer crée un LBU, et des annotations OKS permettent d’en répartir sur plusieurs Subregions pour la haute disponibilité.</li>
+    </ul>
+
+    <h2>Choisir le control plane</h2>
+    <table>
+      <tr><th>Type</th><th>Masters</th><th>HA</th><th>Échelle indicative</th></tr>
+      <tr><td><code>cp.mono.master</code></td><td>1 × 4 GiB</td><td>non</td><td>jusqu’à 10 nœuds</td></tr>
+      <tr><td><code>cp.3.masters.small</code></td><td>3 × 4 GiB</td><td>oui</td><td>jusqu’à 50 nœuds</td></tr>
+      <tr><td><code>cp.3.masters.medium</code></td><td>3 × 8 GiB</td><td>oui</td><td>jusqu’à 200 nœuds</td></tr>
+      <tr><td><code>cp.3.masters.large</code></td><td>3 × 16 GiB</td><td>oui</td><td>jusqu’à 400 nœuds</td></tr>
+    </table>
+    <p>
+      bige-ops part sur <code>cp.mono.master</code> et Kubernetes
+      <strong>1.34</strong> : le bon choix pour simuler, tester ou monter un
+      cluster éphémère. Pour la production, Outscale recommande un control
+      plane à 3 masters (le mono-master n’a ni HA ni SLA). On peut passer de
+      <code>cp.mono.master</code> à un type supérieur après création, pas
+      l’inverse. Et l’échelle dépend aussi du nombre d’objets Kubernetes et
+      de leur activité : un petit cluster très chargé peut demander un
+      control plane plus grand.
+    </p>
 
     <h2>App, CLI bige-ops, oks-cli, kubectl</h2>
     <p>
-      Chemin nominal : <strong>app desktop</strong> (Visual / Workspace).
-      Sous le capot (ou en terminal) : la CLI <code>bige-ops</code> — même
-      moteur. Pour OKS spécifiquement :
+      Chemin nominal : l’<strong>app desktop</strong> (Visual / Workspace).
+      Sous le capot, ou en terminal : la CLI <code>bige-ops</code>, même
+      moteur. Pour OKS :
     </p>
     <ul>
-      <li><code>apply --target oks</code> → <strong>oks-cli</strong> (cluster / nodepools / kubeconfig)</li>
-      <li><code>deploy</code> → <strong>kubectl apply</strong> sur <code>oks/apps/</code></li>
+      <li><code>apply --target oks</code> → <strong>oks-cli</strong> : projet, cluster, nodepools, kubeconfig.</li>
+      <li><code>deploy</code> → <strong>kubectl apply</strong> sur <code>oks/apps/</code>.</li>
     </ul>
-    <p>
-      Donc <strong>oui, on utilise la CLI pour OKS</strong> — pas comme
-      produit terminal-first, mais comme outils kube branchés par
-      bige-ops. Détail : <a href="cli.html">CLI · app · OKS</a>.
-    </p>
+    <p>Détail : <a href="cli.html">CLI · app · OKS</a>.</p>
 
     <h2>Cluster et nœuds</h2>
     <p>
-      Une topologie <strong>oks</strong> déclare le cluster, la version kube,
-      le profil control plane et les <strong>nodepools</strong>
-      (type Tina + count). Le formulaire Visual (ou
-      <code>bige-ops add …</code>) met à jour la simulation
-      immédiatement ; <code>apply --target oks</code> passe par
-      <code>oks-cli</code> embarqué.
+      Une topologie <strong>oks</strong> déclare le cluster, la version
+      Kubernetes, le control plane et les <strong>nodepools</strong> (type
+      Tina, nombre de nœuds, Subregion). Le formulaire Visual (ou
+      <code>bige-ops add …</code>) met à jour la simulation immédiatement.
+      À l’apply, l’accès admin au cluster est restreint à ton IP publique
+      (<code>/32</code>), ou au CIDR que tu fixes dans
+      <code>OKS_ADMIN_CIDR</code>.
     </p>
 
     <h2>Pods et réplicas</h2>
     <p>
-      Les services (api, web, worker, DB…) deviennent Deployments sous
+      Les services (api, web, worker, bases…) deviennent des Deployments sous
       <code>oks/apps/</code>. Le champ <strong>réplicas</strong>
-      (<code>service_config.*.replicas</code>) dans l’inspector réécrit le
-      setup sans questionnaire. Défauts typiques : data / worker ≈ 1,
-      api / web ≈ 2. Puis <code>deploy</code> applique via kubectl.
-      Réplicas ≠ exposition réseau : pour
-      <strong>ouvrir ou non</strong> un pod / Service, voir
+      (<code>service_config.*.replicas</code>) de l’inspector réécrit le setup
+      directement. Par défaut : api et web à 2, worker et bases à 1. Puis
+      <code>deploy</code> applique via kubectl. Réplicas ≠ exposition
+      réseau : pour <strong>ouvrir ou non</strong> un Service, voir
       <a href="reseau.html">réseau · ouvrir ou non</a>.
     </p>
 
@@ -115,30 +137,42 @@ flowchart TB
       target_cpu: 70
     memory_mb: 512</pre>
     <p>
-      Scale : réplicas fixes, HPA CPU, mémoire vertical, nodepools count/type
-      (formulaires Visual + <code>generate</code>).
+      Leviers de scale : réplicas fixes, HPA sur le CPU (services sans état),
+      mémoire par pod, nombre et type de nœuds par nodepool (formulaires
+      Visual, puis <code>generate</code>).
     </p>
     <p>
-      HTTPS public : Service LoadBalancer +
-      <code>expose.tls.server_certificate_id</code> (ORN EIM) — pas
-      cert-manager / Ingress inventés.
+      Les bases déployées en pods démarrent sur un volume
+      <code>emptyDir</code> : leurs données vivent avec le pod. Le filet de
+      sécurité, c’est le backup vers <a href="oos.html">OOS</a>.
+    </p>
+    <p>
+      HTTPS public : Service LoadBalancer avec
+      <code>expose.tls.server_certificate_id</code>, l’ORN d’un certificat
+      serveur EIM. Le LBU créé par OKS termine le TLS, sans Ingress ni
+      cert-manager à maintenir.
     </p>
 
-    <h2>Ce que ça n’est pas</h2>
+    <h2>Le périmètre du kit</h2>
     <p>
-      Pas un opérateur Mongo/ES managé, pas un mesh, pas la garantie HA prod
-      sans relecture. Mesh, policies avancées, operators custom : hors kickoff.
-      Quand vous scalez le cluster pour de vrai,
-      <strong>vous opérez</strong> — <a href="perimetre.html">périmètre</a>.
+      bige-ops pose le cluster et les workloads. Opérateurs de bases, service
+      mesh et politiques réseau avancées s’ajoutent ensuite dans ton
+      exploitation — <a href="perimetre.html">périmètre</a>.
     </p>
 
+    <h2>Doc Outscale</h2>
+    <ul>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-d-OKS.html" target="_blank" rel="noopener noreferrer">À propos d’OKS</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/Installer-et-configurer-OKS-CLI.html" target="_blank" rel="noopener noreferrer">Installer et configurer OKS CLI</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/Créer-des-load-balancers-dans-OKS.html" target="_blank" rel="noopener noreferrer">Créer des load balancers dans OKS</a></li>
+    </ul>
+
     <p>
-      Côté machines hors kube : <a href="vms.html">VMs</a>.
-      Data + objet : <a href="bases.html">bases</a>,
+      Machines hors Kubernetes : <a href="vms.html">VMs</a>.
+      Data et objet : <a href="bases.html">bases</a>,
       <a href="oos.html">OOS</a>.
-      CLI vs app : <a href="cli.html">CLI · app · OKS</a>.
+      CLI ou app : <a href="cli.html">CLI · app · OKS</a>.
     </p>
-
     <footer class="site-footer">
       <div class="cols">
         <div>
@@ -190,7 +224,7 @@ flowchart TB
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

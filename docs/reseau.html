@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Réseau · ouvrir ou non — bige-ops</title>
-  <meta name="description" content="Principes d’exposition : pod, VM, partie d’un layout VMs — règles projet + Security Groups Outscale." />
+  <meta name="description" content="Principes d’exposition sur Outscale : pod, VM ou face d’un layout. Règles du projet, Net, subnets, security groups et firewall bypass." />
   <link rel="canonical" href="https://bige.dev/reseau.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/reseau.html" />
   <meta property="og:title" content="Réseau · ouvrir ou non — bige-ops" />
-  <meta property="og:description" content="Principes d’exposition : pod, VM, partie d’un layout VMs — règles projet + Security Groups Outscale." />
+  <meta property="og:description" content="Principes d’exposition sur Outscale : pod, VM ou face d’un layout. Règles du projet, Net, subnets, security groups et firewall bypass." />
   <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,25 +23,24 @@
 </head>
 <body>
   <main>
-    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="vms.html">VMs</a> · <a href="oks.html">OKS</a> · <a href="index.html#agent-keys">Agent</a></p>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="vms.html">VMs</a> · <a href="oks.html">OKS</a> · <a href="agent.html">Agent</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
     <h1>Réseau · ouvrir ou non</h1>
     <p class="lead">
       Ouvrir un <strong>pod</strong>, une <strong>VM</strong>, ou seulement
-      une face d’un layout multi-VM — ce n’est pas un toggle marketing.
-      Deux sources de vérité : les <strong>règles de votre projet</strong>
-      (simulation / YAML) et les <strong>règles Outscale</strong>
-      (Net, Security Groups, LBU).
+      une face d’un layout multi-VM se décide à deux niveaux : les
+      <strong>règles de ton projet</strong> (simulation, YAML) et les
+      <strong>règles Outscale</strong> (Net, subnets, security groups, LBU).
     </p>
 
     <div class="callout">
       <strong>Principe court.</strong>
-      Exposer le minimum : entrée publique (LBU / HTTP) si besoin ;
-      data et admin en privé (VPC / SG). Pas de <code>0.0.0.0/0</code>
-      sur SSH ou ports admin « parce que pratique ».
+      Expose le minimum : une entrée publique (LBU en HTTP ou HTTPS) quand il
+      en faut une ; data et administration en privé. Réserve SSH et les ports
+      d’admin à des CIDR connus, jamais à <code>0.0.0.0/0</code> par confort.
     </div>
 
     <figure class="diagram">
@@ -50,66 +49,72 @@ flowchart LR
   NET[Internet] --> LBU[LBU / face publique]
   LBU --> APP[VM app / pods front]
   APP --> DATA[VM data / pods DB]
-  DATA -.->|pas d’EIP| X[fermé]
+  DATA -.->|pas d’IP publique| X[fermé]
       </pre>
-      <figcaption>Schéma type multi-VM / node-app : public sur le LBU, data privée.</figcaption>
+      <figcaption>Schéma type multi-VM : public sur le LBU, data privée.</figcaption>
     </figure>
 
-    <h2>Ce qu’on ouvre (ou pas)</h2>
+    <h2>Ce qu’on ouvre, ou pas</h2>
     <ul>
       <li>
         <strong>Face publique d’un layout VMs</strong> —
-        souvent la VM app (+ LBU). Ports app derrière le load balancer ;
-        pas toute la machine ouverte au monde.
+        la VM app, derrière le LBU. Les ports applicatifs sont servis par le
+        load balancer, pas toute la machine.
       </li>
       <li>
-        <strong>VM data / bases</strong> —
-        subnet privée, SG VPC only. Pas d’EIP « pour dépanner ».
+        <strong>VM data et bases</strong> —
+        subnet privé, sans IP publique. Les security groups générés pour les
+        bases n’acceptent que le CIDR du Net.
       </li>
       <li>
         <strong>Pod OKS</strong> —
-        Service / Ingress selon le besoin ; réplicas ≠ exposition.
-        Admin kube : CIDR restreint (<code>OKS_ADMIN_CIDR</code>), pas le monde.
+        Service selon le besoin ; réplicas ≠ exposition. L’API Kubernetes est
+        restreinte à ton IP ou au CIDR de <code>OKS_ADMIN_CIDR</code>.
       </li>
       <li>
-        <strong>SSH / deploy</strong> —
-        sur la face app si nécessaire ; jamais sur mongo/redis « ouverts ».
+        <strong>SSH et deploy</strong> —
+        sur la face app si nécessaire ; jamais sur une base « ouverte pour
+        dépanner ».
       </li>
     </ul>
 
-    <h2>Règles projet + règles Outscale</h2>
-    <p>
-      Dans bige-ops, le layout (mono-VM, multi-VM, OKS) et les liens
-      Visual / YAML disent <em>quoi</em> exposer. Outscale applique le
-      <em>comment</em> : Net, subnets, Security Groups, routes, LBU.
-      Inventaire et reverse engineering montrent l’existant ; un apply
-      ne réécrit pas magiquement votre contrat réseau.
-    </p>
-    <p>
-      Doc produit Outscale (référence) :
-    </p>
+    <h2>Ce que fait le réseau Outscale</h2>
     <ul>
-      <li><a href="https://docs.outscale.com/en/userguide/About-Nets.html">About Nets</a></li>
-      <li><a href="https://docs.outscale.com/en/userguide/About-Security-Groups.html">About Security Groups</a></li>
-      <li><a href="https://docs.outscale.com/en/userguide/Adding-Rules-to-a-Security-Group.html">Adding rules to a Security Group</a></li>
-      <li><a href="https://docs.outscale.com/en/userguide/About-Security-Groups-in-LBU.html">Security Groups in LBU</a></li>
+      <li><strong>Le Net</strong> est ton réseau privé dans une Région. Son CIDR, pris dans les plages RFC 1918, va de <code>/16</code> à <code>/28</code> et ne se modifie plus après création : bige-ops part sur un <code>/16</code> pour garder de la marge.</li>
+      <li><strong>Les subnets</strong> vivent dans une Subregion. Outscale réserve les quatre premières adresses et la dernière de chacun (réseau, routeur, DNS, réserve, broadcast).</li>
+      <li><strong>Les security groups</strong> d’un Net filtrent au niveau de la VM, en entrée comme en sortie, et une règle peut viser un autre security group plutôt qu’un CIDR.</li>
+      <li><strong>Le firewall bypass</strong> : par défaut, deux VMs du même subnet se parlent sans passer par les security groups, pour gagner en latence. Séparer l’app (subnet public) et la data (subnet privé), comme le fait bige-ops, remet donc les security groups dans le chemin entre les deux.</li>
+      <li><strong>Internet</strong> : une VM sort directement avec une IP publique et un internet service, ou indirectement par un NAT service, avec une route <code>0.0.0.0/0</code> dans les deux cas.</li>
     </ul>
-
-    <h2>Layouts « pas simples » à maintenir</h2>
     <p>
-      Multi-VM + LBU + SG + pods : ça dérive vite (ports orphelins,
-      clés partout, setups parallèles). L’
-      <a href="index.html#agent-keys"><strong>agent LLM</strong></a>
-      travaille avec <strong>vos clés API perso</strong> (locales) pour
-      <strong>lire</strong> la simulation, la <strong>maintenir</strong>
-      dans les clous, et éviter la cascade de clés / setups hors règles
-      projet + Outscale — pas pour remplacer votre politique sécurité.
+      Dans bige-ops, le layout (mono-VM, multi-VM, OKS) et les liens Visual
+      ou YAML disent <em>quoi</em> exposer ; Outscale applique le
+      <em>comment</em>. L’inventaire montre l’existant. Le détail ressource par
+      ressource est sur <a href="reseau-avance.html">Réseau avancé</a>.
     </p>
+
+    <h2>Garder un layout lisible</h2>
+    <p>
+      Multi-VM, LBU, security groups et pods : une config réseau grossit vite
+      (ports orphelins, règles en double, variantes parallèles).
+      L’<a href="agent.html"><strong>assistant IA</strong></a> travaille avec
+      <strong>ta propre clé API</strong>, en local : il <strong>lit</strong> la
+      simulation, propose des corrections dans le respect des règles du projet
+      et d’Outscale, et tu valides chaque changement.
+    </p>
+
+    <h2>Doc Outscale</h2>
+    <ul>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-Nets.html" target="_blank" rel="noopener noreferrer">À propos des Nets</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-security-groups.html" target="_blank" rel="noopener noreferrer">À propos des security groups</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/Ajouter-des-règles-à-un-security-group.html" target="_blank" rel="noopener noreferrer">Ajouter des règles à un security group</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-security-groups-dans-LBU.html" target="_blank" rel="noopener noreferrer">Security groups dans LBU</a></li>
+    </ul>
 
     <p class="doc-nav" style="margin-top:2rem">
       <a href="vms.html">VMs · VPS</a> ·
       <a href="oks.html">OKS &amp; pods</a> ·
-      <a href="index.html#oks-warn">OKS · attention contrat</a> ·
+      <a href="regions.html#acces">Accès aux services</a> ·
       <a href="perimetre.html">Périmètre</a>
     </p>
     <footer class="site-footer">
@@ -163,7 +168,7 @@ flowchart LR
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

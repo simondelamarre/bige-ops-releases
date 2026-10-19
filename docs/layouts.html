@@ -18,7 +18,7 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
     <h1>Layouts &amp; topologies</h1>
     <p class="lead">
@@ -46,7 +46,7 @@ flowchart LR
     <ul>
       <li>
         <strong><code>single-vm</code></strong> (mono-VM) — une seule VM
-        <code>{name}-all</code>, une EIP publique, docker installé
+        <code>{name}-all</code>, une IP publique, Docker installé
         (+ nodejs si des services applicatifs sont présents). Simple,
         pas cher, et <em>un seul blast radius</em> : tout tombe ensemble.
       </li>
@@ -113,7 +113,7 @@ flowchart LR
 
     <div class="callout">
       <strong>Un layout n’est pas un contrat.</strong>
-      Il pose une simulation cohérente en un appel, puis vous éditez :
+      Il pose une simulation cohérente en un appel, puis tu édites :
       types de VM, tailles de volumes, réplicas, ouverture réseau.
       Le prix se lit ensuite — voir <a href="simulations.html">projets &amp; simulations</a>.
     </div>
@@ -144,8 +144,8 @@ bige-ops add layout custom --runtime python --db postgres --db redis --web spa -
       <strong>Catalogue de services</strong> : <code>api</code>,
       <code>web</code>, <code>worker</code>, <code>mongodb</code>,
       <code>redis</code>, <code>postgres</code>, <code>weaviate</code>,
-      <code>database</code> (alias Postgres générique). En plus, vous
-      déclarez des <strong>services custom</strong> au nom libre via
+      <code>database</code> (alias Postgres générique). En plus, tu
+      déclares des <strong>services custom</strong> au nom libre via
       <code>service_config</code>, avec <code>kind: custom</code> et soit
       une <code>image</code>, soit un dépôt <code>git</code>.
     </p>
@@ -157,16 +157,16 @@ bige-ops add layout custom --runtime python --db postgres --db redis --web spa -
   api:
     replicas: 2</pre>
 
-    <h2>Ce que ça n’est pas</h2>
+    <h2>Bon à savoir</h2>
     <ul>
       <li>
-        Les <strong>workers partagent la VM app</strong>. Il n’y a pas de VM
-        worker dédiée : si votre worker mange le CPU, il le mange à l’API.
+        Les <strong>workers partagent la VM app</strong> : un worker gourmand
+        en CPU se dimensionne avec la VM app.
       </li>
       <li>
-        En <code>multi-vm</code>, les <strong>URLs de bases n’existent
-        qu’après l’apply</strong> : elles remontent du coffre vers le
-        <code>.env</code>. Ne les codez pas en dur avant.
+        En <code>multi-vm</code>, les <strong>URLs de bases existent après
+        l’apply</strong> : elles remontent du coffre vers le
+        <code>.env</code>. Ne les code pas en dur avant.
       </li>
       <li>
         Le <strong>premier deploy doit être complet</strong>. Un deploy
@@ -174,8 +174,8 @@ bige-ops add layout custom --runtime python --db postgres --db redis --web spa -
         déployée entièrement au moins une fois.
       </li>
       <li>
-        Aucun layout ne remplace une revue d’architecture. C’est un kickoff :
-        quand vous scalez pour de vrai, <strong>vous opérez</strong> —
+        Un layout est un point de départ : la revue d’architecture et la
+        montée en charge restent les tiennes —
         <a href="perimetre.html">périmètre</a>.
       </li>
     </ul>
@@ -239,7 +239,7 @@ bige-ops add layout custom --runtime python --db postgres --db redis --web spa -
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

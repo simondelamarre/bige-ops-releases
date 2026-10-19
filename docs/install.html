@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Installer &amp; mettre à jour — bige-ops</title>
-  <meta name="description" content="Installer bige-ops : DMG macOS, Homebrew cask, Linux. Mises à jour vérifiées mais manuelles, CLI embarquée, dépendances système." />
+  <meta name="description" content="Installer bige-ops : Homebrew sur macOS, AppImage ou .deb sur Linux. CLI embarquée, dépendances, premier lancement." />
   <link rel="canonical" href="https://bige.dev/install.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -18,77 +18,38 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a> · <a href="cli.html">CLI · app</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
     <h1>Installer &amp; mettre à jour</h1>
     <p class="lead">
-      bige-ops est une application <strong>desktop locale</strong>, gratuite,
-      distribuée via GitHub Releases. Version courante : <strong>0.3.0</strong>
-      (tag <code>v0.6.1</code>). macOS et Linux ; <strong>pas de Windows</strong>
-      aujourd’hui.
+      bige-ops est une application <strong>desktop locale</strong> et gratuite,
+      pour macOS (Apple Silicon) et Linux (x86_64). La CLI est incluse.
     </p>
 
-    <div class="callout">
-      <strong>Beta démo, gratuite.</strong>
-      Le produit est jeune : il manque des choses et il reste des bugs.
-      Dites-le — issues publiques :
-      <a href="https://github.com/simondelamarre/bige-ops-releases/issues">bige-ops-releases · issues</a>.
-    </div>
-
-    <h2>Où récupérer l’app</h2>
-    <p>
-      Tout passe par le dépôt public
-      <a href="https://github.com/simondelamarre/bige-ops-releases">simondelamarre/bige-ops-releases</a> :
-      le DMG macOS et le fichier <code>latest.json</code> utilisé pour la
-      vérification de version.
-    </p>
-    <ul>
-      <li><strong>macOS — DMG</strong> : <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">dernière release</a>, puis glissez l’app dans <code>/Applications</code>.</li>
-      <li><strong>macOS — Homebrew</strong> : le tap <code>simondelamarre/bige-ops</code> expose un cask.</li>
-      <li><strong>Linux</strong> : build disponible depuis les releases.</li>
-      <li><strong>Windows</strong> : non supporté à ce jour. Pas de contournement propre, pas d’ETA à vous vendre.</li>
-    </ul>
-
+    <h2 id="macos">macOS : Homebrew</h2>
+    <p>Une commande installe l’app et la prépare pour le premier lancement :</p>
 <pre>brew tap simondelamarre/bige-ops
 brew install --cask bige-ops</pre>
-    <div class="callout callout-warn">
-      <strong>Cask vs release.</strong>
-      Le cask Homebrew peut être en retard sur le tag GitHub
-      (ex. cask <code>0.2.2</code> alors que la release est
-      <code>0.6.1</code>). Vérifiez <code>brew info --cask bige-ops</code> :
-      si les numéros divergent, préférez le
-      <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">DMG latest</a>.
-    </div>
+    <p>Puis lance <strong>bige-ops</strong> depuis le Launchpad ou <code>/Applications</code>.</p>
 
-    <h2 id="gatekeeper">macOS bloque l’app ? (Gatekeeper)</h2>
-    <div class="callout callout-warn">
-      <strong>Pas encore notarié par Apple.</strong>
-      Après un téléchargement DMG, macOS peut afficher
-      « Apple n’a pas pu confirmer que bige-ops… » et
-      <em>refuser toute ouverture</em> — sans bouton « Ouvrir quand même ».
-      Ce n’est pas un DMG corrompu : c’est la quarantaine + l’absence de notarisation.
-    </div>
-    <ol>
-      <li>Montez le DMG et glissez <code>bige-ops.app</code> dans <code>/Applications</code>.</li>
-      <li><strong>Avant</strong> le premier double-clic, ouvrez Terminal et collez :</li>
-    </ol>
+    <h2 id="linux">Linux : AppImage ou .deb</h2>
+    <p>
+      Télécharge l’AppImage ou le paquet <code>.deb</code> depuis la
+      <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">dernière release</a> :
+    </p>
+<pre>chmod +x bige-ops-*-linux-x86_64.AppImage && ./bige-ops-*-linux-x86_64.AppImage
+# ou
+sudo apt install ./bige-ops-*-linux-x86_64.deb</pre>
+
+    <h2 id="gatekeeper">macOS : premier lancement</h2>
+    <p>
+      Le cask Homebrew retire la quarantaine et signe l’app localement : elle s’ouvre
+      directement. Si tu as installé l’app à la main, lance une fois dans Terminal :
+    </p>
 <pre>xattr -cr /Applications/bige-ops.app && codesign --force --deep --sign - /Applications/bige-ops.app
 open /Applications/bige-ops.app</pre>
-    <p>
-      Sur le DMG, le fichier <strong>Fix Gatekeeper.command</strong> fait la même chose
-      (double-clic → autoriser Terminal si macOS le demande).
-    </p>
-    <p>
-      <strong>Après mise à la corbeille :</strong> restaurez ou re-copiez l’app depuis le DMG,
-      puis relancez les commandes <em>avant</em> de rouvrir. Un simple re-téléchargement
-      ne suffit souvent pas.
-    </p>
-    <p>
-      <strong>Sans Terminal :</strong>
-      <code>brew tap simondelamarre/bige-ops && brew install --cask bige-ops</code>
-      — le cask retire la quarantaine automatiquement.
-    </p>
-
+    <!-- macOS DMG download hidden until the app is notarized. Previous copy:
+    macOS — DMG : dernière release, puis glissez l’app dans /Applications. Fix Gatekeeper.command sur le DMG. -->
     <h2>Mises à jour : vérifiées, pas automatiques</h2>
     <p>
       L’application <strong>vérifie</strong> s’il existe une version plus
@@ -102,9 +63,8 @@ open /Applications/bige-ops.app</pre>
         <tr><th>Installation</th><th>Mettre à jour</th></tr>
       </thead>
       <tbody>
-        <tr><td>DMG macOS</td><td>Télécharger la nouvelle release, remplacer l’app dans <code>/Applications</code></td></tr>
-        <tr><td>Homebrew cask</td><td><code>brew upgrade --cask bige-ops</code></td></tr>
-        <tr><td>Linux</td><td>Télécharger et remplacer le binaire</td></tr>
+                <tr><td>Homebrew cask</td><td><code>brew upgrade --cask bige-ops</code></td></tr>
+        <tr><td>Linux</td><td>Télécharger la nouvelle AppImage ou le nouveau .deb</td></tr>
       </tbody>
     </table>
 
@@ -157,9 +117,9 @@ open /Applications/bige-ops.app</pre>
       Concept de simulation : <a href="simulations.html">Simulations</a>.
     </p>
 
-    <h2>Limites honnêtes</h2>
+    <h2>Bon à savoir</h2>
     <div class="callout callout-warn">
-      <strong>Ce que l’installation ne vous donne pas.</strong>
+      <strong>Ce que l’installation couvre.</strong>
       Pas de Windows. Pas de mise à jour automatique : c’est vous qui
       remplacez le binaire. Pas de packaging des dépendances tierces —
       Terraform, oks-cli, kubectl et Docker restent à votre charge, avec les
@@ -218,7 +178,7 @@ open /Applications/bige-ops.app</pre>
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

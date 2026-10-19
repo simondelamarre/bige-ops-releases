@@ -26,7 +26,7 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="github-config.html">GitHub config</a> · <a href="index.html#g-expert">Glossaire</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
     <h1>Mode expert · fichiers, diffs &amp; commits</h1>
     <p class="lead">
@@ -39,8 +39,8 @@
 
     <div class="callout">
       <strong>Deux vitesses.</strong>
-      Flow = setup rapide. Expert = vérité fichiers + Git.
-      Ni l’un ni l’autre ne remplace Outscale ; les secrets restent hors repo.
+      Flow = setup rapide. Expert = les fichiers et Git.
+      Les deux mènent au même plan Outscale ; les secrets restent hors repo.
     </div>
 
     <figure class="diagram">
@@ -59,23 +59,22 @@ flowchart LR
     <p>
       Dans l’app, l’onglet <strong>Workspace</strong> expose l’arbre des
       fichiers du projet et un <strong>éditeur</strong> (YAML, HCL, scripts).
-      Vous ouvrez <code>bige-ops/project.yaml</code>, un module Terraform,
-      un manifest OKS — vous corrigez, vous <strong>Save</strong> en local,
+      Tu ouvres <code>bige-ops/project.yaml</code>, un module Terraform,
+      un manifest OKS ; tu corriges, tu <strong>Save</strong> en local,
       puis validate / generate / plan.
     </p>
     <p>
-      C’est le chemin <strong>expert</strong> : hors formulaires Visual,
-      quand un champ manque, un layout custom, ou une materialization à
-      peaufiner. La simulation reste la vérité produit ; les fichiers sont
-      ce que vous versionnez et appliquez.
+      C’est le chemin <strong>expert</strong> : au-delà des formulaires
+      Visual, pour un champ avancé, un layout custom, ou une génération à
+      peaufiner. La simulation reste la référence ; les fichiers sont ce que
+      tu versionnes et appliques.
     </p>
 
     <h2>Diffs &amp; commits — où on va (interfaces)</h2>
     <p>
-      Aujourd’hui : push GitHub (souvent un commit groupé), revue
-      <strong>plan Terraform</strong> avant apply, diff config vs snapshot
-      dans la revue Apply. Ce n’est pas encore un « Git desktop » complet
-      dans bige-ops.
+      Aujourd’hui : push GitHub (souvent un commit groupé), revue du
+      <strong>plan Terraform</strong> avant apply, diff de la config contre un
+      snapshot dans la revue Apply.
     </p>
     <p>
       <strong>Cible produit</strong> (à câbler dans les UI) :
@@ -101,8 +100,8 @@ flowchart LR
     <p>
       Convention Git déjà documentée :
       <a href="github-config.html">GitHub config-history</a>
-      (projet→repo, sim→branche, promote→main ; deploy via l’app + sync GitHub ;
-      autres Git WIP ; rollback Git manuel sur GitHub).
+      (projet → repo, simulation → branche, promote → main ; deploy via l’app
+      et synchro GitHub ; rollback Git avancé sur GitHub).
       Cette page fixe le contrat <em>expert + diff + commit</em> pour
       guider les prochaines itérations d’interface.
     </p>
@@ -119,7 +118,7 @@ flowchart LR
         </tr>
         <tr>
           <td>Diff local</td>
-          <td>Plan TF + snapshot config (partiel)</td>
+          <td>Plan Terraform + diff contre un snapshot</td>
           <td>Revue unifiée fichiers / plan</td>
         </tr>
         <tr>
@@ -192,7 +191,7 @@ flowchart LR
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

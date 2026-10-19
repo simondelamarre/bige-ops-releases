@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bases de données — bige-ops</title>
-  <meta name="description" content="DB Outscale : coloc VM, VM dédiée, réplicas OKS, volumes, backups OOS. Formulaire → setup direct." />
+  <meta name="description" content="Bases de données sur Outscale : coloc, VM dédiée ou pods OKS, volumes BSU, réplicas, sauvegardes vers OOS. Le formulaire met le setup à jour directement." />
   <link rel="canonical" href="https://bige.dev/bases.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/bases.html" />
   <meta property="og:title" content="Bases de données — bige-ops" />
-  <meta property="og:description" content="DB Outscale : coloc VM, VM dédiée, réplicas OKS, volumes, backups OOS. Formulaire → setup direct." />
+  <meta property="og:description" content="Bases de données sur Outscale : coloc, VM dédiée ou pods OKS, volumes BSU, réplicas, sauvegardes vers OOS. Le formulaire met le setup à jour directement." />
   <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,22 +26,23 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
     <h1>Bases de données</h1>
     <p class="lead">
-      Postgres, Mongo, Redis (et customs) : vous choisissez <em>où</em> ça tourne
-      (même VM, VM dédiée, ou pods OKS), vous réglez réplicas / volumes dans
-      le formulaire, le setup se met à jour <strong>tout de suite</strong>.
-      Le DBA fin et la stratégie backup restent les vôtres — on kickoff.
-      Pour Mongo&nbsp;8, RAG Postgres, Cassandra, Elastic et les gaps produit :
-      <a href="bases-complexes.html">bases chiantes &amp; gourmandes</a>.
+      Postgres, MongoDB, Redis (et bases custom) : tu choisis <em>où</em> elles
+      tournent (même VM, VM dédiée, ou pods OKS), tu règles réplicas et
+      volumes dans le formulaire, et le setup se met à jour
+      <strong>tout de suite</strong>. Le tuning fin et la stratégie de
+      sauvegarde restent les tiens.
+      Pour MongoDB&nbsp;8, Postgres pour le RAG, Cassandra ou Elasticsearch :
+      <a href="bases-complexes.html">bases complexes</a>.
     </p>
 
     <div class="callout">
       <strong>Schéma mental.</strong> Trois placements possibles pour la data.
       Le formulaire ne pose pas dix questions : il écrit la simulation,
-      puis <code>generate</code> materialize.
+      puis <code>generate</code> produit la configuration.
     </div>
 
     <figure class="diagram">
@@ -51,26 +52,27 @@ flowchart TB
   DB --> C1[Coloc sur VM app]
   DB --> C2[VM data dédiée]
   DB --> C3[Pods OKS]
-  C2 --> VOL[Volume block]
+  C2 --> VOL[Volume BSU]
   C3 --> REP[Réplicas Deployment]
   C1 --> VOL
-  VOL -.->|backup optionnel| OOS[(OOS bucket)]
-  REP -.->|backup optionnel| OOS
+  VOL -.->|backup| OOS[(bucket OOS)]
+  REP -.->|backup| OOS
       </pre>
-      <figcaption>Coloc · dédiée · OKS — puis objet OOS pour démarrer les sauvegardes.</figcaption>
+      <figcaption>Coloc · dédiée · OKS — puis OOS pour les sauvegardes.</figcaption>
     </figure>
 
-    <h2>1 · Coloc vs VM dédiée</h2>
+    <h2>1 · Coloc ou VM dédiée</h2>
     <p>
       En <a href="index.html#g-mono-vm"><strong>mono-VM</strong></a>
-      (code <code>single-vm</code>) / multi-VM simple, la DB est souvent
-      <strong>colocalisée</strong> avec l’app : un seul blast radius, estimate
-      bas, parfait pour projeter. Dès que vous isolez le risque data, vous
-      passez une <strong>VM dédiée</strong> (rôle data en
-      <a href="index.html#g-multi-vm">multi-VM</a>) :
-      sizing + <strong>volume</strong> attaché pour la persistance.
-      Le canvas / inspector lie le service DB à la VM et au volume ;
-      Save réécrit <code>project.yaml</code> sans re-interview.
+      (code <code>single-vm</code>), la base est
+      <strong>colocalisée</strong> avec l’app : un seul blast radius, une
+      estimation basse, idéal pour projeter. Pour isoler la data, passe à une
+      <strong>VM dédiée</strong> (rôle data en
+      <a href="index.html#g-multi-vm">multi-VM</a>) : sizing propre, disque
+      racine <code>io1</code> par défaut pour Postgres, MongoDB et les autres
+      bases persistantes, et un <strong>volume</strong> attaché
+      pour la persistance. Le canvas lie le service à sa VM et à son volume ;
+      Save réécrit <code>project.yaml</code> sans questionnaire.
     </p>
 
     <figure class="diagram">
@@ -87,14 +89,15 @@ flowchart LR
       </pre>
     </figure>
 
-    <h2>2 · Sur OKS : réplicas pods ≠ replica-set géré</h2>
+    <h2>2 · Sur OKS : réplicas de pods</h2>
     <p>
-      Topologie <strong>oks</strong> : la DB est un Deployment.
-      Le champ <strong>réplicas</strong> (<code>service_config.*.replicas</code>)
-      scale le nombre de pods. C’est le bon levier pour démarrer —
-      ce n’est <strong>pas</strong> encore un replica-set Mongo ou un cluster
-      Postgres managé. HA moteur = votre run (ou un opérateur plus tard).
-      Voir aussi <a href="oks.html">OKS &amp; pods</a>.
+      En topologie <strong>oks</strong>, la base est un Deployment. Le champ
+      <strong>réplicas</strong> (<code>service_config.*.replicas</code>) règle
+      le nombre de pods. Ce n’est pas un replica set MongoDB ni un cluster
+      Postgres répliqué : la réplication au niveau du moteur se configure dans
+      la base elle-même, ou avec un opérateur. Les pods de base démarrent sur
+      un volume <code>emptyDir</code> : leurs données vivent avec le pod, et le
+      backup vers OOS est le filet. Voir aussi <a href="oks.html">OKS &amp; pods</a>.
     </p>
 
 <pre>service_config:
@@ -103,25 +106,24 @@ flowchart LR
   mongodb:
     replicas: 1</pre>
 
-    <h2>3 · Storage local vs backups objet</h2>
+    <h2>3 · Stockage bloc et sauvegardes objet</h2>
     <p>
-      La persistance chaude passe par le <strong>volume</strong> (block storage)
-      attaché à la VM data, ou le stockage du cluster OKS selon le layout.
-      Les <strong>snapshots</strong> de volume sont le premier filet block.
-      Pour les sauvegardes applicatives / dumps vers l’objet, on branche
-      <strong>OOS</strong> (Object Storage Outscale, S3-compatible) :
-      bucket dédié, lien <code>backup</code> DB → OOS dans Visual, scripts
-      générés après <code>generate</code>.
+      Sur une VM, la persistance passe par le <strong><a href="https://docs.outscale.com/fr/userguide/À-propos-des-volumes.html" target="_blank" rel="noopener noreferrer">volume BSU</a></strong>
+      attaché à la VM data, et les <strong>snapshots</strong> de volume sont le
+      premier filet. Pour les dumps applicatifs, on branche
+      <strong><a href="https://docs.outscale.com/fr/userguide/À-propos-d-OOS.html" target="_blank" rel="noopener noreferrer">OOS</a></strong> (l’Object Storage Outscale, compatible S3) : bucket
+      dédié, lien <code>backup</code> base → OOS dans Visual, script
+      <code>backup.sh</code> préparé après <code>generate</code>.
       Détail : <a href="oos.html">OOS &amp; backups</a>.
     </p>
     <p>
-      <strong>Pas de backup = tu auras un problème.</strong>
-      À la destruction, bige-ops affiche les risques selon le setup :
-      en <a href="index.html#g-mono-vm"><em>mono-VM</em></a>, app + bases
-      partagent le même disque (on ne peut pas « geler » la DB seule sans
-      bloquer toute la VM) — le filet, c’est le dump → OOS. En
-      <a href="index.html#g-multi-vm">multi-VM</a> / OKS, destroy d’une VM
-      data / des pods = perte live ; OOS reste indestructible via l’outil.
+      <strong>Pas de backup, pas de filet.</strong>
+      À la destruction, bige-ops affiche les risques selon le setup : en
+      <a href="index.html#g-mono-vm"><em>mono-VM</em></a>, app et bases
+      partagent le même disque, et le filet, c’est le dump vers OOS. En
+      <a href="index.html#g-multi-vm">multi-VM</a> ou sur OKS, détruire une VM
+      data ou des pods efface les données vivantes ; les buckets OOS, eux,
+      restent protégés.
     </p>
 
     <figure class="diagram">
@@ -132,20 +134,20 @@ sequenceDiagram
   participant Gen as generate
   participant Cloud as Outscale
   UI->>Sim: réplicas / VM / volume / backup OOS
-  Note over Sim: maj directe du setup
+  Note over Sim: mise à jour directe du setup
   Sim->>Gen: Save
-  Gen->>Gen: TF + manifests + backup.sh
-  Gen->>Cloud: apply / deploy (vos keys)
+  Gen->>Gen: Terraform + manifests + backup.sh
+  Gen->>Cloud: apply / deploy (tes clés)
       </pre>
     </figure>
 
     <h2>Presets par type</h2>
     <p>
-      Chaque type amène une image catalogue et des champs utiles dans
-      l’inspector. Postgres : volume data, attache VM ou pod, réplicas OKS.
-      Mongo / Redis : même logique (coloc, dédiée, ou OKS). Custom : image + port
-      + les mêmes leviers sizing / réplicas. Pas de wizard qui recommence :
-      un champ changé = setup à jour.
+      Chaque type amène une image et des champs utiles dans l’inspector.
+      Postgres : volume data, attache à une VM ou à un pod, réplicas OKS.
+      MongoDB et Redis : même logique (coloc, dédiée ou OKS). Custom : image +
+      port + les mêmes leviers de sizing et de réplicas. Un champ changé, et
+      le setup est à jour.
     </p>
 
     <table>
@@ -155,13 +157,13 @@ sequenceDiagram
       <tbody>
         <tr>
           <td><strong>Postgres</strong></td>
-          <td>Catalogue + volume</td>
-          <td>VM / pod, GiB, réplicas OKS</td>
+          <td>Image + volume</td>
+          <td>VM ou pod, GiB, réplicas OKS</td>
         </tr>
         <tr>
           <td><strong>MongoDB</strong></td>
           <td>Coloc ou pod</td>
-          <td>Placement, réplicas pods</td>
+          <td>Placement, réplicas de pods</td>
         </tr>
         <tr>
           <td><strong>Redis</strong></td>
@@ -176,14 +178,12 @@ sequenceDiagram
       </tbody>
     </table>
 
-    <h2>Hors kickoff (volontaire)</h2>
+    <h2>Au-delà du démarrage</h2>
     <p>
-      Tuning SQL, indexes, sharding, operators K8s spécialisés, promesse HA
-      sans relecture humaine : <strong>pas</strong> le job du starter kit.
-      Quand la data scale, l’intelligence reste humaine —
+      Tuning SQL, index, sharding, opérateurs Kubernetes spécialisés et haute
+      disponibilité du moteur s’ajoutent ensuite, dans ton exploitation —
       <a href="perimetre.html">périmètre</a>.
     </p>
-
     <footer class="site-footer">
       <div class="cols">
         <div>
@@ -235,7 +235,7 @@ sequenceDiagram
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

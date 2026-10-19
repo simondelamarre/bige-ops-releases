@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Repos, VMs &amp; Dockerfiles — bige-ops</title>
-  <meta name="description" content="Config-history vs repo app, VMs Outscale, Dockerfile dans le repo ou override. Commits = stack only." />
+  <meta name="description" content="Config-history ou repo applicatif, VMs Outscale, Dockerfile dans le repo ou chemin imposé : qui commite quoi, et où tourne quoi." />
   <link rel="canonical" href="https://bige.dev/repos-vms-docker.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/repos-vms-docker.html" />
   <meta property="og:title" content="Repos, VMs &amp; Dockerfiles — bige-ops" />
-  <meta property="og:description" content="Config-history vs repo app, VMs Outscale, Dockerfile dans le repo ou override. Commits = stack only." />
+  <meta property="og:description" content="Config-history ou repo applicatif, VMs Outscale, Dockerfile dans le repo ou chemin imposé : qui commite quoi, et où tourne quoi." />
   <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,113 +26,106 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="vms.html">VMs</a> · <a href="github-config.html">GitHub config</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
     <h1>Repos, VMs &amp; Dockerfiles</h1>
     <p class="lead">
-      Trois pièces à ne pas mélanger : le <strong>repo qui versionne la stack</strong>
-      (config-history), les <strong>repos applicatifs</strong> (code + Dockerfile),
-      et les <strong>VMs Outscale</strong> où tourne Docker Compose après deploy.
+      Trois pièces à bien distinguer : le <strong>repo qui versionne la
+      stack</strong> (config-history), les <strong>repos applicatifs</strong>
+      (code + Dockerfile), et les <strong>VMs Outscale</strong> où tourne
+      Docker Compose après le deploy.
     </p>
 
     <div class="callout">
-      <strong>Commits bige-ops = stack seulement.</strong>
-      Pour le moment, l’app <strong>ne commit / ne push pas</strong> sur les
-      repos applicatifs. Seul le repo qui gère la stack (config-history
-      GitHub) est synchronisé. Si un problème de build/deploy survient, il
-      vient en général d’un <strong>mauvais setup Dockerfile</strong> dans
-      un repo app pris en charge (chemin, nom, contexte de build) — pas
-      d’un commit fantôme de l’outil sur votre monorepo.
+      <strong>bige-ops commite la stack, pas ton code.</strong>
+      L’app synchronise le repo qui décrit la stack (config-history GitHub) ;
+      elle ne commite ni ne pousse dans tes repos applicatifs. Quand un build
+      ou un deploy échoue, regarde d’abord le setup Dockerfile du repo app
+      (chemin, nom, contexte de build).
     </div>
 
     <div class="callout">
-      <strong>Review lecture / écriture sous container Docker : WIP.</strong>
-      Inspecter ou éditer des fichiers <em>depuis</em> un container en
-      cours (shell / FS live) n’est <strong>pas encore</strong> un flux
-      produit abouti. Aujourd’hui : logs deploy, compose sur la VM, mode
-      expert sur les fichiers de la <em>simulation</em> — pas une revue
-      interactive complète du FS container.
+      <strong>Inspecter un conteneur en cours.</strong>
+      Aujourd’hui : logs de deploy, Compose sur la VM, et mode expert sur les
+      fichiers de la <em>simulation</em>. La revue interactive du système de
+      fichiers d’un conteneur se fait depuis la VM.
     </div>
 
     <figure class="diagram">
       <pre class="mermaid">
 flowchart TB
-  CH[Config-history GitHub] -->|commits / push via app| Stack[Simulation · project.yaml]
+  CH[Config-history GitHub] -->|commits / push via l’app| Stack[Simulation · project.yaml]
   Stack -->|apply| VM[VM Outscale]
   AppRepo[Repo applicatif] -->|clone au deploy| VM
   AppRepo -.->|Dockerfile dans le repo| Build[docker compose build]
-  Override[Override dockerfile path] -.->|service_config.git.dockerfile| Build
+  Override[Chemin de Dockerfile imposé] -.->|service_config.git.dockerfile| Build
   Build --> VM
       </pre>
-      <figcaption>Stack versionnée d’un côté · code + Dockerfile de l’autre · runtime sur la VM.</figcaption>
+      <figcaption>Stack versionnée d’un côté · code + Dockerfile de l’autre · exécution sur la VM.</figcaption>
     </figure>
 
     <h2>Deux familles de repositories</h2>
     <table>
       <thead>
-        <tr><th>Repo</th><th>Rôle</th><th>bige-ops y commit ?</th></tr>
+        <tr><th>Repo</th><th>Rôle</th><th>bige-ops y commite ?</th></tr>
       </thead>
       <tbody>
         <tr>
           <td><strong>Config-history</strong> (<code>*-infra</code>)</td>
-          <td>Blueprint simulation : <code>project.yaml</code>, TF généré, specs, layout</td>
-          <td><strong>Oui</strong> — sync depuis l’app (GitHub)</td>
+          <td>La simulation : <code>project.yaml</code>, Terraform généré, specs, layout</td>
+          <td><strong>Oui</strong> — synchronisé depuis l’app (GitHub)</td>
         </tr>
         <tr>
           <td><strong>Repo applicatif</strong></td>
           <td>Code métier (api, web, worker…) cloné au <code>deploy</code></td>
-          <td><strong>Non</strong> (pour le moment)</td>
+          <td><strong>Non</strong></td>
         </tr>
       </tbody>
     </table>
     <p>
-      Détail branches / promote / rollback Git :
-      <a href="github-config.html">GitHub config-history</a>.
-      Autres forges que GitHub : WIP.
+      Branches, promote et retour arrière Git :
+      <a href="github-config.html">GitHub config-history</a>. La forge prise
+      en charge aujourd’hui est GitHub.
     </p>
 
-    <h2>VMs (= VPS catalogue) : où ça tourne</h2>
+    <h2>Les VMs : là où ça tourne</h2>
     <p>
-      Après <a href="index.html#g-apply"><code>apply</code></a>, les
-      <a href="index.html#g-vm">VMs</a> (Outscale parle aussi de
-      <a href="index.html#g-vps">VPS</a>) portent le runtime —
+      Après l’<a href="index.html#g-apply"><code>apply</code></a>, les
+      <a href="index.html#g-vm">VMs</a> Outscale (ce que beaucoup appellent un
+      <a href="index.html#g-vps">VPS</a>) portent l’exécution :
       <a href="index.html#g-mono-vm">mono-VM</a> <code>*-all</code>,
       <a href="index.html#g-multi-vm">multi-VM</a> app / data, ou nœuds OKS.
-      <a href="index.html#g-deploy"><code>deploy</code></a> pousse compose /
-      scripts / coffre vers la VM publique et
-      <strong>clone le(s) repo(s) app</strong> déclarés dans la simulation,
-      puis <code>docker compose build</code> / up.
+      Le <a href="index.html#g-deploy"><code>deploy</code></a> pousse Compose,
+      scripts et secrets vers la VM publique, <strong>clone le ou les repos
+      app</strong> déclarés dans la simulation, puis lance
+      <code>docker compose build</code> et <code>up</code>.
     </p>
     <p>
-      Les bases (mongo, postgres…) sont sur la même VM (mono-VM) ou
-      sur des VMs data (multi-VM) — voir <a href="vms.html">VMs · VPS</a> et
+      Les bases (MongoDB, Postgres…) sont sur la même VM (mono-VM) ou sur des
+      VMs data (multi-VM) — voir <a href="vms.html">VMs</a> et
       <a href="bases.html">bases</a>. Le Dockerfile concerne surtout les
-      services <strong>app</strong> (api, web, worker, customs git).
+      services <strong>app</strong> (api, web, worker, services custom git).
     </p>
 
-    <h2>Dockerfile : dans le repo <em>ou</em> override</h2>
-    <p>
-      Deux façons, exclusives côté intention :
-    </p>
+    <h2>Dockerfile : dans le repo, ou chemin imposé</h2>
     <ul>
       <li>
-        <strong>Dans le repo</strong> — le fichier
-        <code>Dockerfile</code> (ou chemin relatif au monorepo) vit dans
-        le dépôt applicatif. Au deploy, compose build utilise ce contexte.
-        C’est le cas nominal « repo pris en charge ».
+        <strong>Dans le repo</strong> — le <code>Dockerfile</code> (ou un
+        chemin relatif dans un monorepo) vit dans le dépôt applicatif. Au
+        deploy, <code>compose build</code> utilise ce contexte. C’est le cas
+        nominal.
       </li>
       <li>
-        <strong>Override</strong> — dans la simulation,
-        <code>service_config.&lt;svc&gt;.git.dockerfile</code> pointe un
-        nom / chemin (ex. <code>Dockerfile</code>, <code>Dockerfile.dev</code>,
-        sous-dossier monorepo). Utile pour un preset ou un fichier hors
-        racine. Ce n’est <strong>pas</strong> un commit automatique dans
-        le repo app : c’est une instruction de build dans la stack.
+        <strong>Chemin imposé</strong> — dans la simulation,
+        <code>service_config.&lt;svc&gt;.git.dockerfile</code> désigne un nom
+        ou un chemin (<code>Dockerfile</code>, <code>Dockerfile.dev</code>,
+        sous-dossier de monorepo). C’est une instruction de build portée par
+        la stack, pas un commit dans le repo app.
       </li>
     </ul>
     <p>
-      Alternative sans git : image catalogue
-      (<code>service_config.*.image</code>) — pas de build Dockerfile.
+      Sans git : une image publiée (<code>service_config.*.image</code>), sans
+      build.
     </p>
 <pre>service_config:
   api:
@@ -140,25 +133,21 @@ flowchart TB
       repo: https://github.com/org/monorepo.git
       ref: main
       path: apps/api          # contexte
-      dockerfile: Dockerfile # dans le repo, ou override de nom
+      dockerfile: Dockerfile  # dans le repo, ou chemin imposé
 </pre>
 
-    <h2>Si ça casse au deploy</h2>
+    <h2>Si le deploy échoue</h2>
     <p>
-      Les échecs fréquents viennent d’un
-      <strong>mauvais setup Dockerfile</strong> sur un repo app pris en
-      charge : mauvais <code>path</code> / <code>dockerfile</code>,
-      contexte de build incomplet, secrets de build manquants, image de
-      base inaccessible — pas d’un push de bige-ops sur votre monorepo
-      (il n’en fait pas).
+      Les causes fréquentes : <code>path</code> ou <code>dockerfile</code>
+      erronés, contexte de build incomplet, secrets de build manquants, image
+      de base inaccessible.
     </p>
     <p>
-      Checklist courte : Visual / expert → vérifier
-      <code>git.repo</code> · <code>ref</code> · <code>path</code> ·
-      <code>dockerfile</code> → préflight → logs deploy sur la VM.
-      Optionnel : l’agent peut proposer une <em>PR</em> Dockerfile sur
-      le repo app — <strong>vous</strong> mergez ; ce n’est pas le sync
-      stack automatique.
+      Checklist : Visual ou mode expert → vérifier <code>git.repo</code> ·
+      <code>ref</code> · <code>path</code> · <code>dockerfile</code> →
+      préflight → logs de deploy sur la VM. En option, l’agent peut proposer
+      une <em>pull request</em> sur le Dockerfile du repo app ; c’est
+      <strong>toi</strong> qui merges.
     </p>
 
     <p>
@@ -168,7 +157,6 @@ flowchart TB
       <a href="expert-config.html">mode expert</a> ·
       <a href="oks.html">OKS</a>.
     </p>
-
     <footer class="site-footer">
       <div class="cols">
         <div>
@@ -220,7 +208,7 @@ flowchart TB
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

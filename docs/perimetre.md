@@ -1,14 +1,14 @@
 # Périmètre
 
-Kickoff / starter kit Outscale — **pas** une infra qui remplace l’intelligence humaine. **Quand vous scalez, c’est à vous de gérer.**
+bige-ops est un simulateur et un kit de démarrage pour Outscale : projeter, estimer, composer, générer, appliquer. Il pose une stack propre sur ton compte ; **ensuite, tu pilotes l’exploitation.**
 
 ```mermaid
 flowchart LR
   A[Idée] --> B[Simulation]
-  B --> C[Estimate]
+  B --> C[Estimation]
   C --> D[Generate]
   D --> E[Apply]
-  E --> F[Vous opérez le scale]
+  E --> F[Tu pilotes le run]
 ```
 
 HTML : [perimetre.html](https://bige.dev/perimetre.html)

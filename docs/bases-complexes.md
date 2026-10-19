@@ -1,13 +1,15 @@
-# Bases chiantes & gourmandes
+# Bases complexes
 
-Mongo 8, Postgres RAG, Cassandra, Elastic… kickoff simple. **On n’est pas un reseller.** On documente aussi les **gaps** pour les prioriser.
+MongoDB 8, Postgres pour le RAG, Cassandra, Elasticsearch : simples à démarrer sur Outscale, avec des images publiques officielles, ton compte et tes clés.
 
-| Base | Aujourd’hui | Gap à travailler |
+| Base | Prêt aujourd’hui | Prochaine étape |
 |------|-------------|------------------|
-| Mongo 8 | catalogue, replicas pods, backup OOS | replica-set multi-nœuds un clic |
-| Postgres | volume, OKS, OOS | extensions RAG un prompt (pgvector) |
-| Cassandra | custom + sizing | preset distribué opinionated |
-| Elastic | custom OKS documenté | presets nœuds lourds / estimate |
-| Autres | custom pattern | cataloguer |
+| MongoDB 8 | catalogue, réplicas de pods, backup OOS | preset replica set multi-nœuds |
+| Postgres | volume, OKS, OOS | extensions RAG (pgvector) en un prompt |
+| Cassandra | custom + sizing | preset distribué dédié |
+| Elasticsearch | custom OKS guidé par l’agent | presets nœuds gourmands |
+| Autres | pattern custom | patterns catalogués |
+
+Réplicas de pods ≠ replica set MongoDB (un primaire, des secondaires).
 
 HTML : [bases-complexes.html](https://bige.dev/bases-complexes.html)

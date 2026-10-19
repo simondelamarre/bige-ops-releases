@@ -26,24 +26,24 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="oks.html">OKS</a> · <a href="perimetre.html">Périmètre</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
     <h1>CLI · app · OKS</h1>
     <p class="lead">
-      Le kickoff se fait dans l’<strong>app desktop</strong> (Visual, Workspace,
-      Chat). La <strong>CLI <code>bige-ops</code></strong> existe : c’est le
-      <strong>même moteur</strong> (l’app l’appelle). Pour
-      <strong>OKS</strong>, oui on s’appuie sur des CLI kube —
-      <code>oks-cli</code> et <code>kubectl</code> — sous le capot.
+      Tout commence dans l’<strong>app desktop</strong> (Visual, Workspace,
+      Chat). La <strong>CLI <code>bige-ops</code></strong> est le
+      <strong>même moteur</strong> : l’app l’appelle. Pour
+      <strong>OKS</strong>, bige-ops s’appuie sur les outils officiels,
+      <code>oks-cli</code> et <code>kubectl</code>, sous le capot.
     </p>
 
     <div class="callout">
       <strong>On utilise la CLI pour OKS ?</strong>
-      Oui, mais pas comme produit « terminal-first ». L’app (ou
+      Oui, sans être un produit « terminal-first ». L’app (ou
       <code>bige-ops apply --target oks</code> /
       <code>bige-ops deploy</code>) lance <code>oks-cli</code> pour le
-      cluster et <code>kubectl apply</code> pour les manifests. Vous
-      pouvez aussi enchaîner à la main une fois le kubeconfig généré.
+      cluster et <code>kubectl apply</code> pour les manifests. Tu peux
+      aussi enchaîner à la main une fois le kubeconfig généré.
     </div>
 
     <figure class="diagram">
@@ -68,7 +68,7 @@ flowchart LR
         <tr>
           <td><strong>App desktop</strong></td>
           <td>Composer, estimate, review, deploy</td>
-          <td>Chemin nominal (kickoff)</td>
+          <td>Chemin nominal</td>
         </tr>
         <tr>
           <td><strong><code>bige-ops</code></strong></td>
@@ -76,7 +76,7 @@ flowchart LR
           <td>Sous l’app, ou script / CI / terminal</td>
         </tr>
         <tr>
-          <td><strong><code>oks-cli</code></strong></td>
+          <td><strong><a href="https://docs.outscale.com/fr/userguide/Installer-et-configurer-OKS-CLI.html" target="_blank" rel="noopener noreferrer"><code>oks-cli</code></a></strong></td>
           <td>Projet / cluster / nodepools / kubeconfig OKS</td>
           <td>Via <code>apply --target oks</code> (embarqué)</td>
         </tr>
@@ -91,7 +91,7 @@ flowchart LR
     <h2>OKS en pratique</h2>
     <p>
       1. Simulation topologie <strong>oks</strong> (Visual ou
-      <code>bige-ops add stack --topology oks</code>).
+      <code>bige-ops add stack oks</code>).
       2. <code>generate</code> → specs sous <code>bige-ops/oks/</code> +
       apps YAML (réplicas, HPA, expose HTTP/TLS).
       3. <code>apply --target oks</code> → <strong>oks-cli</strong>.
@@ -108,8 +108,8 @@ flowchart LR
     <h2>Terminal de l’app</h2>
     <p>
       Vrai shell PTY (<code>$SHELL</code>) : <code>ls</code>, <code>git</code>,
-      <code>bige-ops …</code>. Le binaire est sur le PATH. Onglets + KeepAlive
-      quand vous changez de vue.
+      <code>bige-ops …</code>. Le binaire est sur le PATH. Les onglets restent
+      actifs quand tu changes de vue.
     </p>
 
     <h2>Commandes utiles (0.6)</h2>
@@ -120,16 +120,17 @@ bige-ops inventory forget --terminated
 bige-ops pricing catalog-sync
 bige-ops mcp                        # stdio pour Cursor / Claude Code</pre>
     <p>
-      Live = état OAPI + capacité Tina ; % guest seulement avec sample SSH.
+      Live = état lu par l’API Outscale + capacité Tina ; l’usage dans la VM
+      (CPU, RAM, disque) s’obtient avec <code>sample</code>, par SSH.
       Inventaire : badges status, destroy vérifié, forget local.
-      Tarifs : sync catalogue public OAPI (page Tarifs dans l’app).
+      Tarifs : sync du catalogue public Outscale par <code>ReadPublicCatalog</code> (page Tarifs dans l’app).
     </p>
 
-    <h2>Ce que ce n’est pas</h2>
+    <h2>Bon à savoir</h2>
     <p>
-      Pas un substitut à votre formation kubectl. Pas un IDE kube.
-      La landing « CLI Kubernetes » = <em>même moteur + outils kube
-      disponibles</em>, pas « tout se fait uniquement en CLI ».
+      bige-ops génère et applique les manifests ; pour aller plus loin sur ton
+      cluster, <code>kubectl</code> et ton kubeconfig sont à portée de main
+      dans le terminal de l’app.
     </p>
 
     <footer class="site-footer">
@@ -183,7 +184,7 @@ bige-ops mcp                        # stdio pour Cursor / Claude Code</pre>
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

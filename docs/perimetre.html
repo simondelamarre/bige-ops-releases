@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Périmètre — bige-ops</title>
-  <meta name="description" content="Kickoff Outscale : ce que bige-ops couvre, ce qu’il ne remplace pas. Scale = vous gérez." />
+  <meta name="description" content="Le périmètre de bige-ops sur Outscale : simuler, estimer, générer, appliquer. Ensuite, tu pilotes l’exploitation." />
   <link rel="canonical" href="https://bige.dev/perimetre.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/perimetre.html" />
   <meta property="og:title" content="Périmètre — bige-ops" />
-  <meta property="og:description" content="Kickoff Outscale : ce que bige-ops couvre, ce qu’il ne remplace pas. Scale = vous gérez." />
+  <meta property="og:description" content="Le périmètre de bige-ops sur Outscale : simuler, estimer, générer, appliquer. Ensuite, tu pilotes l’exploitation." />
   <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,63 +26,63 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
-    <h1>On aide à démarrer. On ne fait pas tout.</h1>
+    <h1>Le périmètre de bige-ops</h1>
     <p class="lead">
-      bige-ops est un <strong>kickoff / starter kit</strong> pour Outscale :
-      projeter, estimer, composer, générer, appliquer.
-      Ce n’est pas une infra qui remplace l’intelligence humaine.
+      bige-ops est un <strong>simulateur et un kit de démarrage</strong> pour
+      Outscale : projeter, estimer, composer, générer, appliquer. Il pose une
+      stack propre sur ton compte ; l’exploitation au quotidien reste entre
+      tes mains.
     </p>
 
     <figure class="diagram">
       <pre class="mermaid">
 flowchart LR
   A[Idée] --> B[Simulation]
-  B --> C[Estimate]
+  B --> C[Estimation]
   C --> D[Generate]
   D --> E[Apply infra]
   E --> F[Deploy apps]
-  F --> G[Vous opérez le scale]
+  F --> G[Tu pilotes le run]
   style G fill:#1a1f27,stroke:#5ec4b4,color:#f3f5f8
       </pre>
-      <figcaption>Apply = infra · Deploy = apps · puis vous opérez le run.</figcaption>
+      <figcaption>Apply = infra · Deploy = apps · ensuite, tu pilotes le run.</figcaption>
     </figure>
 
     <div class="callout">
-      <strong>Quand vous scalez, c’est à vous de gérer.</strong>
-      Capacité, incidents, hardening fin, négo commerciale Outscale :
-      hors babysitting bige-ops.
+      <strong>Après le déploiement, c’est ton exploitation.</strong>
+      Capacité, incidents, durcissement, sauvegardes et montée en charge se
+      pilotent de ton côté, avec les services Outscale et ton équipe.
     </div>
 
     <div class="callout">
-      <strong>Pricing &amp; capacités = snapshot.</strong>
-      Estimate et catalogue embarqués ne remplacent pas le devis Outscale
-      ni l’offre de demain (ex. NVMe). Commerciaux / tech Outscale :
-      écrivez sur
-      <a href="https://github.com/simondelamarre/bige-ops-releases/issues">GitHub</a>
-      — détail
-      <a href="savoir.html">sait / ne sait pas</a>.
+      <strong>Prix et offre Outscale.</strong>
+      L’estimation repose sur le catalogue public Outscale ; ton devis et les
+      conditions de ton compte viennent d’Outscale. bige-ops intègre les
+      nouveautés de l’offre au fil des versions — une suggestion se dépose sur
+      <a href="https://github.com/simondelamarre/bige-ops-releases/issues">GitHub</a>.
+      Détail : <a href="savoir.html">ce que bige-ops sait</a>.
     </div>
 
-    <h2>Deux couches mentales</h2>
+    <h2>Deux couches</h2>
     <p>
-      D’un côté la <strong>simulation</strong> (layout + € catalogue) :
-      vous explorez sans engagement. De l’autre le
-      <strong>compte Outscale</strong> : inventory, plan, apply —
-      avec vos credentials. Le passage de l’une à l’autre est volontaire.
+      D’un côté la <strong>simulation</strong> (layout + coût au catalogue) :
+      tu explores sans engagement. De l’autre le <strong>compte
+      Outscale</strong> : inventaire, plan, apply, avec tes credentials. Le
+      passage de l’une à l’autre est toujours volontaire.
     </p>
 
     <figure class="diagram">
       <pre class="mermaid">
 flowchart TB
-  subgraph kit [Starter kit bige-ops]
+  subgraph kit [bige-ops]
     S[Simulation / Visual]
-    G[Generate TF / OKS / YAML]
+    G[Generate Terraform / OKS / YAML]
   end
-  subgraph you [Votre responsabilité]
+  subgraph you [Ton exploitation]
     R[Run · scale · DBA · SRE]
-    N[Négo · devis Outscale]
+    N[Devis et compte Outscale]
   end
   S --> G
   G -->|apply| R
@@ -90,30 +90,28 @@ flowchart TB
       </pre>
     </figure>
 
-    <h2>Ce qu’on couvre (kickoff)</h2>
+    <h2>Ce que bige-ops couvre</h2>
     <p>
-      Simulations et layouts (<a href="vms.html">VMs</a> / VPS catalogue, OKS,
-      services), estimation catalogue, génération Terraform / specs OKS /
-      YAML apps, plan · apply · deploy sur <em>votre</em> compte, presets
-      Visual, inventory + reverse, buckets
-      <a href="oos.html">OOS</a>.
+      Simulations et layouts (<a href="vms.html">VMs</a>, OKS, services),
+      estimation sur le catalogue public, génération Terraform, specs OKS et
+      YAML d’apps, plan · apply · deploy sur <em>ton</em> compte, presets
+      Visual, inventaire et import, buckets <a href="oos.html">OOS</a>.
     </p>
 
-    <h2>Ce qu’on ne remplace pas</h2>
+    <h2>Ce qui reste de ton côté</h2>
     <p>
-      Le jugement sur le design et le scale, l’opération de la montée en charge,
-      le contrat commercial Outscale, un vault SaaS ou un MSP, la garantie
-      de facture (estimate = indicative), et l’expertise kubectl / Terraform
-      avancée. Vous validez, vous appliquez, vous assumez le run.
+      Les choix d’architecture et de dimensionnement, l’exploitation de la
+      montée en charge, la relation commerciale avec Outscale, la gestion de
+      secrets à l’échelle d’une équipe, et l’expertise kubectl ou Terraform
+      avancée. Tu relis, tu appliques, tu pilotes le run.
     </p>
 
     <h2>En pratique</h2>
     <p>
-      On pose les <strong>standards opérationnels</strong> pour démarrer vite.
-      Ensuite c’est vous (ou votre DevOps) qui porte le scale.
-      Le kit kickoff ; l’intelligence reste humaine.
+      bige-ops pose des <strong>standards opérationnels</strong> pour démarrer
+      vite et proprement. Ensuite, toi ou ton équipe DevOps portez la montée
+      en charge.
     </p>
-
     <footer class="site-footer">
       <div class="cols">
         <div>
@@ -165,7 +163,7 @@ flowchart TB
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

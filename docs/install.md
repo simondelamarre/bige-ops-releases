@@ -1,38 +1,33 @@
 # Installer & mettre à jour
 
-App desktop locale et gratuite, version **0.6.1**. Distribution via GitHub Releases : [simondelamarre/bige-ops-releases](https://github.com/simondelamarre/bige-ops-releases).
+bige-ops est une application desktop locale et gratuite, pour macOS (Apple Silicon) et Linux (x86_64). La CLI est incluse.
 
-**Plateformes :** macOS (DMG ou cask) et Linux. **Windows : non supporté** aujourd’hui.
+## macOS : Homebrew
 
 ```
 brew tap simondelamarre/bige-ops
 brew install --cask bige-ops
 ```
 
-## macOS bloque l’app ? (Gatekeeper)
+Le cask prépare l’app pour le premier lancement : elle s’ouvre directement. Mise à jour : `brew upgrade --cask bige-ops`.
 
-Pas encore notarié. Après un DMG, macOS peut afficher « Apple n’a pas pu confirmer… » et **bloquer sans « Ouvrir quand même »**.
+## Linux : AppImage ou .deb
 
-1. Copiez `bige-ops.app` dans `/Applications`.
-2. **Avant** le premier double-clic :
+Depuis la [dernière release](https://github.com/simondelamarre/bige-ops-releases/releases/latest) :
 
-```bash
-xattr -cr /Applications/bige-ops.app && codesign --force --deep --sign - /Applications/bige-ops.app
-open /Applications/bige-ops.app
+```
+chmod +x bige-ops-*-linux-x86_64.AppImage && ./bige-ops-*-linux-x86_64.AppImage
+sudo apt install ./bige-ops-*-linux-x86_64.deb
 ```
 
-Ou double-cliquez **Fix Gatekeeper.command** sur le DMG.  
-Après corbeille : re-copier puis relancer les commandes.  
-Sans Terminal : le cask Homebrew ci-dessus retire la quarantaine en postflight.
-
-**Mises à jour :** l’app *vérifie* s’il existe une version plus récente via `latest.json`, mais **ne s’installe pas toute seule**. Vous remplacez le DMG, ou `brew upgrade --cask bige-ops`.
+**Mises à jour :** l’app vérifie s’il existe une version plus récente via `latest.json` et te le signale.
 
 **CLI embarquée :** le binaire `bige-ops` est packagé dans l’app ; Settings signale une CLI introuvable ou désalignée.
 
-**Dépendances :** écran de diagnostic pour CLI embarquée, Terraform (plan/apply), oks-cli + kubectl (OKS), Docker/SSH (deploy applicatif).
+**Dépendances :** écran de diagnostic pour Terraform (plan/apply), oks-cli + kubectl (OKS), Docker/SSH (deploy applicatif).
 
-Premier lancement : choisir un workspace local, puis créer un compte Outscale — ou rester en mode projection sans credentials.
+Premier lancement : choisis un workspace local, puis crée un compte Outscale, ou reste en simulation sans identifiants.
 
-Beta démo : bugs et manques → [issues](https://github.com/simondelamarre/bige-ops-releases/issues).
+Une question ou une idée : [issues](https://github.com/simondelamarre/bige-ops-releases/issues).
 
 HTML : [install.html](https://bige.dev/install.html)
