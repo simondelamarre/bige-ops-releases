@@ -615,12 +615,13 @@
       <p class="brand">bige<span class="ops">-ops</span></p>
       <span class="brand-badge">Gratuit</span>
     </div>
-    <p class="baseline">Le simulateur de stack pour Outscale · gratuit · 100 % local</p>
+    <p class="baseline">Le simulateur de stack pour Outscale · gratuit · installé en une commande</p>
 
     <ul class="pitch">
       <li><strong>Simule avant de déployer.</strong> Dessine ta stack Outscale, teste-la et mesure son coût avant de dépenser quoi que ce soit.</li>
       <li><strong>Analyse ce que tu déploies.</strong> Coût détaillé, risques sur tes données, CVE de tes dépôts.</li>
-      <li><strong>Déploie sur ton compte Outscale.</strong> Cloud souverain français, régions classiques et SecNumCloud.</li>
+      <li><strong>Déploie comme sur une plateforme, chez toi.</strong> Tu relies ton dépôt, bige-ops déploie sur ton compte Outscale : cloud souverain français, régions classiques et SecNumCloud.</li>
+      <li><strong>Gratuit, installé en une commande.</strong> Pas d’abonnement, pas de compte à créer pour commencer : tu installes, tu simules.</li>
       <!-- Other clouds hidden for now (ENABLED_PROVIDER_IDS in desktop/src/lib/providers.ts). Previous copy:
       <li><strong>Un cloud prêt, d’autres en route.</strong> Outscale live · Scaleway, OVH, AWS, Azure, GCP, Fly… bientôt.</li> -->
     </ul>
@@ -649,7 +650,7 @@
         <!-- macOS DMG download hidden until the app is notarized:
         <a class="primary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger macOS</a> -->
       </div>
-      <p>macOS (Apple Silicon) : installation par Homebrew, en une commande. Linux : AppImage ou paquet .deb.</p>
+      <p><strong>Gratuit.</strong> macOS (Apple Silicon) : une commande Homebrew. Linux : AppImage ou paquet .deb. Tu simules tout de suite, sans compte ; tu connectes Outscale quand tu déploies.</p>
     </div>
 
     <section class="block" id="pourquoi">
@@ -671,9 +672,9 @@
       </article>
 
       <article class="why-card" id="why-deploy">
-        <h3>L’outil déploie. Outscale héberge.</h3>
-        <p class="why-sub">Ce n’est pas un Docker sur ton poste.</p>
-        <p>bige-ops tourne sur ta machine pour piloter le déploiement. Ta stack vit sur ton compte Outscale. Tes secrets restent chez toi : coffre local, avec sync optionnelle vers GitHub ou HashiCorp Vault.</p>
+        <h3>La simplicité d’une plateforme, sur ton cloud.</h3>
+        <p class="why-sub">Ce n’est pas un Docker sur ton poste : c’est ta prod, sur Outscale.</p>
+        <p>Un Docker sur ton poste fait tourner des conteneurs pour toi, en local. bige-ops, lui, pilote ta production : tu relies ton dépôt Git, il génère l’infra et déploie tes services sur des VMs ou un cluster OKS de ton compte Outscale. Tu gardes la simplicité d’une plateforme managée, avec la main sur ton infra et le prix public d’Outscale. Tes secrets restent chez toi : coffre local, sync optionnelle vers GitHub ou HashiCorp Vault.</p>
         <!-- Other clouds hidden for now. Previous: (sync optionnelle Vault / GitHub / Fly si tu le veux). -->
         <p><a href="secrets.html">Secrets →</a></p>
       </article>
