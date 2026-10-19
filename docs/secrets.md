@@ -15,7 +15,7 @@ Où vit quoi :
 | `bige-ops/**/*.pem` | clés SSH du module keypair |
 | `bige-ops/kubeconfigs/` | kubeconfigs OKS |
 | `bige-ops/.state/` | hosts.json, statut de deploy, snapshots |
-| `~/.config/bige-ops/settings.json` | token GitHub, clé API Anthropic, chemin du workspace |
+| `~/.config/bige-ops/settings.json` | token GitHub, clés API LLM (Anthropic, OpenAI, Gemini, Mistral), chemin du workspace |
 
 **Jamais pushé sur le config-history :** credentials, `vault.local.json`, `.env`, `terraform.tfvars`, `*.pem`, `tfstate`, inventaire, `.app-src/`, `.state/`. Le reste de `bige-ops/` est versionné.
 
@@ -30,7 +30,10 @@ Où vit quoi :
 | **Local** | Coffre `vault.local.json` → `.env` au deploy | Prêt · primary |
 | **GitHub Actions secrets** | Sync vers un repo choisi | Prêt · optionnelle |
 | **HashiCorp Vault** | KV sur *ton* Vault (token local) | Prêt · optionnelle |
-| **Fly.io secrets** | Secrets d’une app Fly (token local) | Prêt · optionnelle |
+<!-- Other clouds hidden for now (ENABLED_PROVIDER_IDS): | **Fly.io secrets** | Secrets d’une app Fly (token local) | Prêt · optionnelle | -->
+| **Bitwarden / 1Password** | Gestionnaires perso | Non branché — coller les valeurs dans le coffre |
+
+Le coffre est **par simulation** (dossier projet), pas un coffre global machine. Partage = copie manuelle du fichier, ou sync backend ci-dessus.
 
 Config : `bige-ops/vault.config.json`. Tokens dans Settings desktop. **Pas** de vault SaaS bige-ops.
 
@@ -39,7 +42,7 @@ flowchart LR
   V[Coffre local] --> E[.env]
   E --> D[Deploy VM]
   V -.exclu.-> G[config-history]
-  V -.sync opt.-> GH[GitHub / Vault / Fly]
+  V -.sync opt.-> GH[GitHub / Vault]
 ```
 
 HTML : [secrets.html#backends](https://bige.dev/secrets.html#backends)

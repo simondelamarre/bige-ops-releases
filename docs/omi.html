@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>OMI · les images — bige-ops</title>
-  <meta name="description" content="bige-ops choisit une OMI existante (Ubuntu, Debian) ; il n’en fabrique pas. Résolution automatique et override." />
+  <meta name="description" content="OMI Outscale : bige-ops part de l’OMI officielle Ubuntu la plus récente de ta Région, propose la liste Ubuntu et Debian, et accepte ton propre identifiant d’image." />
   <link rel="canonical" href="https://bige.dev/omi.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/omi.html" />
   <meta property="og:title" content="OMI · les images — bige-ops" />
-  <meta property="og:description" content="bige-ops choisit une OMI existante (Ubuntu, Debian) ; il n’en fabrique pas. Résolution automatique et override." />
+  <meta property="og:description" content="OMI Outscale : bige-ops part de l’OMI officielle Ubuntu la plus récente de ta Région, propose la liste Ubuntu et Debian, et accepte ton propre identifiant d’image." />
   <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,39 +26,49 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="vms.html">VMs</a> · <a href="repos-vms-docker.html">Repos · VMs · Docker</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
     <h1>OMI · les images</h1>
-    <p class="lead">Une <strong>OMI</strong> est l’image disque qui sert à démarrer une VM. bige-ops en <strong>choisit</strong> une. Il n’en fabrique pas — et c’est une limite assumée, pas un oubli.</p>
+    <p class="lead">Une <strong>OMI</strong> (OUTSCALE Machine Image) est le modèle qui sert à démarrer une VM : un système, et parfois des logiciels et des volumes préconfigurés. bige-ops part des <strong>OMI officielles</strong> Outscale, maintenues à jour par Outscale, et te laisse en imposer une autre.</p>
     <h2>Comment l’image est choisie</h2>
     <ul>
-      <li>Par défaut, bige-ops <strong>résout automatiquement</strong> une image officielle récente à partir du catalogue de votre compte : Ubuntu 24.04, Ubuntu 22.04 ou Debian 12.</li>
-      <li>Vous pouvez <strong>forcer</strong> une image : au niveau du projet, ou VM par VM.</li>
-      <li>À l’import d’un compte existant, l’identifiant d’image de la VM est repris tel quel — on ne vous rebascule pas sur une autre distribution dans votre dos.</li>
+      <li>Par défaut, bige-ops interroge ton compte (<code>ReadImages</code>, images publiées par Outscale) et retient l’OMI officielle la plus récente en <strong>Ubuntu 24.04</strong>, sinon en <strong>Ubuntu 22.04</strong>.</li>
+      <li>Le formulaire du projet propose la liste des OMI officielles Ubuntu et Debian 12 de ta Région, avec recherche ; la commande <code>bige-ops images</code> affiche la même liste.</li>
+      <li>Tu peux aussi <strong>imposer</strong> un identifiant d’image : au niveau du projet, ou VM par VM en YAML (<code>image_id</code>).</li>
+      <li>À l’import d’un compte existant, l’identifiant d’image de chaque VM est repris tel quel.</li>
     </ul>
 
     <div class="callout">
-      <strong>Corollaire utile.</strong>
-      L’image est la base ; ce qui tourne dessus vient d’ailleurs — paquets
-      système et conteneurs Docker. Voir
-      <a href="repos-vms-docker.html">Repos, VMs &amp; Dockerfiles</a>.
+      <strong>Bon à savoir côté Outscale.</strong>
+      Un identifiant d’OMI est propre à une Région : la même Ubuntu n’a pas
+      le même ID en <code>eu-west-2</code> et en
+      <code>cloudgouv-eu-west-1</code>. Pour faire voyager ta propre image
+      d’une Région à l’autre, Outscale passe par un export vers un bucket OOS
+      puis un import. Et si les OMI officielles sont maintenues à jour par
+      Outscale, une VM démarrée depuis l’une d’elles se met à jour de ton côté.
     </div>
 
-    <h2>Ce que ça n’est pas</h2>
-    <ul>
-      <li><strong>Pas de construction d’OMI.</strong> Pas de Packer, pas de snapshot d’une VM configurée promue en image dorée.</li>
-      <li><strong>Pas de catalogue d’images</strong> parcourable dans l’app : vous subissez la résolution automatique ou vous collez un identifiant.</li>
-      <li><strong>Pas de ligne de coût</strong> : une OMI publique n’est pas facturée en tant que telle, elle n’apparaît donc pas dans l’estimation.</li>
-    </ul>
     <p>
-      Si votre besoin est une image durcie maison rejouée à chaque VM, c’est
-      au-delà du kickoff — voir <a href="perimetre.html">Périmètre</a>.
+      L’image est la base ; ce qui tourne dessus vient des paquets système et
+      des conteneurs Docker. Voir
+      <a href="repos-vms-docker.html">Repos, VMs &amp; Dockerfiles</a>.
     </p>
 
-    <h2>Doc produit Outscale (référence)</h2>
+    <h2>Le périmètre</h2>
     <ul>
-      <li><a href="https://docs.outscale.com/en/userguide/About-OMIs.html">About OMIs</a></li>
-      <li><a href="https://docs.outscale.com/en/userguide/About-VMs.html">About VMs</a></li>
+      <li>bige-ops <strong>sélectionne</strong> une image ; la construction d’images maison (image dorée, Packer) se fait à côté, et tu en colles ensuite l’identifiant.</li>
+      <li>Une OMI officielle n’a pas de ligne de coût propre : elle n’apparaît pas dans l’estimation. Les licences (Windows, RHEL…) sont au catalogue de prix.</li>
+    </ul>
+    <p>
+      Une image durcie rejouée sur chaque VM relève de ton exploitation — voir
+      <a href="perimetre.html">Périmètre</a>.
+    </p>
+
+    <h2>Doc Outscale</h2>
+    <ul>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-OMI.html" target="_blank" rel="noopener noreferrer">À propos des OMI</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-VM.html" target="_blank" rel="noopener noreferrer">À propos des VM</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-keypairs.html" target="_blank" rel="noopener noreferrer">À propos des keypairs</a></li>
     </ul>
 
     <p class="doc-nav" style="margin-top:2rem"><a href="vms.html">VMs · VPS</a> · <a href="volumes-bsu.html">Volumes BSU</a> · <a href="repos-vms-docker.html">Repos · VMs · Docker</a></p>
@@ -113,7 +123,7 @@
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

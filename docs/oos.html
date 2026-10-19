@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>OOS &amp; backups — bige-ops</title>
-  <meta name="description" content="OOS Object Storage Outscale : buckets, versioning, lien backup DB. Bien démarrer les sauvegardes objet." />
+  <meta name="description" content="OOS, l’Object Storage Outscale compatible S3 : bucket régional, lien backup depuis la base, protection contre la destruction, et ce qu’il faut savoir sur les noms, les clés et le coût." />
   <link rel="canonical" href="https://bige.dev/oos.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/oos.html" />
   <meta property="og:title" content="OOS &amp; backups — bige-ops" />
-  <meta property="og:description" content="OOS Object Storage Outscale : buckets, versioning, lien backup DB. Bien démarrer les sauvegardes objet." />
+  <meta property="og:description" content="OOS, l’Object Storage Outscale compatible S3 : bucket régional, lien backup depuis la base, protection contre la destruction, et ce qu’il faut savoir sur les noms, les clés et le coût." />
   <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,109 +26,143 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a> · <a href="bases.html">Bases</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
     <h1>OOS &amp; backups</h1>
     <p class="lead">
-      <strong>OOS</strong> (Outscale Object Storage) est le stockage objet
-      S3-compatible. Pour bien commencer : un bucket, un lien backup depuis
-      la DB, des scripts générés — pas encore une usine de PRA complète.
+      <strong>OOS</strong> (OUTSCALE Object Storage) est le stockage objet
+      d’Outscale, compatible avec l’API S3 : tout outil S3 fonctionne avec.
+      Dans bige-ops, c’est la destination naturelle des sauvegardes : un
+      bucket, un lien backup depuis la base, un script de sauvegarde préparé.
     </p>
 
     <figure class="diagram">
       <pre class="mermaid">
 flowchart LR
   DB[(Postgres / Mongo…)] -->|backup.enabled| B[backup.sh]
-  B --> OOS[(OOS bucket)]
-  VOL[Volume / snapshot] -.->|filet block| DB
-  OOS -->|dumps / objets| SAFE[Rétention à votre charge]
+  B --> OOS[(bucket OOS)]
+  VOL[Volume / snapshot] -.->|filet bloc| DB
+  OOS -->|dumps / objets| SAFE[Rétention et restauration : ton exploitation]
       </pre>
-      <figcaption>Block storage pour le chaud · OOS pour l’objet / dumps.</figcaption>
+      <figcaption>Bloc pour les données chaudes · OOS pour les objets et les dumps.</figcaption>
     </figure>
 
-    <h2>À quoi sert OOS ici</h2>
+    <h2>Ce qu’OOS apporte</h2>
+    <ul>
+      <li><strong>Un stockage régional.</strong> Un volume BSU vit dans une Subregion ; un bucket OOS vit dans la Région. Outscale y combine erasure coding (gros objets) et réplication (petits objets) entre zones : un objet reste lisible même si une zone entière tombe (<a href="https://docs.outscale.com/fr/userguide/Mécanismes-de-résilience-d-OOS.html" target="_blank" rel="noopener noreferrer">mécanismes de résilience</a>).</li>
+      <li><strong>Un endpoint par Région</strong> : <code>https://oos.&lt;région&gt;.outscale.com</code>, disponible dans les cinq Régions publiques.</li>
+      <li><strong>Les fonctions S3 attendues</strong> : versioning, cycle de vie, verrouillage d’objets, chiffrement côté serveur, URL pré-signées, CORS, site statique (<a href="https://docs.outscale.com/fr/userguide/Introduction-à-OOS.html" target="_blank" rel="noopener noreferrer">introduction à OOS</a>).</li>
+      <li><strong>Un coût lisible</strong> : au catalogue public, OOS se paie au GiB stocké par mois ; le trafic sortant et les requêtes y sont à 0 € HT en <code>eu-west-2</code>, <code>cloudgouv-eu-west-1</code>, <code>us-east-2</code> et <code>us-west-1</code>.</li>
+    </ul>
+    <div class="callout">
+      <strong>Deux règles Outscale à connaître.</strong>
+      Un nom de bucket est unique dans toute la Région, fait 3 à 63
+      caractères (minuscules, chiffres, tirets) et ne se renomme pas. Et OOS
+      s’utilise avec les access keys du compte : les utilisateurs EIM n’y ont
+      pas accès.
+    </div>
+
+    <h2>Déclarer un bucket</h2>
     <p>
-      Déclarer un <code>oos_bucket</code> dans la simulation (Visual palette
-      Storage, ou YAML). <code>generate</code> produit du Terraform
-      (provider AWS pointé sur l’endpoint OOS régional, ex.
-      <code>oos.eu-west-2.outscale.com</code>), avec versioning optionnel.
-      Apply crée le bucket sur <em>votre</em> compte.
+      Pose un <code>oos_bucket</code> dans la simulation (palette Storage de
+      Visual, ou YAML). <code>generate</code> produit les ressources Terraform
+      S3 pointées sur l’endpoint OOS de ta Région, avec versioning en option.
+      L’apply crée le bucket sur <em>ton</em> compte.
     </p>
+    <!-- Other clouds hidden for now (ENABLED_PROVIDER_IDS in desktop/src/lib/providers.ts). Previous copy:
+    generate produit du Terraform (provider AWS pointé sur l’endpoint OOS régional, ex. oos.eu-west-2.outscale.com), avec versioning optionnel. -->
 
 <pre>components:
   - type: oos_bucket
     name: app-backups
-    bucket: app-backups</pre>
+    bucket: app-backups
+    versioning: true</pre>
 
-    <h2>Lien DB → backup</h2>
+    <h2>Lien base → backup</h2>
     <p>
-      Sur un nœud base, vous activez le backup et pointez le bucket
+      Sur un nœud base, active le backup et choisis le bucket
       (<code>backup.enabled</code> + <code>oos_bucket</code>). Visual dessine
-      l’edge <strong>backup</strong>. Si le backup est coché sans bucket,
-      le générateur peut créer automatiquement un composant
-      <code>oos_bucket</code>. Après generate : scripts sous
-      <code>bige-ops/app/&lt;stack&gt;/backup.sh</code> — vous les exécutez /
-      planifiez dans <em>votre</em> run.
+      l’edge <strong>backup</strong> et, si aucun bucket n’existe encore, en
+      ajoute un à la simulation (<code>&lt;stack&gt;-backups</code>, versioning
+      activé).
+    </p>
+    <p>
+      Après <code>generate</code>, bige-ops prépare
+      <code>bige-ops/app/&lt;stack&gt;/backup.sh</code> : le bucket,
+      l’endpoint OOS de ta Région, le planning (<code>0 2 * * *</code> par
+      défaut) et la rétention visée (7 jours) y sont renseignés. Tu y branches
+      la commande de dump de ta base, puis tu l’installes en cron sur l’hôte
+      de la base. Pour la rétention, OOS sait expirer les objets lui-même
+      grâce au cycle de vie du bucket.
     </p>
 
     <figure class="diagram">
       <pre class="mermaid">
 flowchart TB
-  F[Formulaire DB] -->|active backup| S[Simulation]
-  S -->|generate| T[TF OOS + backup.sh]
-  T -->|apply| C[Bucket live]
-  C --> H[Humain : cron / rétention / restore tests]
+  F[Formulaire base] -->|active backup| S[Simulation]
+  S -->|generate| T[Terraform OOS + backup.sh]
+  T -->|apply| C[Bucket créé]
+  C --> H[Toi : dump, cron, tests de restauration]
       </pre>
     </figure>
 
     <h2>Secrets</h2>
     <p>
-      Clés d’accès OOS (AK/SK) passent par le coffre local /
-      <code>terraform.tfvars</code> — <strong>jamais</strong> dans
-      <code>project.yaml</code> ni le config-history Git.
-      Même règle que le reste : pas de vault SaaS bige-ops.
+      Les access keys OOS passent par le coffre local et
+      <code>terraform.tfvars</code>, <strong>jamais</strong> par
+      <code>project.yaml</code> ni par le config-history Git. Voir
+      <a href="secrets.html">secrets</a>.
     </p>
 
-    <h2>Limites actuelles (honnêtes)</h2>
+    <h2>Un bucket protégé</h2>
     <p>
-      Pas de reverse-engineering des buckets depuis l’inventory aujourd’hui.
-      Pas de politique de rétention magique ni de restore one-click certifié.
-      OOS dans bige-ops = <strong>bien démarrer</strong> l’objet et le fil
-      backup ; la discipline restore / PRA, c’est vous —
-      <a href="perimetre.html">périmètre</a>.
+      Un bucket contient tes sauvegardes, alors bige-ops ne le détruit jamais
+      par effet de bord : le Terraform porte <code>prevent_destroy</code>, et
+      <code>plan</code>, <code>apply</code> et <code>inventory clean</code>
+      refusent tout plan qui supprimerait de l’Object Storage.
+    </p>
+    <p>
+      À chaque <code>generate</code>, les buckets sont enregistrés dans le
+      <code>shared.yaml</code> du compte et <strong>apparaissent sur toutes
+      les simulations</strong> de ce compte.
+    </p>
+    <p>
+      Pour retirer un bucket, il faut le demander explicitement :
+      <code>bige-ops storage remove --name &lt;bucket&gt;</code>, ou la
+      suppression depuis l’inspector Visual. bige-ops vérifie d’abord l’état
+      réel (<code>bige-ops storage status</code>, <code>storage ls</code>) :
+      un bucket pas encore créé ou vide est retiré, un bucket qui contient
+      des objets est refusé. Pour le vider, passe par Cockpit, l’API ou un
+      outil S3.
+    </p>
+    <p>
+      <strong>Une base sans backup vers OOS perd ses données à la
+      destruction</strong> de sa VM ou de ses pods (en mono-VM, l’app et les
+      bases partagent le même disque). L’app te le signale dans Visual, au
+      préflight et au plan. Voir <a href="bases.html">bases de données</a>.
     </p>
 
-    <h2>Indestructible via bige-ops (même vide)</h2>
+    <h2>Inventaire</h2>
     <p>
-      Les buckets OOS sont <strong>non gérés</strong> pour la destruction :
-      bige-ops <strong>ne détruit jamais</strong> un bucket — même vide —
-      via remove / plan / apply / clean.
-      Terraform porte <code>lifecycle.prevent_destroy</code> ; le CLI et Visual
-      refusent la suppression du composant.
-    </p>
-    <p>
-      À chaque <code>generate</code>, les buckets de la simulation sont
-      enregistrés dans <code>shared.yaml</code> du compte et
-      <strong>réapparaissent sur toutes les simulations</strong> (adopt / lecture).
-    </p>
-    <p>
-      Pour vider ou supprimer pour de vrai : passer par les
-      <strong>interfaces Outscale</strong> (console / API), manuellement,
-      en conscience. On ne « tidy » pas vos backups à votre place.
-    </p>
-    <p>
-      <strong>Pas de backup DB → OOS = tu auras un problème</strong> à la
-      destruction (surtout mono-VM : app + bases sur le même disque).
-      Voir <a href="bases.html">bases de données</a>.
+      L’inventaire liste les buckets du compte ; ils ne sont pas réécrits en
+      YAML. Pour piloter un bucket existant depuis bige-ops, déclare-le dans
+      la simulation.
     </p>
 
+    <h2>Doc Outscale</h2>
+    <ul>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-d-OOS.html" target="_blank" rel="noopener noreferrer">À propos d’OOS</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/Introduction-à-OOS.html" target="_blank" rel="noopener noreferrer">Introduction à OOS</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/Mécanismes-de-résilience-d-OOS.html" target="_blank" rel="noopener noreferrer">Mécanismes de résilience d’OOS</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/Référence-des-endpoints-d-API.html" target="_blank" rel="noopener noreferrer">Référence des endpoints d’API</a></li>
+    </ul>
+
     <p>
-      Retour data : <a href="bases.html">bases de données</a>.
-      Git config : <a href="github-config.html">GitHub config-history</a>.
+      Data : <a href="bases.html">bases de données</a>.
+      Config Git : <a href="github-config.html">GitHub config-history</a>.
       Machines : <a href="vms.html">VMs</a> ·
       <a href="oks.html">OKS</a>.
     </p>
-
     <footer class="site-footer">
       <div class="cols">
         <div>
@@ -180,7 +214,7 @@ flowchart TB
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

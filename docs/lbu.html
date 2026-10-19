@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LBU · l’entrée publique — bige-ops</title>
-  <meta name="description" content="Load Balancer Unit : ce que bige-ops crée (un listener HTTP, des backends, un health check) et ce qu’il ne crée pas (TLS, multi-listener)." />
+  <meta name="description" content="LBU, le load balancer Outscale : listeners HTTP et HTTPS avec certificat EIM, health check complet, VMs backend, et le fonctionnement Outscale à connaître (round-robin, listeners, security groups)." />
   <link rel="canonical" href="https://bige.dev/lbu.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/lbu.html" />
   <meta property="og:title" content="LBU · l’entrée publique — bige-ops" />
-  <meta property="og:description" content="Load Balancer Unit : ce que bige-ops crée (un listener HTTP, des backends, un health check) et ce qu’il ne crée pas (TLS, multi-listener)." />
+  <meta property="og:description" content="LBU, le load balancer Outscale : listeners HTTP et HTTPS avec certificat EIM, health check complet, VMs backend, et le fonctionnement Outscale à connaître (round-robin, listeners, security groups)." />
   <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,81 +26,101 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="reseau.html">Réseau</a> · <a href="layouts.html">Layouts</a> · <a href="vms.html">VMs</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
     <h1>LBU · l’entrée publique</h1>
-    <p class="lead">Le <strong>LBU</strong> est la porte d’entrée HTTP de vos layouts multi-VM. bige-ops en crée un, avec un listener, et attache vos VMs derrière. Au-delà de ça, c’est votre console Outscale.</p>
+    <p class="lead">Le <strong>LBU</strong> (Load Balancer Unit) est le load balancer d’Outscale : la porte d’entrée HTTP ou HTTPS de tes layouts multi-VM. bige-ops le crée avec ses listeners, son health check et ses VMs backend, et sait y brancher un certificat EIM pour le HTTPS.</p>
     <div class="callout">
       <strong>À retenir.</strong>
-      Un LBU porte un <strong>nom DNS</strong>, pas une EIP. Le public tape le
-      DNS du load balancer ; vos VMs restent derrière, sans IP publique.
+      Le public tape le <strong>nom DNS</strong> du LBU, attribué
+      automatiquement. Un LBU internet-facing reçoit aussi une IP publique
+      (fournie par Outscale, ou la tienne si tu la précises). Tes VMs app
+      restent derrière, la couche data reste privée.
     </div>
 
     <figure class="diagram">
       <pre class="mermaid">
 flowchart LR
   U[Internet] --> DNS["DNS du LBU"]
-  DNS --> L["listener HTTP :80"]
+  DNS --> L["listener HTTPS :443<br/>certificat EIM"]
   L --> A1["VM app :3000"]
   L --> A2["VM app :3000"]
   A1 --> D["VM data — privée"]
       </pre>
-      <figcaption>Un listener, des backends, une couche data qui ne voit jamais Internet.</figcaption>
+      <figcaption>TLS terminé sur le LBU, trafic HTTP vers les backends, data jamais exposée.</figcaption>
     </figure>
 
     <h2>Ce que bige-ops crée</h2>
     <ul>
-      <li><strong>Sept des huit layouts nommés</strong> créent un LBU. Seul <code>node-lite</code>, qui est mono-VM, n’en a pas : il expose une EIP.</li>
-      <li>Le <strong>scheme</strong> : <code>internet-facing</code> ou <code>internal</code>.</li>
-      <li><strong>Un listener</strong>, en HTTP : port d’entrée, port et protocole backend.</li>
+      <li><strong>Sept des huit layouts nommés</strong> posent un LBU. Seul <code>node-lite</code>, en mono-VM, s’en passe : sa VM porte une IP publique.</li>
+      <li>Le <strong>scheme</strong> : <code>internet-facing</code> (subnet public) ou <code>internal</code> (subnet privé, joignable depuis le Net seulement).</li>
+      <li>Un ou plusieurs <strong>listeners</strong> : protocole et port d’entrée, protocole et port backend.</li>
+      <li>Le <strong>HTTPS</strong> (ou SSL) : un listener <code>HTTPS</code> avec le <code>server_certificate_id</code>, c’est-à-dire l’ORN du certificat chargé dans EIM. Sans ORN, la validation refuse le listener HTTPS.</li>
       <li>Les <strong>VMs backend</strong> attachées.</li>
-      <li>Un <strong>health check</strong> optionnel, défini par un chemin.</li>
+      <li>Le <strong>health check</strong> : protocole, port, chemin, intervalle, timeout, seuils sain et non sain.</li>
     </ul>
 
-    <h2>Ce que bige-ops ne crée pas</h2>
-    <div class="callout callout-warn">
-      <strong>Pas de HTTPS généré.</strong>
-      Les listeners produits sont en <strong>HTTP</strong>. Aucune ressource de
-      certificat n’est générée. Si vous voulez du TLS, la terminaison se fait
-      dans la console Outscale ou en amont du LBU. Ne lisez pas « entrée
-      publique » comme « entrée chiffrée ».
-    </div>
-    <table>
-      <tr><th>Capacité</th><th>État</th></tr>
-      <tr><td>Plusieurs listeners</td><td>le modèle interne les accepte, l’app n’en expose qu’un</td></tr>
-      <tr><td>Health check avancé (intervalle, seuils, timeout)</td><td>non — chemin seulement</td></tr>
-      <tr><td>Sticky sessions, choix d’algorithme</td><td>non</td></tr>
-      <tr><td>Certificat / terminaison TLS</td><td>non</td></tr>
-    </table>
+<pre>components:
+  - type: load_balancer
+    name: front
+    scheme: internet-facing
+    listeners:
+      - load_balancer_protocol: HTTPS
+        load_balancer_port: 443
+        backend_protocol: HTTP
+        backend_port: 3000
+        server_certificate_id: "orn:ows:idauth::123456789012:server-certificate/front"
+    backend_vms: [app]
+    health_check: { protocol: HTTP, port: 3000, path: /health }</pre>
 
-    <h2>Un LBU importé est un croquis</h2>
+    <h2>Comment un LBU Outscale fonctionne</h2>
+    <ul>
+      <li><strong>Round-robin.</strong> Les requêtes sont réparties à parts égales entre les backends sains ; les sticky sessions (cookie) s’activent sur les listeners HTTP et HTTPS.</li>
+      <li><strong>Protocoles appariés.</strong> Un frontal HTTP ou HTTPS parle HTTP aux backends ; un frontal TCP ou SSL leur parle TCP. Le chiffrement s’arrête au LBU (TLS 1.1 à 1.3) ; entre le LBU et les VMs, ce sont les security groups qui protègent le trafic.</li>
+      <li><strong>Un listener ne se modifie pas.</strong> On en ajoute et on en retire. Changer un port ou un protocole dans la simulation, c’est remplacer le listener : lis le plan Terraform pour voir ce qui sera recréé.</li>
+      <li><strong>Un health check par LBU.</strong> Intervalle de 5 à 600 s, timeout de 2 à 60 s, seuils de 2 à 10. Outscale recommande donc un LBU par service.</li>
+    </ul>
+
+    <h2>Le certificat EIM</h2>
     <p>
-      L’inventaire liste vos load balancers existants. L’import en écrit un
-      composant marqué <strong>observé</strong> : sans listeners, sans
-      backends, et <strong>exclu du Terraform de création</strong>. C’est
-      volontaire — un apply ne doit pas recréer par-dessus un LBU que vous
-      avez réglé à la main.
+      Pour le HTTPS, le certificat serveur se charge dans EIM (Cockpit ou API),
+      puis se référence par son ORN. Outscale attend un certificat x509 et sa
+      clé privée encodés en PEM, une clé RSA au format PKCS#1 sans phrase de
+      passe, et la chaîne des autorités intermédiaires si besoin. Le certificat
+      d’un LBU se remplace à tout moment, sans recréer le load balancer.
+      Source : <a href="https://docs.outscale.com/fr/userguide/À-propos-des-certificats-serveurs-dans-EIM.html" target="_blank" rel="noopener noreferrer">certificats serveurs dans EIM</a>.
     </p>
-    <div class="callout callout-warn">
-      <strong>Limite d’affichage.</strong>
-      Sur le canvas, un LBU importé ressemble aujourd’hui à un LBU pilotable.
-      Il ne l’est pas. Tant que le badge « observé » n’est pas posé sur ce
-      nœud, fiez-vous à <a href="inventory.html">la matrice d’inventaire</a>.
-    </div>
 
     <h2>Security groups et LBU</h2>
     <p>
-      Le LBU a ses propres règles côté Outscale, distinctes de celles des VMs
-      qu’il sert. Ouvrir le listener ne suffit pas si le SG de la VM backend
-      ne laisse pas entrer le load balancer. Les principes d’exposition sont
-      sur <a href="reseau.html">Réseau · ouvrir ou non</a>.
+      Dans un Net, Outscale n’associe aucun security group par défaut à un
+      LBU : celui du LBU doit laisser entrer Internet et laisser sortir vers
+      les backends, et celui des VMs backend doit accepter le LBU. bige-ops
+      place le LBU dans le subnet public ou privé du Net avec le security group
+      du module réseau. Les principes d’exposition sont sur
+      <a href="reseau.html">Réseau · ouvrir ou non</a>.
     </p>
 
-    <h2>Doc produit Outscale (référence)</h2>
+    <h2>Un LBU importé est observé</h2>
+    <p>
+      L’inventaire liste tes load balancers existants. L’import en écrit un
+      composant <strong>observé</strong> : sans listeners ni backends, et
+      <strong>exclu du Terraform de création</strong>, pour qu’un apply ne
+      recrée jamais par-dessus un LBU réglé à la main. Dans l’inspector, il
+      s’affiche en lecture seule avec la mention « Ressource observée ».
+    </p>
+    <p>
+      Sticky sessions, listener rules par chemin et access logs vers OOS se
+      règlent dans Cockpit ou par l’API Outscale.
+    </p>
+
+    <h2>Doc Outscale</h2>
     <ul>
-      <li><a href="https://docs.outscale.com/en/userguide/About-Load-Balancers.html">About load balancers</a></li>
-      <li><a href="https://docs.outscale.com/en/userguide/Configuring-Health-Checks.html">Configuring health checks</a></li>
-      <li><a href="https://docs.outscale.com/en/userguide/About-Security-Groups-in-LBU.html">Security groups in LBU</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-load-balancers.html" target="_blank" rel="noopener noreferrer">À propos des load balancers</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/Configurer-les-health-checks.html" target="_blank" rel="noopener noreferrer">Configurer les health checks</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/Configurer-un-load-balancer-pour-une-redirection-SSL.html" target="_blank" rel="noopener noreferrer">Terminaison SSL ou passthrough</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-certificats-serveurs-dans-EIM.html" target="_blank" rel="noopener noreferrer">Certificats serveurs dans EIM</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-security-groups-dans-LBU.html" target="_blank" rel="noopener noreferrer">Security groups dans LBU</a></li>
     </ul>
 
     <p class="doc-nav" style="margin-top:2rem"><a href="reseau.html">Réseau · ouvrir ou non</a> · <a href="reseau-avance.html">Réseau avancé</a> · <a href="inventory.html">Inventaire &amp; import</a></p>
@@ -155,7 +175,7 @@ flowchart LR
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

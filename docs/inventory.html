@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Inventaire &amp; import — bige-ops</title>
-  <meta name="description" content="Lire un compte Outscale existant : inventory fetch, show, import selection et plan. Matrice honnête de ce qui est importé ou seulement observé." />
+  <meta name="description" content="Lire un compte Outscale existant : inventory fetch, show, import selection et plan. Ce qui est importé en composant, ce qui est observé." />
   <link rel="canonical" href="https://bige.dev/inventory.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -18,14 +18,14 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
     <h1>Inventaire &amp; import (reverse)</h1>
     <p class="lead">
-      Votre compte Outscale existe déjà ? bige-ops le <strong>lit</strong>,
-      le comprend et l’affiche — avec une estimation de coût. Il ne prétend
-      pas le réécrire mieux que vous. Une partie est importable en
-      composants, le reste est seulement observé, et c’est dit.
+      Ton compte Outscale existe déjà ? bige-ops le <strong>lit</strong>,
+      le comprend et l’affiche, avec une estimation de coût. Une partie est
+      importable en composants, le reste est observé, et chaque ressource
+      dit dans quel cas elle se trouve.
     </p>
 
     <h2>Lire le compte</h2>
@@ -46,15 +46,13 @@ flowchart LR
       <li>
         <code>bige-ops inventory fetch</code> — interroge le compte et
         stocke un <strong>snapshot local</strong> : nets, subnets, VMs,
-        volumes, snapshots, buckets OOS, security groups, keypairs, IPs
+        volumes, snapshots, buckets OOS, security groups, keypairs, IP
         publiques, route tables, NAT, internet service, LBU, net peering,
         VPN, OKS.
         <br />
-        <em>Nuance :</em> tout cela part dans le snapshot brut, mais la
-        <strong>liste affichée</strong> est plus courte — les IPs publiques,
-        les gateways VPN et les sous-régions sont récupérées sans être
-        présentées comme des ressources. Elles sont dans le fichier, pas à
-        l’écran.
+        Les gateways VPN (client et virtual gateways) et les Subregions sont
+        aussi récupérées : elles restent dans le snapshot brut, sans ligne
+        dédiée dans la liste affichée.
       </li>
       <li>
         <code>bige-ops inventory show</code> — affiche le résumé et
@@ -75,17 +73,16 @@ bige-ops inventory show
 bige-ops import selection --id i-0123456789abcdef
 bige-ops import plan</pre>
 
-    <h2>Matrice honnête</h2>
+    <h2>La matrice</h2>
     <p>
-      Tout ce que l’API renvoie n’est pas modélisable en composant. Trois
-      états, sans zone grise :
+      Chaque ressource renvoyée par l’API Outscale entre dans un état précis :
     </p>
     <table>
       <thead>
         <tr>
           <th>État</th>
           <th>Ressources</th>
-          <th>Ce que vous pouvez en faire</th>
+          <th>Ce que tu peux en faire</th>
         </tr>
       </thead>
       <tbody>
@@ -97,9 +94,10 @@ bige-ops import plan</pre>
         <tr>
           <td><strong>Observé seulement</strong></td>
           <td>
-            route tables, NAT, internet service, IPs publiques, net peering,
-            VPN, OOS (listé, non réécrit en YAML), LBU importés (sketch, pas de reverse des
-            listeners), OKS (listé dans l’inventaire, pas réécrit en YAML)
+            route tables, NAT, internet service, IP publiques, Net peering,
+            VPN, buckets OOS (listés, non réécrits en YAML), LBU importés
+            (sans listeners ni backends), OKS (projets listés, non réécrits
+            en YAML)
           </td>
           <td>affiché et compté, mais <strong>aucun Terraform de création</strong></td>
         </tr>
@@ -109,9 +107,9 @@ bige-ops import plan</pre>
           <td>visibles en Visual / YAML, <strong>pas de Terraform généré</strong></td>
         </tr>
         <tr>
-          <td><strong>Pas modélisé</strong></td>
+          <td><strong>Catalogue de prix</strong></td>
           <td>DirectLink</td>
-          <td>rien — hors périmètre</td>
+          <td>tarifé au catalogue de prix</td>
         </tr>
       </tbody>
     </table>
@@ -123,10 +121,9 @@ bige-ops import plan</pre>
 
     <div class="callout">
       <strong>La philosophie.</strong>
-      On <strong>lit, comprend et affiche</strong>. On ne fait pas
-      « on réécrit mieux ». Un compte construit à la main reste le vôtre :
-      l’inventaire vous donne une carte et un coût, pas un ordre de
-      migration.
+      On <strong>lit, comprend et affiche</strong>. Un compte construit à la
+      main reste le tien : l’inventaire te donne une carte et un coût, sans
+      rien réécrire derrière toi.
     </div>
 
     <h2>Status, destroy, forget</h2>
@@ -149,28 +146,27 @@ bige-ops inventory forget --terminated</pre>
       <strong>Danger — <code>inventory clean --yes</code> est destructif.</strong>
       Cette commande importe tout ce qui est importable, vide le projet, puis
       lance un <code>terraform destroy</code> sur le compte. Elle est
-      <strong>à réserver aux comptes de test</strong>. Les buckets OOS, eux,
-      restent indestructibles via bige-ops — ce qui ne vous dispense pas de
-      relire deux fois avant de taper la commande.
+      <strong>à réserver aux comptes de test</strong>. Elle refuse de
+      détruire les buckets OOS ; relis tout de même deux fois avant de la
+      lancer.
     </div>
 
-    <h2>Ce que ça n’est pas</h2>
+    <h2>Bon à savoir</h2>
     <ul>
       <li>
-        Pas un outil de migration : il n’adopte pas votre compte entier dans
-        un state Terraform propre.
+        L’import adopte les ressources que tu sélectionnes ; il ne fait pas
+        entrer tout le compte dans un state Terraform.
       </li>
       <li>
-        Pas un reverse complet. Le tableau ci-dessus est la limite réelle,
-        pas une roadmap déguisée.
+        Le tableau ci-dessus décrit exactement ce que l’import réécrit.
       </li>
       <li>
-        Pas un audit de sécurité ni de conformité. Voir les security groups
-        affichés comme un point de départ de lecture, pas comme un verdict.
+        Les security groups affichés sont un point de départ de lecture ;
+        l’audit de sécurité et de conformité se mène à côté.
       </li>
       <li>
-        Pas un remplacement de votre SRE. Quand le compte devient sérieux,
-        <strong>vous opérez</strong> — <a href="perimetre.html">périmètre</a>.
+        L’exploitation du compte reste la tienne —
+        <a href="perimetre.html">périmètre</a>.
       </li>
     </ul>
 
@@ -232,7 +228,7 @@ bige-ops inventory forget --terminated</pre>
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

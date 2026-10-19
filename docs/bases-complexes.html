@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bases chiantes &amp; gourmandes — bige-ops</title>
-  <meta name="description" content="Mongo 8, Postgres RAG, Cassandra, Elastic… kickoff simple. On documente aussi ce qui n’est pas encore là." />
+  <title>Bases complexes — bige-ops</title>
+  <meta name="description" content="MongoDB 8, Postgres pour le RAG, Cassandra, Elasticsearch sur Outscale : ce qui démarre aujourd’hui avec bige-ops, et les prochains presets." />
   <link rel="canonical" href="https://bige.dev/bases-complexes.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -12,8 +12,8 @@
   <meta property="og:site_name" content="bige-ops" />
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/bases-complexes.html" />
-  <meta property="og:title" content="Bases chiantes &amp; gourmandes — bige-ops" />
-  <meta property="og:description" content="Mongo 8, Postgres RAG, Cassandra, Elastic… kickoff simple. On documente aussi ce qui n’est pas encore là." />
+  <meta property="og:title" content="Bases complexes — bige-ops" />
+  <meta property="og:description" content="MongoDB 8, Postgres pour le RAG, Cassandra, Elasticsearch sur Outscale : ce qui démarre aujourd’hui avec bige-ops, et les prochains presets." />
   <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,187 +30,167 @@
     </p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
-    <h1>Bases chiantes &amp; gourmandes</h1>
+    <h1>Bases complexes</h1>
     <p class="lead">
-      Mongo, Postgres + extensions, Cassandra, Elastic… des stacks qui font peur
-      au premier devis DevOps. L’idée bige-ops : les rendre
-      <strong>abordables en kickoff</strong> — formulaire / prompt / flow —
-      tout en documentant <strong>honnêtement</strong> ce qui est déjà simple
-      et ce qui reste à travailler en premier.
+      MongoDB, Postgres et ses extensions, Cassandra, Elasticsearch : des
+      bases qui impressionnent au premier devis DevOps. L’idée de bige-ops :
+      les rendre <strong>simples à démarrer</strong> sur Outscale — formulaire,
+      prompt ou flow — et dire clairement ce qui est déjà prêt et ce qui
+      arrive ensuite.
     </p>
 
     <div class="callout">
-      <strong>On n’est pas un reseller.</strong>
-      Pas de licence revendue, pas de boîte noire éditeur.
-      Images catalogue, votre compte Outscale, vos keys.
-      On documente le chemin — y compris les trous produit.
+      <strong>Tes images, ton compte, tes clés.</strong>
+      Pas de licence revendue ni de boîte noire : des images publiques
+      officielles, ton compte Outscale, tes clés. La page documente le
+      chemin, étape par étape.
     </div>
 
     <figure class="diagram">
       <pre class="mermaid">
 flowchart LR
-  subgraph today [Kickoff aujourd’hui]
-    M[Mongo 8]
-    P[Postgres]
+  subgraph today [Prêt aujourd’hui]
+    M[MongoDB 8]
+    P[Postgres 16]
     W[Weaviate / custom]
   end
-  subgraph gap [À durcir — documenté]
+  subgraph next [Prochaines étapes]
     C[Cassandra]
-    E[Elastic]
-    X[Autres complexes]
+    E[Elasticsearch]
+    X[Autres bases]
   end
-  today --> gap
+  today --> next
       </pre>
-      <figcaption>Matrice vivante : ce qui marche en starter · ce qu’on priorise ensuite.</figcaption>
+      <figcaption>Matrice vivante : ce qui démarre aujourd’hui · ce qui vient ensuite.</figcaption>
     </figure>
 
-    <h2>Matrice honnête</h2>
+    <h2>La matrice</h2>
     <table>
       <thead>
         <tr>
           <th>Base</th>
-          <th>Kickoff aujourd’hui</th>
-          <th>Promesse / gap à travailler</th>
+          <th>Prêt aujourd’hui</th>
+          <th>Prochaine étape</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><strong>MongoDB 8</strong></td>
-          <td>Service catalogue, coloc / VM / OKS, réplicas pods, backup → OOS</td>
-          <td>Replica-set multi-nœuds « un clic » encore partiel — à durcir</td>
+          <td>Service du catalogue, coloc / VM / OKS, réplicas de pods, backup → OOS</td>
+          <td>Preset replica set multi-nœuds en un clic</td>
         </tr>
         <tr>
           <td><strong>Postgres</strong></td>
-          <td>Catalogue, volume, OKS replicas, backup OOS</td>
-          <td>Extensions RAG « un prompt » (pgvector…) — parcours agent à figer</td>
+          <td>Service du catalogue, volume, réplicas OKS, backup → OOS</td>
+          <td>Extensions RAG (pgvector…) en un prompt</td>
         </tr>
         <tr>
           <td><strong>Cassandra</strong></td>
-          <td>Via custom / image + sizing</td>
-          <td>Preset distribué « finger in the nose » — pas encore un wizard dédié</td>
+          <td>Service custom : image + sizing</td>
+          <td>Preset distribué dédié</td>
         </tr>
         <tr>
           <td><strong>Elasticsearch</strong></td>
-          <td>Custom OKS (image + volume + replicas) documenté dans l’agent</td>
-          <td>Presets nœuds lourds / heap / disk — premiers crans avant DevOps</td>
+          <td>Service custom sur OKS (image, volume, réplicas), guidé par l’agent</td>
+          <td>Presets pour nœuds gourmands (heap, disque)</td>
         </tr>
         <tr>
           <td><strong>Autres</strong></td>
-          <td>Custom image + port + réplicas + OOS</td>
-          <td>Cataloguer les patterns (OpenSearch, Meilisearch…)</td>
+          <td>Custom : image + port + réplicas + OOS</td>
+          <td>Patterns catalogués (OpenSearch, Meilisearch…)</td>
         </tr>
       </tbody>
     </table>
 
-    <h2>MongoDB 8 — pas un reseller, un kickoff</h2>
+    <h2>MongoDB 8</h2>
     <p>
-      Version <strong>8</strong> côté image catalogue (<code>mongo:8</code>) :
-      on démarre moderne, sans package commercial redistribué.
-      Placement : coloc, <strong>VM data dédiée</strong>, ou pods OKS.
-      Leviers formulaire : sizing Tina, volume, <strong>réplicas</strong>
-      Deployment, <strong>backup → OOS</strong> en un geste Visual
-      (edge backup + scripts générés).
+      Image <code>mongo:8</code> par défaut : on démarre sur la version
+      courante. Placement : coloc, <strong>VM data dédiée</strong> (disque
+      racine <code>io1</code>), ou pods OKS. Leviers du formulaire : type Tina,
+      volume, <strong>réplicas</strong> du Deployment, <strong>backup →
+      OOS</strong> en un geste dans Visual (edge backup + script préparé).
     </p>
     <p>
-      <strong>Ce que « replicas + backups en un clic » veut dire aujourd’hui :</strong>
-      scale pods + fil OOS activé — pas encore un replica-set Mongo multi-primary
-      managé bout-en-bout. Gap #1 à travailler : presets replica-set / arbiter
-      sur multi-vm ou OKS stateful, toujours sans revendiquer une licence.
+      <strong>Réplicas de pods et replica set MongoDB ne sont pas la même
+      chose.</strong> Un replica set, c’est un primaire et des secondaires qui
+      se répliquent entre eux ; des réplicas de pods, ce sont des copies
+      indépendantes du conteneur. Prochaine étape : un preset replica set
+      (primaire, secondaires, arbitre) sur multi-VM ou sur OKS.
     </p>
 
     <figure class="diagram">
       <pre class="mermaid">
 flowchart TB
   F[Formulaire / Visual] --> S[Simulation mongo:8]
-  S --> R[Réplicas pods]
+  S --> R[Réplicas de pods]
   S --> B[Backup OOS]
-  S -.->|gap| RS[Replica-set multi-nœuds]
+  S -.->|prochaine étape| RS[Replica set multi-nœuds]
       </pre>
     </figure>
 
-    <h2>Postgres — config RAG, un prompt</h2>
+    <h2>Postgres pour le RAG</h2>
     <p>
-      Postgres reste la base relationnelle du starter kit
-      (<code>postgres:16</code>). Le cas qui revient partout : le
-      <strong>RAG classique</strong> — embeddings + similarité dans la DB
-      (pgvector et amis).
+      Postgres reste la base relationnelle du kit (<code>postgres:16</code>
+      par défaut). Le cas qui revient partout : le <strong>RAG</strong>,
+      embeddings et recherche par similarité dans la base (pgvector).
     </p>
     <p>
-      <strong>Promesse produit :</strong> décrire en un prompt agent
-      (« Postgres + pgvector + OOS backups ») et obtenir extensions,
-      volume, sizing, backup branchés dans la simulation.
-      <strong>Aujourd’hui :</strong> Postgres + volume + replicas + backup OOS
-      sont là ; le parcours « extensions magiques » doit être figé
-      (templates + agent) pour ne plus improviser à chaque projet.
-      Gap #2 : preset <em>RAG starter</em> (extension + schema hint + estimate disk).
+      <strong>Aujourd’hui :</strong> Postgres, volume, réplicas et backup OOS
+      sont en place. <strong>Prochaine étape :</strong> un preset
+      <em>RAG starter</em> (extension, indice de schéma, estimation du disque)
+      pour l’obtenir en un prompt.
     </p>
 
-    <h2>Distribuée — Cassandra finger in the nose</h2>
+    <h2>Cassandra et les bases distribuées</h2>
     <p>
-      Pourquoi Cassandra (ou équivalent distribué) fait peur : seed nodes,
-      replication factor, disco, JVM, disques gourmands.
-      <strong>Pourquoi on le veut simple :</strong> beaucoup d’apps « scale »
-      n’ont besoin que d’un cluster minimal correct pour démarrer —
-      pas d’un SRE Cassandra le jour 1.
+      Une base distribuée demande ses seed nodes, son facteur de réplication,
+      sa JVM et des disques solides. Beaucoup d’apps n’ont besoin, au départ,
+      que d’un petit cluster correct.
     </p>
     <p>
-      <strong>Comment (cible) :</strong> preset Visual / layout
-      « Cassandra 3 nœuds » (ou N) sur VMs privées ou OKS stateful,
-      RF et seeds préremplis, estimate Tina + disk, backup snapshot / OOS
-      documenté. <strong>Aujourd’hui :</strong> chemin
-      <em>custom image + sizing + replicas</em> — ça passe, mais sans
-      opinionation. Gap #3 : premier preset Cassandra opinionated
-      + schéma mental dans le flow.
+      <strong>Aujourd’hui :</strong> service custom (image + sizing +
+      réplicas). <strong>Prochaine étape :</strong> un preset « Cassandra
+      3 nœuds » sur VMs privées ou OKS, facteur de réplication et seeds
+      préremplis, estimation Tina + disque, sauvegarde snapshot ou OOS.
     </p>
 
     <figure class="diagram">
       <pre class="mermaid">
 flowchart LR
   U[Besoin distribué] --> P[Preset N nœuds]
-  P --> E[Estimate gourmand honnête]
-  E --> A[Apply sur votre compte]
-  A --> H[Vous scalez / tunez ensuite]
+  P --> E[Estimation Tina + disque]
+  E --> A[Apply sur ton compte]
+  A --> H[Tu ajustes ensuite]
       </pre>
-      <figcaption>Kickoff cluster minimal · intelligence humaine au scale.</figcaption>
+      <figcaption>Un cluster minimal pour démarrer · le tuning ensuite.</figcaption>
     </figure>
 
-    <h2>Elastic — lourd sur les nœuds ?</h2>
+    <h2>Elasticsearch, gourmand en nœuds</h2>
     <p>
-      Oui : heap, disco, replicas shards — Elastic (et OpenSearch) mangent
-      du Tina. L’agent sait déjà poser un
-      <strong>custom elasticsearch</strong> sur OKS (image officielle,
-      volume data, replicas). L’objectif kickoff : gérer
-      <strong>les premiers crans</strong> (1–3 nœuds, disk, estimate)
-      <em>avant</em> que votre DevOps n’arrive — pas remplacer le tuning prod.
-    </p>
-    <p>
-      Gap #4 : presets « Elastic light / medium » avec garde-fous
-      (mémoire min, volume, warning estimate), distincts du YAML custom libre.
+      Heap, disque, réplicas de shards : Elasticsearch (et OpenSearch)
+      consomment de la VM. L’agent sait déjà poser un
+      <strong>Elasticsearch custom</strong> sur OKS (image officielle, volume
+      de données, réplicas). <strong>Prochaine étape :</strong> des presets
+      « léger » et « moyen » avec garde-fous (mémoire minimale, volume,
+      alerte d’estimation).
     </p>
 
-    <h2>Autres bases complexes — garder ça simple</h2>
+    <h2>Les autres bases</h2>
     <p>
-      OpenSearch, Meilisearch, Neo4j, ClickHouse… même recette mentale :
+      OpenSearch, Meilisearch, Neo4j, ClickHouse… même recette :
       <strong>custom</strong> + placement (VM dédiée ou OKS) + volume +
-      réplicas pods + backup OOS si pertinent. La doc et le flow doivent
-      nommer le pattern ; les presets catalogue viennent ensuite.
-      Si ce n’est pas dans la matrice : ouvrez une issue — c’est exactement
-      comme on priorise les faiblesses.
+      réplicas + backup OOS si pertinent. Une base te manque ? Ouvre une
+      <a href="https://github.com/simondelamarre/bige-ops-releases/issues">issue</a> :
+      c’est ainsi que les prochains presets sont choisis.
     </p>
 
-    <h2>Comment on priorise grâce à cette page</h2>
     <p>
-      Tout ce qui est marqué <strong>gap</strong> est un ticket produit
-      en puissance. Le site public assume le manque : pas de théâtre,
-      pas de feature fantôme. Kickoff d’abord ; scale = vous —
+      Placement et sauvegardes : <a href="bases.html">bases</a> ·
+      <a href="oos.html">OOS</a> ·
       <a href="perimetre.html">périmètre</a>.
-      Retour placement / OOS :
-      <a href="bases.html">bases</a> ·
-      <a href="oos.html">OOS</a>.
     </p>
-
     <footer class="site-footer">
       <div class="cols">
         <div>
@@ -262,7 +242,7 @@ flowchart LR
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

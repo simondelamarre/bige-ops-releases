@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GitHub config-history — bige-ops</title>
-  <meta name="description" content="Config-history GitHub : branches sim/main, deploy via l’app, autres Git WIP, rollback manuel. Cool mais imparfait." />
+  <meta name="description" content="Config-history sur GitHub : un repo privé par projet, une branche par simulation, main pour la live, deploy et synchro depuis l’app, retour arrière par snapshot ou par Git." />
   <link rel="canonical" href="https://bige.dev/github-config.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/github-config.html" />
   <meta property="og:title" content="GitHub config-history — bige-ops" />
-  <meta property="og:description" content="Config-history GitHub : branches sim/main, deploy via l’app, autres Git WIP, rollback manuel. Cool mais imparfait." />
+  <meta property="og:description" content="Config-history sur GitHub : un repo privé par projet, une branche par simulation, main pour la live, deploy et synchro depuis l’app, retour arrière par snapshot ou par Git." />
   <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,29 +26,30 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
     <h1>GitHub · config-history</h1>
     <p class="lead">
-      Un repo Git <strong>privé à vous</strong> pour versionner la config d’infra
-      (pas les secrets, pas le monorepo app). Projet → repo, simulation → branche,
-      promote → <code>main</code>, deploy lit toujours la vérité
-      <strong>live / main</strong>.
+      Un repo Git <strong>privé, à toi</strong>, pour versionner la config
+      d’infrastructure (ni les secrets, ni le code applicatif). Projet → repo,
+      simulation → branche, promote → <code>main</code> ; le deploy s’appuie
+      toujours sur la simulation <strong>live</strong>, donc sur
+      <code>main</code>.
     </p>
 
     <div class="callout">
-      <strong>GitHub only (pour l’instant).</strong>
+      <strong>GitHub, piloté depuis l’app.</strong>
       Le <strong>deploy bige-ops</strong> passe par l’<strong>app</strong> et
-      <strong>sync votre GitHub</strong> (config-history). GitLab, Bitbucket,
-      Forgejo, bare git… : <strong>non gérés</strong> (WIP). En cas de souci
-      Git, le <strong>rollback se fait manuellement sur GitHub</strong>
-      (historique / branches) — l’app ne remplace pas la console GitHub.
+      <strong>synchronise ton GitHub</strong> (config-history). La forge prise
+      en charge aujourd’hui est GitHub. Pour un retour arrière Git avancé
+      (revert, checkout d’un ancien commit), la console GitHub reste l’outil
+      de référence.
     </div>
 
     <div class="callout">
-      <strong>Deux repos, deux jobs.</strong>
-      <em>Config-history</em> (<code>*-infra</code>) = blueprint simulation.
-      <em>Repo applicatif</em> = code que <code>deploy</code> clone.
+      <strong>Deux repos, deux rôles.</strong>
+      <em>Config-history</em> (<code>*-infra</code>) = la simulation.
+      <em>Repo applicatif</em> = le code que <code>deploy</code> clone.
       On ne mélange pas.
     </div>
 
@@ -63,112 +64,108 @@ flowchart TB
   M -->|deploy apps| D[Cloud Outscale]
   M -->|rollback snapshot| B2[État précédent + plan/apply]
       </pre>
-      <figcaption>Convention : draft → sim/… · live / deploy → main.</figcaption>
+      <figcaption>Convention : draft → sim/… · live et deploy → main.</figcaption>
     </figure>
 
     <h2>La logique en quatre gestes</h2>
     <p>
-      <strong>1 · Créer un projet / lier le tenant</strong> —
-      bige-ops peut <strong>créer un nouveau repo GitHub</strong> privé
-      (config-history) ou s’attacher à un repo existant
-      (<code>config_repo</code> sur le compte). C’est le coffre Git de la stack,
-      pas l’app métier.
+      <strong>1 · Créer un projet, lier le compte</strong> —
+      bige-ops peut <strong>créer un repo GitHub privé</strong>
+      (config-history) ou se rattacher à un repo existant
+      (<code>config_repo</code> sur le compte). C’est le coffre Git de la
+      stack, pas l’app métier.
     </p>
     <p>
       <strong>2 · Créer une simulation</strong> —
-      variante locale (layout, €, generate). Au push :
-      <strong>nouvelle branche</strong> <code>sim/&lt;id&gt;</code>.
-      Vous itérez sans toucher la prod déclarative.
+      variante locale (layout, coût, generate). Au push :
+      <strong>nouvelle branche</strong> <code>sim/&lt;id&gt;</code>. Tu
+      itères sans toucher à la stack live.
     </p>
     <p>
-      <strong>3 · Promote une simulation</strong> —
-      la draft devient <strong>live</strong> (stack live). Côté Git : alignement sur
-      <strong><code>main</code></strong>. Option <code>simulation promote --push-main</code>.
-      Un snapshot pré-promote permet de revenir en arrière sur la config.
+      <strong>3 · Promouvoir une simulation</strong> —
+      la draft devient <strong>live</strong>. Côté Git : alignement sur
+      <strong><code>main</code></strong>, avec <code>simulation promote --push-main</code>.
+      Un snapshot pris avant le promote permet de revenir sur la config.
     </p>
     <p>
       <strong>4 · Deploy</strong> —
-      le déploiement applicatif / la stack active s’adosse à la
-      <strong>live</strong>, donc à la ligne <strong>main</strong> du
-      config-history. On ne déploie pas « une branche random » : main =
-      ce qui est promu.
+      le déploiement s’adosse à la simulation <strong>live</strong>, donc à
+      la branche <strong>main</strong> du config-history : on déploie ce qui
+      est promu.
     </p>
 
     <table>
       <thead>
-        <tr><th>Action locale</th><th>Effet GitHub config-history</th></tr>
+        <tr><th>Action locale</th><th>Effet sur le config-history GitHub</th></tr>
       </thead>
       <tbody>
-        <tr><td>Nouveau projet / bind</td><td>Repo privé créé ou lié</td></tr>
+        <tr><td>Nouveau projet / rattachement</td><td>Repo privé créé ou lié</td></tr>
         <tr><td>Nouvelle simulation (draft)</td><td>Branche <code>sim/&lt;id&gt;</code></td></tr>
-        <tr><td>Push depuis draft</td><td>Commit sur <code>sim/…</code></td></tr>
+        <tr><td>Save ou push depuis une draft</td><td>Commit sur <code>sim/…</code></td></tr>
         <tr><td>Promote (+ push-main)</td><td>Live + <code>main</code> à jour</td></tr>
         <tr><td>Deploy</td><td>Référence live / <code>main</code></td></tr>
-        <tr><td>Rollback snapshot</td><td>Restore fichiers locaux → plan/apply cloud</td></tr>
+        <tr><td>Rollback snapshot</td><td>Fichiers locaux restaurés → plan/apply</td></tr>
       </tbody>
     </table>
-
-    <h2>Branches : pourquoi c’est cool (et imparfait)</h2>
     <p>
-      <strong>Cool.</strong>
-      Une simulation = une branche <code>sim/&lt;id&gt;</code> : vous itérez,
-      comparez, review, sans écraser la vérité live. Promote aligne
-      <code>main</code> = ce qui est déployable. L’historique GitHub devient
-      la mémoire du blueprint (qui a changé quoi, quand) — utile pour
-      auditer et pour repartir d’un commit connu.
-    </p>
-    <p>
-      <strong>Imparfait.</strong>
-      Ce n’est pas un GitOps complet ni un « undo one-click » cloud.
-      L’app pousse / promeut via <strong>GitHub</strong> ; elle ne gère pas
-      encore les conflits complexes, les PR riches, ni les autres forges.
-      Si un push / promote / sync rate, ou si vous devez revenir loin :
-      ouvrez <strong>GitHub</strong> (revert, checkout d’un commit,
-      force-alignement de branche), puis resync / plan / apply dans bige-ops.
-      Les snapshots locaux aident, mais le filet de sécurité « vérité Git »
-      reste <strong>manuel sur GitHub</strong> pour l’instant.
+      Avec un token GitHub et un config-history lié, l’app pousse
+      automatiquement la config d’une simulation sur sa branche après chaque
+      Save (les sauvegardes rapprochées sont regroupées). Elle ne supprime
+      jamais de branche distante.
     </p>
 
-    <h2>Deploy via l’app · sync GitHub</h2>
+    <h2>Les branches</h2>
     <p>
-      Le chemin nominal : vous validez dans l’app (Visual / Workspace /
-      Change review) → <strong>deploy / apply</strong> côté Outscale, et la
-      config d’infra est <strong>synchronisée sur votre repo GitHub</strong>
-      (branches <code>sim/…</code> ou <code>main</code> selon le geste).
-      Pas de backend bige-ops qui garde votre Git : c’est <em>votre</em>
-      compte GitHub, piloté depuis le desktop.
+      <strong>Ce qu’elles apportent.</strong>
+      Une simulation = une branche <code>sim/&lt;id&gt;</code> : tu itères,
+      compares, relis, sans toucher à la stack live. Le promote aligne
+      <code>main</code> sur ce qui est déployable. L’historique GitHub devient
+      la mémoire de la stack (qui a changé quoi, quand) : utile pour auditer
+      et repartir d’un commit connu.
     </p>
     <p>
-      <strong>Autres Git : WIP.</strong> Pas de sync native GitLab / autre
-      pour le moment. Vous pouvez toujours versionner hors outil, mais
-      bige-ops ne « drive » que GitHub aujourd’hui.
+      <strong>Ce qui se fait sur GitHub.</strong>
+      La synchro couvre le push, la création de branches et le promote ; les
+      résolutions de conflits et les pull requests se mènent sur GitHub. Si
+      une synchro échoue, ou pour revenir loin en arrière : ouvre GitHub
+      (revert, checkout d’un commit, réalignement de branche), puis resync,
+      plan et apply dans bige-ops.
     </p>
 
-    <h2>Emulate deploy &amp; rollback</h2>
+    <h2>Deploy via l’app, sync GitHub</h2>
     <p>
-      Avant d’engager le cloud, vous <strong>émulez</strong> : simulation +
-      estimate + generate + <code>plan</code>. Le GitHub config-history
-      versionne ces états sur <code>sim/…</code> pour comparer, review, CI légère.
+      Le chemin nominal : tu valides dans l’app (Visual, Workspace, revue des
+      changements) → <strong>deploy / apply</strong> côté Outscale, et la
+      config d’infrastructure est <strong>synchronisée sur ton repo
+      GitHub</strong> (branches <code>sim/…</code> ou <code>main</code> selon
+      le geste). Aucun backend bige-ops ne garde ton Git : c’est
+      <em>ton</em> compte GitHub, piloté depuis le desktop.
+    </p>
+
+    <h2>Simuler le deploy, revenir en arrière</h2>
+    <p>
+      Avant d’engager le cloud, tu <strong>simules</strong> : simulation +
+      estimation + generate + <code>plan</code>. Le config-history versionne
+      ces états sur <code>sim/…</code> pour comparer, relire, brancher une CI
+      légère.
     </p>
     <p>
       <strong>Rollback dans l’app</strong> = restaurer un
       <strong>snapshot</strong> de simulation (<code>simulation rollback</code>),
       puis <code>plan</code> / <code>apply</code> pour réconcilier le cloud.
-      Ce n’est pas un « undo magique Outscale ».
     </p>
     <p>
-      <strong>Rollback Git (secours)</strong> — si l’état local / la sync
-      est foireux : allez sur <strong>GitHub</strong>, reprenez un commit
-      ou une branche saine (<code>main</code> / <code>sim/…</code>), puis
-      ramenez la config dans la simulation et rejouez plan/apply.
-      Lien mental : GitHub = source de vérité versionnée ; Outscale = effet
-      cloud après apply.
+      <strong>Rollback Git</strong> — si l’état local ou la synchro ne
+      convient plus : sur <strong>GitHub</strong>, reprends un commit ou une
+      branche saine (<code>main</code> / <code>sim/…</code>), ramène la config
+      dans la simulation et rejoue plan/apply. Repère : GitHub = la config
+      versionnée ; Outscale = l’effet dans le cloud après apply.
     </p>
 
     <figure class="diagram">
       <pre class="mermaid">
 sequenceDiagram
-  participant Dev as Vous
+  participant Dev as Toi
   participant Sim as Simulation
   participant GH as GitHub main/sim
   participant Cloud as Outscale
@@ -178,45 +175,43 @@ sequenceDiagram
   Sim->>GH: main
   Dev->>Cloud: apply / deploy
   Dev->>Sim: rollback snapshot
-  Sim->>Cloud: plan + apply réconciliation
+  Sim->>Cloud: plan + apply de réconciliation
       </pre>
     </figure>
 
-    <h2>Ce qui part / ne part jamais</h2>
+    <h2>Ce qui part, ce qui ne part jamais</h2>
     <p>
       <strong>Poussé (config-history) :</strong> <code>project.yaml</code>,
-      terraform sans tfvars, oks, scripts app, layout Visual,
+      Terraform sans tfvars, specs OKS, scripts app, layout Visual,
       <code>.env.example</code>, SECRETS.md.
       <strong>Exclu :</strong> credentials, PEM, <code>.env</code>, tfvars,
-      kubeconfigs, state, inventory, sources app clonées.
-      Voir aussi le bloc sécurité sur la
-      <a href="index.html">landing</a>.
+      kubeconfigs, state, inventaire, sources app clonées.
+      Détail : <a href="secrets.html">secrets &amp; coffre</a>.
     </p>
     <p>
-      <strong>Repos applicatifs :</strong> clonés au deploy, jamais
-      commités automatiquement par bige-ops. Dockerfile dans le repo ou
-      override dans la stack — détail
+      <strong>Repos applicatifs :</strong> clonés au deploy, jamais commités
+      automatiquement par bige-ops. Dockerfile dans le repo ou chemin imposé
+      par la stack — détail
       <a href="repos-vms-docker.html">repos · VMs · Dockerfiles</a>.
     </p>
 
-    <h2>Défauts &amp; versions à venir</h2>
+    <h2>La suite</h2>
     <p>
-      Convention branches live→main / draft→sim/… : déjà le défaut.
-      Création repo à la volée, push Hub, promote --push-main : en place.
-      À durcir ensuite : UX « emulate deploy » plus visible, rollback guidé
-      depuis le Hub, garde-fous destroy (ex. OOS), et la revue
-      <strong>diffs / commits</strong> en mode expert —
-      <a href="expert-config.html">feuille de route</a>.
+      Convention <code>main</code> pour la live, <code>sim/…</code> pour les
+      drafts, création de repo à la volée, push et
+      <code>promote --push-main</code> : en place. Prochaines étapes : un
+      « deploy simulé » plus visible, un rollback guidé depuis le Hub, et la
+      revue des <strong>diffs et commits</strong> en mode expert —
+      <a href="expert-config.html">mode expert</a>.
     </p>
 
     <p>
-      Mode expert (édition fichiers) :
+      Mode expert (édition des fichiers) :
       <a href="expert-config.html">expert-config.html</a>.
-      Retour data :
+      Data :
       <a href="bases.html">bases</a> ·
       <a href="oos.html">OOS &amp; backups</a>.
     </p>
-
     <footer class="site-footer">
       <div class="cols">
         <div>
@@ -268,7 +263,7 @@ sequenceDiagram
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Assistant IA — bige-ops</title>
-  <meta name="description" content="L’agent bige-ops : Claude Sonnet 4.5, votre clé API, outils de config en lecture/écriture. Jamais d’apply, deploy ni push." />
+  <meta name="description" content="L’assistant IA de bige-ops : Claude Sonnet 4.5 par défaut, ou OpenAI, Gemini, Mistral, avec ta propre clé API. Outils de config en lecture et écriture ; jamais d’apply, de deploy ni de push." />
   <link rel="canonical" href="https://bige.dev/agent.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -18,39 +18,38 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="secrets.html">Secrets</a> · <a href="expert-config.html">Config experte</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
     <h1>Assistant IA (agent)</h1>
     <p class="lead">
-      Un chat intégré qui manipule la <strong>configuration</strong> de votre
+      Un chat intégré qui travaille sur la <strong>configuration</strong> de ta
       simulation : lire le contexte, éditer <code>project.yaml</code>, lancer
       des commandes en lecture, préparer un Dockerfile. Il ne touche jamais à
-      votre cloud : <strong>c’est vous qui faites <code>plan</code> et
+      ton cloud : <strong>c’est toi qui fais <code>plan</code> et
       <code>apply</code></strong>.
     </p>
 
     <div class="callout">
-      <strong>Votre clé, votre compte.</strong>
-      Modèle utilisé aujourd’hui : <strong>Claude Sonnet 4.5</strong>
-      (Anthropic). Vous saisissez <strong>votre propre clé API</strong> dans
-      Settings ; elle est stockée localement dans
-      <code>~/.config/bige-ops/settings.json</code>. Les appels partent du
-      backend local de l’app (Tauri) vers l’API Anthropic — la clé ne transite
-      pas par un backend bige-ops, et ce n’est <strong>pas</strong> une clé
-      managée par nous. Mistral / stack souveraine : prévu, pas encore là.
-      Voir <a href="index.html#agent-keys">clés &amp; agent</a>.
+      <strong>Ta clé, ton fournisseur.</strong>
+      Modèle par défaut : <strong>Claude Sonnet 4.5</strong> (Anthropic). Tu
+      peux aussi choisir un modèle OpenAI, Gemini ou Mistral. Tu saisis
+      <strong>ta propre clé API</strong> dans Settings ; elle est stockée
+      localement dans <code>~/.config/bige-ops/settings.json</code>. Les appels
+      partent de l’app, sur ton poste, directement vers l’API du fournisseur
+      choisi : aucun backend bige-ops au milieu, aucune clé gérée par nous.
+      Voir la <a href="index.html#faq">FAQ</a>.
     </div>
 
     <figure class="diagram">
       <pre class="mermaid">
 flowchart LR
-  U[Vous — chat] --> A[Agent]
+  U[Toi — chat] --> A[Agent]
   A --> R[Lecture contexte et fichiers]
-  A --> W[Ecriture project.yaml]
+  A --> W[Écriture project.yaml]
   W --> V[validate + generate]
-  V --> P[Plan / Apply par vous]
+  V --> P[Plan / Apply par toi]
       </pre>
-      <figcaption>L’agent s’arrête avant le cloud. La dernière étape reste manuelle.</figcaption>
+      <figcaption>L’agent s’arrête avant le cloud. La dernière étape reste la tienne.</figcaption>
     </figure>
 
     <h2>Ce que l’agent peut faire</h2>
@@ -60,7 +59,7 @@ flowchart LR
       <li>Lister et lire les fichiers de la simulation.</li>
       <li>Éditer <code>project.yaml</code> : mise à jour complète ou patch ciblé.</li>
       <li><strong>Retirer</strong> un composant, <strong>ajouter</strong> une stack.</li>
-      <li>Lancer des commandes CLI <strong>en lecture ou local</strong> : <code>validate</code>, <code>generate</code>, <code>estimate --json</code>, <code>status</code>, <code>plan</code>, <code>diff config</code>, <code>inventory show</code>…</li>
+      <li>Lancer des commandes CLI <strong>en lecture ou en local</strong> : <code>validate</code>, <code>generate</code>, <code>estimate --json</code>, <code>status</code>, <code>plan</code>, <code>diff config</code>, <code>inventory show</code>…</li>
       <li>Lire la <strong>documentation intégrée</strong> pour justifier ses choix.</li>
       <li>Préparer un <strong>repo applicatif</strong>, lire et écrire un <code>Dockerfile</code>, et ouvrir une <strong>pull request</strong> dessus.</li>
     </ul>
@@ -71,9 +70,9 @@ flowchart LR
         <tr><th>Bloqué</th><th>Pourquoi</th></tr>
       </thead>
       <tbody>
-        <tr><td><code>apply</code>, <code>deploy</code>, <code>redeploy</code></td><td>Mutations réelles sur votre cloud ou vos workloads</td></tr>
+        <tr><td><code>apply</code>, <code>deploy</code>, <code>redeploy</code></td><td>Mutations réelles sur ton cloud ou tes workloads</td></tr>
         <tr><td><code>github push</code></td><td>Le push du config-history reste une décision humaine</td></tr>
-        <tr><td><code>auth login</code> / <code>auth logout</code></td><td>Touche à vos credentials Outscale</td></tr>
+        <tr><td><code>auth login</code> / <code>auth logout</code></td><td>Touche à tes credentials Outscale</td></tr>
         <tr><td><code>import selection</code></td><td>Réécrit <code>project.yaml</code> depuis l’inventaire live</td></tr>
         <tr><td><code>init --force</code></td><td>Peut effacer un projet existant</td></tr>
       </tbody>
@@ -83,10 +82,10 @@ flowchart LR
       credentials, coffre, <code>.env</code>, <code>.pem</code>,
       <code>terraform.tfvars</code> sont filtrés côté outils. Les actions
       sensibles restantes passent par une <strong>demande de confirmation
-      explicite</strong> dans le chat — vous validez, ou non.
+      explicite</strong> dans le chat : tu valides, ou non.
     </p>
 
-    <h2>Dans vos repos applicatifs</h2>
+    <h2>Dans tes repos applicatifs</h2>
     <p>
       Quand l’agent travaille sur un repo de code, l’écriture est
       volontairement étroite :
@@ -104,46 +103,42 @@ flowchart LR
     <h2>MCP local (Cursor / Claude Code)</h2>
     <p>
       Même moteur que le chat : <code>bige-ops mcp</code> en stdio (binaire
-      embarqué — pas de pip). Settings → <strong>Agents / MCP</strong> →
-      copier le snippet. Apply / deploy / auth restent refusés. Visual se
-      rafraîchit après écriture.
+      embarqué, rien à installer). Settings → <strong>Agents / MCP</strong> →
+      copier le snippet. Apply, deploy et auth restent refusés. Visual se
+      rafraîchit après chaque écriture.
     </p>
 
     <h2>Traces</h2>
     <p>
-      Chaque tour agent est journalisé en JSONL sous
-      <code>chats/traces/</code> (hors repo). Utile pour audit / debug.
+      Chaque tour de l’agent est journalisé en JSONL sous
+      <code>chats/traces/</code> (hors repo). Utile pour l’audit et le debug.
     </p>
 
     <h2>Exposition HTTPS</h2>
     <p>
-      L’agent écrit <code>expose</code> / ORN EIM dans
-      <code>project.yaml</code> — pas de recettes Ingress / cert-manager.
-      Voir <a href="oks.html">OKS</a> et <a href="lbu.html">LBU</a>.
+      Pour le HTTPS, l’agent écrit dans <code>project.yaml</code> l’ORN du
+      certificat serveur EIM que tu lui donnes : sur un listener LBU, ou dans
+      <code>expose.tls</code> pour OKS. Le certificat se charge d’abord dans
+      EIM. Voir <a href="oks.html">OKS</a> et <a href="lbu.html">LBU</a>.
     </p>
 
     <h2>Comment bien s’en servir</h2>
     <ul>
-      <li>Donnez une intention et une contrainte : « API + Postgres, budget sous X € HT/mois, région eu-west-2 ».</li>
-      <li>Faites-lui lire le contexte avant d’éditer, puis relancez <code>validate</code> et <code>generate</code>.</li>
-      <li>Relisez le diff de <code>project.yaml</code> — c’est la seule vérité.</li>
-      <li>Pour l’exposition réseau, vérifiez ses choix : <a href="reseau.html">ouvrir ou non</a>.</li>
-      <li>Pour reprendre la main à la pince : <a href="expert-config.html">config experte</a>.</li>
+      <li>Donne une intention et une contrainte : « API + Postgres, budget sous X € HT/mois, Région eu-west-2 ».</li>
+      <li>Fais-lui lire le contexte avant d’éditer, puis relance <code>validate</code> et <code>generate</code>.</li>
+      <li>Relis le diff de <code>project.yaml</code> : c’est la référence.</li>
+      <li>Pour l’exposition réseau, vérifie ses choix : <a href="reseau.html">ouvrir ou non</a>.</li>
+      <li>Pour reprendre la main à la pince : <a href="expert-config.html">mode expert</a>.</li>
     </ul>
 
-    <h2>Limites honnêtes</h2>
-    <div class="callout callout-warn">
-      <strong>L’agent peut se tromper.</strong>
-      C’est un <strong>co-pilote sur la configuration</strong>, pas un
-      opérateur cloud, pas un architecte, pas votre SRE. Il peut proposer un
-      dimensionnement faux, une exposition réseau trop large ou un coût mal
-      calibré. <strong>Relisez avant <code>plan</code> et
-      <code>apply</code>.</strong> La fonctionnalité est encore
-      <strong>WIP</strong> : outils et garde-fous bougent d’une version à
-      l’autre. Enfin, la consommation de tokens est facturée sur
-      <strong>votre compte Anthropic</strong> — pas sur le nôtre.
+    <h2>Bon usage</h2>
+    <div class="callout">
+      <strong>Un co-pilote de configuration.</strong>
+      L’agent propose ; tu décides. Un dimensionnement, une règle réseau ou
+      un coût se relisent avant <code>plan</code> et <code>apply</code>.
+      Ses outils et garde-fous s’enrichissent d’une version à l’autre. La consommation de tokens est facturée sur
+      <strong>ton compte</strong> chez le fournisseur choisi.
     </div>
-
     <footer class="site-footer">
       <div class="cols">
         <div>
@@ -195,7 +190,7 @@ flowchart LR
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>

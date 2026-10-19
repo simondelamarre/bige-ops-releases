@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Volumes BSU &amp; snapshots — bige-ops</title>
-  <meta name="description" content="Disque racine, volumes de données, types gp2/io1, snapshots : ce que bige-ops pilote sur le stockage bloc Outscale." />
+  <meta name="description" content="BSU Outscale : types standard, gp2 et io1, IOPS et plafonds, disque racine, volumes de données et snapshots, tels que bige-ops les pilote." />
   <link rel="canonical" href="https://bige.dev/volumes-bsu.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/volumes-bsu.html" />
   <meta property="og:title" content="Volumes BSU &amp; snapshots — bige-ops" />
-  <meta property="og:description" content="Disque racine, volumes de données, types gp2/io1, snapshots : ce que bige-ops pilote sur le stockage bloc Outscale." />
+  <meta property="og:description" content="BSU Outscale : types standard, gp2 et io1, IOPS et plafonds, disque racine, volumes de données et snapshots, tels que bige-ops les pilote." />
   <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,85 +26,109 @@
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="vms.html">VMs</a> · <a href="bases.html">Bases</a> · <a href="oos.html">OOS</a></p>
     <div class="brand-row">
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Beta démo</span>
+      <span class="brand-badge">Gratuit</span>
     </div>
     <h1>Volumes BSU &amp; snapshots</h1>
-    <p class="lead">Le disque, c’est là que ça fait mal. <strong>BSU</strong> est le stockage bloc d’Outscale : un volume attaché à une VM. bige-ops en pilote une partie — mieux vaut savoir laquelle avant de poser une base dessus.</p>
+    <p class="lead"><strong>BSU</strong> (Block Storage Unit) est le stockage bloc d’Outscale : un volume attaché à une VM de la même Subregion, qui survit à la VM si tu le décides. C’est là que vivent tes bases. Voici ce que bige-ops en pilote, et les chiffres Outscale qui comptent pour bien dimensionner.</p>
     <div class="callout">
       <strong>Principe court.</strong>
-      Le disque racine suit la VM et meurt avec elle. Ce qui doit survivre va
-      sur un volume séparé, ou dans <a href="oos.html">OOS</a>.
+      Le disque racine porte le système. Les données qui doivent durer vont
+      sur un volume séparé, sauvegardé par snapshot, et leurs dumps
+      applicatifs dans <a href="oos.html">OOS</a>.
     </div>
 
     <figure class="diagram">
       <pre class="mermaid">
 flowchart LR
   VM[VM] --> ROOT["disque racine<br/>gp2 ou io1"]
-  VM --> DATA["volume de données<br/>gp2 / io1"]
-  DATA --> SNAP["snapshot BSU"]
+  VM --> DATA["volume de données<br/>standard / gp2 / io1"]
+  DATA --> SNAP["snapshot BSU<br/>(régional)"]
   DATA -.->|dump applicatif| OOS[bucket OOS]
       </pre>
-      <figcaption>Racine jetable, données sur volume, sauvegarde applicative dans OOS.</figcaption>
+      <figcaption>Racine système, données sur volume, snapshot dans la Région, dumps dans OOS.</figcaption>
     </figure>
 
-    <h2>Les trois types que bige-ops connaît</h2>
+    <h2>Les trois types BSU</h2>
     <table>
-      <tr><th>Type</th><th>Pour quoi</th><th>Dans l’app</th></tr>
-      <tr><td><code>gp2</code></td><td>SSD polyvalent, le défaut raisonnable</td><td>choisissable</td></tr>
-      <tr><td><code>io1</code></td><td>SSD à IOPS provisionnées, pour une base qui écrit</td><td>choisissable sur un volume ; <strong>imposé automatiquement</strong> au disque racine des rôles mongo, postgres et weaviate</td></tr>
-      <tr><td><code>standard</code></td><td>magnétique, froid</td><td>reconnu au chiffrage, rarement pertinent</td></tr>
+      <tr><th>Type API</th><th>Nom Outscale</th><th>Performance</th><th>Taille</th></tr>
+      <tr><td><code>standard</code></td><td>Magnetic</td><td>environ 250 lectures et 150 écritures par seconde, quelle que soit la taille</td><td>1 à 14 901 GiB</td></tr>
+      <tr><td><code>gp2</code></td><td>Performance (SSD)</td><td>3 IOPS par GiB (100 au minimum), burst à 3 000 IOPS sous 1 TiB, plafond 10 000 IOPS</td><td>1 à 14 901 GiB</td></tr>
+      <tr><td><code>io1</code></td><td>Enterprise (SSD)</td><td>IOPS provisionnées, de 100 à 13 000 par volume, dans la limite de 300 IOPS par GiB</td><td>4 à 14 901 GiB</td></tr>
     </table>
     <p>
-      Pas de NVMe. Le catalogue embarqué ne le modélise pas, y compris en
-      région SecNumCloud — voir <a href="savoir.html">ce que le kit sait</a>.
+      Une VM plafonne à <strong>36 000 IOPS</strong> tous volumes confondus
+      (562,5 MiB/s en blocs de 16 KiB), et accepte jusqu’à 40 volumes, racine
+      comprise. Source :
+      <a href="https://docs.outscale.com/fr/userguide/À-propos-des-volumes.html" target="_blank" rel="noopener noreferrer">À propos des volumes</a>.
+    </p>
+
+    <h2>Trois calculs qui évitent les surprises</h2>
+    <ul>
+      <li><strong>Le burst gp2 est un crédit.</strong> Un volume gp2 de moins de 1 TiB démarre avec 5,4 millions d’IOPS de crédit : de quoi tenir 3 000 IOPS une trentaine de minutes, puis il revient à sa base de 3 IOPS par GiB. Parfait pour un démarrage ou un batch court ; pour une base qui écrit en continu, c’est la base qu’il faut dimensionner.</li>
+      <li><strong>Les IOPS io1 dépendent de la taille.</strong> 300 IOPS par GiB au maximum : 3 000 IOPS demandent au moins 10 GiB, les 13 000 IOPS du plafond au moins 44 GiB.</li>
+      <li><strong>Le plafond de la VM s’applique avant celui des volumes.</strong> Trois volumes io1 à 13 000 IOPS donnent 39 000 IOPS sur le papier, la VM en servira 36 000.</li>
+    </ul>
+    <p>
+      Côté facture, un volume io1 se paie au GiB <em>et</em> à l’IOPS
+      provisionnée, chaque mois : sur un petit disque à 3 000 IOPS, ce sont
+      les IOPS qui font l’essentiel de la ligne. L’estimation de bige-ops
+      compte les deux.
     </p>
 
     <h2>Le disque racine</h2>
     <ul>
-      <li>Sa <strong>taille</strong> est pilotée par le formulaire de la VM.</li>
-      <li>Son <strong>type</strong> ne l’est pas : <code>io1</code> si le rôle est une base, <code>gp2</code> sinon.</li>
-      <li>Les <strong>IOPS</strong> d’un racine <code>io1</code> sont à 3000 et ne sont réglables ni dans l’app, ni dans le YAML.</li>
-      <li>À l’import d’un compte existant, le racine d’une VM n’est pas repris comme composant séparé — il reste attaché à sa VM.</li>
+      <li>Sa <strong>taille</strong>, son <strong>type</strong> et ses <strong>IOPS</strong> (en <code>io1</code>) se règlent dans le formulaire de la VM, ou en YAML (<code>volume_size</code>, <code>volume_type</code>, <code>iops</code>).</li>
+      <li>Par défaut, le Terraform généré pose un racine <code>io1</code> à 3 000 IOPS pour les rôles base de données (mongo, postgres, mysql, mariadb, neo4j, weaviate), et <code>gp2</code> pour les autres.</li>
+      <li>L’estimation chiffre le racine avec le même type et les mêmes IOPS que le Terraform.</li>
+      <li>À l’import d’un compte existant, le racine d’une VM reste attaché à sa VM : il n’est pas repris comme composant séparé.</li>
     </ul>
-    <div class="callout callout-warn">
-      <strong>Écart de chiffrage connu.</strong>
-      L’estimation compte toujours le disque racine en <code>gp2</code>, même
-      quand le Terraform le crée en <code>io1</code> pour une base. Sur un
-      layout avec VM data, la facture réelle sera <em>au-dessus</em> de
-      l’estimation. C’est identifié et corrigé au backlog — en attendant,
-      lisez le chiffre d’un layout data comme un plancher.
-    </div>
 
     <h2>Les volumes de données</h2>
     <p>
-      Le composant <strong>Volume</strong> se pose sur le canvas Visual. Il est
-      réellement éditable : taille en GiB, type <code>gp2</code> ou
-      <code>io1</code>, VM d’attache, nom de device. Il génère du Terraform, il
-      est importé depuis un compte existant, et il est compté dans
-      l’estimation — IOPS comprises quand elles sont renseignées.
+      Le composant <strong>Volume</strong> se pose sur le canvas Visual : taille
+      en GiB, type, IOPS en <code>io1</code>, VM d’attache, nom de device. Il
+      génère du Terraform, il est importé depuis un compte existant, et il est
+      compté dans l’estimation, IOPS comprises.
+    </p>
+    <p>
+      Le nom de device se donne au format <code>/dev/xvdX</code>
+      (<code>X</code> de <code>b</code> à <code>z</code>). Dans une VM Linux,
+      le volume apparaît en <code>/dev/sdY</code> selon l’ordre d’attachement ;
+      les paquets Outscale pour Ubuntu et CentOS recréent le lien
+      <code>/dev/xvdX</code>, et c’est ce nom que la doc Outscale demande dans
+      <code>/etc/fstab</code>.
+    </p>
+    <p>
+      Outscale permet de modifier la taille, le type ou les IOPS d’un volume,
+      racine compris, quel que soit son état
+      (<a href="https://docs.outscale.com/fr/userguide/Modifier-un-volume.html" target="_blank" rel="noopener noreferrer">Modifier un volume</a>).
+      Avant d’appliquer un tel changement depuis la simulation, lis le plan
+      Terraform : il indique si le volume est modifié sur place ou recréé.
     </p>
 
     <h2>Snapshots</h2>
     <ul>
-      <li>Le composant <strong>Snapshot</strong> génère du Terraform et apparaît à l’inventaire.</li>
-      <li>Un snapshot vu sur votre compte <strong>n’est pas réimporté</strong> en YAML : il reste une ligne d’inventaire.</li>
-      <li>Il est chiffré dans l’estimation <em>d’inventaire</em>, pas dans celle d’un projet.</li>
-      <li>Ne pas confondre avec les <a href="simulations.html">snapshots de configuration</a>, qui sont des sauvegardes locales de vos fichiers, pas du cloud.</li>
+      <li>Un snapshot BSU est rattaché à la <strong>Région</strong> : il sert à recréer le volume dans n’importe quelle Subregion de la Région. Pour une autre Région, on l’exporte vers un bucket OOS puis on l’importe (<a href="https://docs.outscale.com/fr/userguide/À-propos-des-snapshots.html" target="_blank" rel="noopener noreferrer">À propos des snapshots</a>).</li>
+      <li>Dans bige-ops, le composant <strong>Snapshot</strong> génère du Terraform et apparaît à l’inventaire.</li>
+      <li>Un snapshot présent sur ton compte reste une ligne d’inventaire : il n’est pas réécrit en YAML.</li>
+      <li>Il est compté dans l’estimation <em>d’inventaire</em>.</li>
+      <li>À ne pas confondre avec les <a href="simulations.html">snapshots de configuration</a>, qui sont des sauvegardes locales de tes fichiers.</li>
     </ul>
 
-    <h2>Ce que ça n’est pas</h2>
-    <ul>
-      <li>Pas de redimensionnement à chaud piloté depuis l’app.</li>
-      <li>Pas de politique de rétention ni de sauvegarde planifiée — pour la sauvegarde applicative, c’est <a href="oos.html">OOS</a>.</li>
-      <li>Pas de chiffrement de volume piloté.</li>
-    </ul>
+    <h2>Sauvegardes</h2>
+    <p>
+      Le snapshot protège le volume ; la sauvegarde applicative (dump de
+      base) part dans <a href="oos.html">OOS</a> via les scripts générés. La
+      rétention et la planification des sauvegardes se règlent dans ton
+      exploitation.
+    </p>
 
-    <h2>Doc produit Outscale (référence)</h2>
+    <h2>Doc Outscale</h2>
     <ul>
-      <li><a href="https://docs.outscale.com/en/userguide/About-Volumes.html">About volumes</a></li>
-      <li><a href="https://docs.outscale.com/en/userguide/Attaching-a-Volume-to-a-VM.html">Attaching a volume to a VM</a></li>
-      <li><a href="https://docs.outscale.com/en/userguide/Modifying-a-Volume.html">Modifying a volume</a></li>
-      <li><a href="https://docs.outscale.com/en/userguide/About-Snapshots.html">About snapshots</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-volumes.html" target="_blank" rel="noopener noreferrer">À propos des volumes</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/Attacher-un-volume-à-une-VM.html" target="_blank" rel="noopener noreferrer">Attacher un volume à une VM</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/Modifier-un-volume.html" target="_blank" rel="noopener noreferrer">Modifier un volume</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-snapshots.html" target="_blank" rel="noopener noreferrer">À propos des snapshots</a></li>
     </ul>
 
     <p class="doc-nav" style="margin-top:2rem"><a href="bases.html">Bases de données</a> · <a href="catalogue-prix.html">Catalogue de prix</a> · <a href="inventory.html">Inventaire &amp; import</a></p>
@@ -159,7 +183,7 @@ flowchart LR
         </div>
       </div>
       <p class="meta">
-        Gratuit · Beta démo · kickoff starter kit — scale = vous gérez ·
+        Gratuit · simulateur local pour Outscale ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>
