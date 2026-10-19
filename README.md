@@ -1,121 +1,124 @@
 <p align="center">
-  <img src="docs/bige-ops-three-clicks.png" alt="bige-ops — dessiner, projeter, déployer" width="920" />
+  <img src="docs/screens/visual-oks.png" alt="bige-ops : une stack OKS simulée sur Outscale, avec son coût mensuel estimé" width="920" />
 </p>
 
-<h1 align="center">LESS IS MORE</h1>
+<h1 align="center">bige-ops</h1>
 
 <p align="center">
-  <strong>App desktop gratuite — déployer sans te noyer</strong><br/>
-  L’outil déploie. Le cloud héberge. Pas de plan de contrôle SaaS.<br/>
-  <em>Outscale live · Scaleway, OVH, AWS, Azure, GCP, Fly… bientôt</em>
+  <strong>Le simulateur de stack pour Outscale</strong><br/>
+  Dessine ta stack, teste-la, mesure son coût, puis déploie-la sur ton compte Outscale.<br/>
+  <em>Gratuit · 100 % local · aucun service intermédiaire</em>
 </p>
 
 <p align="center">
-  <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest"><img src="https://img.shields.io/badge/⬇%20Download%20macOS-FREE-0ea5a4?style=for-the-badge&logo=apple&logoColor=white" alt="Download macOS — free" height="52" /></a>
-  &nbsp;
+  <!-- macOS DMG download hidden until the app is notarized: install with Homebrew.
+  <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest"><img src="https://img.shields.io/badge/⬇%20Download%20macOS-FREE-0ea5a4?style=for-the-badge&logo=apple&logoColor=white" alt="Download macOS — free" height="52" /></a> -->
   <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest"><img src="https://img.shields.io/badge/⬇%20Download%20Linux-FREE-1f2937?style=for-the-badge&logo=linux&logoColor=white" alt="Download Linux — free" height="52" /></a>
 </p>
 
 <p align="center">
+  <strong>macOS (Apple Silicon)</strong><br/>
   <code>brew tap simondelamarre/bige-ops && brew install --cask bige-ops</code>
 </p>
 
 <p align="center">
-  <a href="https://bige.dev/"><strong>bige.dev</strong></a> —
-  <a href="https://bige.dev/#pourquoi">pourquoi</a> ·
-  <a href="https://bige.dev/#clouds">clouds</a> ·
-  <a href="https://bige.dev/#features">features</a> ·
-  <a href="https://bige.dev/#ecoute">écoute</a> ·
-  <a href="https://bige.dev/install.html">install</a>
+  <a href="https://bige.dev/"><strong>bige.dev</strong></a> ·
+  <a href="https://bige.dev/outscale.html">Outscale</a> ·
+  <a href="https://bige.dev/oks.html">OKS</a> ·
+  <a href="https://bige.dev/documentation.html">documentation</a> ·
+  <a href="https://bige.dev/install.html">installer</a>
 </p>
 
 ---
 
-## Pourquoi
+## Pourquoi bige-ops
 
-Dessine, projette le €, déploie — sans te noyer dans Terraform à la main.
+Tu simules, tu testes, tu déploies sur Outscale — puis tu analyses et tu corriges.
 
-### Less is more.
+### 1. Simule avant de déployer.
+**bige-ops est un simulateur de stack pour Outscale.** Tu dessines ta stack (VMs, cluster OKS, stockage, réseau), tu vois son coût mensuel et tu la testes avant de dépenser un euro. Quand elle te convient, tu la déploies sur ton compte : Terraform et manifests Kubernetes sont générés pour toi.
 
-Une app desktop gratuite pour déployer sans te noyer.
+### 2. Construit pour Outscale.
+**Cloud souverain français, régions classiques et SecNumCloud.** Chaque brique du simulateur correspond à un service Outscale (VMs Tina, OKS, volumes BSU, Object Storage, LBU), avec son prix public. Tu planifies, tu appliques et tu suis tes coûts sur Outscale, y compris en SecNumCloud.
 
-Tu dessines ta stack — VMs ou Kubernetes — tu projettes le €, puis tu déploies sur ton compte. Terraform / YAML sortent derrière.
+### 3. L’outil déploie. Outscale héberge.
+**Ce n’est pas un Docker sur ton poste.** bige-ops tourne sur ta machine pour piloter le déploiement. Ta stack vit sur ton compte Outscale. Tes secrets restent chez toi : coffre local, avec sync optionnelle vers GitHub ou HashiCorp Vault.
 
-→ [bige.dev/#why-less](https://bige.dev/#why-less)
+### 4. Tu peux commencer sans compte.
+**Tu simules d’abord. Tu te connectes quand tu appliques.** Sans identifiants Outscale, tu explores, tu simules et tu estimes. Tu te connectes seulement pour l’inventaire, le plan et l’apply, quand tu es prêt.
 
-### L’outil déploie. Le cloud héberge.
+<p align="center">
+  <img src="docs/screens/hub.png" alt="Les simulations d'un compte Outscale et leur coût mensuel" width="820" />
+</p>
 
-Pas un Docker sur ton poste. bige-ops tourne sur ta machine ; la stack vit sur ton cloud. Secrets en local.
+<p align="center">
+  <img src="docs/screens/estimate.png" alt="Détail de l'estimation mensuelle d'une stack OKS sur le catalogue public Outscale" width="820" />
+</p>
 
-→ [secrets](https://bige.dev/secrets.html)
+### 5. Tes vulnérabilités, en direct.
+**Sans LLM ni clé : l’analyse tourne sur ton poste.** bige-ops lit les dépôts de ta stack avec un vrai parseur de code (tree-sitter) et croise avec ce que ta stack expose : dépendances npm et PyPI rapprochées des vulnérabilités connues ([OSV](https://osv.dev/)), failles courantes dans le code (injections, XSS, secrets, CORS) et routes exposées sans authentification : les trous béants ressortent en quelques minutes. Avec ta clé [OpenCVE](https://www.opencve.io/), les images de ta stack sont confrontées au référentiel CVE d’OpenCVE : tu vois les premières vulnérabilités avant de déployer. Rapport Markdown ou PDF.
 
-### Clouds
+<p align="center">
+  <img src="docs/screens/vulns-sqli.png" alt="Injection SQL réelle détectée dans routes/login.ts d'OWASP Juice Shop, exposée à Internet" width="820" /><br/>
+  <em>Une injection SQL réelle dans <a href="https://owasp.org/projects/juice-shop">OWASP Juice Shop</a>, dépôt public volontairement vulnérable : chacun peut la vérifier.</em>
+</p>
 
-**Aujourd’hui :** Outscale (régions + SecNumCloud) — pricing, apply, OKS.
+<p align="center">
+  <img src="docs/screens/vulns-deps.png" alt="CVE-2022-25887 sur sanitize-html 1.4.2, avec son lien OpenCVE" width="820" /><br/>
+  <em>CVE-2022-25887 sur sanitize-html 1.4.2, avec son lien vers OpenCVE.</em>
+</p>
 
+### 6. Le game changer : l’analyse profonde.
+**bige-ops advanced, avec ta propre clé LLM.** Un agent d’audit parcourt tes dépôts en profondeur, avec le contexte de ta stack cloud : ce qui est exposé, et par quelles routes. Il remonte des failles classées par CWE, avec une issue GitHub proposée pour chacune. Tu branches ta clé (Anthropic, OpenAI, Google Gemini, Mistral) : les appels partent de ton poste, rien n’est gardé chez nous.
+
+### 7. On t’écoute.
+**Un bug ou une idée : tu l’ouvres sur GitHub.** Le dépôt public reçoit tes [issues](https://github.com/simondelamarre/bige-ops-releases/issues/new/choose) et tes demandes de fonctions. On les lit, on priorise, on répond, sans toucher à ton graphe ni à tes secrets.
+
+## 100 % Outscale
+
+bige-ops est construit pour Outscale, cloud souverain français, sur les régions classiques comme sur SecNumCloud. → [Pourquoi Outscale](https://bige.dev/pourquoi-outscale.html)
+
+| | |
+|---|---|
+| **Calcul** | VMs Tina, en mono-VM ou multi-VM, réseau Net et Security Groups, IP publiques |
+| **Kubernetes** | OKS : cluster, nodepools, scale horizontal et vertical, HPA, HTTPS via certificat EIM |
+| **Stockage** | Volumes BSU (gp2, io1 avec IOPS provisionnées), snapshots, Object Storage (OOS) |
+| **Exposition** | LBU (load balancer) et HTTPS |
+| **Bases** | MongoDB, PostgreSQL, MySQL, Redis… en VM ou sur OKS, sauvegardes vers OOS |
+| **Coûts** | Catalogue public Outscale, synchronisé via l'API |
+
+<!-- Other clouds hidden for now (see ENABLED_PROVIDER_IDS in desktop/src/lib/providers.ts).
+Previous copy, to restore with them:
+<em>Outscale live · Scaleway, OVH, AWS, Azure, GCP, Fly… bientôt</em>
 **En cours :** Scaleway, OVHcloud, AWS, Azure, GCP, Fly.io — listés dans l’app, pas encore materialization / pricing complets.
-
-→ [bige.dev/#clouds](https://bige.dev/#clouds)
-
-### Tu peux commencer sans compte.
-
-Projection offline. Login seulement pour inventaire / plan / apply.
-
-→ [install](https://bige.dev/install.html)
-
-### Vulns · clés LLM · issues
-
-Scan repos / CVE (suite crédits) · tes clés LLM (BYOK) · [ouvrir une issue](https://github.com/simondelamarre/bige-ops-releases/issues/new/choose) — détail sur [bige.dev](https://bige.dev/).
-
----
+| Bientôt | Scaleway · OVH · AWS · Azure · GCP · Fly |
+- Tarifs : sync catalogue OAPI · formulaires VM par cloud · Fly (WIP)
+-->
 
 ## En bref
 
 | | |
 |---|---|
-| Prix | **Gratuit** — la facture cloud reste la tienne |
-| Outil | Sur **ta machine** |
-| Stack | Sur **ton cloud** |
-| Live | **Outscale** (+ SecNumCloud) |
-| Bientôt | Scaleway · OVH · AWS · Azure · GCP · Fly |
-
----
-
-## Nouveautés 0.6
-
-**Vulns & OpenCVE** — scan repos, risques exposés, CVE via [OpenCVE](https://www.opencve.io/), rapports MD/PDF. Open source, pas un produit sécurité SaaS.
-
-**Agent (WIP)** — copilote config (vos clés) · MCP local Cursor/Claude · traces JSONL. Jamais apply / secrets. Encore WIP.
-
-**App & CLI**
-- Terminal PTY · Live VMs/pods · inventaire (status, destroy vérifié, forget)
-- OKS scale H/V + HPA · HTTPS via ORN EIM
-- Tarifs : sync catalogue OAPI · formulaires VM par cloud · Fly (WIP)
-- Fixes divers : Visual (drag, nodes, confirm), Hub clouds, estimate persist, sim delete/init
-
-Issues : [bige-ops-releases](https://github.com/simondelamarre/bige-ops-releases/issues).
+| **Prix** | Gratuit : la facture cloud reste chez Outscale |
+| **Outil** | Sur ta machine (macOS, Linux) : app desktop et CLI |
+| **Stack** | Sur ton compte Outscale |
+| **Secrets** | Dans un coffre local, jamais envoyés à un service bige-ops |
 
 ---
 
 ## Installer
 
-| macOS / Linux | [Dernière release — FREE](https://github.com/simondelamarre/bige-ops-releases/releases/latest) |
-| Homebrew | `brew tap simondelamarre/bige-ops && brew install --cask bige-ops` |
+| | |
+|---|---|
+| **macOS** (Apple Silicon) | `brew tap simondelamarre/bige-ops && brew install --cask bige-ops` |
+| **Linux** (x86_64) | AppImage ou .deb : [dernière release](https://github.com/simondelamarre/bige-ops-releases/releases/latest) |
 
-### macOS Gatekeeper (pas notarié)
+Le cask Homebrew prépare l’app pour le premier lancement : elle s’ouvre directement. Guide complet : [bige.dev/install.html](https://bige.dev/install.html).
 
-Après copie dans `/Applications` — **avant** le premier double-clic :
-
-```bash
-xattr -cr /Applications/bige-ops.app && codesign --force --deep --sign - /Applications/bige-ops.app
-```
-
-Ou **Fix Gatekeeper.command** sur le DMG. Guide : [install.html#gatekeeper](https://bige.dev/install.html#gatekeeper).
-
-Issues / feedback : [ouvrir une issue](https://github.com/simondelamarre/bige-ops-releases/issues/new/choose).
+Une question, un retour, une idée : [ouvre une issue](https://github.com/simondelamarre/bige-ops-releases/issues/new/choose).
 
 <p align="center">
-  <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest"><img src="https://img.shields.io/badge/⬇%20Download%20macOS-FREE-0ea5a4?style=for-the-badge&logo=apple&logoColor=white" alt="Download macOS — free" height="52" /></a>
-  &nbsp;
+  <!-- macOS DMG download hidden until the app is notarized: install with Homebrew.
+  <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest"><img src="https://img.shields.io/badge/⬇%20Download%20macOS-FREE-0ea5a4?style=for-the-badge&logo=apple&logoColor=white" alt="Download macOS — free" height="52" /></a> -->
   <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest"><img src="https://img.shields.io/badge/⬇%20Download%20Linux-FREE-1f2937?style=for-the-badge&logo=linux&logoColor=white" alt="Download Linux — free" height="52" /></a>
 </p>
