@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>.NET sur Outscale : ASP.NET Core, Entity Framework Core — bige-ops</title>
+  <meta name="description" content=".NET sur Outscale avec bige-ops : ASP.NET Core, Entity Framework Core, Npgsql, PostgreSQL, RabbitMQ. LBU HTTPS, base privée, CVE OpenCVE, coût réel." />
+  <link rel="canonical" href="https://bige.dev/lang-dotnet.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="bige-ops" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:url" content="https://bige.dev/lang-dotnet.html" />
+  <meta property="og:title" content=".NET sur Outscale : ASP.NET Core, Entity Framework Core — bige-ops" />
+  <meta property="og:description" content=".NET sur Outscale avec bige-ops : ASP.NET Core, Entity Framework Core, Npgsql, PostgreSQL, RabbitMQ. LBU HTTPS, base privée, CVE OpenCVE, coût réel." />
+  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": ".NET sur Outscale : ASP.NET Core, Entity Framework Core", "description": ".NET sur Outscale avec bige-ops : ASP.NET Core, Entity Framework Core, Npgsql, PostgreSQL, RabbitMQ. LBU HTTPS, base privée, CVE OpenCVE, coût réel.", "inLanguage": "fr", "url": "https://bige.dev/lang-dotnet.html", "keywords": ".NET, ASP.NET Core, Entity Framework Core, EF Core, C#, Npgsql, PostgreSQL, RabbitMQ, Kestrel, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": ".NET sur Outscale : ASP.NET Core, Entity Framework Core", "item": "https://bige.dev/lang-dotnet.html"}]}]}</script>
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="stacks.html">Stacks &amp; langages</a> · <a href="documentation.html">Toute la doc</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Gratuit</span>
+    </div>
+    <h1>.NET sur Outscale</h1>
+    <p class="lead">
+      ASP.NET Core est multiplateforme, rapide et tourne parfaitement sous Linux, en conteneur. Sur Outscale, bige-ops pose ton API .NET derrière un LBU, PostgreSQL en subnet privé, RabbitMQ pour la messagerie, et chiffre la stack au catalogue public.
+    </p>
+
+    <div class="callout">
+      <strong>En bref.</strong>
+      Un service .NET se déclare en runtime <code>custom</code> construit depuis ton Dockerfile (port 8080, le port par défaut des images ASP.NET Core récentes), avec <code>ASPNETCORE_ENVIRONMENT=Production</code>.
+    </div>
+
+    <h2 id="frameworks">Frameworks et bibliothèques</h2>
+    <p>Le socle web et données de .NET.</p>
+    <h3 id="aspnetcore">ASP.NET Core</h3>
+    <p>Minimal APIs, contrôleurs MVC, Razor, SignalR, gRPC, servis par Kestrel. Une image multi-étapes (SDK pour le build, runtime ASP.NET pour l’exécution) reste compacte.</p>
+    <p><a href="https://learn.microsoft.com/aspnet/core/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=microsoft&amp;product=asp.net_core" target="_blank" rel="noopener noreferrer">ASP.NET Core sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=microsoft&amp;product=.net" target="_blank" rel="noopener noreferrer">.NET sur OpenCVE</a></p>
+    <h3 id="efcore">Entity Framework Core</h3>
+    <p>L’ORM de .NET : LINQ, migrations, suivi des changements ; PostgreSQL via le fournisseur <a href="https://www.npgsql.org/" target="_blank" rel="noopener noreferrer">Npgsql</a>.</p>
+    <p><a href="https://learn.microsoft.com/ef/core/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=npgsql&amp;product=npgsql" target="_blank" rel="noopener noreferrer">Npgsql sur OpenCVE</a></p>
+    <h3 id="messaging">Messagerie</h3>
+    <p>Le client .NET de RabbitMQ (ou une couche comme MassTransit) pour les commandes et événements entre services.</p>
+    <p><a href="https://www.rabbitmq.com/client-libraries/dotnet" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=rabbitmq&amp;product=rabbitmq" target="_blank" rel="noopener noreferrer">RabbitMQ sur OpenCVE</a></p>
+
+    <h2 id="outscale">Faire tourner .NET sur Outscale avec bige-ops</h2>
+<p>Déclare <code>api</code> (et <code>worker</code> pour un consumer ou un <code>BackgroundService</code>) en runtime <code>custom</code> : port 8080, mémoire réglable, image construite depuis ton Dockerfile. Le LBU termine le TLS ; Kestrel parle HTTP derrière.</p>
+    <table>
+      <tr><th>Topologie</th><th>Sur Outscale</th><th>Pour</th></tr>
+      <tr><td><code>single-vm</code></td><td>une VM <code>{name}-all</code> avec IP publique : apps et bases en Docker Compose</td><td>prototype, démo, environnement de test</td></tr>
+      <tr><td><code>multi-vm</code></td><td>VM app en subnet public derrière un LBU, une VM privée par base (security groups au CIDR du Net), NAT pour la sortie</td><td>la production simple et lisible</td></tr>
+      <tr><td><code>oks</code></td><td>cluster OKS (control plane managé + nodepools), un Deployment par service, Service LoadBalancer → LBU</td><td>le scale horizontal, les microservices, l’HPA</td></tr>
+    </table>
+    <pre># service_config (extrait)
+api:
+  runtime: custom
+  port: 8080
+  memory_mb: 1024
+  env:
+    ASPNETCORE_ENVIRONMENT: {mode: literal, value: Production}</pre>
+    <p>La page <a href="stack-dotnet-postgresql-rabbitmq.html">ASP.NET Core + PostgreSQL + RabbitMQ</a> donne le projet complet et son coût.</p>
+
+    <h2 id="scan">Ce que le scan bige-ops fait pour .NET</h2>
+    <p>L’analyse du code .NET arrive ; ta stack est déjà couverte : composants et images (y compris celles de tes Dockerfile et docker-compose) confrontés à OpenCVE, exposition dans la simulation et coût sur Outscale.</p>
+
+    <h2 id="bases">Bases de données typiques</h2>
+    <p>PostgreSQL via Npgsql est le choix naturel d’une stack .NET sous Linux.</p>
+    <table>
+      <tr><th>Base</th><th>Avec ce langage</th><th>CVE</th></tr>
+      <tr><td>PostgreSQL</td><td>EF Core + Npgsql, Dapper. Stack : <a href="stack-dotnet-postgresql-rabbitmq.html">ASP.NET Core + PostgreSQL + RabbitMQ</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+      <tr><td>RabbitMQ</td><td>commandes et événements, MassTransit. Stack : <a href="stack-dotnet-postgresql-rabbitmq.html">ASP.NET Core + PostgreSQL + RabbitMQ</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=rabbitmq&amp;product=rabbitmq" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+      <tr><td>Redis</td><td>cache distribué, sessions, SignalR backplane.</td><td><a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+    </table>
+    <p>
+      Règle d’or, quelle que soit la base : jamais exposée à Internet. En multi-VM elle vit
+      dans le subnet privé, sans IP publique, derrière un security group limité au CIDR du
+      Net ; sur OKS elle reste un Service interne (ClusterIP). Détail :
+      <a href="reseau.html">réseau · ouvrir ou non</a> et <a href="bases.html">bases de données</a>.
+    </p>
+
+    <h2 id="versions">Versions à épingler</h2>
+    <p><strong>.NET 10</strong> est la version LTS active, supportée jusqu’au 14 novembre 2028. .NET 8 (LTS) et .NET 9 (STS) arrivent tous deux en fin de support le 10 novembre 2026 : c’est le moment de passer à .NET 10. Source : <a href="https://dotnet.microsoft.com/platform/support/policy/dotnet-core" target="_blank" rel="noopener noreferrer">politique de support .NET</a> · CVE : <a href="https://app.opencve.io/cve/?vendor=microsoft&amp;product=.net" target="_blank" rel="noopener noreferrer">.NET sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=microsoft&amp;product=asp.net_core" target="_blank" rel="noopener noreferrer">ASP.NET Core sur OpenCVE</a>.</p>
+
+    <h2 id="opencve">OpenCVE, le référentiel CVE de bige-ops</h2>
+    <p>
+      Pour savoir quelles vulnérabilités touchent les briques de ta stack, bige-ops
+      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE agrège les CVE publiées
+      (NVD, MITRE, catalogue KEV de la CISA…), les enrichit avec les scores CVSS et EPSS
+      et les range par fournisseur et par produit, consultables dans son
+      <a href="https://app.opencve.io/" target="_blank" rel="noopener noreferrer">explorateur</a>. Le projet est open source : son code, ses
+      issues et les contributions de sa communauté vivent sur
+      <a href="https://github.com/opencve/opencve" target="_blank" rel="noopener noreferrer">GitHub</a>, et il s’installe aussi chez toi. Merci à ses
+      mainteneurs et à tous ceux qui font vivre ce référentiel : c’est grâce à eux que
+      chaque composant de ta simulation a sa fiche CVE à jour.
+    </p>
+
+    <h2 id="stacks">Stacks .NET chiffrées</h2>
+    <ul>
+      <li><a href="stack-dotnet-postgresql-rabbitmq.html">ASP.NET Core + PostgreSQL + RabbitMQ</a> (438,40 € HT/mois estimés)</li>
+    </ul>
+
+    <h2 id="docs">Docs officielles</h2>
+    <ul>
+      <li><a href="https://learn.microsoft.com/dotnet/" target="_blank" rel="noopener noreferrer">.NET</a></li>
+      <li><a href="https://learn.microsoft.com/aspnet/core/" target="_blank" rel="noopener noreferrer">ASP.NET Core</a></li>
+      <li><a href="https://learn.microsoft.com/ef/core/" target="_blank" rel="noopener noreferrer">Entity Framework Core</a></li>
+      <li><a href="https://www.npgsql.org/" target="_blank" rel="noopener noreferrer">Npgsql</a></li>
+      <li><a href="https://www.rabbitmq.com/docs" target="_blank" rel="noopener noreferrer">RabbitMQ</a></li>
+    </ul>
+    <p>Pour aller plus loin : <a href="layouts.html">layouts &amp; topologies</a>, <a href="vms.html">VMs</a>, <a href="oks.html">OKS</a>, <a href="volumes-bsu.html">volumes BSU</a>, <a href="oos.html">OOS</a>, <a href="lbu.html">LBU</a>, <a href="reseau.html">réseau</a>, <a href="regions.html">régions</a>, <a href="bases.html">bases de données</a>, <a href="catalogue-prix.html">catalogue de prix</a>. Toutes les stacks : <a href="stacks.html">stacks &amp; langages</a>.</p>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="documentation.html">Toute la doc</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="glossaire.html">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
+            <li><a href="omi.html">OMI · images</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Réseau &amp; région</h3>
+          <ul>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="reseau-avance.html">Réseau avancé</a></li>
+            <li><a href="lbu.html">LBU · entrée publique</a></li>
+            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · simulateur local pour Outscale ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

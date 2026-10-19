@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rust sur Outscale : Axum, Actix Web, Tokio — bige-ops</title>
+  <meta name="description" content="Rust sur Outscale avec bige-ops : Axum, Actix Web, Tokio, SQLx, PostgreSQL. Binaires compacts sur petites VMs ou OKS, stack suivie sur OpenCVE." />
+  <link rel="canonical" href="https://bige.dev/lang-rust.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="bige-ops" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:url" content="https://bige.dev/lang-rust.html" />
+  <meta property="og:title" content="Rust sur Outscale : Axum, Actix Web, Tokio — bige-ops" />
+  <meta property="og:description" content="Rust sur Outscale avec bige-ops : Axum, Actix Web, Tokio, SQLx, PostgreSQL. Binaires compacts sur petites VMs ou OKS, stack suivie sur OpenCVE." />
+  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Rust sur Outscale : Axum, Actix Web, Tokio", "description": "Rust sur Outscale avec bige-ops : Axum, Actix Web, Tokio, SQLx, PostgreSQL. Binaires compacts sur petites VMs ou OKS, stack suivie sur OpenCVE.", "inLanguage": "fr", "url": "https://bige.dev/lang-rust.html", "keywords": "Rust, Axum, Actix Web, Tokio, hyper, SQLx, Cargo, PostgreSQL, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Rust sur Outscale : Axum, Actix Web, Tokio", "item": "https://bige.dev/lang-rust.html"}]}]}</script>
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="stacks.html">Stacks &amp; langages</a> · <a href="documentation.html">Toute la doc</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Gratuit</span>
+    </div>
+    <h1>Rust sur Outscale</h1>
+    <p class="lead">
+      Rust apporte la performance du natif et la sûreté mémoire : idéal pour les API à fort trafic, les proxies et les services de traitement. Un binaire Rust tient dans quelques mégaoctets et quelques centaines de MiB de RAM : bige-ops le dimensionne au plus juste sur Outscale.
+    </p>
+
+    <div class="callout">
+      <strong>En bref.</strong>
+      Preset de service <code>rust</code> dans bige-ops : port 8080, 256 MiB, binaire release dans ton image.
+    </div>
+
+    <h2 id="frameworks">Frameworks et bibliothèques</h2>
+    <p>L’écosystème asynchrone de Rust repose sur Tokio.</p>
+    <h3 id="axum">Axum</h3>
+    <p>Le framework web de l’équipe Tokio, sur hyper et tower : routage typé, extracteurs, middlewares tower.</p>
+    <p><a href="https://docs.rs/axum/latest/axum/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=tokio&amp;product=tokio" target="_blank" rel="noopener noreferrer">Tokio sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=hyper&amp;product=hyper" target="_blank" rel="noopener noreferrer">hyper sur OpenCVE</a></p>
+    <h3 id="actix">Actix Web</h3>
+    <p>Un framework mature et parmi les plus rapides, avec son propre runtime d’acteurs au-dessus de Tokio.</p>
+    <p><a href="https://actix.rs/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=actix&amp;product=actix-web" target="_blank" rel="noopener noreferrer">Actix Web sur OpenCVE</a></p>
+    <h3 id="tokio">Tokio, SQLx et Cargo</h3>
+    <p>Tokio pour l’asynchrone, <a href="https://github.com/launchbadge/sqlx" target="_blank" rel="noopener noreferrer">SQLx</a> pour PostgreSQL vérifié à la compilation, <a href="https://doc.rust-lang.org/cargo/" target="_blank" rel="noopener noreferrer">Cargo</a> pour le build ; <a href="https://rustsec.org/" target="_blank" rel="noopener noreferrer">RustSec</a> recense les avis de sécurité des crates.</p>
+    <p><a href="https://tokio.rs/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=rust-lang&amp;product=cargo" target="_blank" rel="noopener noreferrer">Cargo sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=rust-lang&amp;product=rust" target="_blank" rel="noopener noreferrer">Rust sur OpenCVE</a></p>
+
+    <h2 id="outscale">Faire tourner Rust sur Outscale avec bige-ops</h2>
+<p>Déclare tes services avec le runtime <code>rust</code> : 256 MiB et le port 8080 par défaut. Un build multi-étapes (<code>cargo build --release</code> puis une image distroless) donne une image minimale ; une VM <code>tinav6.c2r4p2</code> porte une API Rust très chargée.</p>
+    <table>
+      <tr><th>Topologie</th><th>Sur Outscale</th><th>Pour</th></tr>
+      <tr><td><code>single-vm</code></td><td>une VM <code>{name}-all</code> avec IP publique : apps et bases en Docker Compose</td><td>prototype, démo, environnement de test</td></tr>
+      <tr><td><code>multi-vm</code></td><td>VM app en subnet public derrière un LBU, une VM privée par base (security groups au CIDR du Net), NAT pour la sortie</td><td>la production simple et lisible</td></tr>
+      <tr><td><code>oks</code></td><td>cluster OKS (control plane managé + nodepools), un Deployment par service, Service LoadBalancer → LBU</td><td>le scale horizontal, les microservices, l’HPA</td></tr>
+    </table>
+    <pre># service_config (extrait)
+api:
+  runtime: rust
+  port: 8080
+  memory_mb: 256</pre>
+    <p>Pour une architecture complète avec PostgreSQL et un bus de messages, la page <a href="stack-go-postgresql-nats.html">Go + PostgreSQL + NATS</a> se transpose telle quelle à Rust.</p>
+
+    <h2 id="scan">Ce que le scan bige-ops fait pour Rust</h2>
+    <p>L’analyse du code Rust arrive ; ta stack est déjà couverte : composants et images (y compris celles de tes Dockerfile et docker-compose) confrontés à OpenCVE, exposition dans la simulation et coût sur Outscale.</p>
+
+    <h2 id="bases">Bases de données typiques</h2>
+    <p>SQLx et Diesel couvrent PostgreSQL ; Redis et NATS ont des clients asynchrones solides.</p>
+    <table>
+      <tr><th>Base</th><th>Avec ce langage</th><th>CVE</th></tr>
+      <tr><td>PostgreSQL</td><td>SQLx, Diesel, tokio-postgres. Stack : <a href="stack-go-postgresql-nats.html">Go + PostgreSQL + NATS</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+      <tr><td>Redis</td><td>redis-rs, fred.</td><td><a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+      <tr><td>NATS</td><td>async-nats. Stack : <a href="stack-go-postgresql-nats.html">Go + PostgreSQL + NATS</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=nats&amp;product=nats-server" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+    </table>
+    <p>
+      Règle d’or, quelle que soit la base : jamais exposée à Internet. En multi-VM elle vit
+      dans le subnet privé, sans IP publique, derrière un security group limité au CIDR du
+      Net ; sur OKS elle reste un Service interne (ClusterIP). Détail :
+      <a href="reseau.html">réseau · ouvrir ou non</a> et <a href="bases.html">bases de données</a>.
+    </p>
+
+    <h2 id="versions">Versions à épingler</h2>
+    <p>Rust publie une version stable toutes les six semaines, rétrocompatible : épingle la toolchain dans <code>rust-toolchain.toml</code> et les crates dans <code>Cargo.lock</code>. Docs : <a href="https://www.rust-lang.org/learn" target="_blank" rel="noopener noreferrer">Rust</a> · CVE : <a href="https://app.opencve.io/cve/?vendor=rust-lang&amp;product=rust" target="_blank" rel="noopener noreferrer">Rust sur OpenCVE</a>.</p>
+
+    <h2 id="opencve">OpenCVE, le référentiel CVE de bige-ops</h2>
+    <p>
+      Pour savoir quelles vulnérabilités touchent les briques de ta stack, bige-ops
+      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE agrège les CVE publiées
+      (NVD, MITRE, catalogue KEV de la CISA…), les enrichit avec les scores CVSS et EPSS
+      et les range par fournisseur et par produit, consultables dans son
+      <a href="https://app.opencve.io/" target="_blank" rel="noopener noreferrer">explorateur</a>. Le projet est open source : son code, ses
+      issues et les contributions de sa communauté vivent sur
+      <a href="https://github.com/opencve/opencve" target="_blank" rel="noopener noreferrer">GitHub</a>, et il s’installe aussi chez toi. Merci à ses
+      mainteneurs et à tous ceux qui font vivre ce référentiel : c’est grâce à eux que
+      chaque composant de ta simulation a sa fiche CVE à jour.
+    </p>
+
+    <h2 id="stacks">Stacks Rust chiffrées</h2>
+    <ul>
+      <li><a href="stack-go-postgresql-nats.html">Go + PostgreSQL + NATS</a> : même architecture pour une API Rust.</li>
+    </ul>
+
+    <h2 id="docs">Docs officielles</h2>
+    <ul>
+      <li><a href="https://www.rust-lang.org/learn" target="_blank" rel="noopener noreferrer">Rust</a></li>
+      <li><a href="https://docs.rs/axum/latest/axum/" target="_blank" rel="noopener noreferrer">Axum</a></li>
+      <li><a href="https://actix.rs/" target="_blank" rel="noopener noreferrer">Actix Web</a></li>
+      <li><a href="https://tokio.rs/" target="_blank" rel="noopener noreferrer">Tokio</a></li>
+      <li><a href="https://rustsec.org/" target="_blank" rel="noopener noreferrer">RustSec</a></li>
+    </ul>
+    <p>Pour aller plus loin : <a href="layouts.html">layouts &amp; topologies</a>, <a href="vms.html">VMs</a>, <a href="oks.html">OKS</a>, <a href="volumes-bsu.html">volumes BSU</a>, <a href="oos.html">OOS</a>, <a href="lbu.html">LBU</a>, <a href="reseau.html">réseau</a>, <a href="regions.html">régions</a>, <a href="bases.html">bases de données</a>, <a href="catalogue-prix.html">catalogue de prix</a>. Toutes les stacks : <a href="stacks.html">stacks &amp; langages</a>.</p>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="documentation.html">Toute la doc</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="glossaire.html">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
+            <li><a href="omi.html">OMI · images</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Réseau &amp; région</h3>
+          <ul>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="reseau-avance.html">Réseau avancé</a></li>
+            <li><a href="lbu.html">LBU · entrée publique</a></li>
+            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · simulateur local pour Outscale ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

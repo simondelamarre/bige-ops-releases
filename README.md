@@ -88,4 +88,6 @@ Previous copy, to restore with them:
 
 ---
 
-**D’autres clouds français à venir :** [OVHcloud](https://www.ovhcloud.com/fr/) · [Scaleway](https://www.scaleway.com/fr/)
+### Installe maintenant. La suite, c’est toi qui choisis.
+
+Ta stack est décrite une fois, dans un format ouvert, versionné dans ton Git. Quand d’autres clouds français arriveront dans bige-ops ([OVHcloud](https://www.ovhcloud.com/fr/), [Scaleway](https://www.scaleway.com/fr/)), tu compareras la même stack, prix à l’appui, et tu migreras si ça vaut le coup. Sans tout réécrire.

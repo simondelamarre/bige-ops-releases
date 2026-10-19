@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OCaml sur Outscale : Dream, Opium, Ocsigen — bige-ops</title>
+  <meta name="description" content="OCaml sur Outscale avec bige-ops : Dream, Opium, Ocsigen / Eliom, Caqti pour PostgreSQL et MariaDB, opam et dune. Service custom, CVE OpenCVE." />
+  <link rel="canonical" href="https://bige.dev/lang-ocaml.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="bige-ops" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:url" content="https://bige.dev/lang-ocaml.html" />
+  <meta property="og:title" content="OCaml sur Outscale : Dream, Opium, Ocsigen — bige-ops" />
+  <meta property="og:description" content="OCaml sur Outscale avec bige-ops : Dream, Opium, Ocsigen / Eliom, Caqti pour PostgreSQL et MariaDB, opam et dune. Service custom, CVE OpenCVE." />
+  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "OCaml sur Outscale : Dream, Opium, Ocsigen", "description": "OCaml sur Outscale avec bige-ops : Dream, Opium, Ocsigen / Eliom, Caqti pour PostgreSQL et MariaDB, opam et dune. Service custom, CVE OpenCVE.", "inLanguage": "fr", "url": "https://bige.dev/lang-ocaml.html", "keywords": "OCaml, Dream, Opium, Ocsigen, Eliom, Caqti, opam, dune, PostgreSQL, MariaDB, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "OCaml sur Outscale : Dream, Opium, Ocsigen", "item": "https://bige.dev/lang-ocaml.html"}]}]}</script>
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="stacks.html">Stacks &amp; langages</a> · <a href="documentation.html">Toute la doc</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Gratuit</span>
+    </div>
+    <h1>OCaml sur Outscale</h1>
+    <p class="lead">
+      OCaml allie typage fort, compilation native et excellentes performances : un choix solide pour des backends web sûrs et sobres. bige-ops déploie ton service OCaml sur Outscale comme un service custom construit depuis ton Dockerfile, avec ses bases en subnet privé.
+    </p>
+
+    <div class="callout">
+      <strong>En bref.</strong>
+      Service <code>custom</code> dans bige-ops : image construite depuis ton Dockerfile (opam + dune), port et mémoire au choix. Topologies mono-VM, multi-VM ou OKS.
+    </div>
+
+    <h2 id="frameworks">Frameworks et bibliothèques</h2>
+    <p>Les frameworks web OCaml les plus utilisés.</p>
+    <h3 id="dream">Dream</h3>
+    <p>Un framework web tout-en-un dans un seul module : routeur, sessions, formulaires protégés contre le CSRF, WebSockets, GraphQL, HTTPS et HTTP/2, et accès SQL via Caqti.</p>
+    <p><a href="https://camlworks.github.io/dream/" target="_blank" rel="noopener noreferrer">documentation officielle</a></p>
+    <h3 id="opium">Opium</h3>
+    <p>Un framework léger inspiré de Sinatra, pour des API REST simples.</p>
+    <p><a href="https://github.com/rgrinberg/opium" target="_blank" rel="noopener noreferrer">documentation officielle</a></p>
+    <h3 id="ocsigen">Ocsigen et Eliom</h3>
+    <p><a href="https://ocsigen.org/eliom/" target="_blank" rel="noopener noreferrer">Eliom</a> écrit client et serveur dans le même programme OCaml, servi par <a href="https://ocsigen.org/ocsigenserver/" target="_blank" rel="noopener noreferrer">Ocsigen Server</a> ; le client est compilé en JavaScript.</p>
+    <p><a href="https://ocsigen.org/" target="_blank" rel="noopener noreferrer">documentation officielle</a></p>
+    <h3 id="caqti">Caqti</h3>
+    <p>L’interface commune aux bases relationnelles : pilotes PostgreSQL (<code>postgresql://</code>), MariaDB (<code>mariadb://</code>) et SQLite, choisis par l’URI de connexion.</p>
+    <p><a href="https://github.com/paurkedal/ocaml-caqti" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">PostgreSQL sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=mariadb&amp;product=mariadb" target="_blank" rel="noopener noreferrer">MariaDB sur OpenCVE</a></p>
+    <h3 id="opam">opam et dune</h3>
+    <p>opam installe le compilateur et les paquets, <a href="https://dune.build/" target="_blank" rel="noopener noreferrer">dune</a> construit le projet ; un Dockerfile multi-étapes part de l’image <a href="https://hub.docker.com/r/ocaml/opam" target="_blank" rel="noopener noreferrer">ocaml/opam</a> et livre un binaire natif dans une image minimale.</p>
+    <p><a href="https://opam.ocaml.org/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=ocaml&amp;product=opam" target="_blank" rel="noopener noreferrer">opam sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=ocaml&amp;product=ocaml" target="_blank" rel="noopener noreferrer">OCaml sur OpenCVE</a></p>
+
+    <h2 id="outscale">Faire tourner OCaml sur Outscale avec bige-ops</h2>
+<p>Déclare ton service en <code>kind: custom</code> avec l’image construite depuis ton Dockerfile (ou un dépôt Git), son port et sa mémoire : un binaire natif OCaml se contente de peu. En multi-VM il partage la VM app ; sur OKS il devient un Deployment (une image est requise pour un pod).</p>
+    <table>
+      <tr><th>Topologie</th><th>Sur Outscale</th><th>Pour</th></tr>
+      <tr><td><code>single-vm</code></td><td>une VM <code>{name}-all</code> avec IP publique : apps et bases en Docker Compose</td><td>prototype, démo, environnement de test</td></tr>
+      <tr><td><code>multi-vm</code></td><td>VM app en subnet public derrière un LBU, une VM privée par base (security groups au CIDR du Net), NAT pour la sortie</td><td>la production simple et lisible</td></tr>
+      <tr><td><code>oks</code></td><td>cluster OKS (control plane managé + nodepools), un Deployment par service, Service LoadBalancer → LBU</td><td>le scale horizontal, les microservices, l’HPA</td></tr>
+    </table>
+    <pre># service_config (extrait)
+web:
+  kind: custom
+  image: registry.example.com/acme/ocaml-web:1.0.0
+  port: 8080
+  memory_mb: 256</pre>
+    <p>Les bases du catalogue bige-ops (PostgreSQL, MariaDB, Redis…) se déclarent à côté, en VM privée ou en pod.</p>
+
+    <h2 id="scan">Ce que le scan bige-ops fait pour OCaml</h2>
+    <p>L’analyse du code OCaml arrive ; ta stack est déjà couverte : composants et images (y compris celles de tes Dockerfile et docker-compose) confrontés à OpenCVE, exposition dans la simulation et coût sur Outscale.</p>
+
+    <h2 id="bases">Bases de données typiques</h2>
+    <p>Caqti couvre PostgreSQL et MariaDB, les deux bases les plus courantes avec OCaml.</p>
+    <table>
+      <tr><th>Base</th><th>Avec ce langage</th><th>CVE</th></tr>
+      <tr><td>PostgreSQL</td><td>Caqti (<code>postgresql://</code>), Petrol. Stack : <a href="stack-phoenix-postgresql.html">Phoenix + PostgreSQL</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+      <tr><td>MariaDB</td><td>Caqti (<code>mariadb://</code>). Stack : <a href="stack-wordpress-mariadb.html">WordPress + MariaDB</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=mariadb&amp;product=mariadb" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+      <tr><td>Redis</td><td>clients redis OCaml.</td><td><a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+    </table>
+    <p>
+      Règle d’or, quelle que soit la base : jamais exposée à Internet. En multi-VM elle vit
+      dans le subnet privé, sans IP publique, derrière un security group limité au CIDR du
+      Net ; sur OKS elle reste un Service interne (ClusterIP). Détail :
+      <a href="reseau.html">réseau · ouvrir ou non</a> et <a href="bases.html">bases de données</a>.
+    </p>
+
+    <h2 id="versions">Versions à épingler</h2>
+    <p>Épingle le compilateur dans ton switch opam et tes paquets dans un fichier de lock opam. Sources : <a href="https://ocaml.org/releases" target="_blank" rel="noopener noreferrer">versions d’OCaml</a> · <a href="https://ocaml.org/security" target="_blank" rel="noopener noreferrer">sécurité OCaml</a> · CVE : <a href="https://app.opencve.io/cve/?vendor=ocaml&amp;product=ocaml" target="_blank" rel="noopener noreferrer">OCaml sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=ocaml&amp;product=opam" target="_blank" rel="noopener noreferrer">opam sur OpenCVE</a>.</p>
+
+    <h2 id="opencve">OpenCVE, le référentiel CVE de bige-ops</h2>
+    <p>
+      Pour savoir quelles vulnérabilités touchent les briques de ta stack, bige-ops
+      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE agrège les CVE publiées
+      (NVD, MITRE, catalogue KEV de la CISA…), les enrichit avec les scores CVSS et EPSS
+      et les range par fournisseur et par produit, consultables dans son
+      <a href="https://app.opencve.io/" target="_blank" rel="noopener noreferrer">explorateur</a>. Le projet est open source : son code, ses
+      issues et les contributions de sa communauté vivent sur
+      <a href="https://github.com/opencve/opencve" target="_blank" rel="noopener noreferrer">GitHub</a>, et il s’installe aussi chez toi. Merci à ses
+      mainteneurs et à tous ceux qui font vivre ce référentiel : c’est grâce à eux que
+      chaque composant de ta simulation a sa fiche CVE à jour.
+    </p>
+
+    <h2 id="stacks">Stacks OCaml chiffrées</h2>
+    <ul>
+      <li>Les architectures multi-VM des pages <a href="stack-phoenix-postgresql.html">Phoenix + PostgreSQL</a> et <a href="stack-wordpress-mariadb.html">WordPress + MariaDB</a> se transposent à un service OCaml.</li>
+    </ul>
+
+    <h2 id="docs">Docs officielles</h2>
+    <ul>
+      <li><a href="https://ocaml.org/docs" target="_blank" rel="noopener noreferrer">OCaml</a></li>
+      <li><a href="https://camlworks.github.io/dream/" target="_blank" rel="noopener noreferrer">Dream</a></li>
+      <li><a href="https://github.com/rgrinberg/opium" target="_blank" rel="noopener noreferrer">Opium</a></li>
+      <li><a href="https://ocsigen.org/" target="_blank" rel="noopener noreferrer">Ocsigen</a></li>
+      <li><a href="https://github.com/paurkedal/ocaml-caqti" target="_blank" rel="noopener noreferrer">Caqti</a></li>
+      <li><a href="https://opam.ocaml.org/" target="_blank" rel="noopener noreferrer">opam</a></li>
+      <li><a href="https://dune.build/" target="_blank" rel="noopener noreferrer">dune</a></li>
+    </ul>
+    <p>Pour aller plus loin : <a href="layouts.html">layouts &amp; topologies</a>, <a href="vms.html">VMs</a>, <a href="oks.html">OKS</a>, <a href="volumes-bsu.html">volumes BSU</a>, <a href="oos.html">OOS</a>, <a href="lbu.html">LBU</a>, <a href="reseau.html">réseau</a>, <a href="regions.html">régions</a>, <a href="bases.html">bases de données</a>, <a href="catalogue-prix.html">catalogue de prix</a>. Toutes les stacks : <a href="stacks.html">stacks &amp; langages</a>.</p>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="documentation.html">Toute la doc</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="glossaire.html">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
+            <li><a href="omi.html">OMI · images</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Réseau &amp; région</h3>
+          <ul>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="reseau-avance.html">Réseau avancé</a></li>
+            <li><a href="lbu.html">LBU · entrée publique</a></li>
+            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · simulateur local pour Outscale ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

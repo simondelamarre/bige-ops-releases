@@ -63,12 +63,12 @@ flowchart TB
 
     <h2>1 · Coloc ou VM dédiée</h2>
     <p>
-      En <a href="index.html#g-mono-vm"><strong>mono-VM</strong></a>
+      En <a href="glossaire.html#g-mono-vm"><strong>mono-VM</strong></a>
       (code <code>single-vm</code>), la base est
       <strong>colocalisée</strong> avec l’app : un seul blast radius, une
       estimation basse, idéal pour projeter. Pour isoler la data, passe à une
       <strong>VM dédiée</strong> (rôle data en
-      <a href="index.html#g-multi-vm">multi-VM</a>) : sizing propre, disque
+      <a href="glossaire.html#g-multi-vm">multi-VM</a>) : sizing propre, disque
       racine <code>io1</code> par défaut pour Postgres, MongoDB et les autres
       bases persistantes, et un <strong>volume</strong> attaché
       pour la persistance. Le canvas lie le service à sa VM et à son volume ;
@@ -119,9 +119,9 @@ flowchart LR
     <p>
       <strong>Pas de backup, pas de filet.</strong>
       À la destruction, bige-ops affiche les risques selon le setup : en
-      <a href="index.html#g-mono-vm"><em>mono-VM</em></a>, app et bases
+      <a href="glossaire.html#g-mono-vm"><em>mono-VM</em></a>, app et bases
       partagent le même disque, et le filet, c’est le dump vers OOS. En
-      <a href="index.html#g-multi-vm">multi-VM</a> ou sur OKS, détruire une VM
+      <a href="glossaire.html#g-multi-vm">multi-VM</a> ou sur OKS, détruire une VM
       data ou des pods efface les données vivantes ; les buckets OOS, eux,
       restent protégés.
     </p>
@@ -194,13 +194,14 @@ sequenceDiagram
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="savoir.html">Sait / ne sait pas</a></li>
             <li><a href="install.html">Installer &amp; mettre à jour</a></li>
-            <li><a href="index.html#glossaire">Glossaire</a></li>
+            <li><a href="glossaire.html">Glossaire</a></li>
           </ul>
         </div>
         <div>
           <h3>Composer</h3>
           <ul>
-            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="layouts.html">Par où commencer</a></li>
+            <li><a href="stacks.html">Stacks &amp; langages</a></li>
             <li><a href="vms.html">VMs · VPS</a></li>
             <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
             <li><a href="omi.html">OMI · images</a></li>

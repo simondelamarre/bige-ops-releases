@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stack IA sur Outscale : FastAPI, pgvector et GPU — bige-ops</title>
+  <meta name="description" content="Stack IA souveraine sur Outscale : FastAPI, PostgreSQL pgvector, Redis, documents OOS et GPU NVIDIA L40. Coût réel (2 654,65 € HT/mois), CVE." />
+  <link rel="canonical" href="https://bige.dev/stack-ai-fastapi-pgvector-gpu.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="bige-ops" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:url" content="https://bige.dev/stack-ai-fastapi-pgvector-gpu.html" />
+  <meta property="og:title" content="Stack IA sur Outscale : FastAPI, pgvector et GPU — bige-ops" />
+  <meta property="og:description" content="Stack IA souveraine sur Outscale : FastAPI, PostgreSQL pgvector, Redis, documents OOS et GPU NVIDIA L40. Coût réel (2 654,65 € HT/mois), CVE." />
+  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Stack IA sur Outscale : FastAPI, pgvector et GPU", "description": "Stack IA souveraine sur Outscale : FastAPI, PostgreSQL pgvector, Redis, documents OOS et GPU NVIDIA L40. Coût réel (2 654,65 € HT/mois), CVE.", "inLanguage": "fr", "url": "https://bige.dev/stack-ai-fastapi-pgvector-gpu.html", "keywords": "IA, RAG, LLM, FastAPI, pgvector, PostgreSQL, embeddings, Redis, OOS, GPU, NVIDIA L40, fGPU, inférence, Outscale, SecNumCloud, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Stack IA sur Outscale : FastAPI, pgvector et GPU", "item": "https://bige.dev/stack-ai-fastapi-pgvector-gpu.html"}]}]}</script>
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="stacks.html">Stacks &amp; langages</a> · <a href="documentation.html">Toute la doc</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Gratuit</span>
+    </div>
+    <h1>Stack IA : FastAPI + pgvector + Redis + OOS + GPU sur Outscale</h1>
+    <p class="lead">
+      Un assistant RAG ou une API d’inférence qui reste sur un cloud souverain : FastAPI pour l’API, PostgreSQL avec pgvector pour les embeddings, Redis pour le cache et les jobs, OOS pour les documents, et une VM GPU Outscale pour servir le modèle. bige-ops pose l’ensemble et le chiffre, GPU compris.
+    </p>
+
+    <div class="callout">
+      <strong>En bref.</strong>
+      Topologie <code>multi-vm</code> : VM app <code>tinav6.c4r8p2</code> (FastAPI, front, worker d’ingestion) derrière un LBU, PostgreSQL + pgvector et Redis privés, VM d’inférence privée <code>tinav7.c16r64p1</code> avec un GPU NVIDIA L40, 500 GiB de documents dans OOS, backups, NAT. Estimation bige-ops : <strong>2 654,65 € HT par mois</strong>.
+    </div>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  U["Internet"] -->|"HTTPS 443"| LBU["LBU internet-facing"]
+  subgraph NET ["Net 10.0.0.0/16"]
+    APP["VM rag-app · tinav6.c4r8p2<br/>FastAPI :8000 · front<br/>worker d’ingestion"]
+    GPU["VM rag-inference · tinav7.c16r64p1<br/>1 × NVIDIA L40 (48 Go)"]
+    PG[("VM rag-postgres<br/>PostgreSQL 17 + pgvector")]
+    RD[("VM rag-redis<br/>Redis 8")]
+  end
+  LBU --> APP
+  APP -->|"inférence"| GPU
+  APP -->|"5432 · recherche vectorielle"| PG
+  APP -->|"6379"| RD
+  APP -->|"S3 API"| OOS[("OOS<br/>documents + backups")]
+      </pre>
+      <figcaption>Le modèle tourne sur une VM GPU privée ; documents et sauvegardes dans OOS.</figcaption>
+    </figure>
+
+    <h2 id="architecture">Architecture sur Outscale</h2>
+    <ul>
+      <li><strong>VM app</strong> <code>tinav6.c4r8p2</code> : l’API FastAPI (Uvicorn, port 8000), le front et le worker qui découpe, vectorise et indexe les documents.</li>
+      <li><strong>PostgreSQL 17 + pgvector</strong> sur VM privée (image <code>pgvector/pgvector:pg17</code>, disque <code>io1</code>) : données métier et embeddings dans la même base, index HNSW ou IVFFlat.</li>
+      <li><strong>Redis 8</strong> privé : cache de réponses, files de jobs d’ingestion.</li>
+      <li><strong>VM d’inférence</strong> privée <code>tinav7.c16r64p1</code> (16 vCPU, 64 GiB, performance la plus haute) avec un <a href="https://docs.outscale.com/fr/userguide/À-propos-des-flexible-GPU.html" target="_blank" rel="noopener noreferrer">GPU flexible</a> NVIDIA L40 de 48 Go de VRAM, disque de 200 GiB pour les poids du modèle. Le L40 se rattache à une VM de génération v7 en <code>p1</code>, jusqu’à 35 vCPU et 250 GiB : <code>tinav7.c16r64p1</code> est dans les clous. bige-ops chiffre la VM et son GPU déclaré ; l’allocation et l’attachement du fGPU se font dans Cockpit ou par l’API Outscale.</li>
+      <li><strong>OOS</strong> : 500 GiB de documents sources (API S3) et 100 GiB de backups PostgreSQL.</li>
+    </ul>
+
+    <h2 id="cout">Coût mensuel estimé</h2>
+    <p>Calculé avec <code>bige-ops estimate --json</code> sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région <code>eu-west-2</code>, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.</p>
+    <table>
+      <tr><th>Ligne bige-ops</th><th>Ce que c’est</th><th>€ HT / mois</th></tr>
+      <tr><td>LBU rag-web</td><td>entrée publique</td><td>21,90 €</td></tr>
+      <tr><td>VM rag-inference — tinav7.c16r64p1</td><td>inférence : 16 vCPU, 64 GiB, 1 × L40, 200 GiB</td><td>2 217,84 €</td></tr>
+      <tr><td>OOS rag-documents — 500 GiB</td><td>documents sources (500 GiB)</td><td>12,50 €</td></tr>
+      <tr><td>OOS rag-backups — 100 GiB</td><td>sauvegardes PostgreSQL (100 GiB)</td><td>2,50 €</td></tr>
+      <tr><td>VM rag-app — tinav6.c4r8p2</td><td>FastAPI + front + worker</td><td>135,80 €</td></tr>
+      <tr><td>VM rag-redis — tinav6.c2r2p3</td><td>cache, jobs d’ingestion</td><td>54,76 €</td></tr>
+      <tr><td>VM rag-postgres — tinav6.c4r8p2</td><td>PostgreSQL 17 + pgvector, io1</td><td>169,20 €</td></tr>
+      <tr><td>NAT gateway</td><td>sortie du subnet privé</td><td>36,50 €</td></tr>
+      <tr><td>EIP VM rag-app (attachée — 1ʳᵉ offerte / Net)</td><td>IP de la VM app (1ʳᵉ offerte)</td><td>0,00 €</td></tr>
+      <tr><td>EIP NAT (attachée supplémentaire)</td><td>IP publique du NAT</td><td>3,65 €</td></tr>
+      <tr><th>Total estimé</th><th></th><th>2 654,65 €</th></tr>
+    </table>
+    <p>La VM GPU représente 2 217,84 € du total ; le reste de la stack (app, bases, LBU, OOS, NAT) pèse 436,81 € HT par mois. Le GPU se paie à l’heure : une VM d’inférence arrêtée hors des heures d’usage réduit d’autant la facture. Le catalogue Outscale propose aussi A100, H100 et H200 selon la taille du modèle.</p>
+    <p>Le projet utilisé, à reproduire chez toi :</p>
+    <pre>bige-ops init -n stack-ai-fastapi-pgvector-gpu
+bige-ops add layout custom --name rag --runtime python --web spa --worker \
+  --db postgres --db redis --topology multi-vm --lbu
+# puis project.yaml ajusté comme ci-dessous
+bige-ops validate
+bige-ops estimate --json</pre>
+    <pre>name: stack-ai-fastapi-pgvector-gpu
+region: eu-west-2
+enable_nat: true
+components:
+- type: stack
+  name: rag
+  topology: multi-vm
+  services: [api, web, worker, postgres, redis]
+  images: {postgres: 'pgvector/pgvector:pg17', redis: 'redis:8-alpine'}
+  sizing: {app_vm: tinav6.c4r8p2, postgres_vm: tinav6.c4r8p2, redis_vm: tinav6.c2r2p3}
+  service_config:
+    postgres:
+      backup: {enabled: true, oos_bucket: rag-backups}
+- type: load_balancer
+  name: rag-web
+  scheme: internet-facing
+  backend_vms: [rag-app]
+- {type: vm, name: rag-inference, size: tinav7.c16r64p1, subnet: private, volume_size: 200,
+  gpu: 1, gpu_type: Nvidia L40}
+- {type: oos_bucket, name: rag-documents, bucket: rag-documents, size: 500, purpose: documents}
+- {type: oos_bucket, name: rag-backups, bucket: rag-backups, size: 100, purpose: backups}
+</pre>
+
+    <h2 id="donnees">Données et vecteurs : versions, backups, CVE</h2>
+
+    <table>
+      <tr><th>Base</th><th>Image épinglée</th><th>Backup vers OOS</th><th>CVE</th></tr>
+      <tr><td>PostgreSQL</td><td><code>pgvector/pgvector:pg17</code></td><td><code>pg_dump</code> → gzip → bucket OOS</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+      <tr><td>Redis</td><td><code>redis:8-alpine</code></td><td>snapshot RDB / AOF → bucket OOS</td><td><a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+      <tr><td>pgvector</td><td><code>pgvector/pgvector:pg17</code></td><td>inclus dans le dump PostgreSQL</td><td><a href="https://app.opencve.io/cve/?vendor=pgvector&amp;product=pgvector" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+    </table>
+    <p><strong>PostgreSQL.</strong> PostgreSQL 18 (supporté jusqu’en novembre 2030), 17 (novembre 2029), 16 (défaut bige-ops, novembre 2028) et 15 (novembre 2027) sont maintenus ; 14 sort du support le 12 novembre 2026. La simulation épingle <code>pgvector/pgvector:pg17</code>. Source : <a href="https://www.postgresql.org/support/versioning/" target="_blank" rel="noopener noreferrer">politique de versions PostgreSQL</a>. Côté durcissement : un rôle applicatif dédié (jamais le superutilisateur), des règles <a href="https://www.postgresql.org/docs/current/auth-pg-hba-conf.html" target="_blank" rel="noopener noreferrer">pg_hba.conf</a> limitées au CIDR du Net en <code>scram-sha-256</code>, et des mises à jour mineures régulières (la majeure reste celle que tu épingles).</p>
+    <p><strong>Redis.</strong> La simulation garde <code>redis:8-alpine</code>, le tag par défaut de bige-ops : il suit la dernière Redis 8. Épingle la mineure (par exemple <code>8.10</code>) si tu veux un build strictement reproductible. Côté durcissement : un mot de passe ou des ACL, le <em>protected mode</em> actif, aucune exposition publique, et les commandes d’administration réservées à un utilisateur dédié (<a href="https://redis.io/docs/latest/operate/oss_and_stack/management/security/" target="_blank" rel="noopener noreferrer">sécurité Redis</a>).</p>
+    <p><strong>pgvector.</strong> L’image officielle <a href="https://hub.docker.com/r/pgvector/pgvector" target="_blank" rel="noopener noreferrer">pgvector/pgvector</a> embarque PostgreSQL et l’extension ; épingle la combinaison (<code>pg17</code>, ou <code>0.8.7-pg17</code> pour figer aussi l’extension). Doc : <a href="https://github.com/pgvector/pgvector" target="_blank" rel="noopener noreferrer">pgvector</a>.</p>
+    <p>Le backup est activé dans la simulation (<code>backup.enabled</code> + bucket OOS) : bige-ops crée le bucket, protégé contre la destruction, et prépare <code>backup.sh</code> (bucket, endpoint, planning) où tu branches le dump. Sans backup, Visual, <code>preflight</code> et <code>plan</code> te le signalent. Détail : <a href="oos.html">OOS &amp; backups</a>.</p>
+
+    <h2 id="exposition">Exposition : ce qui est ouvert, et à qui</h2>
+    <ul>
+      <li><strong>Une seule entrée publique</strong> : le LBU <code>internet-facing</code>. Ajoute-lui un listener HTTPS 443 avec le <code>server_certificate_id</code> (ORN d’un certificat chargé dans <a href="https://docs.outscale.com/fr/userguide/À-propos-des-certificats-serveurs-dans-EIM.html" target="_blank" rel="noopener noreferrer">EIM</a>) vers le port 8000 de la VM app ; le TLS se termine sur le LBU.</li>
+      <li><strong>VM app</strong> en subnet public : avec un LBU, ses ports applicatifs (ceux de tes services : 3000, 3001, 8000, 8080…) n’acceptent que le CIDR du Net (<code>10.0.0.0/16</code>), donc le trafic applicatif passe par le LBU. Sa première IP publique est offerte et sert au deploy SSH.</li>
+      <li><strong>Bases en subnet privé</strong>, sans IP publique, chacune derrière son security group qui n’accepte que le CIDR du Net sur son port. Jamais de listener LBU, d’IP publique ni de règle <code>0.0.0.0/0</code> vers une base : pour l’administrer, passe par un tunnel SSH via la VM app.</li>
+      <li><strong>Security group de la VM app</strong> : il ouvre SSH (22) pour le deploy, ainsi que HTTP (80) et HTTPS (443). Resserre SSH sur tes CIDR connus avant la production, et fais écouter ton app sur un port applicatif (3000, 8000, 8080…), que seul le Net atteint.</li>
+      <li><strong>NAT service</strong> : la sortie Internet du subnet privé (images, mises à jour), sans aucune entrée.</li>
+      <li><strong>VM d’inférence</strong> en subnet privé, sans IP publique : seule l’API l’appelle, jamais le navigateur. Le serveur de modèle n’a pas besoin d’entrée Internet ; il tire ses poids via le NAT ou depuis OOS.</li>
+    </ul>
+    <p>Rappel Outscale : deux VMs d’un même subnet se parlent sans passer par les security groups ; séparer l’app (public) et la data (privé) les remet dans le chemin. Détail : <a href="reseau.html">réseau · ouvrir ou non</a>, <a href="https://docs.outscale.com/fr/userguide/À-propos-des-security-groups.html" target="_blank" rel="noopener noreferrer">security groups Outscale</a>.</p>
+
+    <h2 id="vulnerabilites">Vulnérabilités : ce que bige-ops vérifie</h2>
+
+    <p>
+      Avec ta clé API OpenCVE (Settings), l’onglet Vulnérabilités lit ta simulation :
+      chaque composant reconnu, image Docker ou package, est rapproché de sa fiche
+      fournisseur / produit, à raison d’une requête par produit. Les CVE remontées sont
+      classées par risque :
+    </p>
+    <ul>
+      <li><strong>Sévérité</strong> : score CVSS (critique dès 9, haute dès 7, moyenne dès 4), relevée au moins à « haute » quand la faille figure au <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener noreferrer">catalogue KEV</a> des vulnérabilités exploitées.</li>
+      <li><strong>Exposition dans ta simulation</strong> : un composant joignable depuis Internet ou derrière le LBU garde sa sévérité ; un composant en subnet privé descend d’un cran, sauf s’il est KEV.</li>
+      <li><strong>Départage</strong> : à risque égal, KEV d’abord, puis CVSS, puis <a href="https://www.first.org/epss/" target="_blank" rel="noopener noreferrer">EPSS</a>. Un filtre « important » ne garde que KEV ou CVSS ≥ 7.</li>
+    </ul>
+    <p>
+      Le rapprochement se fait au niveau du produit : tu recoupes ensuite avec la version
+      que tu as épinglée. Une image en <code>latest</code> ressort en plus comme
+      « version non épinglée ». Le résultat est mis en cache dans la simulation et se
+      rafraîchit à la demande.
+    </p>
+
+    <table>
+      <tr><th>Composant</th><th>Fiche OpenCVE</th><th>Dans bige-ops</th></tr>
+      <tr><td>Redis</td><td><a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">Redis</a></td><td>mappé automatiquement depuis l’image <code>redis:8-alpine</code> · exposition : privée</td></tr>
+      <tr><td>PostgreSQL + pgvector</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">PostgreSQL</a> · <a href="https://app.opencve.io/cve/?vendor=pgvector&amp;product=pgvector" target="_blank" rel="noopener noreferrer">pgvector</a></td><td>image <code>pgvector/pgvector</code> hors table de correspondance automatique : ces deux fiches sont tes références</td></tr>
+      <tr><td>Docker (VM d’inférence)</td><td><a href="https://app.opencve.io/cve/?vendor=docker&amp;product=docker" target="_blank" rel="noopener noreferrer">Docker</a></td><td>mappé automatiquement depuis les packages de la VM dédiée</td></tr>
+      <tr><td>Python</td><td><a href="https://app.opencve.io/cve/?vendor=python&amp;product=python" target="_blank" rel="noopener noreferrer">Python</a></td><td>mappé depuis le <code>FROM python</code> de ton Dockerfile (scan des dépôts)</td></tr>
+      <tr><td>FastAPI, Starlette, Pydantic</td><td><a href="https://app.opencve.io/cve/?vendor=tiangolo&amp;product=fastapi" target="_blank" rel="noopener noreferrer">FastAPI</a> · <a href="https://app.opencve.io/cve/?vendor=encode&amp;product=starlette" target="_blank" rel="noopener noreferrer">Starlette</a> · <a href="https://app.opencve.io/cve/?vendor=pydantic&amp;product=pydantic" target="_blank" rel="noopener noreferrer">Pydantic</a></td><td>fiche de référence (composant hors table de correspondance automatique) ; versions PyPI épinglées contrôlées par OSV</td></tr>
+    </table>
+    <p>Mode direct, sans clé : routes FastAPI (<code>@app.get</code>, <code>@router.post</code>), secrets en dur (clés d’API de modèles comprises), <code>verify=False</code>, SQL en f-string, dépendances PyPI épinglées rapprochées d’OSV. Détail : <a href="lang-python.html">Python sur Outscale</a>.</p>
+
+    <p>
+      <strong>bige-ops advanced</strong> va plus loin avec ta propre clé LLM : un agent
+      d’audit reprend les pistes pré-mâchées (routes ouvertes, motifs à risque, pièges
+      connus du framework), confirme les vraies failles, écarte les faux positifs et
+      classe chaque trouvaille par CWE, avec sa priorité (P0 à P3), son exposition et une
+      issue GitHub proposée. Les appels partent de ton poste ; ni apply, ni lecture des
+      secrets. Voir l’<a href="agent.html">assistant IA</a>.
+    </p>
+
+
+    <h2 id="avant-deploy">Ce que bige-ops vérifie avant le deploy</h2>
+    <ul>
+      <li><code>bige-ops validate</code> : structure du projet, services custom (image ou dépôt requis), listener HTTPS refusé sans ORN de certificat EIM, et rappel du NAT dès qu’une VM privée existe (c’est lui qui permet <code>docker pull</code> et <code>apt</code> depuis le subnet privé).</li>
+      <li><code>bige-ops preflight</code> : clés Outscale présentes, OMI résolue, stack déclarée, IP des hôtes après l’apply, Dockerfile trouvé, secrets de build et d’exécution présents dans le coffre, jeton GitHub pour les dépôts privés, et alerte si une base n’a pas de backup vers OOS. Une erreur bloque le deploy.</li>
+      <li><code>bige-ops plan</code> : le plan Terraform avant tout apply, avec les risques de perte de données signalés ; les buckets OOS sont protégés contre la destruction.</li>
+      <li><strong>Vulnérabilités</strong> : composants de la stack confrontés à OpenCVE et classés par exposition, tags <code>latest</code> signalés, dépôts analysés en mode direct.</li>
+    </ul>
+
+
+    <h2 id="opencve">OpenCVE, le référentiel CVE de bige-ops</h2>
+    <p>
+      Pour savoir quelles vulnérabilités touchent les briques de ta stack, bige-ops
+      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE agrège les CVE publiées
+      (NVD, MITRE, catalogue KEV de la CISA…), les enrichit avec les scores CVSS et EPSS
+      et les range par fournisseur et par produit, consultables dans son
+      <a href="https://app.opencve.io/" target="_blank" rel="noopener noreferrer">explorateur</a>. Le projet est open source : son code, ses
+      issues et les contributions de sa communauté vivent sur
+      <a href="https://github.com/opencve/opencve" target="_blank" rel="noopener noreferrer">GitHub</a>, et il s’installe aussi chez toi. Merci à ses
+      mainteneurs et à tous ceux qui font vivre ce référentiel : c’est grâce à eux que
+      chaque composant de ta simulation a sa fiche CVE à jour.
+    </p>
+
+    <h2 id="docs">Docs officielles</h2>
+    <ul>
+      <li><a href="https://fastapi.tiangolo.com/" target="_blank" rel="noopener noreferrer">FastAPI</a></li>
+      <li><a href="https://github.com/pgvector/pgvector" target="_blank" rel="noopener noreferrer">pgvector</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-flexible-GPU.html" target="_blank" rel="noopener noreferrer">GPU flexibles Outscale</a></li>
+      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-d-OOS.html" target="_blank" rel="noopener noreferrer">OOS</a></li>
+      <li><a href="https://redis.io/docs/latest/" target="_blank" rel="noopener noreferrer">Redis</a></li>
+      <li><a href="https://fr.outscale.com/secnumcloud/" target="_blank" rel="noopener noreferrer">SecNumCloud</a></li>
+    </ul>
+    <p>Langages : <a href="lang-python.html">Python</a>.</p>
+    <p>Pour aller plus loin : <a href="layouts.html">layouts &amp; topologies</a>, <a href="vms.html">VMs</a>, <a href="oks.html">OKS</a>, <a href="volumes-bsu.html">volumes BSU</a>, <a href="oos.html">OOS</a>, <a href="lbu.html">LBU</a>, <a href="reseau.html">réseau</a>, <a href="regions.html">régions</a>, <a href="bases.html">bases de données</a>, <a href="catalogue-prix.html">catalogue de prix</a>. Toutes les stacks : <a href="stacks.html">stacks &amp; langages</a>.</p>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="documentation.html">Toute la doc</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="glossaire.html">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
+            <li><a href="omi.html">OMI · images</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Réseau &amp; région</h3>
+          <ul>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="reseau-avance.html">Réseau avancé</a></li>
+            <li><a href="lbu.html">LBU · entrée publique</a></li>
+            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · simulateur local pour Outscale ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+  </script>
+</body>
+</html>

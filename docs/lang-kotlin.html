@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kotlin sur Outscale : Ktor, Spring Boot Kotlin — bige-ops</title>
+  <meta name="description" content="Kotlin côté serveur sur Outscale avec bige-ops : Ktor, Spring Boot Kotlin, Gradle, PostgreSQL et Kafka sur OKS. Stack suivie sur OpenCVE, coût réel." />
+  <link rel="canonical" href="https://bige.dev/lang-kotlin.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0b0d10" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="bige-ops" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:url" content="https://bige.dev/lang-kotlin.html" />
+  <meta property="og:title" content="Kotlin sur Outscale : Ktor, Spring Boot Kotlin — bige-ops" />
+  <meta property="og:description" content="Kotlin côté serveur sur Outscale avec bige-ops : Ktor, Spring Boot Kotlin, Gradle, PostgreSQL et Kafka sur OKS. Stack suivie sur OpenCVE, coût réel." />
+  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Kotlin sur Outscale : Ktor, Spring Boot Kotlin", "description": "Kotlin côté serveur sur Outscale avec bige-ops : Ktor, Spring Boot Kotlin, Gradle, PostgreSQL et Kafka sur OKS. Stack suivie sur OpenCVE, coût réel.", "inLanguage": "fr", "url": "https://bige.dev/lang-kotlin.html", "keywords": "Kotlin, Ktor, Spring Boot, coroutines, Gradle, JVM, PostgreSQL, Kafka, OKS, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Kotlin sur Outscale : Ktor, Spring Boot Kotlin", "item": "https://bige.dev/lang-kotlin.html"}]}]}</script>
+</head>
+<body>
+  <main>
+    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="stacks.html">Stacks &amp; langages</a> · <a href="documentation.html">Toute la doc</a></p>
+    <div class="brand-row">
+      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
+      <span class="brand-badge">Gratuit</span>
+    </div>
+    <h1>Kotlin sur Outscale</h1>
+    <p class="lead">
+      Kotlin a gagné le serveur après Android : concision, null-safety, coroutines. Ktor pour des services légers, Spring Boot en Kotlin pour profiter de tout l’écosystème Spring. Sur Outscale, bige-ops les traite comme des services JVM.
+    </p>
+
+    <div class="callout">
+      <strong>En bref.</strong>
+      Kotlin tourne sur la JVM : runtime <code>java</code> dans bige-ops (port 8080, 1 GiB), image construite par Gradle depuis ton Dockerfile.
+    </div>
+
+    <h2 id="frameworks">Frameworks et bibliothèques</h2>
+    <p>Deux voies principales côté serveur.</p>
+    <h3 id="ktor">Ktor</h3>
+    <p>Le framework serveur de l’équipe Kotlin : asynchrone par coroutines, modulaire par plugins, moteurs Netty ou CIO.</p>
+    <p><a href="https://ktor.io/docs/welcome.html" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=jetbrains&amp;product=ktor" target="_blank" rel="noopener noreferrer">Ktor sur OpenCVE</a></p>
+    <h3 id="spring-kotlin">Spring Boot en Kotlin</h3>
+    <p>Spring prend Kotlin en charge de première classe : DSL de beans, coroutines dans WebFlux, extensions Kotlin pour Spring Data.</p>
+    <p><a href="https://spring.io/guides/tutorials/spring-boot-kotlin" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=vmware&amp;product=spring_boot" target="_blank" rel="noopener noreferrer">Spring Boot sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=jetbrains&amp;product=kotlin" target="_blank" rel="noopener noreferrer">Kotlin sur OpenCVE</a></p>
+    <h3 id="gradle">Gradle Kotlin DSL</h3>
+    <p>Le build idiomatique d’un projet Kotlin (<code>build.gradle.kts</code>), qui produit un JAR exécutable pour l’image.</p>
+    <p><a href="https://docs.gradle.org/current/userguide/userguide.html" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=gradle&amp;product=gradle" target="_blank" rel="noopener noreferrer">Gradle sur OpenCVE</a></p>
+
+    <h2 id="outscale">Faire tourner Kotlin sur Outscale avec bige-ops</h2>
+<p>Un service Kotlin se déclare en runtime <code>java</code> : 1 GiB et le port 8080 par défaut, ajustables par service (<code>memory_mb</code>, réplicas, HPA sur OKS). Ktor tient souvent dans 512 MiB.</p>
+    <table>
+      <tr><th>Topologie</th><th>Sur Outscale</th><th>Pour</th></tr>
+      <tr><td><code>single-vm</code></td><td>une VM <code>{name}-all</code> avec IP publique : apps et bases en Docker Compose</td><td>prototype, démo, environnement de test</td></tr>
+      <tr><td><code>multi-vm</code></td><td>VM app en subnet public derrière un LBU, une VM privée par base (security groups au CIDR du Net), NAT pour la sortie</td><td>la production simple et lisible</td></tr>
+      <tr><td><code>oks</code></td><td>cluster OKS (control plane managé + nodepools), un Deployment par service, Service LoadBalancer → LBU</td><td>le scale horizontal, les microservices, l’HPA</td></tr>
+    </table>
+    <pre>bige-ops add layout custom --runtime java --web none --worker \
+  --db postgres --topology oks --lbu</pre>
+    <p>Les pages Spring Boot et Quarkus ci-dessous donnent des architectures complètes, valables en Kotlin.</p>
+
+    <h2 id="scan">Ce que le scan bige-ops fait pour Kotlin</h2>
+    <p>L’analyse du code Kotlin arrive ; ta stack est déjà couverte : composants et images (y compris celles de tes Dockerfile et docker-compose) confrontés à OpenCVE, exposition dans la simulation et coût sur Outscale.</p>
+
+    <h2 id="bases">Bases de données typiques</h2>
+    <p>Exposed, jOOQ, Spring Data et R2DBC couvrent les bases relationnelles.</p>
+    <table>
+      <tr><th>Base</th><th>Avec ce langage</th><th>CVE</th></tr>
+      <tr><td>PostgreSQL</td><td>Exposed, jOOQ, Spring Data, R2DBC. Stack : <a href="stack-spring-boot-oks-kafka-keycloak.html">Spring Boot sur OKS + Kafka + Keycloak</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+      <tr><td>Apache Kafka</td><td>consumers en coroutines, Spring Kafka. Stack : <a href="stack-quarkus-oks-postgresql-kafka.html">Quarkus sur OKS + PostgreSQL + Kafka</a>.</td><td><a href="https://app.opencve.io/cve/?vendor=apache&amp;product=kafka" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+      <tr><td>Redis</td><td>cache, sessions.</td><td><a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">fiche OpenCVE</a></td></tr>
+    </table>
+    <p>
+      Règle d’or, quelle que soit la base : jamais exposée à Internet. En multi-VM elle vit
+      dans le subnet privé, sans IP publique, derrière un security group limité au CIDR du
+      Net ; sur OKS elle reste un Service interne (ClusterIP). Détail :
+      <a href="reseau.html">réseau · ouvrir ou non</a> et <a href="bases.html">bases de données</a>.
+    </p>
+
+    <h2 id="versions">Versions à épingler</h2>
+    <p>Épingle la version de Kotlin et du plugin Gradle dans <code>build.gradle.kts</code>, et un JDK LTS (25 ou 21) dans l’image. Docs : <a href="https://kotlinlang.org/docs/home.html" target="_blank" rel="noopener noreferrer">Kotlin</a> · CVE : <a href="https://app.opencve.io/cve/?vendor=jetbrains&amp;product=kotlin" target="_blank" rel="noopener noreferrer">Kotlin sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=jetbrains&amp;product=ktor" target="_blank" rel="noopener noreferrer">Ktor sur OpenCVE</a>.</p>
+
+    <h2 id="opencve">OpenCVE, le référentiel CVE de bige-ops</h2>
+    <p>
+      Pour savoir quelles vulnérabilités touchent les briques de ta stack, bige-ops
+      s’appuie sur <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>. OpenCVE agrège les CVE publiées
+      (NVD, MITRE, catalogue KEV de la CISA…), les enrichit avec les scores CVSS et EPSS
+      et les range par fournisseur et par produit, consultables dans son
+      <a href="https://app.opencve.io/" target="_blank" rel="noopener noreferrer">explorateur</a>. Le projet est open source : son code, ses
+      issues et les contributions de sa communauté vivent sur
+      <a href="https://github.com/opencve/opencve" target="_blank" rel="noopener noreferrer">GitHub</a>, et il s’installe aussi chez toi. Merci à ses
+      mainteneurs et à tous ceux qui font vivre ce référentiel : c’est grâce à eux que
+      chaque composant de ta simulation a sa fiche CVE à jour.
+    </p>
+
+    <h2 id="stacks">Stacks Kotlin chiffrées</h2>
+    <ul>
+      <li><a href="stack-spring-boot-oks-kafka-keycloak.html">Spring Boot sur OKS + Kafka + Keycloak</a> (918,80 € HT/mois estimés)</li>
+      <li><a href="stack-quarkus-oks-postgresql-kafka.html">Quarkus sur OKS + PostgreSQL + Kafka</a> (523,35 € HT/mois estimés)</li>
+    </ul>
+
+    <h2 id="docs">Docs officielles</h2>
+    <ul>
+      <li><a href="https://kotlinlang.org/docs/home.html" target="_blank" rel="noopener noreferrer">Kotlin</a></li>
+      <li><a href="https://ktor.io/docs/welcome.html" target="_blank" rel="noopener noreferrer">Ktor</a></li>
+      <li><a href="https://spring.io/guides/tutorials/spring-boot-kotlin" target="_blank" rel="noopener noreferrer">Spring Boot + Kotlin</a></li>
+    </ul>
+    <p>Pour aller plus loin : <a href="layouts.html">layouts &amp; topologies</a>, <a href="vms.html">VMs</a>, <a href="oks.html">OKS</a>, <a href="volumes-bsu.html">volumes BSU</a>, <a href="oos.html">OOS</a>, <a href="lbu.html">LBU</a>, <a href="reseau.html">réseau</a>, <a href="regions.html">régions</a>, <a href="bases.html">bases de données</a>, <a href="catalogue-prix.html">catalogue de prix</a>. Toutes les stacks : <a href="stacks.html">stacks &amp; langages</a>.</p>
+
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          <h3>Comprendre</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="documentation.html">Toute la doc</a></li>
+            <li><a href="perimetre.html">Périmètre</a></li>
+            <li><a href="savoir.html">Sait / ne sait pas</a></li>
+            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
+            <li><a href="glossaire.html">Glossaire</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Composer</h3>
+          <ul>
+            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="vms.html">VMs · VPS</a></li>
+            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
+            <li><a href="omi.html">OMI · images</a></li>
+            <li><a href="bases.html">Bases de données</a></li>
+            <li><a href="bases-complexes.html">Bases complexes</a></li>
+            <li><a href="oos.html">OOS &amp; backups</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Réseau &amp; région</h3>
+          <ul>
+            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
+            <li><a href="reseau-avance.html">Réseau avancé</a></li>
+            <li><a href="lbu.html">LBU · entrée publique</a></li>
+            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
+            <li><a href="oks.html">OKS &amp; pods</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Opérer</h3>
+          <ul>
+            <li><a href="simulations.html">Simulations &amp; promote</a></li>
+            <li><a href="inventory.html">Inventaire &amp; import</a></li>
+            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
+            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
+            <li><a href="agent.html">Assistant IA</a></li>
+            <li><a href="cli.html">CLI · app · OKS</a></li>
+            <li><a href="github-config.html">GitHub config</a></li>
+            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
+            <li><a href="expert-config.html">Mode expert · diffs</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">
+        Gratuit · simulateur local pour Outscale ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
+        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

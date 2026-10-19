@@ -605,38 +605,54 @@
     @media (prefers-reduced-motion: reduce) {
       * { transition: none !important; scroll-behavior: auto !important; }
     }
+
+    /* 2026-10-19 home: hero, chips, slider, facts */
+    .hero-title { font-family: var(--font-display); font-size: clamp(2.4rem, 7vw, 3.6rem); line-height: 1.02; letter-spacing: -0.03em; margin: 1.2rem 0 1rem; color: var(--white); }
+    .hero-title span { color: var(--accent-bright); }
+    .baseline a { color: var(--accent-bright); }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.6rem 0 0; font-size: 0.9rem; }
+    .chips span { border: 1px solid var(--ink-700); border-radius: 999px; padding: 0.25rem 0.75rem; color: #c9d3d8; }
+    .chips a { padding: 0.25rem 0.2rem; color: var(--accent-bright); }
+    .slider { margin: 2rem 0 0.5rem; }
+    .slides { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; gap: 1rem; scrollbar-width: none; border-radius: 14px; }
+    .slides::-webkit-scrollbar { display: none; }
+    .slides:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 4px; }
+    .slide { flex: 0 0 100%; scroll-snap-align: center; margin: 0; }
+    .slide img { width: 100%; height: auto; display: block; border: 1px solid var(--ink-700); border-radius: 14px; }
+    .slide figcaption { margin-top: 0.6rem; font-size: 0.92rem; color: var(--mist); text-align: center; }
+    .slide figcaption a { color: var(--accent-bright); }
+    .slider-nav { display: flex; align-items: center; justify-content: center; gap: 0.9rem; margin-top: 0.6rem; }
+    .slider-btn { background: var(--ink-900); color: var(--white); border: 1px solid var(--ink-700); border-radius: 999px; width: 2.2rem; height: 2.2rem; font-size: 1.2rem; cursor: pointer; }
+    .slider-btn:hover, .slider-btn:focus-visible { border-color: var(--accent-bright); }
+    .dots { display: flex; gap: 0.45rem; }
+    .dots button { width: 0.6rem; height: 0.6rem; border-radius: 999px; border: 0; padding: 0; background: var(--ink-600); cursor: pointer; }
+    .dots button[aria-current="true"] { background: var(--accent-bright); }
+    .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .fact { border: 1px solid var(--ink-700); background: var(--ink-900); border-radius: 14px; padding: 1.1rem 1.2rem; }
+    .fact h3 { margin: 0 0 0.4rem; font-family: var(--font-display); font-size: 1.35rem; color: var(--accent-bright); }
+    .fact p { margin: 0.3rem 0; color: #d7dde2; }
+    @media (prefers-reduced-motion: reduce) { .slides { scroll-behavior: auto; } }
+    .panel { border: 1px solid rgba(94,196,180,.45); background: linear-gradient(135deg, rgba(61,158,143,.18), rgba(18,21,26,.9)); border-radius: 18px; padding: 2rem 1.6rem; margin-top: 2.5rem; }
+    .panel-kicker { margin: 0; font-family: var(--font-mono); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-bright); }
+    .panel-title { margin: .6rem 0 .8rem; font-family: var(--font-display); font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.05; letter-spacing: -0.02em; color: var(--white); text-transform: none; }
+    .panel-text { color: #d7dde2; font-size: 1.05rem; max-width: 40rem; }
+    .panel-clouds { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .panel-clouds a { border: 1px solid var(--ink-600); border-radius: 999px; padding: .35rem .9rem; color: var(--white); text-decoration: none; }
+    .panel-clouds a:hover, .panel-clouds a:focus-visible { border-color: var(--accent-bright); }
+    .panel-cta { display: inline-block; margin-top: .4rem; }
   </style>
 </head>
 <body>
   <a class="skip-link" href="#contenu">Aller au contenu</a>
-  <!-- landing build: 2026-10-19-outscale -->
+  <!-- landing build: 2026-10-19-slider -->
   <main id="contenu">
     <div class="brand-row">
       <p class="brand">bige<span class="ops">-ops</span></p>
       <span class="brand-badge">Gratuit</span>
     </div>
-    <p class="baseline">Le simulateur de stack pour <a href="pourquoi-outscale.html">Outscale</a> · gratuit · installé en une commande</p>
-
-    <ul class="pitch">
-      <li><strong>Simule avant de déployer.</strong> Dessine ta stack, teste-la et mesure son coût avant de dépenser quoi que ce soit.</li>
-      <li><strong>Analyse ce que tu déploies.</strong> Coût détaillé, risques sur tes données, CVE de tes dépôts.</li>
-      <li><strong>Déploie comme sur une plateforme, chez toi.</strong> Tu relies ton dépôt, bige-ops déploie sur ton compte : cloud souverain français, régions classiques et SecNumCloud.</li>
-      <li><strong>Gratuit, installé en une commande.</strong> Pas d’abonnement, pas de compte cloud pour commencer : tu installes, tu te connectes avec GitHub, tu simules.</li>
-      <!-- Other clouds hidden for now (ENABLED_PROVIDER_IDS in desktop/src/lib/providers.ts). Previous copy:
-      <li><strong>Un cloud prêt, d’autres en route.</strong> Outscale live · Scaleway, OVH, AWS, Azure, GCP, Fly… bientôt.</li> -->
-    </ul>
-
-    <figure class="shot" id="shot-hero">
-      <img
-        src="screens/hero.png"
-        width="1600"
-        height="900"
-        loading="eager"
-        decoding="async"
-        alt="bige-ops : une stack Kubernetes simulée, ses services et son coût mensuel estimé à environ 500 € HT, avec la commande d’installation Homebrew"
-      />
-      <figcaption>Ta stack et son prix, avant de déployer</figcaption>
-    </figure>
+    <span id="why-outscale"></span><span id="outscale"></span><span id="clouds"></span>
+    <h1 class="hero-title">Dessine ta stack.<br>Vois le prix.<br><span>Déploie.</span></h1>
+    <p class="baseline">bige-ops simule ton infra, te montre ce qu’elle coûte et la déploie sur ton compte <a href="pourquoi-outscale.html">Outscale</a>. Gratuit, installé en une commande.</p>
 
     <div id="download" class="download-inline">
       <p class="brew">
@@ -644,234 +660,88 @@
         <button type="button" class="copy-btn" id="brew-copy"
                 data-target="brew-cmd" aria-label="Copier la commande Homebrew">Copier</button>
       </p>
-      <div class="actions">
-        <a class="secondary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger pour Linux</a>
-        <a class="secondary" href="install.html">Guide d’installation</a>
-        <!-- macOS DMG download hidden until the app is notarized:
-        <a class="primary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger macOS</a> -->
-      </div>
-      <p><strong>Gratuit.</strong> macOS (Apple Silicon) : une commande Homebrew. Linux : AppImage ou paquet .deb. Tu simules tout de suite, sans compte cloud ; tu le connectes quand tu déploies.</p>
+      <p class="chips">
+        <span>Gratuit</span><span>Sans carte bancaire</span><span>Sans compte cloud pour commencer</span>
+        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Linux : AppImage / .deb</a>
+      </p>
+      <!-- macOS DMG download hidden until the app is notarized:
+      <a class="primary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger macOS</a> -->
     </div>
+
+    <section class="slider" aria-roledescription="carousel" aria-label="Aperçus de bige-ops">
+      <div class="slides" id="slides" tabindex="0">
+        <figure class="slide" aria-roledescription="slide" aria-label="1 sur 5">
+          <img src="screens/hero.png" width="1600" height="900" alt="Une petite stack : une machine avec l’API, le front et PostgreSQL, estimée à environ 75 € HT par mois" />
+          <figcaption>Une app et sa base sur une machine : ~75 € HT/mois, ligne par ligne.</figcaption>
+        </figure>
+        <figure class="slide" aria-roledescription="slide" aria-label="2 sur 5">
+          <img src="screens/vulns-sqli.png" width="1440" height="900" loading="lazy" alt="Injection SQL réelle détectée dans routes/login.ts d’OWASP Juice Shop, exposée à Internet" />
+          <figcaption>Une faille réelle, trouvée sans LLM ni clé (<a href="https://owasp.org/projects/juice-shop" target="_blank" rel="noopener">OWASP Juice Shop</a>).</figcaption>
+        </figure>
+        <figure class="slide" aria-roledescription="slide" aria-label="3 sur 5">
+          <img src="screens/vulns-deps.png" width="1440" height="900" loading="lazy" alt="CVE-2022-25887 sur sanitize-html 1.4.2, avec son lien OpenCVE" />
+          <figcaption>Les CVE de tes dépendances, reliées à <a href="https://www.opencve.io/" target="_blank" rel="noopener">OpenCVE</a>.</figcaption>
+        </figure>
+        <figure class="slide" aria-roledescription="slide" aria-label="4 sur 5">
+          <img src="screens/visual-oks.png" width="1440" height="900" loading="lazy" alt="Le Visual : une stack Kubernetes avec ses services, ses bases et son coût" />
+          <figcaption>Quand tu grandis : Kubernetes managé, toujours avec son prix.</figcaption>
+        </figure>
+        <figure class="slide" aria-roledescription="slide" aria-label="5 sur 5">
+          <img src="screens/conso.png" width="1600" height="900" loading="lazy" alt="Aperçu : coût réel quotidien comparé au budget simulé" />
+          <figcaption>Bientôt : ta conso réelle face à ta simulation (aperçu).</figcaption>
+        </figure>
+      </div>
+      <div class="slider-nav">
+        <button type="button" class="slider-btn" id="slide-prev" aria-label="Aperçu précédent">‹</button>
+        <span class="dots" id="slide-dots"></span>
+        <button type="button" class="slider-btn" id="slide-next" aria-label="Aperçu suivant">›</button>
+      </div>
+    </section>
+
+    <section class="block" id="pourquoi">
+      <span id="features"></span><span id="why-projection"></span>
+      <h2>Ce que fait bige-ops</h2>
+      <div class="facts">
+        <article class="fact" id="why-less">
+          <h3>Simule</h3>
+          <p>Dessine ta stack ou pars d’un modèle. Le prix s’affiche ligne par ligne, avant la facture.</p>
+          <p><a href="layouts.html">Par où commencer →</a></p>
+        </article>
+        <article class="fact" id="why-deploy">
+          <h3>Déploie</h3>
+          <p>Tu relies ton dépôt, bige-ops crée l’infra et déploie sur ton compte. Pas besoin de DevOps.</p>
+          <p><a href="stacks.html">Stacks et langages →</a></p>
+        </article>
+        <article class="fact" id="why-vulns">
+          <h3>Sécurise</h3>
+          <p>Routes exposées, injections, secrets, CVE des dépendances. Sans LLM, sans clé.</p>
+          <p><a href="documentation.html">Documentation →</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="block" id="prix">
+      <h2>Combien ça coûte&nbsp;?</h2>
+      <p><strong>bige-ops : 0 €.</strong> Ton cloud, tu le paies au prix public, et tu le vois avant chaque déploiement. Une app et sa base sur une machine démarrent autour de <strong>75 € HT par mois</strong>.</p>
+      <p><a href="layouts.html">Le budget selon ta topologie →</a> · <a href="catalogue-prix.html">Catalogue de prix →</a></p>
+    </section>
 
     <section class="block" id="demarrer">
       <h2>Démarrer en 3 étapes</h2>
       <ol>
-        <li><strong>Installe</strong>, c’est gratuit : <code>brew install --cask simondelamarre/bige-ops/bige-ops</code> sur macOS, ou l’AppImage / le .deb sur Linux.</li>
-        <li><strong>Ouvre bige-ops</strong>, connecte-toi avec GitHub (tes configurations y sont versionnées), choisis un dossier de travail et pars d’une topologie prête : mono-VM, multi-VM ou Kubernetes (OKS).</li>
-        <li><strong>Lis le résultat</strong> : coût mensuel, risques et vulnérabilités. Tu connectes ton compte cloud seulement quand tu veux déployer.</li>
+        <li><strong>Installe</strong> : la commande ci-dessus sur macOS, l’AppImage ou le .deb sur Linux.</li>
+        <li><strong>Simule</strong> : connecte-toi avec GitHub, choisis un dossier, pars d’une topologie prête.</li>
+        <li><strong>Décide</strong> : coût, risques, vulnérabilités. Tu connectes ton compte cloud quand tu veux déployer.</li>
       </ol>
     </section>
 
-    <section class="block" id="pourquoi">
-      <h2>Pourquoi bige-ops</h2>
-      <p>Tu simules, tu testes, tu déploies — puis tu analyses et tu corriges.</p>
-
-      <article class="why-card" id="why-less">
-        <h3>Simule avant de déployer.</h3>
-        <p class="why-sub">bige-ops est un simulateur de stack.</p>
-        <p>Tu dessines ta stack (VMs, cluster OKS, stockage, réseau), tu vois son coût mensuel et tu la testes avant de dépenser un euro. Quand elle te convient, tu la déploies sur ton compte : Terraform et manifests Kubernetes sont générés pour toi.</p>
-        <p><a href="layouts.html">Par où commencer →</a></p>
-      </article>
-
-      <article class="why-card" id="why-outscale">
-        <h3>Construit pour un cloud souverain.</h3>
-        <p class="why-sub">Cloud souverain français, régions classiques et SecNumCloud.</p>
-        <p>Chaque brique du simulateur correspond à un service du cloud (VMs, Kubernetes managé, volumes, Object Storage, load balancer), avec son prix public. Tu planifies, tu appliques et tu suis tes coûts, y compris en SecNumCloud.</p>
-        <p><a href="#outscale">Le cloud →</a></p>
-      </article>
-
-      <article class="why-card" id="why-deploy">
-        <h3>La simplicité d’une plateforme, sur ton cloud.</h3>
-        <p class="why-sub">Ce n’est pas un Docker sur ton poste : c’est ta prod, sur ton cloud.</p>
-        <p>Un Docker sur ton poste fait tourner des conteneurs pour toi, en local. bige-ops, lui, pilote ta production : tu relies ton dépôt Git, il génère l’infra et déploie tes services sur des VMs ou un cluster Kubernetes managé de ton compte. Tu gardes la simplicité d’une plateforme managée, avec la main sur ton infra et le prix public de ton cloud. Tes secrets restent chez toi : coffre local, sync optionnelle vers GitHub ou HashiCorp Vault.</p>
-        <!-- Other clouds hidden for now. Previous: (sync optionnelle Vault / GitHub / Fly si tu le veux). -->
-        <p><a href="secrets.html">Secrets →</a></p>
-      </article>
-
-      <article class="why-card" id="why-projection">
-        <h3>Tu peux commencer sans compte cloud.</h3>
-        <p class="why-sub">Tu simules d’abord. Tu te connectes quand tu appliques.</p>
-        <p>Sans identifiants cloud, tu explores, tu simules et tu estimes. Tu te connectes seulement pour l’inventaire, le plan et l’apply, quand tu es prêt.</p>
-        <p><a href="simulations.html">Simulations →</a></p>
-      </article>
-
-      <figure class="shot shot-secondary" id="shot-estimate">
-        <img
-          src="screens/estimate.png"
-          width="1440"
-          height="900"
-          loading="lazy"
-          decoding="async"
-          alt="Détail de l’estimation mensuelle d’une stack OKS sur le catalogue public"
-        />
-        <figcaption>Estimation détaillée sur le catalogue public</figcaption>
-      </figure>
-
-      <article class="why-card" id="why-vulns">
-        <h3>Tes vulnérabilités, en direct.</h3>
-        <p class="why-sub">Sans LLM ni clé : l’analyse tourne sur ton poste.</p>
-        <p>bige-ops lit les dépôts de ta stack avec un vrai parseur de code (tree-sitter) et croise avec ce que ta stack expose : dépendances npm et PyPI rapprochées des vulnérabilités connues (<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>), failles courantes dans le code (injections, XSS, secrets, CORS) et routes exposées sans authentification : les trous béants ressortent en quelques minutes. Avec ta clé <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a>, les images de ta stack sont confrontées au référentiel CVE d’OpenCVE : tu vois les premières vulnérabilités avant de déployer. Rapport Markdown ou PDF.</p>
-        <!-- Previous: Vulns et risques… Déployer reste gratuit. Scanner les dépôts, CVE et remédiation : la suite (crédits). -->
-      </article>
-
-      <figure class="shot shot-secondary" id="shot-vulns-sqli">
-        <img src="screens/vulns-sqli.png" width="1440" height="900" loading="lazy" decoding="async"
-          alt="Injection SQL réelle détectée dans routes/login.ts d’OWASP Juice Shop, exposée à Internet" />
-        <figcaption>Une injection SQL réelle dans <a href="https://owasp.org/projects/juice-shop" target="_blank" rel="noopener noreferrer">OWASP Juice Shop</a>, dépôt public volontairement vulnérable : chacun peut la vérifier.</figcaption>
-      </figure>
-
-      <figure class="shot shot-secondary" id="shot-vulns-deps">
-        <img src="screens/vulns-deps.png" width="1440" height="900" loading="lazy" decoding="async"
-          alt="CVE-2022-25887 sur sanitize-html 1.4.2, avec son lien OpenCVE" />
-        <figcaption>CVE-2022-25887 sur sanitize-html 1.4.2, avec son lien vers OpenCVE.</figcaption>
-      </figure>
-
-      <article class="why-card" id="why-byok">
-        <h3>Le game changer : l’analyse profonde.</h3>
-        <p class="why-sub">bige-ops advanced, avec ta propre clé LLM.</p>
-        <p>Un agent d’audit parcourt tes dépôts en profondeur, avec le contexte de ta stack cloud : ce qui est exposé, et par quelles routes. Il remonte des failles classées par CWE, avec une issue GitHub proposée pour chacune. Tu branches ta clé (Anthropic, OpenAI, Google Gemini, Mistral) : les appels partent de ton poste, rien n’est gardé chez nous.</p>
-        <p><a href="agent.html">Agent →</a></p>
-      </article>
-
-      <span id="ecoute"></span>
-      <article class="why-card" id="why-ecoute">
-        <h3>On t’écoute.</h3>
-        <p class="why-sub">Un bug ou une idée : tu l’ouvres sur GitHub.</p>
-        <p>Le dépôt public reçoit tes issues et tes demandes de fonctions. On les lit, on priorise, on répond, sans toucher à ton graphe ni à tes secrets.</p>
-        <p class="actions" style="margin-top:0.75rem">
-          <a class="primary" href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">Ouvrir une issue</a>
-          <a class="secondary" href="https://github.com/simondelamarre/bige-ops-releases/issues/new?template=feature_request.yml">Demander une fonction</a>
-        </p>
-      </article>
-    </section>
-
-    <section class="block" id="outscale">
-      <span id="clouds"></span>
-      <h2>Un cloud souverain</h2>
-      <p>
-        bige-ops est construit pour un cloud souverain français, sur les régions classiques
-        comme sur SecNumCloud. Chaque brique du simulateur correspond à un service, avec son prix public.
-      </p>
-      <ul class="provider-row" aria-label="Services Outscale couverts">
-        <li class="is-live">VMs Tina</li>
-        <li class="is-live">OKS · Kubernetes managé</li>
-        <li class="is-live">BSU · gp2 et io1</li>
-        <li class="is-live">Object Storage (OOS)</li>
-        <li class="is-live">LBU · HTTPS</li>
-        <li class="is-live">Net · Security Groups</li>
-        <li class="is-live">SecNumCloud</li>
-      </ul>
-      <p><a href="pourquoi-outscale.html"><strong>Pourquoi ce cloud →</strong></a> · <a href="outscale.html">Le cloud dans bige-ops →</a> · <a href="oks.html">OKS →</a> · <a href="regions.html">Régions →</a></p>
-      <!-- Other clouds hidden for now (ENABLED_PROVIDER_IDS in desktop/src/lib/providers.ts). Previous copy:
-      <p><strong>En cours :</strong> Scaleway, OVHcloud, AWS, Azure, GCP, Fly.io — listés dans l’app, pas encore materialization / pricing complets.</p>
-      <li class="is-wip">Fly.io · connect</li> <li class="is-wip">Scaleway · bientôt</li> <li class="is-wip">OVHcloud · bientôt</li>
-      <li class="is-wip">AWS · bientôt</li> <li class="is-wip">Azure · bientôt</li> <li class="is-wip">GCP · bientôt</li> -->
-    </section>
-
-    <section class="block" id="features">
-      <h2>Fonctions</h2>
-
-      <div class="feat-group">
-        <h3>Stable</h3>
-        <ul class="feat-list">
-          <li><span class="badge badge-stable">Stable</span> <span><strong>Visual et estimation</strong> : canvas, € HT/mois, hors ligne</span></li>
-          <li><span class="badge badge-stable">Stable</span> <span><strong>Bases optimisées à tes usages</strong> : réglages par défaut pensés pour chaque base (disque, IOPS, sauvegarde), ajustables en voyant le coût. <a href="layouts.html">Détail</a></span></li>
-          <li><span class="badge badge-stable">Stable</span> <span><strong>Simulations</strong> : brouillon et live, promote, snapshots, retour arrière</span></li>
-          <li><span class="badge badge-stable">Stable</span> <span><strong>Apply et deploy</strong> : plan, apply et deploy sur ton compte</span></li>
-          <li><span class="badge badge-stable">Stable</span> <span><strong>OKS</strong> : nodepools, scale horizontal et vertical, HPA, HTTPS via certificat EIM, logs kubectl</span></li>
-          <li><span class="badge badge-stable">Stable</span> <span><strong>Tarifs</strong> : catalogue public, synchronisé via l’API</span></li>
-          <li id="vulns"><span class="badge badge-stable">Stable</span> <span><strong>Vulnérabilités</strong> : mode direct sans clé (dépendances OSV, failles de code), référentiel OpenCVE pour les images de la stack (clé OpenCVE), rapport MD/PDF</span></li>
-          <li><span class="badge badge-stable">Stable</span> <span><strong>Live</strong> : terminal, inventaire, statut, destroy vérifié</span></li>
-        </ul>
-      </div>
-
-      <div class="feat-group">
-        <h3>Bêta</h3>
-        <ul class="feat-list">
-          <li><span class="badge badge-wip">Bêta</span> <span><strong>bige-ops advanced</strong> : agent d’audit en profondeur des dépôts, failles classées par CWE (ta clé LLM) ; jamais d’apply ni de lecture des secrets</span></li>
-          <li><span class="badge badge-wip">Bêta</span> <span><strong>Scan étendu</strong> : couverture monorepo élargie</span></li>
-          <!-- Other clouds hidden for now. Previous copy:
-          <li><span class="badge badge-wip">WIP</span> <span><strong>Autres clouds</strong> — Scaleway, OVH, AWS, Azure, GCP · Fly materialize</span></li>
-          Backlog: Crédits &amp; compte — free tier, GitHub / GitLab -->
-        </ul>
-      </div>
-
-      <div class="feat-group">
-        <h3>Bientôt</h3>
-        <ul class="feat-list">
-          <li><span class="badge badge-backlog">Bientôt</span> <span><strong>Ta conso réelle face à ta simulation</strong> : coût réel par jour et par poste, lu dans l’API de consommation du cloud, écarts expliqués, jauges CPU, RAM et disque</span></li>
-        </ul>
-        <figure class="shot shot-secondary" id="shot-conso">
-          <img src="screens/conso.png" width="1600" height="900" loading="lazy" decoding="async"
-            alt="Aperçu : coût réel quotidien comparé au budget simulé, avec l’écart expliqué par un nœud ajouté par l’autoscaling" />
-          <figcaption>Aperçu, données de démonstration.</figcaption>
-        </figure>
-      </div>
-
-      <p style="margin-top:0.85rem">
-        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Issues</a>
-        ·
-        <a href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">en ouvrir une</a>
-      </p>
-    </section>
-
-    <section class="block" id="pratique">
-      <h2>En pratique</h2>
-      <ul class="link-grid">
-        <li>
-          <a href="install.html">
-            <span class="lg-title">Installer</span>
-            <span class="lg-sub">Homebrew (macOS), AppImage et .deb (Linux)</span>
-          </a>
-        </li>
-        <li>
-          <a href="layouts.html">
-            <span class="lg-title">Par où commencer</span>
-            <span class="lg-sub">Une machine, app et données séparées, ou Kubernetes : selon ton activité</span>
-          </a>
-        </li>
-        <li>
-          <a href="documentation.html">
-            <span class="lg-title">Documentation</span>
-            <span class="lg-sub">Toute la doc</span>
-          </a>
-        </li>
-        <li>
-          <a href="catalogue-prix.html">
-            <span class="lg-title">Catalogue de prix</span>
-            <span class="lg-sub">Grille publique, € HT/mois</span>
-          </a>
-        </li>
-        <li>
-          <a href="secrets.html">
-            <span class="lg-title">Secrets</span>
-            <span class="lg-sub">Coffre local</span>
-          </a>
-        </li>
-        <li>
-          <a href="oks.html">
-            <span class="lg-title">OKS</span>
-            <span class="lg-sub">Kubernetes managé</span>
-          </a>
-        </li>
-        <li>
-          <a href="savoir.html">
-            <span class="lg-title">Ce que l’outil sait</span>
-            <span class="lg-sub">Périmètre du simulateur</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://github.com/simondelamarre/bige-ops-releases/issues">
-            <span class="lg-title">Issues GitHub</span>
-            <span class="lg-sub">Bugs, idées, votes</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://www.opencve.io/" rel="noopener noreferrer">
-            <span class="lg-title">OpenCVE</span>
-            <span class="lg-sub">Base CVE utilisée par le scan</span>
-          </a>
-        </li>
+    <section class="block" id="aussi">
+      <h2>Et aussi</h2>
+      <ul>
+        <li><strong>Des bases réglées pour leur usage</strong> : disque, IOPS, sauvegardes. <a href="layouts.html">Voir</a></li>
+        <li id="why-byok"><strong>L’audit profond en option</strong> : bige-ops advanced, avec ta propre clé LLM. <a href="agent.html">Voir</a></li>
+        <li><strong>Tes secrets chez toi</strong> : coffre local, jamais dans tes fichiers. <a href="secrets.html">Voir</a></li>
+        <li><strong>Bientôt</strong> : ta conso réelle face à ta simulation.</li>
       </ul>
     </section>
 
@@ -879,72 +749,29 @@
       <h2>FAQ</h2>
       <dl class="faq">
         <dt>Faut-il un compte cloud&nbsp;?</dt>
-        <dd>Pas pour commencer : la simulation et l’estimation fonctionnent hors ligne. Ton compte cloud sert pour l’inventaire, le plan et l’apply.</dd>
-        <dt>Pourquoi ce cloud&nbsp;?</dt>
-        <dd>bige-ops est conçu pour un cloud souverain français, avec des régions SecNumCloud et Kubernetes managé (OKS). Le simulateur couvre ses services un par un, avec leur prix public. <a href="pourquoi-outscale.html">Pourquoi ce choix</a>.</dd>
-        <!-- Other clouds hidden for now. Previous FAQ: Et les autres clouds ? Outscale est live. Suivent Scaleway, OVHcloud, AWS, Azure, GCP, Fly.io. -->
-        <dt>Comment l’installer sur macOS&nbsp;?</dt>
-        <dd>Par Homebrew : la commande ci-dessus installe l’app et la prépare pour le premier lancement. <a href="install.html">Guide d’installation</a>.</dd>
-        <dt>Où sont les secrets&nbsp;?</dt>
-        <dd>Sur ton poste, dans un coffre local. Rien n’est synchronisé vers un service bige-ops. <a href="secrets.html">Détail</a>.</dd>
-        <dt>L’analyse de vulnérabilités est-elle incluse&nbsp;?</dt>
-        <dd>Oui. Le mode direct (dépendances et code) fonctionne sans aucune clé ; le rapprochement des images avec le référentiel <a href="https://www.opencve.io/" target="_blank" rel="noopener noreferrer">OpenCVE</a> demande ta clé OpenCVE.</dd>
-        <dt>Où vont mes clés LLM&nbsp;?</dt>
-        <dd>Elles restent chez toi (Settings), puis partent directement chez le fournisseur choisi. Aucune rétention côté bige-ops. <a href="agent.html">Agent</a>.</dd>
+        <dd>Pas pour commencer : la simulation et l’estimation fonctionnent hors ligne. Ton compte sert au moment de déployer.</dd>
+        <dt>C’est vraiment gratuit&nbsp;?</dt>
+        <dd>Oui. Tu paies ton cloud au prix public, rien de plus.</dd>
+        <dt>Où sont mes secrets&nbsp;?</dt>
+        <dd>Sur ton poste, dans un coffre local. <a href="secrets.html">Détail</a>.</dd>
+        <dt id="why-ecoute">Une idée, un bug&nbsp;?</dt>
+        <dd><span id="ecoute"></span><a href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">Ouvre une issue</a>, on lit tout.</dd>
       </dl>
     </section>
 
-    <section class="block" id="glossaire">
-      <h2>Glossaire</h2>
-      <dl class="faq">
-        <dt id="g-tina">Tina</dt>
-        <dd>Le nom des types de VM sur mesure, au format <code>tinavW.cXrYpZ</code> : génération de CPU, vCPU, RAM en GiB et niveau de performance (<code>p1</code> le plus haut). Exemple : <code>tinav6.c4r16p1</code>.</dd>
-        <dt id="g-vm">VM</dt>
-        <dd>Une machine virtuelle, taillée à la demande par son type Tina, démarrée depuis une OMI, avec un disque racine BSU. L’API historique FCU l’appelle « instance ».</dd>
-        <dt id="g-vps">VPS</dt>
-        <dd>Virtual Private Server : le terme générique pour un serveur virtuel loué. Ici, c’est une VM, et sa taille se compose librement (vCPU, RAM, performance) au lieu d’être choisie dans une grille fixe.</dd>
-        <dt id="g-omi">OMI</dt>
-        <dd>Machine Image : l’image qui sert de modèle à une VM (système et configuration). Les OMI officielles sont maintenues par le cloud ; un identifiant d’OMI est propre à une Région.</dd>
-        <dt id="g-bsu">BSU</dt>
-        <dd>Les volumes bloc, attachés à une VM de la même Subregion : <code>standard</code> (Magnetic), <code>gp2</code> (Performance, SSD) ou <code>io1</code> (Enterprise, SSD à IOPS provisionnées), avec snapshots.</dd>
-        <dt id="g-oos">OOS</dt>
-        <dd>Object Storage compatible S3 : buckets régionaux pour fichiers applicatifs, sauvegardes et exports d’OMI ou de snapshots.</dd>
-        <dt id="g-net">Net</dt>
-        <dd>Le réseau privé virtuel d’un compte dans une Région, découpé en Subnets, avec route tables, security groups, internet service et NAT service.</dd>
-        <dt id="g-lbu">LBU</dt>
-        <dd>Load Balancer Unit, le load balancer : HTTP/HTTPS ou TCP/SSL, health checks, et terminaison TLS avec un certificat serveur stocké dans EIM.</dd>
-        <dt id="g-eim">EIM</dt>
-        <dd>Elastic Identity Management : utilisateurs, politiques d’accès et certificats serveur du compte. Un certificat y est référencé par son ORN.</dd>
-        <dt id="g-oks">OKS</dt>
-        <dd>Kubernetes as a Service : control plane managé, nodepools de VMs Tina, Services de type LoadBalancer adossés au LBU.</dd>
-        <dt id="g-secnumcloud">SecNumCloud</dt>
-        <dd>Le référentiel de sécurité de l’ANSSI. Le cloud est qualifié SecNumCloud 3.2 ; la région correspondante est <code>cloudgouv-eu-west-1</code>.</dd>
-        <dt id="g-mono-vm">Mono-VM</dt>
-        <dd>La topologie <code>single-vm</code> de bige-ops : une seule VM <code>{nom}-all</code> porte les apps et leurs bases, avec une IP publique. Le point de départ le plus simple.</dd>
-        <dt id="g-multi-vm">Multi-VM</dt>
-        <dd>La topologie <code>multi-vm</code> : une VM app publique, souvent derrière un LBU, et une VM privée par base de données, dans le même Net.</dd>
-        <dt id="g-simulation">Simulation</dt>
-        <dd>Une variante de ta stack dans bige-ops : brouillon (draft) ou live, avec son coût estimé.</dd>
-        <dt id="g-estimate">Estimation</dt>
-        <dd>Le coût mensuel € HT d’une simulation, calculé sur ton poste à partir du catalogue public, synchronisable par l’API <code>ReadPublicCatalog</code>.</dd>
-        <dt id="g-apply">Apply</dt>
-        <dd>Créer ou mettre à jour l’infrastructure sur ton compte : Terraform généré pour le Net, les VMs, les volumes, le LBU et OOS, oks-cli pour OKS. Le plan montre les changements avant.</dd>
-        <dt id="g-deploy">Deploy</dt>
-        <dd>Déployer les applications sur l’infrastructure en place : Docker Compose sur les VMs, <code>kubectl apply</code> sur OKS.</dd>
-        <dt id="g-promote">Promote</dt>
-        <dd>Faire d’une simulation draft la simulation live du compte. L’ancienne live est archivée, après un snapshot de configuration.</dd>
-        <dt id="g-expert">Mode expert</dt>
-        <dd>L’édition directe des fichiers de la simulation (<code>project.yaml</code>, Terraform, manifests OKS) dans le Workspace de l’app.</dd>
-      </dl>
-    </section>
-
-    <section class="block" id="a-venir">
-      <h2>D’autres clouds français à venir</h2>
-      <p>bige-ops s’ouvrira à d’autres clouds français, avec la même simplicité :</p>
-      <ul>
-        <li><a href="https://www.ovhcloud.com/fr/" target="_blank" rel="noopener">OVHcloud</a></li>
-        <li><a href="https://www.scaleway.com/fr/" target="_blank" rel="noopener">Scaleway</a></li>
-      </ul>
+    <section class="block panel" id="a-venir">
+      <p class="panel-kicker">Bientôt d’autres clouds français</p>
+      <h2 class="panel-title">Installe maintenant.<br>La suite, c’est toi qui choisis.</h2>
+      <p class="panel-text">
+        Ta stack est décrite une fois, dans un format ouvert, versionné dans ton Git.
+        Quand d’autres clouds français arriveront dans bige-ops, tu compareras la même stack,
+        prix à l’appui, et tu migreras si ça vaut le coup. Sans tout réécrire.
+      </p>
+      <p class="panel-clouds">
+        <a href="https://www.ovhcloud.com/fr/" target="_blank" rel="noopener">OVHcloud</a>
+        <a href="https://www.scaleway.com/fr/" target="_blank" rel="noopener">Scaleway</a>
+      </p>
+      <p class="actions"><a class="primary panel-cta" href="#download">Installer gratuitement</a></p>
     </section>
 
     <footer class="site-footer">
@@ -957,13 +784,14 @@
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="savoir.html">Sait / ne sait pas</a></li>
             <li><a href="install.html">Installer &amp; mettre à jour</a></li>
-            <li><a href="index.html#glossaire">Glossaire</a></li>
+            <li><a href="glossaire.html">Glossaire</a></li>
           </ul>
         </div>
         <div>
           <h3>Composer</h3>
           <ul>
-            <li><a href="layouts.html">Layouts &amp; topologies</a></li>
+            <li><a href="layouts.html">Par où commencer</a></li>
+            <li><a href="stacks.html">Stacks &amp; langages</a></li>
             <li><a href="vms.html">VMs · VPS</a></li>
             <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
             <li><a href="omi.html">OMI · images</a></li>
@@ -1006,7 +834,7 @@
   </main>
 
   <div id="download-sticky" class="download-sticky" role="region" aria-label="Téléchargement rapide" hidden>
-    <a class="primary" href="#download">Installer sur macOS</a>
+    <a class="primary" href="#download">Installer gratuitement</a>
     <a class="secondary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Linux</a>
   </div>
 
@@ -1055,6 +883,46 @@
         { threshold: 0, rootMargin: "0px" }
       );
       observer.observe(inline);
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var track = document.getElementById("slides");
+      if (!track) return;
+      var slides = Array.prototype.slice.call(track.querySelectorAll(".slide"));
+      var dots = document.getElementById("slide-dots");
+      var current = 0, timer = null;
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      slides.forEach(function (_, i) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.setAttribute("aria-label", "Aperçu " + (i + 1));
+        b.addEventListener("click", function () { go(i); stop(); });
+        dots.appendChild(b);
+      });
+      function paint() {
+        Array.prototype.forEach.call(dots.children, function (d, i) { d.setAttribute("aria-current", i === current ? "true" : "false"); });
+      }
+      function go(i) {
+        current = (i + slides.length) % slides.length;
+        track.scrollTo({ left: slides[current].offsetLeft - track.offsetLeft, behavior: reduce ? "auto" : "smooth" });
+        paint();
+      }
+      function stop() { if (timer) { clearInterval(timer); timer = null; } }
+      document.getElementById("slide-prev").addEventListener("click", function () { go(current - 1); stop(); });
+      document.getElementById("slide-next").addEventListener("click", function () { go(current + 1); stop(); });
+      track.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight") { go(current + 1); stop(); }
+        if (e.key === "ArrowLeft") { go(current - 1); stop(); }
+      });
+      track.addEventListener("scroll", function () {
+        var i = Math.round(track.scrollLeft / track.clientWidth);
+        if (i !== current) { current = i; paint(); }
+      }, { passive: true });
+      ["mouseenter", "focusin", "touchstart"].forEach(function (ev) { track.addEventListener(ev, stop, { passive: true }); });
+      paint();
+      if (!reduce) timer = setInterval(function () { go(current + 1); }, 6000);
     })();
   </script>
 </body>
