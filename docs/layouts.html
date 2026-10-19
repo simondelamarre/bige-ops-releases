@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Layouts &amp; topologies — bige-ops</title>
-  <meta name="description" content="Layouts nommés et topologies single-vm / multi-vm / oks : runtimes, bases, services, bâtisseur de stack. Starter kit Outscale." />
+  <title>Par où commencer : choisir sa topologie — bige-ops</title>
+  <meta name="description" content="Startup, TPE ou PME, sans équipe DevOps : choisis un point de départ selon ton activité. Une machine, l’app et ses données séparées, ou Kubernetes managé, avec le budget mensuel réel sur Outscale." />
   <link rel="canonical" href="https://bige.dev/layouts.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -20,173 +20,89 @@
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
       <span class="brand-badge">Gratuit</span>
     </div>
-    <h1>Layouts &amp; topologies</h1>
+    <h1>Par où commencer&nbsp;?</h1>
     <p class="lead">
-      Un <strong>layout</strong> est un point de départ : un runtime, des
-      bases, des services, et une <strong>topologie</strong> qui décide
-      combien de machines existent et qui est exposé. Trois topologies,
-      huit layouts nommés, un bâtisseur pour le reste.
+      Pas besoin d’équipe DevOps. Tu choisis un point de départ selon ton activité, et bige-ops
+      s’occupe du reste : réseau, sauvegardes, HTTPS et déploiement sur ton compte Outscale.
+      Tu pourras changer plus tard : changer de topologie, c’est une simulation de plus.
     </p>
 
-    <h2>Les trois topologies</h2>
-    <figure class="diagram">
-      <pre class="mermaid">
-flowchart LR
-  L[Layout choisi] --> S[single-vm]
-  L --> M[multi-vm]
-  L --> O[oks]
-  S --> S1[Une VM all-in-one]
-  M --> M1[VM app publique]
-  M --> M2[Une VM privee par base]
-  O --> O1[Cluster OKS et manifests]
-      </pre>
-      <figcaption>La topologie n’est pas un détail cosmétique : elle fixe le blast radius.</figcaption>
-    </figure>
-
-    <ul>
-      <li>
-        <strong><code>single-vm</code></strong> (mono-VM) — une seule VM
-        <code>{name}-all</code>, une IP publique, Docker installé
-        (+ nodejs si des services applicatifs sont présents). Simple,
-        pas cher, et <em>un seul blast radius</em> : tout tombe ensemble.
-      </li>
-      <li>
-        <strong><code>multi-vm</code></strong> — une VM app publique, plus
-        une VM privée par base de données. Isolation réelle, coût plus
-        élevé, câblage réseau à comprendre.
-      </li>
-      <li>
-        <strong><code>oks</code></strong> — un cluster OKS et des manifests
-        Kubernetes générés. <strong>Aucune VM app n’est matérialisée</strong> :
-        les services deviennent des Deployments. Voir
-        <a href="oks.html">OKS &amp; pods</a>.
-      </li>
-    </ul>
-
-    <h2>Les huit layouts nommés</h2>
+    <h2>Trois façons de démarrer</h2>
     <table>
       <thead>
-        <tr>
-          <th>id</th>
-          <th>runtime</th>
-          <th>topologie</th>
-          <th>LBU</th>
-          <th>bases</th>
-          <th>services</th>
-        </tr>
+        <tr><th></th><th>Pour qui</th><th>Ce que tu obtiens</th><th>Budget indicatif</th></tr>
       </thead>
       <tbody>
         <tr>
-          <td><code>node-app</code></td><td>nodejs</td><td>multi-vm</td><td>oui</td>
-          <td>mongodb, redis, weaviate</td><td>api, web, worker</td>
+          <td><strong>Une machine</strong></td>
+          <td>Une TPE, un outil métier, un site, la première version d’un produit</td>
+          <td>Une VM qui porte ton app et sa base, une adresse publique, les sauvegardes vers l’Object Storage</td>
+          <td>à partir de <strong>~75 €/mois</strong></td>
         </tr>
         <tr>
-          <td><code>python-app</code></td><td>python</td><td>multi-vm</td><td>oui</td>
-          <td>postgres, redis</td><td>api, web, worker</td>
+          <td><strong>L’app et ses données séparées</strong></td>
+          <td>Une activité qui tourne, des clients qui comptent sur toi</td>
+          <td>L’app derrière un load balancer, chaque base sur sa propre VM dans un réseau privé</td>
+          <td><strong>~380 €/mois</strong></td>
         </tr>
         <tr>
-          <td><code>java-spring</code></td><td>java</td><td>multi-vm</td><td>oui</td>
-          <td>postgres, redis</td><td>api, web</td>
-        </tr>
-        <tr>
-          <td><code>elixir-phoenix</code></td><td>elixir</td><td>multi-vm</td><td>oui</td>
-          <td>postgres, redis</td><td>api, web, worker</td>
-        </tr>
-        <tr>
-          <td><code>php-app</code></td><td>php</td><td>multi-vm</td><td>oui</td>
-          <td>postgres, redis</td><td>api, web, worker</td>
-        </tr>
-        <tr>
-          <td><code>go-app</code></td><td>go</td><td>multi-vm</td><td>oui</td>
-          <td>postgres, redis</td><td>api, web, worker</td>
-        </tr>
-        <tr>
-          <td><code>node-lite</code></td><td>nodejs</td><td><strong>single-vm</strong></td><td>non</td>
-          <td>postgres</td><td>api, web</td>
-        </tr>
-        <tr>
-          <td><code>python-ml</code></td><td>python</td><td>multi-vm</td><td>oui</td>
-          <td>postgres, redis, weaviate</td><td>api, web, worker</td>
+          <td><strong>Kubernetes managé</strong></td>
+          <td>Plusieurs services, des pics de charge, une équipe qui grandit</td>
+          <td>Un cluster OKS dédié (control plane à 3 masters), des nœuds qui s’ajustent à la charge</td>
+          <td><strong>~500 €/mois</strong></td>
         </tr>
       </tbody>
     </table>
-
-    <div class="callout">
-      <strong>Un layout n’est pas un contrat.</strong>
-      Il pose une simulation cohérente en un appel, puis tu édites :
-      types de VM, tailles de volumes, réplicas, ouverture réseau.
-      Le prix se lit ensuite — voir <a href="simulations.html">projets &amp; simulations</a>.
-    </div>
-
-    <h2>Bâtisseur de stack</h2>
     <p>
-      Quand aucun preset ne colle, le <strong>bâtisseur de stack</strong>
-      (alias <code>custom</code> ou <code>build</code>) construit le layout
-      à la demande. Il exige <code>--runtime</code>. Par défaut :
-      <code>postgres</code> + <code>redis</code>, topologie
-      <code>multi-vm</code>, LBU activé, worker inclus.
-      Dans l’app desktop, c’est le wizard <strong>Setup</strong> /
-      « Bâtisseur de stack ».
+      Les montants sont des estimations hors taxes, calculées par bige-ops sur la grille publique Outscale
+      (eu-west-2) : une machine de 2 vCPU et 4 Gio ; une app Python avec PostgreSQL et Redis ;
+      un cluster OKS de trois nœuds de 4 vCPU et 6 Gio. Ta simulation te donne le montant exact, ligne par ligne.
     </p>
 
-<pre>bige-ops add layouts                 # lister les layouts
-bige-ops add layouts -q spring       # rechercher par mot-clé
-bige-ops add layout node-app --name mon-app
-bige-ops add layout custom --runtime python --db postgres --db redis --web spa --lbu</pre>
-
-    <h2>Runtimes et services disponibles</h2>
-    <p>
-      <strong>Runtimes app</strong> : <code>nodejs</code>, <code>python</code>,
-      <code>go</code>, <code>rust</code>, <code>java</code>,
-      <code>elixir</code>, <code>php</code>, <code>custom</code>.
-    </p>
-    <p>
-      <strong>Catalogue de services</strong> : <code>api</code>,
-      <code>web</code>, <code>worker</code>, <code>mongodb</code>,
-      <code>redis</code>, <code>postgres</code>, <code>weaviate</code>,
-      <code>database</code> (alias Postgres générique). En plus, tu
-      déclares des <strong>services custom</strong> au nom libre via
-      <code>service_config</code>, avec <code>kind: custom</code> et soit
-      une <code>image</code>, soit un dépôt <code>git</code>.
-    </p>
-
-<pre>service_config:
-  moteur-pdf:
-    kind: custom
-    image: ghcr.io/moi/moteur-pdf:1.4
-  api:
-    replicas: 2</pre>
-
-    <h2>Bon à savoir</h2>
+    <h2>Quand passer à l’étape suivante</h2>
     <ul>
-      <li>
-        Les <strong>workers partagent la VM app</strong> : un worker gourmand
-        en CPU se dimensionne avec la VM app.
-      </li>
-      <li>
-        En <code>multi-vm</code>, les <strong>URLs de bases existent après
-        l’apply</strong> : elles remontent du coffre vers le
-        <code>.env</code>. Ne les code pas en dur avant.
-      </li>
-      <li>
-        Le <strong>premier deploy doit être complet</strong>. Un deploy
-        ciblé <code>--service</code> suppose que la stack a déjà été
-        déployée entièrement au moins une fois.
-      </li>
-      <li>
-        Un layout est un point de départ : la revue d’architecture et la
-        montée en charge restent les tiennes —
-        <a href="perimetre.html">périmètre</a>.
-      </li>
+      <li><strong>D’une machine à l’app et ses données séparées</strong> : quand une panne de la machine devient un vrai problème pour tes clients, ou quand ta base grossit et mérite sa propre machine.</li>
+      <li><strong>Vers Kubernetes managé</strong> : quand tu as plusieurs services à faire évoluer séparément, ou des pics de charge à absorber sans intervenir.</li>
+    </ul>
+    <p>Dans les deux cas, tu dupliques ta simulation, tu changes la topologie et tu compares les deux coûts avant de décider.</p>
+
+    <h2>Quel que soit ton choix, bige-ops s’occupe de</h2>
+    <ul>
+      <li><strong>Le réseau</strong> : réseau privé, règles d’ouverture, bases jamais exposées à Internet. <a href="reseau.html">Réseau</a></li>
+      <li><strong>Les sauvegardes</strong> : un clic sur une base pour l’envoyer vers l’Object Storage. <a href="oos.html">Object Storage</a></li>
+      <li><strong>Le HTTPS</strong> : load balancer et certificat. <a href="lbu.html">LBU</a></li>
+      <li><strong>Les secrets</strong> : coffre local, jamais dans tes fichiers de config. <a href="secrets.html">Secrets</a></li>
+      <li><strong>Le coût et les risques</strong>, affichés avant chaque déploiement. <a href="catalogue-prix.html">Catalogue de prix</a></li>
     </ul>
 
-    <p>
-      Machines : <a href="vms.html">VMs</a>.
-      Kubernetes : <a href="oks.html">OKS &amp; pods</a>.
-      Data : <a href="bases.html">bases de données</a>.
-      Exposition : <a href="reseau.html">réseau</a>.
-      Vocabulaire : <a href="index.html#glossaire">glossaire</a>.
-    </p>
+    <h2>Des points de départ prêts à l’emploi</h2>
+    <table>
+      <thead>
+        <tr><th>Ton projet</th><th>Point de départ</th><th>Topologie</th><th>Budget indicatif</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Une petite app ou un outil interne en Node.js</td><td><code>node-lite</code></td><td>Une machine</td><td>dès ~75 €/mois avec une machine de 2 vCPU</td></tr>
+        <tr><td>Une API Python avec son front</td><td><code>python-app</code></td><td>App et données séparées</td><td>~380 €/mois</td></tr>
+        <tr><td>Une application Java / Spring Boot</td><td><code>java-spring</code></td><td>App et données séparées</td><td>~380 €/mois</td></tr>
+        <tr><td>Une application PHP (Laravel, Symfony)</td><td><code>php-app</code></td><td>App et données séparées</td><td>~380 €/mois</td></tr>
+        <tr><td>Une API Go</td><td><code>go-app</code></td><td>App et données séparées</td><td>~380 €/mois</td></tr>
+        <tr><td>Du temps réel avec Elixir / Phoenix</td><td><code>elixir-phoenix</code></td><td>App et données séparées</td><td>~380 €/mois</td></tr>
+        <tr><td>Un SaaS Node.js complet (API, front, worker, recherche)</td><td><code>node-app</code></td><td>App et données séparées</td><td>~550 €/mois</td></tr>
+        <tr><td>Un produit data / IA en Python</td><td><code>python-ml</code></td><td>App et données séparées</td><td>~550 €/mois</td></tr>
+      </tbody>
+    </table>
+    <p>Chaque point de départ se modifie ensuite dans le Visual : taille des machines, bases, services, topologie.</p>
+
+    <h2>Pour les développeurs</h2>
+    <p>Les mêmes points de départ existent en ligne de commande :</p>
+<pre>bige-ops add layouts
+bige-ops add layout node-app --name mon-app
+bige-ops add layout custom --runtime python --db postgres --db redis --web spa --lbu</pre>
+    <ul>
+      <li>Topologies : <code>single-vm</code> (une machine), <code>multi-vm</code> (app et données séparées), <code>oks</code> (Kubernetes managé, les services deviennent des Deployments). <a href="vms.html">VMs</a> · <a href="oks.html">OKS</a></li>
+      <li>Taille de la machine unique : <code>sizing.single_vm</code> sur la stack.</li>
+      <li>Les workers partagent la VM de l’app ; en <code>multi-vm</code>, les URLs des bases sont injectées après l’apply (coffre → <code>.env</code>) ; le premier deploy doit être complet avant un <code>--service</code> ciblé.</li>
+    </ul>
 
     <footer class="site-footer">
       <div class="cols">
@@ -245,9 +161,5 @@ bige-ops add layout custom --runtime python --db postgres --db redis --web spa -
       </p>
     </footer>
   </main>
-  <script type="module">
-    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
-  </script>
 </body>
 </html>
