@@ -128,3 +128,7 @@ Une question, un retour, une idée : [ouvre une issue](https://github.com/simond
   <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest"><img src="https://img.shields.io/badge/⬇%20Download%20macOS-FREE-0ea5a4?style=for-the-badge&logo=apple&logoColor=white" alt="Download macOS — free" height="52" /></a> -->
   <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest"><img src="https://img.shields.io/badge/⬇%20Download%20Linux-FREE-1f2937?style=for-the-badge&logo=linux&logoColor=white" alt="Download Linux — free" height="52" /></a>
 </p>
+
+---
+
+**D’autres clouds français à venir :** [OVHcloud](https://www.ovhcloud.com/fr/) · [Scaleway](https://www.scaleway.com/fr/)
