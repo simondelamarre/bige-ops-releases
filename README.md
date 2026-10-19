@@ -27,6 +27,20 @@ brew install --cask simondelamarre/bige-ops/bige-ops
 
 <p align="center"><img src="docs/screens/readme-deps.png" alt="04 — Corrige. Les bibliothèques à mettre à jour. Capture réelle : CVE-2022-25887 sur sanitize-html 1.4.2, reliée à OpenCVE, avec l’issue GitHub proposée en un clic." width="920" /></p>
 
+## Pour qui
+
+Pas d’équipe DevOps, pas de rendez-vous : tu choisis ton cas, tu vois le prix, tu déploies.
+
+| Tu es | bige-ops te donne | Budget indicatif |
+|---|---|---|
+| TPE sans informaticien | Une machine, avec ses sauvegardes vers le stockage objet | ~75 €/mois |
+| Startup qui lance son produit | L’app et ses données séparées, les failles vérifiées avant la démo | ~382 €/mois |
+| Scale-up qui passe à Kubernetes | Kubernetes managé, un cluster rien qu’à toi | dès ~458 €/mois |
+| Éditeur qui vend aux grands comptes | Un cloud qualifié SecNumCloud, HDS, ISO 27001, et un rapport de failles pour le dossier | ~919 €/mois |
+| Agence ou ESN | Chaque stack chiffrée pour ton devis, déployée sur le compte de ton client | de ~75 à ~919 €/mois par client |
+
+13 stacks prêtes · 12 langages · de la machine unique à Kubernetes · 0 € pour commencer
+
 ## Des stacks prêtes, chiffrées avant de déployer
 
 | Stack | Pour qui | Budget indicatif |

@@ -1,6 +1,6 @@
 # Par où commencer ?
 
-Pas besoin d’équipe DevOps. Tu choisis un point de départ selon ton activité, et bige-ops s’occupe du reste : réseau, sauvegardes, HTTPS et déploiement sur ton compte Outscale. Changer de topologie plus tard, c’est une simulation de plus.
+Pas besoin d’équipe DevOps. Tu choisis un point de départ selon ton activité, et bige-ops s’occupe du reste : réseau, sauvegardes et déploiement sur ton compte Outscale. Changer de topologie plus tard, c’est une simulation de plus.
 
 | | Pour qui | Ce que tu obtiens | Budget indicatif |
 | --- | --- | --- | --- |
