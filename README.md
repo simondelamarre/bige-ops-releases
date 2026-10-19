@@ -65,6 +65,8 @@ Estimations HT calculées par bige-ops sur la grille publique (eu-west-2). [Tout
 
 ---
 
+<p align="center"><strong>Le prix compte, mais pas seul : où vivent tes données, qui les protège et qui te répond comptent autant.</strong></p>
+
 <h3 align="center">Bientôt d’autres providers SecNumCloud et français</h3>
 
 <p align="center">
