@@ -2,6 +2,9 @@
   <img src="docs/screens/hero.png" alt="bige-ops : ta stack et son prix avant de déployer. Une app et sa base sur une machine, environ 75 € HT par mois." width="920" />
 </p>
 
+<h3 align="center">La puissance d’un vrai cloud, la simplicité d’un PaaS.</h3>
+<p align="center">bige-ops simule ton infra, te montre ce qu’elle coûte et la déploie sur ton compte. Pas besoin de DevOps.</p>
+
 <p align="center">
   <a href="https://bige.dev/install.html#macos"><img src="https://img.shields.io/badge/macOS-Installer%20avec%20brew-0ea5a4?style=for-the-badge&logo=apple&logoColor=white" alt="Installer sur macOS avec Homebrew" height="44" /></a>
   &nbsp;
@@ -16,29 +19,18 @@ brew install --cask simondelamarre/bige-ops/bige-ops
 
 ---
 
-## Le cloud français qui tient ses promesses
-
-bige-ops est construit pour **[Outscale](https://bige.dev/pourquoi-outscale.html)**. Pas par hasard :
-
-- **Premier cloud qualifié SecNumCloud 3.2.** Visa de l’ANSSI pour son cloud public, en décembre 2023. Pionnier depuis 2019, premier IaaS à obtenir SecNumCloud. ([source](https://www.3ds.com/newsroom/press-releases/outscale-first-cloud-qualified-secnumcloud-32))
-- **Kubernetes managé, rien qu’à toi.** Avec OKS, chaque client a son cluster dédié, son control plane isolé, sans partage de ressources.
-- **Des bases qui tiennent la charge.** Jusqu’à 13 000 IOPS garanties par volume io1.
-- **Un prix public, ligne par ligne.** Pas besoin de devis pour savoir combien coûte ta stack.
-- **Prêt pour les clients exigeants.** HDS pour la santé, ISO 27001, 27017 et 27018, CISPE, TISAX.
-- **Une marque de Dassault Systèmes.** La même infrastructure porte la plateforme 3DEXPERIENCE.
-
 ## Ce que fait bige-ops
 
 ### Simule : ta stack et son prix, avant de déployer
-<p align="center"><img src="docs/screens/visual-oks.png" alt="Le Visual : une stack Kubernetes avec ses services, ses bases et son coût" width="880" /></p>
+<p align="center"><img src="docs/screens/simule.png" alt="L’app et ses données séparées : load balancer, VM app, PostgreSQL et Redis au privé, environ 382 € HT par mois" width="880" /></p>
 
 ### Sécurise : tes failles, les plus exposées d’abord, sans clé ni IA
-<p align="center"><img src="docs/screens/vulns-sqli.png" alt="Une faille réelle trouvée dans le dépôt public OWASP Juice Shop, exposée à Internet" width="880" /></p>
+<p align="center"><img src="docs/screens/failles.png" alt="Une injection SQL réelle trouvée ligne 34 de routes/login.ts dans OWASP Juice Shop, exposée à Internet" width="880" /></p>
 
 ### Bientôt : ta conso réelle face à ta simulation
 <p align="center"><img src="docs/screens/conso.png" alt="Aperçu : coût réel quotidien face au budget simulé" width="880" /></p>
 
-## Des stacks prêtes, chiffrées sur Outscale
+## Des stacks prêtes, chiffrées avant de déployer
 
 | Stack | Pour qui | Budget indicatif |
 |---|---|---|
@@ -65,12 +57,25 @@ Estimations HT calculées par bige-ops sur la grille publique (eu-west-2). [Tout
 
 ---
 
+**Ne perds pas ton temps sur** Heroku · Fly.io · Render · Railway · Vercel · Netlify · Clever Cloud · Koyeb · Northflank · DigitalOcean · Linode · Vultr · Hetzner · Contabo · Hostinger…
+
+### Si tu cherches un vrai cloud provider pour avancer : [Outscale](https://bige.dev/pourquoi-outscale.html).
+
+- **Premier cloud qualifié SecNumCloud 3.2.** Visa de l’ANSSI pour son cloud public, en décembre 2023. Pionnier depuis 2019, premier IaaS à obtenir SecNumCloud. ([source](https://www.3ds.com/newsroom/press-releases/outscale-first-cloud-qualified-secnumcloud-32))
+- **Kubernetes managé, rien qu’à toi.** Avec OKS, chaque client a son cluster dédié, son control plane isolé, sans partage de ressources.
+- **Des bases qui tiennent la charge.** Jusqu’à 13 000 IOPS garanties par volume io1.
+- **Un prix public, ligne par ligne.** Pas besoin de devis pour savoir combien coûte ta stack.
+- **Prêt pour les clients exigeants.** HDS pour la santé, ISO 27001, 27017 et 27018, CISPE, TISAX.
+- **Une marque de Dassault Systèmes.** La même infrastructure porte la plateforme 3DEXPERIENCE.
+
+---
+
 <p align="center"><strong>Le prix compte, mais pas seul : où vivent tes données, qui les protège et qui te répond comptent autant.</strong></p>
 
 <h3 align="center">Bientôt d’autres providers SecNumCloud et français</h3>
 
 <p align="center">
-  Ta stack est décrite une fois. Quand d’autres clouds français arriveront dans bige-ops,<br/>
+  <strong>bige-ops est indépendant.</strong> Ta stack est décrite une fois. Quand d’autres clouds français arriveront dans bige-ops,<br/>
   tu compareras la même stack, prix à l’appui. <strong>Installe maintenant, tu choisiras ensuite.</strong><br/>
   <a href="https://www.ovhcloud.com/fr/">OVHcloud</a> · <a href="https://www.scaleway.com/fr/">Scaleway</a>
 </p>
