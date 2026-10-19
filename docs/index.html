@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <title>bige-ops — le simulateur de stack pour Outscale (gratuit, local)</title>
-  <meta name="description" content="Simulateur de stack pour Outscale, gratuit et 100 % local. Dessine ta stack, vérifie-la, vois son coût, puis déploie-la sur ton compte Outscale." />
+  <title>bige-ops — la puissance d’un vrai cloud, la simplicité d’un PaaS (gratuit, local)</title>
+  <meta name="description" content="Gratuit et 100 % local : dessine ta stack, vérifie ses failles, vois son prix ligne par ligne, puis déploie-la sur ton compte cloud. Pas besoin de DevOps." />
   <link rel="canonical" href="https://bige.dev/" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,12 +13,12 @@
   <meta property="og:site_name" content="bige-ops" />
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/" />
-  <meta property="og:title" content="bige-ops — le simulateur de stack pour Outscale" />
+  <meta property="og:title" content="bige-ops — la puissance d’un vrai cloud, la simplicité d’un PaaS" />
   <meta property="og:description" content="Gratuit · 100 % local. Simule ta stack, vérifie-la, vois son coût, puis déploie-la sur ton compte." />
   <meta property="og:image" content="https://bige.dev/screens/hero.png" />
-  <meta property="og:image:alt" content="bige-ops — Visual Outscale, topologie et coût" />
+  <meta property="og:image:alt" content="bige-ops — une stack et son prix, avant de déployer" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="bige-ops — le simulateur de stack pour Outscale" />
+  <meta name="twitter:title" content="bige-ops — la puissance d’un vrai cloud, la simplicité d’un PaaS" />
   <meta name="twitter:description" content="Gratuit · 100 % local. Simule, vérifie, vois le prix, puis déploie." />
   <meta name="twitter:image" content="https://bige.dev/screens/hero.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -640,6 +640,14 @@
     .panel-clouds a { border: 1px solid var(--ink-600); border-radius: 999px; padding: .35rem .9rem; color: var(--white); text-decoration: none; }
     .panel-clouds a:hover, .panel-clouds a:focus-visible { border-color: var(--accent-bright); }
     .panel-cta { display: inline-block; margin-top: .4rem; }
+    .baseline .tagline { display: block; color: var(--white); font-weight: 600; margin-bottom: .35rem; }
+    .waste-lead { font-family: var(--font-display); font-size: 1.35rem !important; font-weight: 600; color: var(--white) !important; margin-bottom: .4rem !important; }
+    .waste { font-family: var(--font-mono); font-size: .95rem !important; line-height: 1.8; color: #8b99a1 !important; max-width: none !important; }
+    .real-title { font-family: var(--font-display); font-size: clamp(1.5rem, 4.2vw, 2.1rem) !important; line-height: 1.15; letter-spacing: -0.02em; font-weight: 600; color: var(--white) !important; margin: 1.4rem 0 1rem !important; max-width: none !important; }
+    .real-title a { color: var(--accent-bright); }
+    .real-facts { margin: 0; padding-left: 1.1rem; color: #d7dde2; }
+    .real-facts li { margin: .35rem 0; }
+    .real-facts a { color: var(--accent-bright); font-size: .9rem; }
   </style>
 </head>
 <body>
@@ -652,7 +660,7 @@
     </div>
     <span id="why-outscale"></span><span id="outscale"></span><span id="clouds"></span>
     <h1 class="hero-title">Dessine ta stack.<br>Vois le prix.<br><span>Déploie.</span></h1>
-    <p class="baseline">bige-ops simule ton infra, te montre ce qu’elle coûte et la déploie sur ton compte <a href="pourquoi-outscale.html">Outscale</a>. Gratuit, installé en une commande.</p>
+    <p class="baseline"><strong class="tagline">La puissance d’un vrai cloud, la simplicité d’un PaaS.</strong> bige-ops simule ton infra, te montre ce qu’elle coûte et la déploie sur ton compte, aujourd’hui chez <a href="pourquoi-outscale.html">Outscale</a>. Gratuit, installé en une commande.</p>
 
     <div id="download" class="download-inline">
       <p class="brew">
@@ -675,7 +683,7 @@
           <figcaption>Une app et sa base sur une machine : ~75 € HT/mois, ligne par ligne.</figcaption>
         </figure>
         <figure class="slide" aria-roledescription="slide" aria-label="2 sur 5">
-          <img src="screens/vulns-sqli.png" width="1440" height="900" loading="lazy" alt="Injection SQL réelle détectée dans routes/login.ts d’OWASP Juice Shop, exposée à Internet" />
+          <img src="screens/failles.png" width="1600" height="900" loading="lazy" alt="Injection SQL réelle trouvée ligne 34 de routes/login.ts dans OWASP Juice Shop, exposée à Internet, priorité 1" />
           <figcaption>Une faille réelle, trouvée sur ton poste, sans clé ni IA (<a href="https://owasp.org/projects/juice-shop" target="_blank" rel="noopener">OWASP Juice Shop</a>).</figcaption>
         </figure>
         <figure class="slide" aria-roledescription="slide" aria-label="3 sur 5">
@@ -683,8 +691,8 @@
           <figcaption>Les failles connues de tes bibliothèques, reliées à <a href="https://www.opencve.io/" target="_blank" rel="noopener">OpenCVE</a>.</figcaption>
         </figure>
         <figure class="slide" aria-roledescription="slide" aria-label="4 sur 5">
-          <img src="screens/visual-oks.png" width="1440" height="900" loading="lazy" alt="Le Visual : une stack Kubernetes avec ses services, ses bases et son coût" />
-          <figcaption>Quand tu grandis : Kubernetes managé, toujours avec son prix.</figcaption>
+          <img src="screens/simule.png" width="1600" height="900" loading="lazy" alt="L’app et ses données séparées : load balancer, VM app, PostgreSQL et Redis au privé, environ 382 € HT par mois" />
+          <figcaption>Quand tu grandis : l’app et ses données séparées, ~382 € HT/mois, chaque brique chiffrée.</figcaption>
         </figure>
         <figure class="slide" aria-roledescription="slide" aria-label="5 sur 5">
           <img src="screens/conso.png" width="1600" height="900" loading="lazy" alt="Aperçu : coût réel quotidien comparé au budget simulé" />
@@ -718,6 +726,18 @@
           <p><a href="#failles">Comment ça marche →</a></p>
         </article>
       </div>
+    </section>
+
+    <section class="block" id="vrai-cloud">
+      <p class="waste-lead">Ne perds pas ton temps sur</p>
+      <p class="waste">Heroku · Fly.io · Render · Railway · Vercel · Netlify · Clever Cloud · Koyeb · Northflank · DigitalOcean · Linode · Vultr · Hetzner · Contabo · Hostinger…</p>
+      <p class="real-title">Si tu cherches un vrai cloud provider pour avancer&nbsp;: <a href="pourquoi-outscale.html">Outscale</a>.</p>
+      <ul class="real-facts">
+        <li><strong>Premier cloud qualifié SecNumCloud&nbsp;3.2</strong>, le visa de l’ANSSI. <a href="https://www.3ds.com/newsroom/press-releases/outscale-first-cloud-qualified-secnumcloud-32" target="_blank" rel="noopener">Source</a></li>
+        <li><strong>Kubernetes dédié</strong> : ton cluster, ton control plane, rien de partagé.</li>
+        <li><strong>13&nbsp;000 IOPS garanties</strong> par volume pour tes bases.</li>
+        <li><strong>Un prix public</strong>, ligne par ligne, sans devis.</li>
+      </ul>
     </section>
 
     <section class="block" id="failles">
@@ -776,7 +796,7 @@
       <p class="panel-kicker">Bientôt d’autres providers SecNumCloud et français</p>
       <h2 class="panel-title">Installe maintenant.<br>La suite, c’est toi qui choisis.</h2>
       <p class="panel-text">
-        Ta stack est décrite une fois, dans un format ouvert, versionné dans ton Git.
+        <strong>bige-ops est indépendant.</strong> Ta stack est décrite une fois, dans un format ouvert, versionné dans ton Git.
         Quand d’autres clouds français arriveront dans bige-ops, tu compareras la même stack,
         prix à l’appui, et tu migreras si ça vaut le coup. Sans tout réécrire.
       </p>
