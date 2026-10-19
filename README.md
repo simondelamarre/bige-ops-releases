@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/screens/hero.png" alt="bige-ops : ta stack et son prix avant de déployer. Une app et sa base sur une machine, environ 75 € HT par mois." width="920" />
+  <img src="docs/screens/readme-simule.png" alt="01 — Simule. Ta stack et son prix, avant de déployer. Capture réelle du Visual : une app et sa base sur une machine, 74,50 € HT par mois, calculés sur la grille publique." width="920" />
 </p>
 
 <h3 align="center">La puissance d’un vrai cloud, la simplicité d’un PaaS.</h3>
@@ -21,14 +21,11 @@ brew install --cask simondelamarre/bige-ops/bige-ops
 
 ## Ce que fait bige-ops
 
-### Simule : ta stack et son prix, avant de déployer
-<p align="center"><img src="docs/screens/simule.png" alt="L’app et ses données séparées : load balancer, VM app, PostgreSQL et Redis au privé, environ 382 € HT par mois" width="880" /></p>
+<p align="center"><img src="docs/screens/readme-grandis.png" alt="02 — Grandis. Sépare l’app et ses données quand tu grandis. Capture réelle : load balancer, app, PostgreSQL et Redis au privé, 381,66 € HT par mois, chaque VM avec son prix." width="920" /></p>
 
-### Sécurise : tes failles, les plus exposées d’abord, sans clé ni IA
-<p align="center"><img src="docs/screens/failles.png" alt="Une injection SQL réelle trouvée ligne 34 de routes/login.ts dans OWASP Juice Shop, exposée à Internet" width="880" /></p>
+<p align="center"><img src="docs/screens/readme-failles.png" alt="03 — Sécurise. Tes failles, les plus exposées d’abord. Capture réelle : une injection SQL dans OWASP Juice Shop, routes/login.ts ligne 34, trouvée sur ton poste sans clé ni IA." width="920" /></p>
 
-### Bientôt : ta conso réelle face à ta simulation
-<p align="center"><img src="docs/screens/conso.png" alt="Aperçu : coût réel quotidien face au budget simulé" width="880" /></p>
+<p align="center"><img src="docs/screens/readme-deps.png" alt="04 — Corrige. Les bibliothèques à mettre à jour. Capture réelle : CVE-2022-25887 sur sanitize-html 1.4.2, reliée à OpenCVE, avec l’issue GitHub proposée en un clic." width="920" /></p>
 
 ## Des stacks prêtes, chiffrées avant de déployer
 
