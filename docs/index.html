@@ -614,26 +614,25 @@
     .chips span { border: 1px solid var(--ink-700); border-radius: 999px; padding: 0.25rem 0.75rem; color: #c9d3d8; }
     .chips a { padding: 0.25rem 0.2rem; color: var(--accent-bright); }
     body { overflow-x: clip; }
-    .slider { width: 100vw; margin: 2rem 0 0 calc(50% - 50vw); }
-    .slides { position: relative; display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; background: #ece8df; color: #15181c; }
+    .slider { width: 100vw; margin: 2.25rem 0 0 calc(50% - 50vw); }
+    .slides { --gutter: max(1.25rem, calc((100vw - 78rem) / 2)); position: relative; display: flex; gap: 2.5rem; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; padding: .5rem var(--gutter) .75rem; scroll-padding-inline: var(--gutter); }
     .slides::-webkit-scrollbar { display: none; }
-    .slides:focus-visible { outline: 3px solid var(--accent-bright); outline-offset: -3px; }
-    .slides-curve { position: absolute; top: 0; left: 0; width: 400%; height: 100%; pointer-events: none; }
-    .slides-curve path { vector-effect: non-scaling-stroke; }
-    .slides-curve .c0 { fill: #e1dccf; stroke: none; }
-    .slides-curve .c1 { fill: none; stroke: #0d8a7f; stroke-width: 9; stroke-linecap: round; }
-    .slides-curve .c2 { fill: none; stroke: #15181c; stroke-width: 1.25; opacity: .3; }
-    .slide { position: relative; flex: 0 0 100%; scroll-snap-align: start; margin: 0; display: grid; grid-template-columns: minmax(15rem, 25rem) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: center; padding: clamp(2.25rem, 5vw, 4rem) max(1.25rem, calc((100vw - 78rem) / 2)) 0; overflow: hidden; }
-    .slide-copy { align-self: center; padding-bottom: clamp(2rem, 5vw, 4rem); }
-    .slide-kicker { margin: 0 0 .9rem; font-family: var(--font-mono); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: #0b5a53; }
-    .slide-title { margin: 0 0 1rem; font-family: var(--font-display); font-weight: 600; font-size: clamp(1.75rem, 3.3vw, 2.8rem); line-height: 1.04; letter-spacing: -.025em; color: #15181c; text-transform: none; }
-    .slide-text { margin: 0; font-size: 1.08rem; line-height: 1.55; color: #3b4148; max-width: 26rem; }
-    .slide-text strong { color: #15181c; font-weight: 600; }
-    .slide-text a { color: #0b5a53; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-    .slide-shot { align-self: end; display: block; }
-    .slide-shot:focus-visible { outline: 3px solid #0b5a53; outline-offset: 4px; border-radius: 12px; }
-    .slide-shot img { display: block; width: 100%; height: auto; border-radius: 12px 12px 0 0; transform: translateY(2rem); box-shadow: 0 30px 60px -18px rgba(21, 24, 28, .45), 0 2px 6px rgba(21, 24, 28, .2); }
-    .slider-nav { display: flex; align-items: center; justify-content: center; gap: .6rem; margin-top: 1rem; }
+    .slides:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: -2px; }
+    .slide { flex: 0 0 min(78rem, calc(100vw - 2.5rem)); scroll-snap-align: start; margin: 0; }
+    .slide-copy { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: .6rem 3rem; align-items: end; margin-bottom: 1.4rem; }
+    .slide-kicker { grid-column: 1 / -1; margin: 0; font-family: var(--font-mono); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-bright); }
+    .slide-title { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: clamp(1.7rem, 3vw, 2.6rem); line-height: 1.05; letter-spacing: -.025em; color: var(--white); text-transform: none; }
+    .slide-text { margin: 0; max-width: 34rem; font-size: 1.05rem; line-height: 1.55; color: #b9c3c9; }
+    .slide-text strong { color: var(--white); font-weight: 600; }
+    .slide-text a { color: var(--accent-bright); }
+    .slide-shot { position: relative; display: block; overflow: hidden; border: 1px solid #233038; border-radius: 14px; background: #0d1215; }
+    .slide-shot:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
+    .slide-shot img { display: block; width: 100%; height: auto; }
+    .persona-lead { color: #d7dde2 !important; font-size: 1.1rem !important; }
+    .persona h3 { font-size: 1.15rem; color: var(--white); }
+    .persona-price { font-family: var(--font-mono); font-size: .9rem !important; color: var(--accent-bright) !important; }
+    .persona-facts { margin-top: 1.1rem !important; font-family: var(--font-mono); font-size: .88rem !important; color: var(--mist); }
+    .slider-nav { display: flex; align-items: center; justify-content: center; gap: .6rem; margin-top: .75rem; }
     .slider-btn { width: 2.75rem; height: 2.75rem; border-radius: 999px; border: 1px solid var(--ink-600); background: var(--ink-900); color: var(--white); font-size: 1.1rem; cursor: pointer; }
     .slider-btn:hover:not(:disabled) { border-color: var(--accent-bright); }
     .slider-btn:focus-visible, .dots button:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 2px; }
@@ -642,13 +641,11 @@
     .dots button { width: 1.6rem; height: 2.75rem; padding: 0; border: 0; background: transparent; cursor: pointer; display: grid; place-items: center; border-radius: 6px; }
     .dots button::before { content: ""; width: .6rem; height: .6rem; border-radius: 999px; background: var(--ink-600); }
     .dots button[aria-current="true"]::before { width: 1.2rem; background: var(--accent-bright); }
-    .slide-status { font-family: var(--font-mono); font-size: .85rem; color: var(--mist); min-width: 3.5ch; text-align: center; }
+    .slide-status { min-width: 3.5ch; text-align: center; font-family: var(--font-mono); font-size: .85rem; color: var(--mist); }
     @media (max-width: 760px) {
-      .slide { grid-template-columns: 1fr; gap: 1.25rem; padding-top: 2rem; }
-      .slide-copy { padding-bottom: 0; }
+      .slides { gap: 1rem; }
+      .slide-copy { grid-template-columns: 1fr; }
       .slide-title { font-size: 1.7rem; }
-      .slide-shot img { transform: translateY(1rem); border-radius: 10px 10px 0 0; }
-      .slides-curve { top: auto; bottom: 0; height: 42%; }
     }
     .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem; }
     .fact { border: 1px solid var(--ink-700); background: var(--ink-900); border-radius: 14px; padding: 1.1rem 1.2rem; }
@@ -687,18 +684,15 @@
 
     <section class="slider" id="apercus" aria-roledescription="carousel" aria-label="Aperçus de bige-ops">
       <div class="slides" id="slides" tabindex="0">
-        <svg class="slides-curve" viewBox="0 0 4000 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <path class="c0" d="M-40 900 C400 905 470 330 680 330 S930 900 1000 900 C1400 905 1470 430 1680 430 S1930 900 2000 900 C2400 905 2470 300 2680 300 S2930 900 3000 900 C3400 905 3470 400 3680 400 S3930 900 4040 900 L4040 1040 L-40 1040 Z" />
-          <path class="c2" d="M-40 840 C400 845 470 270 680 270 S930 840 1000 840 C1400 845 1470 370 1680 370 S1930 840 2000 840 C2400 845 2470 240 2680 240 S2930 840 3000 840 C3400 845 3470 340 3680 340 S3930 840 4040 840" />
-          <path class="c1" d="M-40 900 C400 905 470 330 680 330 S930 900 1000 900 C1400 905 1470 430 1680 430 S1930 900 2000 900 C2400 905 2470 300 2680 300 S2930 900 3000 900 C3400 905 3470 400 3680 400 S3930 900 4040 900" />
-        </svg>
         <figure class="slide" role="group" aria-roledescription="slide" aria-label="1 sur 4 : Simule" data-name="Simule">
           <figcaption class="slide-copy">
             <p class="slide-kicker">01 — Simule</p>
             <h2 class="slide-title">Ta stack et son prix, avant de déployer.</h2>
             <p class="slide-text">Une app et sa base sur une machine&nbsp;: <strong>74,50&nbsp;€ HT par mois</strong>, calculés sur la grille publique.</p>
           </figcaption>
-          <a class="slide-shot" href="screens/shot-simule.png" title="Ouvrir la capture en grand"><img src="screens/shot-simule.png" width="2000" height="1250" alt="Capture de bige-ops : le Visual d’une stack sur une machine (API, front, PostgreSQL et sauvegardes), estimée à 74,50 € HT par mois." /></a>
+          <a class="slide-shot" href="screens/shot-simule.png" title="Ouvrir la capture en grand">
+            <img src="screens/shot-simule.png" width="2400" height="1089" alt="Capture de bige-ops : le Visual d’une stack sur une machine (API, front, PostgreSQL et sauvegardes), estimée à 74,50 € HT par mois." />
+          </a>
         </figure>
         <figure class="slide" role="group" aria-roledescription="slide" aria-label="2 sur 4 : Grandis" data-name="Grandis">
           <figcaption class="slide-copy">
@@ -706,7 +700,9 @@
             <h2 class="slide-title">Sépare l’app et ses données quand tu grandis.</h2>
             <p class="slide-text">Load balancer, app, PostgreSQL et Redis au privé&nbsp;: <strong>381,66&nbsp;€ HT par mois</strong>, chaque VM avec son prix.</p>
           </figcaption>
-          <a class="slide-shot" href="screens/shot-grandis.png" title="Ouvrir la capture en grand"><img src="screens/shot-grandis.png" width="2000" height="1250" loading="lazy" alt="Capture de bige-ops : le Visual d’une stack multi-VM, VM app à 136 €, VM PostgreSQL à 169 € et VM Redis à 55 € par mois, total 381,66 € HT." /></a>
+          <a class="slide-shot" href="screens/shot-grandis.png" title="Ouvrir la capture en grand">
+            <img src="screens/shot-grandis.png" width="2400" height="1106" loading="lazy" alt="Capture de bige-ops : le Visual d’une stack multi-VM, VM app à 136 €, VM PostgreSQL à 169 € et VM Redis à 55 € par mois, total 381,66 € HT." />
+          </a>
         </figure>
         <figure class="slide" role="group" aria-roledescription="slide" aria-label="3 sur 4 : Sécurise" data-name="Sécurise">
           <figcaption class="slide-copy">
@@ -714,7 +710,9 @@
             <h2 class="slide-title">Tes failles, les plus exposées d’abord.</h2>
             <p class="slide-text">Une vraie injection SQL dans <a href="https://owasp.org/projects/juice-shop" target="_blank" rel="noopener">OWASP Juice Shop</a>&nbsp;: le fichier, la ligne, la route exposée. Sur ton poste, sans clé ni IA.</p>
           </figcaption>
-          <a class="slide-shot" href="screens/shot-failles.png" title="Ouvrir la capture en grand"><img src="screens/shot-failles.png" width="1728" height="1080" loading="lazy" alt="Capture de bige-ops : l’arbre des routes de Juice Shop jusqu’à login.ts, et la ligne 34 surlignée, une requête SQL construite avec l’email et le mot de passe saisis." /></a>
+          <a class="slide-shot" href="screens/shot-failles.png" title="Ouvrir la capture en grand">
+            <img src="screens/shot-failles.png" width="2068" height="957" loading="lazy" alt="Capture de bige-ops : l’arbre des routes de Juice Shop jusqu’à login.ts, et la ligne 34 surlignée, une requête SQL construite avec l’email et le mot de passe saisis." />
+          </a>
         </figure>
         <figure class="slide" role="group" aria-roledescription="slide" aria-label="4 sur 4 : Corrige" data-name="Corrige">
           <figcaption class="slide-copy">
@@ -722,7 +720,9 @@
             <h2 class="slide-title">Les bibliothèques à mettre à jour.</h2>
             <p class="slide-text">sanitize-html 1.4.2 et ses CVE, reliées à <a href="https://www.opencve.io/" target="_blank" rel="noopener">OpenCVE</a>, et l’issue GitHub proposée en un clic.</p>
           </figcaption>
-          <a class="slide-shot" href="screens/shot-deps.png" title="Ouvrir la capture en grand"><img src="screens/shot-deps.png" width="1728" height="1080" loading="lazy" alt="Capture de bige-ops : la fiche CVE-2022-25887 sur sanitize-html 1.4.2, exposée à Internet, priorité 1, avec son lien OpenCVE et le bouton Proposer une issue GitHub." /></a>
+          <a class="slide-shot" href="screens/shot-deps.png" title="Ouvrir la capture en grand">
+            <img src="screens/shot-deps.png" width="2068" height="957" loading="lazy" alt="Capture de bige-ops : la fiche CVE-2022-25887 sur sanitize-html 1.4.2, exposée à Internet, priorité 1, avec son lien OpenCVE et le bouton Proposer une issue GitHub." />
+          </a>
         </figure>
       </div>
       <div class="slider-nav">
@@ -747,6 +747,49 @@
       <a class="primary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger macOS</a> -->
     </div>
 
+
+    <section class="block" id="pour-qui">
+      <h2>Pour qui</h2>
+      <p class="persona-lead">Pas d’équipe DevOps, pas de rendez-vous&nbsp;: tu choisis ton cas, tu vois le prix, tu déploies.</p>
+      <div class="facts personas">
+        <article class="fact persona">
+          <h3>TPE sans informaticien</h3>
+          <p>Un site, un outil métier, une petite boutique. Personne pour gérer des serveurs.</p>
+          <p>Une machine, avec ses sauvegardes vers le stockage objet.</p>
+          <p class="persona-price">~75&nbsp;€ HT / mois</p>
+          <p><a href="layouts.html">Par où commencer →</a></p>
+        </article>
+        <article class="fact persona">
+          <h3>Startup qui lance son produit</h3>
+          <p>Deux à cinq développeurs, pas de DevOps, une démo client dans un mois.</p>
+          <p>L’app et ses données séparées, les failles vérifiées avant la démo.</p>
+          <p class="persona-price">~382&nbsp;€ HT / mois</p>
+          <p><a href="stacks.html">Stacks et langages →</a></p>
+        </article>
+        <article class="fact persona">
+          <h3>Scale-up qui passe à Kubernetes</h3>
+          <p>Plusieurs services, de la charge, des clients qui veulent de la disponibilité.</p>
+          <p>Kubernetes managé, un cluster rien qu’à toi, le prix de chaque nœud.</p>
+          <p class="persona-price">dès ~458&nbsp;€ HT / mois</p>
+          <p><a href="stack-express-mongodb-redis-oks.html">Node.js sur Kubernetes →</a></p>
+        </article>
+        <article class="fact persona">
+          <h3>Éditeur qui vend aux grands comptes</h3>
+          <p>Tes clients demandent SecNumCloud, HDS ou ISO&nbsp;27001 dans leurs appels d’offres.</p>
+          <p>Les mêmes stacks sur un cloud qualifié, et un rapport de failles à joindre au dossier.</p>
+          <p class="persona-price">Spring Boot + Kafka + Keycloak&nbsp;: ~919&nbsp;€ HT / mois</p>
+          <p><a href="stack-spring-boot-oks-kafka-keycloak.html">Voir la stack →</a></p>
+        </article>
+        <article class="fact persona">
+          <h3>Agence ou ESN qui livre pour ses clients</h3>
+          <p>Un nouveau projet chaque mois, un devis à chiffrer à chaque fois.</p>
+          <p>Chaque stack chiffrée ligne par ligne pour ton devis, déployée sur le compte de ton client.</p>
+          <p class="persona-price">de ~75&nbsp;€ à ~919&nbsp;€ HT / mois par client</p>
+          <p><a href="stacks.html">Les 13 stacks prêtes →</a></p>
+        </article>
+      </div>
+      <p class="persona-facts">13 stacks prêtes · 12 langages · de la machine unique à Kubernetes · 0&nbsp;€ pour commencer</p>
+    </section>
 
     <section class="block" id="pourquoi">
       <span id="features"></span><span id="why-projection"></span>
@@ -973,6 +1016,8 @@
       var status = document.getElementById("slide-status");
       var current = 0, settle = null;
       var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      function gutter() { return parseFloat(getComputedStyle(track).paddingLeft) || 0; }
+      function step() { return slides.length > 1 ? slides[1].offsetLeft - slides[0].offsetLeft : track.clientWidth; }
       // No autoplay: the reader moves the slides (buttons, dots, ← → Début Fin, swipe).
       slides.forEach(function (s, i) {
         var b = document.createElement("button");
@@ -990,7 +1035,7 @@
       }
       function go(i) {
         current = Math.max(0, Math.min(slides.length - 1, i));
-        track.scrollTo({ left: slides[current].offsetLeft, behavior: reduce ? "auto" : "smooth" });
+        track.scrollTo({ left: slides[current].offsetLeft - gutter(), behavior: reduce ? "auto" : "smooth" });
         paint();
       }
       prev.addEventListener("click", function () { go(current - 1); });
@@ -1004,7 +1049,7 @@
       track.addEventListener("scroll", function () {
         clearTimeout(settle);
         settle = setTimeout(function () {
-          var i = Math.round(track.scrollLeft / track.clientWidth);
+          var i = Math.round(track.scrollLeft / step());
           if (i !== current) { current = i; paint(); }
         }, 90);
       }, { passive: true });
