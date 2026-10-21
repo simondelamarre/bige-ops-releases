@@ -30,44 +30,50 @@
     </div>
     <h1>Mode expert · fichiers, diffs &amp; commits</h1>
     <p class="lead">
-      Visual / Flow pour composer. Quand il faut aller dans le détail :
-      <strong>édition directe</strong> des fichiers de la simulation
-      (<code>project.yaml</code>, Terraform généré, specs OKS, scripts…).
-      Puis <strong>diffs</strong> et <strong>commits</strong> sur le
-      config-history — la feuille de route des interfaces.
+      Visual / Flow pour composer. Quand il faut aller dans le détail,
+      <strong>Mode expert</strong> permet d’éditer directement la configuration.
+      Les deux vues partagent le même modèle canonique et le même bouton
+      <strong>Appliquer</strong>.
     </p>
 
     <div class="callout">
       <strong>Deux vitesses.</strong>
       Flow = setup rapide. Expert = les fichiers et Git.
-      Les deux mènent au même plan Outscale ; les secrets restent hors repo.
+      Les deux sont réconciliés avant le plan Outscale ; les secrets restent hors repo.
     </div>
 
     <figure class="diagram">
       <pre class="mermaid">
 flowchart LR
-  V[Visual / Flow] -->|Save + generate| F[Fichiers simulation]
-  F -->|éditeur Workspace| E[Mode expert]
-  E -->|revue diff| D[Diff local]
+  V[Visual / Flow] -->|brouillon| A[Appliquer]
+  E[Mode expert] -->|brouillon| A
+  A -->|réconcilier, valider, générer, relire| F[Configuration canonique]
+  F -->|revue diff| D[Diff local]
   D -->|commit / push| G[GitHub config-history]
-  G -->|sim/… ou main| C[Cloud plan / apply]
+  G -->|sim/… ou main| C[Plan puis action cloud]
       </pre>
-      <figcaption>Flow → fichiers → diff → commit → plan/apply.</figcaption>
+      <figcaption>Visual ou Expert → une transaction locale → diff → commit → plan cloud.</figcaption>
     </figure>
 
     <h2>Mode expert aujourd’hui</h2>
     <p>
       Dans l’app, l’onglet <strong>Workspace</strong> expose l’arbre des
       fichiers du projet et un <strong>éditeur</strong> (YAML, HCL, scripts).
-      Tu ouvres <code>bige-ops/project.yaml</code>, un module Terraform,
-      un manifest OKS ; tu corriges, tu <strong>Save</strong> en local,
-      puis validate / generate / plan.
+      Tu ouvres <code>bige-ops/project.yaml</code> et tu modifies la simulation.
+      Tant que le brouillon n’est pas appliqué, aucun fichier dérivé, push Git
+      ou déploiement n’est déclenché.
     </p>
     <p>
-      C’est le chemin <strong>expert</strong> : au-delà des formulaires
-      Visual, pour un champ avancé, un layout custom, ou une génération à
-      peaufiner. La simulation reste la référence ; les fichiers sont ce que
-      tu versionnes et appliques.
+      <strong>Appliquer</strong> exécute une seule transaction locale :
+      réconciliation du modèle, validation, génération ciblée et relecture du
+      Visual. Une erreur restaure la dernière configuration valide. Le Visual
+      suit exactement la même règle ; un avertissement empêche de quitter
+      silencieusement une vue modifiée.
+    </p>
+    <p>
+      Cette action locale est distincte de <strong>Plan</strong>,
+      <strong>Apply cloud</strong> et <strong>Deploy</strong>. Elle ne crée
+      aucune ressource cloud.
     </p>
 
     <h2>Diffs &amp; commits — où on va (interfaces)</h2>
@@ -82,7 +88,7 @@ flowchart LR
     <ul>
       <li>
         <strong>Diff fichiers</strong> — voir clairement ce qui a changé
-        (Visual Save, édition expert, generate) avant de committer.
+        (Visual ou édition expert appliquée) avant de committer.
       </li>
       <li>
         <strong>Commit intentionnel</strong> — message, branche
@@ -113,8 +119,8 @@ flowchart LR
       <tbody>
         <tr>
           <td>Édition fichiers</td>
-          <td>Workspace · arbre + éditeur</td>
-          <td>Même socle, plus lié au Flow</td>
+          <td>Workspace · arbre + éditeur + Apply atomique</td>
+          <td>Même socle, lien bidirectionnel avec le Flow</td>
         </tr>
         <tr>
           <td>Diff local</td>

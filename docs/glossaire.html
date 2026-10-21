@@ -61,14 +61,26 @@
         <dd>Une variante de ta stack dans bige-ops : brouillon (draft) ou live, avec son coût estimé.</dd>
         <dt id="g-estimate">Estimation</dt>
         <dd>Le coût mensuel € HT d’une simulation, calculé sur ton poste à partir du catalogue public, synchronisable par l’API <code>ReadPublicCatalog</code>.</dd>
-        <dt id="g-apply">Apply</dt>
-        <dd>Créer ou mettre à jour l’infrastructure sur ton compte : Terraform généré pour le Net, les VMs, les volumes, le LBU et OOS, oks-cli pour OKS. Le plan montre les changements avant.</dd>
+        <dt id="g-config-apply">Appliquer la configuration</dt>
+        <dd>Réconcilier le Visual et <code>project.yaml</code>, valider la stack, régénérer uniquement les fichiers dérivés puis relire le résultat canonique. Cette transaction locale est atomique : en cas d’erreur, la dernière configuration valide est restaurée. Elle ne crée aucune ressource cloud.</dd>
+        <dt id="g-plan">Plan</dt>
+        <dd>Prévisualiser les créations, modifications, suppressions, risques et coûts cloud avant toute action réelle.</dd>
+        <dt id="g-apply">Apply cloud</dt>
+        <dd>Créer ou mettre à jour l’infrastructure après revue du plan : Net, subnets, routage, VMs, volumes, LBU, OOS ou OKS selon la stack.</dd>
         <dt id="g-deploy">Deploy</dt>
-        <dd>Déployer les applications sur l’infrastructure en place : Docker Compose sur les VMs, <code>kubectl apply</code> sur OKS.</dd>
+        <dd>Déployer l’application sur l’infrastructure préparée : Docker Compose sur VM ou manifests sur OKS. Le bouton reste indisponible tant qu’une modification Visual ou Config n’a pas été appliquée localement.</dd>
         <dt id="g-promote">Promote</dt>
         <dd>Faire d’une simulation draft la simulation live du compte. L’ancienne live est archivée, après un snapshot de configuration.</dd>
         <dt id="g-expert">Mode expert</dt>
         <dd>L’édition directe des fichiers de la simulation (<code>project.yaml</code>, Terraform, manifests OKS) dans le Workspace de l’app.</dd>
+        <dt id="g-branch">Branche active</dt>
+        <dd>La branche Git sélectionnée pour un service. Le code, les routes et les vulnérabilités affichés doivent provenir de cette branche uniquement.</dd>
+        <dt id="g-route">Route exposée</dt>
+        <dd>Une route web ou API détectée dans le code et reliée à son dépôt, son service et son exposition réseau réelle (publique, interne ou source uniquement).</dd>
+        <dt id="g-cwe">CWE</dt>
+        <dd>Une famille d’erreurs de conception ou de code, par exemple injection SQL, XSS ou contrôle d’accès absent.</dd>
+        <dt id="g-cve">CVE</dt>
+        <dd>Une vulnérabilité connue dans une version précise d’une dépendance. bige-ops la confronte à la version réellement utilisée, à l’exposition de la stack et à l’existence d’un correctif afin de prioriser les actions actuelles plutôt qu’un historique brut.</dd>
       </dl>
 
     <footer class="site-footer">
