@@ -17,9 +17,15 @@ Le vocabulaire du cloud et de bige-ops, défini une fois.
 - **Multi-VM** : La topologie multi-vm : une VM app publique, souvent derrière un LBU, et une VM privée par base de données, dans le même Net.
 - **Simulation** : Une variante de ta stack dans bige-ops : brouillon (draft) ou live, avec son coût estimé.
 - **Estimation** : Le coût mensuel € HT d’une simulation, calculé sur ton poste à partir du catalogue public, synchronisable par l’API ReadPublicCatalog.
-- **Apply** : Créer ou mettre à jour l’infrastructure sur ton compte : Terraform généré pour le Net, les VMs, les volumes, le LBU et OOS, oks-cli pour OKS. Le plan montre les changements avant.
-- **Deploy** : Déployer les applications sur l’infrastructure en place : Docker Compose sur les VMs, kubectl apply sur OKS.
+- **Appliquer la configuration** : Réconcilier le Visual et `project.yaml`, valider la stack, régénérer uniquement les fichiers dérivés puis relire le résultat canonique. Cette transaction locale est atomique : en cas d’erreur, la dernière configuration valide est restaurée. Elle ne crée aucune ressource cloud.
+- **Plan** : Prévisualiser les créations, modifications, suppressions, risques et coûts cloud avant toute action réelle.
+- **Apply cloud** : Créer ou mettre à jour l’infrastructure après revue du plan : Net, subnets, routage, VMs, volumes, LBU, OOS ou OKS selon la stack.
+- **Deploy** : Déployer l’application sur l’infrastructure préparée : Docker Compose sur VM ou manifests sur OKS. Le bouton reste indisponible tant qu’une modification Visual ou Config n’a pas été appliquée localement.
 - **Promote** : Faire d’une simulation draft la simulation live du compte. L’ancienne live est archivée, après un snapshot de configuration.
 - **Mode expert** : L’édition directe des fichiers de la simulation (project.yaml, Terraform, manifests OKS) dans le Workspace de l’app.
+- **Branche active** : La branche Git sélectionnée pour un service. Le code, les routes et les vulnérabilités affichés doivent provenir de cette branche uniquement.
+- **Route exposée** : Une route web ou API détectée dans le code et reliée à son dépôt, son service et son exposition réseau réelle (publique, interne ou source uniquement).
+- **CWE** : Une famille d’erreurs de conception ou de code, par exemple injection SQL, XSS ou contrôle d’accès absent.
+- **CVE** : Une vulnérabilité connue dans une version précise d’une dépendance. bige-ops la confronte à la version réellement utilisée, à l’exposition de la stack et à l’existence d’un correctif afin de prioriser les actions actuelles plutôt qu’un historique brut.
 
 HTML : [glossaire.html](https://bige.dev/glossaire.html)

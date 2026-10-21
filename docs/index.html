@@ -700,7 +700,7 @@
       <div class="facts">
         <article class="fact" id="why-less">
           <h3>Simule</h3>
-          <p>Dessine ta stack ou pars d’un modèle. Le prix s’affiche ligne par ligne, avant la facture.</p>
+          <p>Dessine ta stack ou pars d’un modèle. Visual et configuration restent synchronisés par un Apply local et atomique ; le prix s’affiche ligne par ligne.</p>
           <p><a href="layouts.html">Par où commencer →</a></p>
         </article>
         <article class="fact" id="why-deploy">
@@ -710,7 +710,7 @@
         </article>
         <article class="fact" id="why-vulns">
           <h3>Sécurise</h3>
-          <p>Des failles, il y en aura toujours. bige-ops les affiche et met en tête celles que ta stack expose. Sur ton poste, sans clé ni IA.</p>
+          <p>Routes groupées par dépôt, stack et service ; code analysé sur la branche active ; CVE et CWE actuelles classées par exposition, gravité et correctif.</p>
           <p><a href="#failles">Comment ça marche →</a></p>
         </article>
       </div>
@@ -719,11 +719,11 @@
     <section class="block" id="failles">
       <h2>Comment bige-ops trouve tes failles</h2>
       <ol>
-        <li>Il lit le code de tes dépôts, sur ton poste.</li>
-        <li>Il repère les pages et les API que ton app expose, et vérifie qu’elles demandent une connexion.</li>
+        <li>Il lit sur ton poste la branche sélectionnée de chaque dépôt et oublie les résultats devenus obsolètes quand tu changes de branche.</li>
+        <li>Il groupe les pages et API par dépôt, stack et service, puis les relie à leur exposition réelle : publique, interne ou source uniquement.</li>
         <li>Il cherche les erreurs classiques : mots de passe écrits en clair, requêtes à la base construites avec ce que tape l’utilisateur, API ouverte à n’importe quel site.</li>
-        <li>Il compare tes bibliothèques à la base publique des failles connues (<a href="https://osv.dev/" target="_blank" rel="noopener">OSV</a>) et, avec ta clé <a href="https://www.opencve.io/" target="_blank" rel="noopener">OpenCVE</a>, ta stack au registre mondial des failles (CVE).</li>
-        <li>Il classe tout par urgence : ce qui est exposé à Internet d’abord.</li>
+        <li>Il compare les versions réellement installées aux bases publiques (<a href="https://osv.dev/" target="_blank" rel="noopener">OSV</a>) et, avec ta clé <a href="https://www.opencve.io/" target="_blank" rel="noopener">OpenCVE</a>, enrichit les CVE avec leur statut et leurs correctifs connus.</li>
+        <li>Il écarte le bruit historique non applicable et classe les actions : exposition Internet, sévérité, exploitabilité puis version corrigée.</li>
       </ol>
       <p><strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, et c’est gratuit.</p>
     </section>
@@ -760,6 +760,8 @@
     <section class="block" id="aussi">
       <h2>Et aussi</h2>
       <ul>
+        <li><strong>Un dépôt, plusieurs workloads</strong> : front, API et workers d’un monorepo restent identifiés séparément pour préparer VM, pod ou nodepool. <a href="repos-vms-docker.html">Voir</a></li>
+        <li><strong>Une seule réalité</strong> : Config et Visual sont réconciliés, validés et régénérés en une opération atomique avant plan ou déploiement. <a href="expert-config.html">Voir</a></li>
         <li><strong>Des bases réglées pour leur usage</strong> : disque, IOPS, sauvegardes. <a href="layouts.html">Voir</a></li>
         <li id="why-byok"><strong>L’audit profond en option</strong> : bige-ops advanced lit ton code plus en profondeur avec ta propre clé d’IA, et classe chaque faille par type. <a href="agent.html">Voir</a></li>
         <li><strong>Tes secrets chez toi</strong> : coffre local, jamais dans tes fichiers. <a href="secrets.html">Voir</a></li>
