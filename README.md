@@ -25,6 +25,19 @@ brew install --cask simondelamarre/bige-ops/bige-ops
 <p align="center"><img src="docs/screens/shot-failles.png" alt="Capture de bige-ops : une injection SQL réelle dans OWASP Juice Shop, ligne 34 de routes/login.ts, exposée à Internet." width="880" /></p>
 <p align="center"><img src="docs/screens/shot-deps.png" alt="Capture de bige-ops : CVE-2022-25887 sur sanitize-html 1.4.2, reliée à OpenCVE, avec l’issue GitHub proposée en un clic." width="880" /></p>
 
+## Une simulation, une seule réalité
+
+- **Visual ↔ configuration.** Un seul bouton Appliquer réconcilie `project.yaml`, valide la stack, régénère les fichiers utiles et recharge le Visual. La transaction est locale, atomique et restaurée en cas d’erreur.
+- **Pas de déploiement sur un brouillon.** Plan, Apply cloud et Deploy restent distincts et ne sont proposés qu’après application de la configuration.
+- **VM, parc VM ou OKS.** Les subnets, routes, IP publiques ou privées, NAT, load balancers, pods et nodepools sont représentés selon la topologie réellement déclarée.
+- **Monorepos compris.** Front, API, workers et services gardent leur dépôt, branche et chemin propres pour préparer plusieurs workloads depuis un seul repo.
+
+## Des vulnérabilités actionnables
+
+- Le scan suit la **branche active** : changer de branche invalide les anciennes routes et vulnérabilités au lieu de les mélanger.
+- Les routes sont regroupées par **dépôt, stack et service**, avec leur exposition publique, interne ou source uniquement.
+- Les CWE de code et CVE de dépendances sont priorisées par **applicabilité, exposition, sévérité et correctif disponible**, plutôt que d’afficher tout l’historique brut.
+
 ## Pas cher, maîtrisé et sans VPS
 
 bige-ops est gratuit. Ton cloud, tu le paies au prix public, et tu le vois ligne par ligne avant de déployer.
