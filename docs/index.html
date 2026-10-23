@@ -4,22 +4,23 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <title>bige-ops — dessine ta stack, vois le prix, déploie (gratuit, local)</title>
-  <meta name="description" content="Gratuit et 100 % local : dessine ta stack, vérifie ses failles, vois son prix ligne par ligne, puis déploie-la sur ton compte cloud, sans DevOps." />
+  <title>bige-ops — simule, sécurise et migre ton cloud (gratuit, local)</title>
+  <meta name="description" content="Gratuit et 100 % local : dessine ta stack, vérifie ses failles, vois son prix, déploie-la et explore ou migre tes buckets AWS S3, Cloudflare R2 et Outscale OOS." />
   <link rel="canonical" href="https://bige.dev/" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <meta name="theme-color" content="#0b0d10" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="bige-ops" />
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/" />
-  <meta property="og:title" content="bige-ops — dessine ta stack, vois le prix, déploie" />
-  <meta property="og:description" content="Gratuit · 100 % local. Simule ta stack, vérifie-la, vois son coût, puis déploie-la sur ton compte." />
+  <meta property="og:title" content="bige-ops — simule, sécurise et migre ton cloud" />
+  <meta property="og:description" content="Gratuit · 100 % local. Simule ta stack, vérifie-la, puis explore et migre tes buckets AWS S3, Cloudflare R2 et Outscale OOS." />
   <meta property="og:image" content="https://bige.dev/screens/shot-simule.png" />
   <meta property="og:image:alt" content="Capture de bige-ops : une stack sur une machine estimée à 74,50 € HT par mois" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="bige-ops — dessine ta stack, vois le prix, déploie" />
-  <meta name="twitter:description" content="Gratuit · 100 % local. Simule, vérifie, vois le prix, puis déploie." />
+  <meta name="twitter:title" content="bige-ops — simule, sécurise et migre ton cloud" />
+  <meta name="twitter:description" content="Gratuit · 100 % local. Simule, vérifie, déploie et migre tes buckets S3, R2 et OOS." />
   <meta name="twitter:image" content="https://bige.dev/screens/shot-simule.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -652,7 +653,7 @@
     </div>
     <span id="why-outscale"></span><span id="outscale"></span><span id="clouds"></span>
     <h1 class="hero-title">Dessine ta stack.<br>Vois le prix.<br><span>Déploie.</span></h1>
-    <p class="baseline">bige-ops simule ton infra, te montre ce qu’elle coûte et la déploie sur ton compte, aujourd’hui chez <a href="pourquoi-outscale.html">Outscale</a>. Gratuit, installé en une commande.</p>
+    <p class="baseline">bige-ops simule ton infra, te montre ce qu’elle coûte, la déploie et simplifie la migration de tes données vers <a href="pourquoi-outscale.html">Outscale</a>. Gratuit, installé en une commande.</p>
 
     <div id="download" class="download-inline">
       <p class="brew">
@@ -713,7 +714,34 @@
           <p>Routes groupées par dépôt, stack et service ; code analysé sur la branche active ; CVE et CWE actuelles classées par exposition, gravité et correctif.</p>
           <p><a href="#failles">Comment ça marche →</a></p>
         </article>
+        <article class="fact" id="why-storage">
+          <h3>Migre</h3>
+          <p>Explore AWS S3, Cloudflare R2 et Outscale OOS, prévisualise tes fichiers et reproduis un ou plusieurs buckets sur OOS sans supprimer la source.</p>
+          <p><a href="#object-storage">Voir le parcours →</a></p>
+        </article>
       </div>
+    </section>
+
+    <section class="block" id="object-storage">
+      <h2>Explorer et migrer l’Object Storage</h2>
+      <p>
+        Connecte un compte <strong>AWS S3</strong>, <strong>Cloudflare R2</strong>,
+        <strong>Outscale OOS</strong> ou un endpoint compatible S3. Le Storage
+        Explorer rassemble les buckets dans une vue locale sans mélanger les
+        credentials entre tes espaces de travail.
+      </p>
+      <ol>
+        <li><strong>Visualise</strong> les poids courants, l’exposition publique, l’arbre dossiers/fichiers, les métadonnées et les aperçus d’images, PDF, médias et documents bureautiques.</li>
+        <li><strong>Gère</strong> les objets : recherche, upload, téléchargement, suppression d’un fichier, d’un dossier complet ou d’un bucket avec confirmation et progression.</li>
+        <li><strong>Migre</strong> un bucket ou toute une connexion vers OOS. Les buckets absents sont créés avec les mêmes noms, puis les objets sont copiés en parallèle.</li>
+        <li><strong>Reprends</strong> après une fermeture ou une erreur : le journal persistant évite de recommencer les objets déjà vérifiés et n’écrase jamais un objet arrivé entre-temps.</li>
+      </ol>
+      <p>
+        La migration est une copie contrôlée <strong>Source → Destination</strong> :
+        elle ne supprime jamais automatiquement la source. Les backups de bases
+        restent un usage séparé, avec leur propre planning et leur restauration.
+      </p>
+      <p><a href="oos.html">Object Storage, migrations S3/R2/OOS et backups →</a></p>
     </section>
 
     <section class="block" id="failles">
@@ -763,6 +791,7 @@
         <li><strong>Un dépôt, plusieurs workloads</strong> : front, API et workers d’un monorepo restent identifiés séparément pour préparer VM, pod ou nodepool. <a href="repos-vms-docker.html">Voir</a></li>
         <li><strong>Une seule réalité</strong> : Config et Visual sont réconciliés, validés et régénérés en une opération atomique avant plan ou déploiement. <a href="expert-config.html">Voir</a></li>
         <li><strong>Des bases réglées pour leur usage</strong> : disque, IOPS, sauvegardes. <a href="layouts.html">Voir</a></li>
+        <li><strong>Tes buckets dans une seule interface</strong> : exploration, aperçu, transfert et migration reprenable entre S3, R2 et OOS. <a href="oos.html">Voir</a></li>
         <li id="why-byok"><strong>L’audit profond en option</strong> : bige-ops advanced lit ton code plus en profondeur avec ta propre clé d’IA, et classe chaque faille par type. <a href="agent.html">Voir</a></li>
         <li><strong>Tes secrets chez toi</strong> : coffre local, jamais dans tes fichiers. <a href="secrets.html">Voir</a></li>
         <li><strong>Bientôt</strong> : ta conso réelle face à ta simulation.</li>
@@ -832,7 +861,7 @@
             <li><a href="omi.html">OMI · images</a></li>
             <li><a href="bases.html">Bases de données</a></li>
             <li><a href="bases-complexes.html">Bases complexes</a></li>
-            <li><a href="oos.html">OOS &amp; backups</a></li>
+            <li><a href="oos.html">Object Storage · S3, R2, OOS</a></li>
           </ul>
         </div>
         <div>
