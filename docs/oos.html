@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OOS &amp; backups — bige-ops</title>
-  <meta name="description" content="OOS, l’Object Storage Outscale compatible S3 : bucket régional, lien backup depuis la base, protection contre la destruction, et ce qu’il faut savoir sur les noms, les clés et le coût." />
+  <title>Object Storage · S3, R2, OOS &amp; backups — bige-ops</title>
+  <meta name="description" content="Explore, prévisualise et migre un ou plusieurs buckets AWS S3, Cloudflare R2 ou compatibles S3 vers Outscale OOS, avec copie parallèle et reprise après interruption." />
   <link rel="canonical" href="https://bige.dev/oos.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -12,8 +12,8 @@
   <meta property="og:site_name" content="bige-ops" />
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/oos.html" />
-  <meta property="og:title" content="OOS &amp; backups — bige-ops" />
-  <meta property="og:description" content="OOS, l’Object Storage Outscale compatible S3 : bucket régional, lien backup depuis la base, protection contre la destruction, et ce qu’il faut savoir sur les noms, les clés et le coût." />
+  <meta property="og:title" content="Object Storage · S3, R2, OOS &amp; backups — bige-ops" />
+  <meta property="og:description" content="Explore, prévisualise et migre un ou plusieurs buckets AWS S3, Cloudflare R2 ou compatibles S3 vers Outscale OOS, avec copie parallèle et reprise après interruption." />
   <meta property="og:image" content="https://bige.dev/screens/hero.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -28,12 +28,71 @@
       <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
       <span class="brand-badge">Gratuit</span>
     </div>
-    <h1>OOS &amp; backups</h1>
+    <h1>Object Storage · S3, R2, OOS &amp; backups</h1>
     <p class="lead">
-      <strong>OOS</strong> (OUTSCALE Object Storage) est le stockage objet
-      d’Outscale, compatible avec l’API S3 : tout outil S3 fonctionne avec.
-      Dans bige-ops, c’est la destination naturelle des sauvegardes : un
-      bucket, un lien backup depuis la base, un script de sauvegarde préparé.
+      Connecte <strong>AWS S3</strong>, <strong>Cloudflare R2</strong>,
+      <strong>Outscale OOS</strong> ou un endpoint compatible S3 pour explorer,
+      prévisualiser et transférer tes objets. Bige Ops peut reproduire un ou
+      plusieurs buckets sur OOS, conserver leurs noms et reprendre une copie
+      interrompue sans supprimer la source.
+    </p>
+
+    <div class="callout">
+      <strong>Deux usages séparés.</strong>
+      Le <strong>Storage Explorer</strong> sert à parcourir, rechercher,
+      prévisualiser, transférer et migrer les objets. Les
+      <strong>backups de bases de données</strong> utilisent aussi un bucket,
+      mais gardent leur propre configuration, leur planning, leur rétention et
+      leur restauration.
+    </div>
+
+    <h2>Storage Explorer multi-provider</h2>
+    <p>
+      Dans l’app, l’onglet <strong>Storage</strong> accepte AWS S3, OOS,
+      Cloudflare R2 et un endpoint compatible S3. Une connexion manuelle et ses
+      secrets restent dans le workspace courant : elle n’apparaît pas dans les
+      autres espaces de travail. Les buckets OOS déjà détectés dans l’inventaire
+      peuvent être ouverts directement par une connexion gérée liée au compte.
+    </p>
+    <ul>
+      <li><strong>Parcourir et chercher :</strong> arbre paresseux dossiers/fichiers, fil d’Ariane, pagination et recherche bornée par lots.</li>
+      <li><strong>Comprendre :</strong> poids des objets courants, nombre d’objets, métadonnées, tags et nom original lorsqu’il existe — sans appeler cette mesure la facture exacte.</li>
+      <li><strong>Contrôler l’exposition :</strong> état privé, potentiellement public ou inconnu selon les protections et policies réellement lisibles.</li>
+      <li><strong>Agir :</strong> aperçu local intégré, téléchargement, upload et suppression récursive d’un dossier ou d’un bucket avec inventaire, confirmation exacte et progression.</li>
+      <li><strong>Migrer :</strong> flux Source → Destination, 16 transferts parallèles par défaut (réglables), reprise après interruption, recherche des clés manquantes et vérification ; la source n’est jamais supprimée ni écrasée automatiquement.</li>
+      <li><strong>Reproduire plusieurs buckets :</strong> sélection partielle ou globale d’une connexion S3, création automatique des buckets OOS manquants avec les mêmes noms, puis suivi et reprise par bucket et par objet.</li>
+    </ul>
+    <div class="callout">
+      <strong>Migration complète en quatre étapes.</strong>
+      Choisis la connexion source, sélectionne un ou tous ses buckets, choisis
+      la connexion OOS de destination, puis prépare le plan. Bige Ops crée les
+      buckets OOS manquants avec les mêmes noms et lance les copies parallèles.
+      La console affiche le bucket, les objets terminés, les octets, le débit,
+      l’estimation et le nombre de transferts actifs. Fermer l’app interrompt le
+      processus local et libère son verrou sans détruire le suivi : l’action
+      <strong>Reprendre</strong> continue les objets non terminés ou non vérifiés.
+    </div>
+    <figure class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  SRC["AWS S3 / R2 / S3 custom"] -->|sélectionner un ou tous les buckets| PLAN[Plan local]
+  PLAN -->|créer les buckets manquants avec les mêmes noms| OOS[(Outscale OOS)]
+  PLAN -->|copie parallèle et reprenable| OOS
+  SRC -.->|source conservée| SRC
+      </pre>
+      <figcaption>Un plan liste les métadonnées ; les contenus ne sont copiés qu’au lancement de la migration.</figcaption>
+    </figure>
+    <p>
+      Une clé contenant des caractères non imprimables peut être refusée par OOS.
+      Bige Ops ne la renomme jamais silencieusement : l’objet reste dans la
+      source et apparaît dans le rapport d’alerte pour une correction ciblée.
+    </p>
+    <p>
+      Les aperçus utilisent un cache privé et borné du workspace. Images, texte,
+      PDF, audio, vidéo et principaux formats bureautiques (DOC/DOCX, RTF,
+      OpenDocument, XLS/XLSX et PPT/PPTX) sont rendus dans l’app lorsque le
+      format le permet. Les variantes non prises en charge gardent un repli
+      explicite vers le téléchargement ou l’application système.
     </p>
 
     <figure class="diagram">
@@ -122,18 +181,19 @@ flowchart TB
       refusent tout plan qui supprimerait de l’Object Storage.
     </p>
     <p>
-      À chaque <code>generate</code>, les buckets sont enregistrés dans le
-      <code>shared.yaml</code> du compte et <strong>apparaissent sur toutes
-      les simulations</strong> de ce compte.
+      Le catalogue des buckets du compte est enregistré dans
+      <code>shared.yaml</code> et apparaît dans l’Inventaire et le Storage
+      Explorer. Un Visual affiche uniquement les buckets explicitement attachés
+      à sa simulation. Retirer cette référence du Visual ne supprime jamais le
+      bucket cloud.
     </p>
     <p>
-      Pour retirer un bucket, il faut le demander explicitement :
-      <code>bige-ops storage remove --name &lt;bucket&gt;</code>, ou la
-      suppression depuis l’inspector Visual. bige-ops vérifie d’abord l’état
-      réel (<code>bige-ops storage status</code>, <code>storage ls</code>) :
-      un bucket pas encore créé ou vide est retiré, un bucket qui contient
-      des objets est refusé. Pour le vider, passe par Cockpit, l’API ou un
-      outil S3.
+      La suppression cloud se fait uniquement depuis le Storage Explorer et
+      demande de saisir le nom exact. Un bucket vide peut être supprimé
+      directement. Pour un bucket non vide, bige-ops inspecte d’abord les
+      objets courants, versions, marqueurs de suppression et uploads multipart,
+      puis exige une confirmation explicite de purge avant toute suppression
+      définitive.
     </p>
     <p>
       <strong>Une base sans backup vers OOS perd ses données à la
@@ -186,7 +246,7 @@ flowchart TB
             <li><a href="omi.html">OMI · images</a></li>
             <li><a href="bases.html">Bases de données</a></li>
             <li><a href="bases-complexes.html">Bases complexes</a></li>
-            <li><a href="oos.html">OOS &amp; backups</a></li>
+            <li><a href="oos.html">Object Storage · S3, R2, OOS</a></li>
           </ul>
         </div>
         <div>
