@@ -74,6 +74,17 @@ flowchart TB
       pour la persistance. Le canvas lie le service à sa VM et à son volume ;
       Save réécrit <code>project.yaml</code> sans questionnaire.
     </p>
+    <p>
+      En multi-VM, une petite base peut aussi tourner sur la
+      <strong>VM privée d’une autre base</strong> : champ
+      <strong>Machine</strong> de l’inspecteur, ou
+      <code>service_config.redis.colocate_with: weaviate</code>. Une VM de
+      moins dans l’estimation ; la VM hôte garde sa taille, ses groupes de
+      sécurité s’additionnent, deploy et backups suivent. La validation refuse
+      deux bases sur le même port (MySQL + MariaDB) ou une VM hôte trop petite
+      pour la mémoire déclarée. Déplacer une base déjà déployée ne copie pas
+      ses données.
+    </p>
 
     <figure class="diagram">
       <pre class="mermaid">

@@ -14,7 +14,7 @@ Le vocabulaire du cloud et de bige-ops, défini une fois.
 - **OKS** : Kubernetes as a Service : control plane managé, nodepools de VMs Tina, Services de type LoadBalancer adossés au LBU.
 - **SecNumCloud** : Le référentiel de sécurité de l’ANSSI. Le cloud est qualifié SecNumCloud 3.2 ; la région correspondante est cloudgouv-eu-west-1.
 - **Mono-VM** : La topologie single-vm de bige-ops : une seule VM {nom}-all porte les apps et leurs bases, avec une IP publique. Le point de départ le plus simple.
-- **Multi-VM** : La topologie multi-vm : une VM app publique, souvent derrière un LBU, et une VM privée par base de données, dans le même Net.
+- **Multi-VM** : La topologie multi-vm : une VM app publique, souvent derrière un LBU, et une VM privée par base de données, dans le même Net. Une base peut partager la VM privée d’une autre base (`colocate_with`).
 - **Simulation** : Une variante de ta stack dans bige-ops : brouillon (draft) ou live, avec son coût estimé.
 - **Estimation** : Le coût mensuel € HT d’une simulation, calculé sur ton poste à partir du catalogue public, synchronisable par l’API ReadPublicCatalog.
 - **Appliquer la configuration** : Réconcilier le Visual et `project.yaml`, valider la stack, régénérer uniquement les fichiers dérivés puis relire le résultat canonique. Cette transaction locale est atomique : en cas d’erreur, la dernière configuration valide est restaurée. Elle ne crée aucune ressource cloud.

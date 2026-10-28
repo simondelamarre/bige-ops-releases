@@ -56,7 +56,7 @@
         <dt id="g-mono-vm">Mono-VM</dt>
         <dd>La topologie <code>single-vm</code> de bige-ops : une seule VM <code>{nom}-all</code> porte les apps et leurs bases, avec une IP publique. Le point de départ le plus simple.</dd>
         <dt id="g-multi-vm">Multi-VM</dt>
-        <dd>La topologie <code>multi-vm</code> : une VM app publique, souvent derrière un LBU, et une VM privée par base de données, dans le même Net.</dd>
+        <dd>La topologie <code>multi-vm</code> : une VM app publique, souvent derrière un LBU, et une VM privée par base de données, dans le même Net. Une base peut partager la VM privée d’une autre base (<code>colocate_with</code>).</dd>
         <dt id="g-simulation">Simulation</dt>
         <dd>Une variante de ta stack dans bige-ops : brouillon (draft) ou live, avec son coût estimé.</dd>
         <dt id="g-estimate">Estimation</dt>
