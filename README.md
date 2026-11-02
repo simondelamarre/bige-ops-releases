@@ -1,5 +1,13 @@
 <p align="center">
-  <img src="docs/screens/shot-simule.png" alt="Capture de bige-ops : le Visual d’une stack sur une machine (API, front, PostgreSQL et sauvegardes), estimée à 74,50 € HT par mois." width="920" />
+  <img src="docs/screens/site-simule.webp" alt="Capture de bige-ops : le Visual d’une stack. L’API, le front et le worker sur une VM publique, PostgreSQL et Redis chacun sur une VM privée, sauvegardes vers l’Object Storage, bouton Déployer en production." width="920" />
+</p>
+
+<h1 align="center">Simple comme un PaaS.<br/>Flexible comme un IaaS.</h1>
+
+<p align="center">
+  <strong>bige-ops</strong> est une application gratuite, installée sur ton poste.<br/>
+  Tu relies ton dépôt, tu simules ta stack, tu la testes en local et tu la déploies sur ton propre compte cloud.<br/>
+  <strong>Sans DevOps.</strong>
 </p>
 
 <p align="center">
@@ -12,93 +20,108 @@
 brew install --cask simondelamarre/bige-ops/bige-ops
 ```
 
-<p align="center"><strong>Gratuit · local · sans compte cloud pour commencer</strong> · <a href="https://bige.dev/">bige.dev</a></p>
+<p align="center"><strong>Gratuit · sans carte bancaire · sans compte cloud pour commencer</strong> · <a href="https://bige.dev/">bige.dev</a></p>
 
 ---
 
-## Simple, facile et pratique
+## Simple comme un PaaS
 
-### Simule : ta stack et son prix, avant de déployer
-<p align="center"><img src="docs/screens/shot-grandis.png" alt="Capture de bige-ops : le Visual d’une stack multi-VM, VM app à 136 €, VM PostgreSQL à 169 € et VM Redis à 55 € par mois, total 381,66 € HT." width="880" /></p>
+Tu veux mettre ton produit en ligne, pas devenir DevOps. bige-ops fait le travail d’une plateforme managée, sur ton poste.
 
-### Sécurise : tes failles, les plus exposées d’abord, sans clé ni IA
-<p align="center"><img src="docs/screens/shot-failles.png" alt="Capture de bige-ops : une injection SQL réelle dans OWASP Juice Shop, ligne 34 de routes/login.ts, exposée à Internet." width="880" /></p>
-<p align="center"><img src="docs/screens/shot-deps.png" alt="Capture de bige-ops : CVE-2022-25887 sur sanitize-html 1.4.2, reliée à OpenCVE, avec l’issue GitHub proposée en un clic." width="880" /></p>
+- **Simule.** Pars d’une stack prête ou dessine la tienne. Le Visual et la configuration restent la même chose : un seul Appliquer, local et vérifié. [Par où commencer](https://bige.dev/layouts.html)
+- **Teste en local.** Tes conteneurs, ou ton Kubernetes en local, avant de toucher au cloud. Pas besoin de compte cloud pour ça.
+- **Déploie.** Tu relies ton dépôt et tu cliques sur Déployer. bige-ops écrit le Terraform et les manifests, te montre le plan, puis déploie sur ton compte. [13 stacks prêtes](https://bige.dev/stacks.html)
+- **Sécurise.** Tes failles, les plus exposées d’abord : la ligne de code, la version corrigée, l’issue GitHub en un clic.
 
-## Une simulation, une seule réalité
+<p align="center"><img src="docs/screens/site-kubernetes.webp" alt="Capture de bige-ops : la même stack sur Kubernetes, un cluster OKS, un node pool de trois nœuds, les pods api, worker et web, MongoDB et Redis, avec les boutons Tester Kubernetes et Déployer en production." width="880" /></p>
+<p align="center"><em>La même stack sur Kubernetes : ton cluster, ton node pool, tes pods. Testée en local avant le cloud.</em></p>
 
-- **Visual ↔ configuration.** Un seul bouton Appliquer réconcilie `project.yaml`, valide la stack, régénère les fichiers utiles et recharge le Visual. La transaction est locale, atomique et restaurée en cas d’erreur.
-- **Pas de déploiement sur un brouillon.** Plan, Apply cloud et Deploy restent distincts et ne sont proposés qu’après application de la configuration.
-- **VM, parc VM ou OKS.** Les subnets, routes, IP publiques ou privées, NAT, load balancers, pods et nodepools sont représentés selon la topologie réellement déclarée.
-- **Monorepos compris.** Front, API, workers et services gardent leur dépôt, branche et chemin propres pour préparer plusieurs workloads depuis un seul repo.
+## Flexible comme un IaaS
 
-## Des vulnérabilités actionnables
+Ce que tu gagnes à quitter un PaaS, sans perdre sa simplicité.
 
-- Le scan suit la **branche active** : changer de branche invalide les anciennes routes et vulnérabilités au lieu de les mélanger.
-- Les routes sont regroupées par **dépôt, stack et service**, avec leur exposition publique, interne ou source uniquement.
-- Les CWE de code et CVE de dépendances sont priorisées par **applicabilité, exposition, sévérité et correctif disponible**, plutôt que d’afficher tout l’historique brut.
-
-## Pas cher, maîtrisé et sans VPS
-
-bige-ops est gratuit. Ton cloud, tu le paies au prix public, et tu le vois ligne par ligne avant de déployer.
-
-| Stack | Pour qui | Budget indicatif |
-|---|---|---|
-| [Une app et sa base sur une machine](https://bige.dev/layouts.html) | TPE, outil métier, premier produit | ~75 €/mois |
-| [WordPress + MariaDB](https://bige.dev/stack-wordpress-mariadb.html) | Site, e-commerce léger | ~237 €/mois |
-| [Go + PostgreSQL + NATS](https://bige.dev/stack-go-postgresql-nats.html) | API rapide, événements | ~303 €/mois |
-| [Phoenix + PostgreSQL](https://bige.dev/stack-phoenix-postgresql.html) | Temps réel | ~368 €/mois |
-| [Django + Celery](https://bige.dev/stack-django-celery-postgresql-redis.html) · [Rails + Sidekiq](https://bige.dev/stack-rails-sidekiq-postgresql-redis.html) · [Laravel + Horizon](https://bige.dev/stack-laravel-horizon-mysql-redis.html) | SaaS avec tâches de fond | ~423 €/mois |
-| [Next.js + NestJS + PostgreSQL + Redis](https://bige.dev/stack-nextjs-nestjs-postgresql-redis.html) | SaaS TypeScript | ~428 €/mois |
-| [.NET + PostgreSQL + RabbitMQ](https://bige.dev/stack-dotnet-postgresql-rabbitmq.html) | Applications métier | ~438 €/mois |
-| [Node.js + MongoDB + Redis sur Kubernetes](https://bige.dev/stack-express-mongodb-redis-oks.html) | Scale-up | ~458 €/mois |
-| [Quarkus + Kafka sur Kubernetes](https://bige.dev/stack-quarkus-oks-postgresql-kafka.html) | Microservices Java | ~523 €/mois |
-| [Jakarta EE + OpenSearch](https://bige.dev/stack-jakarta-ee-opensearch-postgresql.html) | Grands comptes, recherche | ~715 €/mois |
-| [Spring Boot + Kafka + Keycloak sur Kubernetes](https://bige.dev/stack-spring-boot-oks-kafka-keycloak.html) | Grands comptes | ~919 €/mois |
-| [IA : FastAPI + pgvector + GPU](https://bige.dev/stack-ai-fastapi-pgvector-gpu.html) | Produit IA | ~2 655 €/mois |
-
-Estimations HT calculées par bige-ops sur la grille publique (eu-west-2). [Toutes les stacks et les langages →](https://bige.dev/stacks.html)
+- **Ton compte, tes machines.** VMs, cluster Kubernetes dédié, réseau privé, load balancer : tout est créé sur ton compte, rien ne passe par nous.
+- **Tes versions, tes licences.** PostgreSQL, MongoDB, Redis : tu choisis l’image et la version. Pas d’image revendue, pas de base captive.
+- **Ton infra en clair.** Terraform et manifests générés, lisibles, versionnés dans ton Git : chaque simulation est une branche.
+- **Une seule facture cloud.** Tes services et tes données rejoignent ton compte, au lieu d’un abonnement par PaaS, BaaS et SaaS.
+- **Tu grandis sans tout réécrire.** Une machine, puis l’app et ses données séparées, puis Kubernetes : la même stack, décrite une fois.
 
 Ne perds pas ton temps sur Heroku, Fly.io, Render, Railway, Vercel, Netlify, Clever Cloud, Koyeb, Northflank, DigitalOcean, Linode, Vultr, Hetzner, Contabo, Hostinger…
 
 ### Si tu cherches un vrai cloud provider pour avancer : [Outscale](https://bige.dev/pourquoi-outscale.html).
 
-- **Premier cloud qualifié SecNumCloud 3.2.** Visa de l’ANSSI pour son cloud public, en décembre 2023. Pionnier depuis 2019, premier IaaS à obtenir SecNumCloud. ([source](https://www.3ds.com/newsroom/press-releases/outscale-first-cloud-qualified-secnumcloud-32))
-- **Kubernetes managé, rien qu’à toi.** Avec OKS, chaque client a son cluster dédié, son control plane isolé, sans partage de ressources.
+- **Premier cloud qualifié SecNumCloud 3.2.** Visa de l’ANSSI pour son cloud public, en décembre 2023. ([source](https://www.3ds.com/newsroom/press-releases/outscale-first-cloud-qualified-secnumcloud-32))
+- **Kubernetes managé, rien qu’à toi.** Chaque client a son cluster dédié, son control plane isolé, sans partage de ressources.
 - **Des bases qui tiennent la charge.** Jusqu’à 13 000 IOPS garanties par volume io1.
-- **Un prix public, ligne par ligne.** Pas besoin de devis pour savoir combien coûte ta stack.
 - **Prêt pour les clients exigeants.** HDS pour la santé, ISO 27001, 27017 et 27018, CISPE, TISAX.
 - **Une marque de Dassault Systèmes.** La même infrastructure porte la plateforme 3DEXPERIENCE.
 
-## Encore plus simple, basique et pratique
+## Migre sans peur
 
-1. **Installe.** C’est gratuit.
-2. **Simule.** Pars d’une stack prête et vois le prix.
-3. **Déploie** sur ton compte, quand tu veux. Pas besoin de DevOps.
+Quitter un PaaS, c’est d’abord déplacer des données. bige-ops le fait en copie contrôlée : la source n’est jamais supprimée, rien n’est écrasé.
+
+- **Object Storage.** Connecte AWS S3, Cloudflare R2, OOS ou un endpoint compatible S3. Explore, prévisualise tes fichiers, puis reproduis un bucket ou tous sur OOS : mêmes noms, copie parallèle, reprise après une coupure. [Voir](https://bige.dev/oos.html)
+- **Bases de données.** Chaque base a son panneau Données : dump, envoi vers l’Object Storage, restauration, migration depuis une autre base.
+
+<p align="center"><img src="docs/screens/site-migration.webp" alt="Capture de bige-ops : migration de trois buckets AWS S3 vers OOS, mêmes noms, deux buckets à créer, seize transferts en parallèle." width="880" /></p>
+<p align="center"><img src="docs/screens/site-donnees.webp" alt="Capture de bige-ops : le panneau Données d’une base MongoDB, dump créé, envoi vers l’Object Storage en cours, boutons Créer un dump, Restaurer et Migrer depuis une base." width="880" /></p>
+
+## Tes failles, les plus exposées d’abord
+
+Sur ton poste, sans clé ni IA :
+
+- le scan suit la **branche active** de chaque dépôt, et oublie les résultats d’une branche que tu quittes ;
+- les routes sont regroupées par **dépôt, stack et service**, avec leur exposition : publique, interne ou source uniquement ;
+- injections, mots de passe en clair, API ouvertes, et les **CVE de tes bibliothèques** avec la version corrigée ([OSV](https://osv.dev/), [OpenCVE](https://www.opencve.io/) avec ta clé) ;
+- un clic propose l’**issue GitHub** à ton équipe ; le rapport s’exporte en Markdown ou PDF.
+
+<p align="center"><img src="docs/screens/site-failles.webp" alt="Capture de bige-ops : une injection SQL dans OWASP Juice Shop, ligne 34 de routes/login.ts surlignée, exposée à Internet, priorité 1, avec le bouton Proposer une issue GitHub." width="880" /></p>
+<p align="center"><em>Une injection SQL réelle dans <a href="https://owasp.org/projects/juice-shop">OWASP Juice Shop</a> : la ligne, l’exposition, l’issue en un clic.</em></p>
+
+[Comment bige-ops trouve tes failles →](https://bige.dev/#failles)
+
+## Gratuit, sans intermédiaire
+
+**bige-ops est gratuit.** Ton cloud, tu le paies à ton fournisseur, sur ton compte. Personne ne se place entre les deux.
+
+Avant de déployer, la simulation t’en donne une estimation dans l’app, sur les tarifs publics du fournisseur : le catalogue se synchronise par la CLI, et la remise que tu négocies vient en plus.
+
+## Démarrer en trois étapes
+
+1. **Installe** : la commande ci-dessus sur macOS, l’AppImage ou le .deb sur Linux.
+2. **Simule et teste** : connecte-toi avec GitHub, choisis un dossier, pars d’une stack prête et lance-la en local.
+3. **Déploie** : tu connectes ton compte cloud quand tu es prêt, tu relis le plan, tu déploies.
+
+## Nouveautés 0.9 et 0.10
+
+- **Un panneau Données par base.** Dump, restauration et migration ; les dumps locaux sont listés, pesés et supprimables ; l’envoi vers l’Object Storage tourne en arrière-plan et se reprend.
+- **Kubernetes en local.** Teste une stack OKS sur ton poste, depuis un brouillon, avant le cloud.
+- **Images et Dockerfiles guidés.** Registre GitHub (GHCR) proposé pour OKS, revue du Dockerfile avant le build, monorepos compris.
+- **Dépôts de travail propres.** Les fichiers locaux, dumps et données de test ne partent jamais dans ton Git.
+
+Les recettes sur de vrais comptes cloud restent séparées des tests automatisés : avant une infra critique, garde un expert dans la boucle.
 
 ## Questions franches
 
-- **C’est prêt pour la prod ?** bige-ops est jeune (v0.7) et avance vite. Avant chaque déploiement, une étape de revue te montre ce qui va changer, et ta stack reste un fichier versionné dans ton Git. Pour une infra critique, garde un expert dans la boucle.
+- **C’est prêt pour la prod ?** bige-ops est jeune (0.10) et avance vite. Avant chaque déploiement, tu relis le plan de ce qui va changer, et ta stack reste un fichier versionné dans ton Git.
 - **Et le HTTPS ?** Il passe par le load balancer, avec ton certificat chargé dans le cloud : bige-ops le branche pour toi.
+- **Où sont mes secrets ?** Sur ton poste, dans un coffre local, jamais dans tes fichiers.
 - **Pourquoi brew sur macOS ?** Une commande installe l’app et la prépare pour macOS. Sur Linux : AppImage ou .deb.
-- **Les prix sont-ils justes ?** Ce sont les prix publics du catalogue, ligne par ligne, recalculés à chaque modification. Si tu négocies une remise, elle vient en plus.
 
 ---
-
-<p align="center"><strong>Le prix compte, mais pas seul : où vivent tes données, qui les protège et qui te répond comptent autant.</strong></p>
 
 <h3 align="center">Bientôt d’autres providers SecNumCloud et français</h3>
 
 <p align="center">
   <strong>bige-ops est indépendant.</strong> Ta stack est décrite une fois. Quand d’autres clouds français arriveront dans bige-ops,<br/>
-  tu compareras la même stack, prix à l’appui. <strong>Installe maintenant, tu choisiras ensuite.</strong><br/>
+  tu déploieras la même stack chez eux. <strong>Installe maintenant, tu choisiras ensuite.</strong><br/>
   <a href="https://www.ovhcloud.com/fr/">OVHcloud</a> · <a href="https://www.scaleway.com/fr/">Scaleway</a>
 </p>
 
 <p align="center">
   <a href="https://bige.dev/layouts.html">Par où commencer</a> ·
-  <a href="https://bige.dev/#failles">Comment on trouve tes failles</a> ·
-  <a href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">Une idée ?</a>
+  <a href="https://bige.dev/stacks.html">Stacks et langages</a> ·
+  <a href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">Une idée, un bug ?</a>
 </p>
 
 <!-- Other clouds hidden for now (see ENABLED_PROVIDER_IDS in desktop/src/lib/providers.ts).
