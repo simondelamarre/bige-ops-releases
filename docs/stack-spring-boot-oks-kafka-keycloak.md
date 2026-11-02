@@ -1,8 +1,8 @@
 # Spring Boot sur OKS + Kafka + PostgreSQL + Redis + Keycloak
 
-Le schéma type des grandes entreprises et des scale-ups Java : des microservices Spring Boot derrière une gateway, Kafka pour les événements, PostgreSQL pour les données, Redis pour le cache, Keycloak pour l’identité. Sur OKS, le Kubernetes managé d’Outscale, disponible aussi en Région SecNumCloud, bige-ops génère le cluster, les manifests et le chiffrage.
+Le schéma type des grandes entreprises et des scale-ups Java : des microservices Spring Boot derrière une gateway, Kafka pour les événements, PostgreSQL pour les données, Redis pour le cache, Keycloak pour l’identité. Sur OKS, le Kubernetes managé d’Outscale, disponible aussi en Région SecNumCloud, bige-ops génère le cluster et les manifests.
 
-**En bref.** Topologie oks : control plane haute disponibilité cp.3.masters.small, nodepool de 3 nœuds tinav6.c8r16p2 (24 vCPU, 48 GiB). Gateway, front, consumers Kafka, microservices orders et catalog, Kafka, Keycloak, PostgreSQL et Redis en Deployments. Estimation bige-ops : **918,80 € HT/mois**, plus les trois LBU des Services exposés.
+**En bref.** Topologie oks : control plane haute disponibilité cp.3.masters.small, nodepool de 3 nœuds tinav6.c8r16p2 (24 vCPU, 48 GiB). Gateway, front, consumers Kafka, microservices orders et catalog, Kafka, Keycloak, PostgreSQL et Redis en Deployments. La gateway, le front et Keycloak créent chacun leur LBU.
 
 ## Pourquoi cette stack tourne bien sur Outscale
 
@@ -14,18 +14,17 @@ Le schéma type des grandes entreprises et des scale-ups Java : des microservice
 
 OKS cp.3.masters.small (HA), nodepool 3 × tinav6.c8r16p2 ; gateway Spring Cloud (HPA 2→6), web, microservices orders et catalog (custom, image registre), worker Kafka ; Kafka 4.3.1 (KRaft) et Keycloak 26.8.1 en custom ; PostgreSQL 17 et Redis 8 ; pods de données sur emptyDir, backup PostgreSQL vers OOS.
 
-## Coût mensuel estimé
+## Exemple : ce que la simulation contient
 
-Calculé avec bige-ops estimate --json sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région eu-west-2, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.
+| Ligne bige-ops | Ce que c’est |
+| --- | --- |
+| OOS platform-backups — 100 GiB | sauvegardes PostgreSQL (100 GiB) |
+| OKS control plane — cp.3.masters.small | control plane HA (3 masters) |
+| Nodepool default — tinav6.c8r16p2 × 3 | 3 nœuds : 24 vCPU, 48 GiB, disques inclus |
 
-| Ligne bige-ops | Ce que c’est | € HT / mois |
-| --- | --- | --- |
-| OOS platform-backups — 100 GiB | sauvegardes PostgreSQL (100 GiB) | 2,50 € |
-| OKS control plane — cp.3.masters.small | control plane HA (3 masters) | 94,90 € |
-| Nodepool default — tinav6.c8r16p2 × 3 | 3 nœuds : 24 vCPU, 48 GiB, disques inclus | 821,40 € |
-| **Total estimé** | | **918,80 €** |
+L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.
 
-LBU gateway + web + Keycloak : 3 × 21,90 € → 984,50 € HT/mois au total.
+Gateway, web et Keycloak créent chacun un LBU, en plus des lignes ci-dessus ; passer Keycloak derrière la gateway en retire un.
 
 ```
 bige-ops init -n stack-spring-boot-oks-kafka-keycloak
@@ -103,7 +102,7 @@ Avec ta clé OpenCVE, chaque composant reconnu (image, paquet installé) est rap
 | Spring Boot, Spring Cloud Gateway, Spring Security | [Spring Boot](https://app.opencve.io/cve/?vendor=vmware&product=spring_boot) · [Spring Cloud Gateway](https://app.opencve.io/cve/?vendor=vmware&product=spring_cloud_gateway) · [Spring Security](https://app.opencve.io/cve/?vendor=vmware&product=spring_security) | fiche de référence (pas encore reconnu automatiquement) |
 | JDK | [OpenJDK](https://app.opencve.io/cve/?vendor=oracle&product=openjdk) | fiche de référence (pas encore reconnu automatiquement) |
 
-L’analyse du code Java arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE, exposition sur OKS et coût sur Outscale. Détail : Java sur Outscale.
+L’analyse du code Java arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE, classés selon leur exposition sur OKS. Détail : Java sur Outscale.
 
 ## Avant le deploy
 

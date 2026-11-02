@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ruby on Rails sur Outscale : Puma, Sidekiq, PostgreSQL — bige-ops</title>
-  <meta name="description" content="Ruby on Rails sur Outscale avec bige-ops : Puma, Sidekiq, PostgreSQL, Redis. Routes Rails et before_action détectés, stack suivie sur OpenCVE, coût réel." />
+  <meta name="description" content="Ruby on Rails sur Outscale avec bige-ops : Puma, Sidekiq, PostgreSQL, Redis. Routes Rails et before_action détectés, stack suivie sur OpenCVE." />
   <link rel="canonical" href="https://bige.dev/lang-ruby.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,14 +13,14 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/lang-ruby.html" />
   <meta property="og:title" content="Ruby on Rails sur Outscale : Puma, Sidekiq, PostgreSQL — bige-ops" />
-  <meta property="og:description" content="Ruby on Rails sur Outscale avec bige-ops : Puma, Sidekiq, PostgreSQL, Redis. Routes Rails et before_action détectés, stack suivie sur OpenCVE, coût réel." />
-  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta property="og:description" content="Ruby on Rails sur Outscale avec bige-ops : Puma, Sidekiq, PostgreSQL, Redis. Routes Rails et before_action détectés, stack suivie sur OpenCVE." />
+  <meta property="og:image" content="https://bige.dev/screens/hero.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Ruby on Rails sur Outscale : Puma, Sidekiq, PostgreSQL", "description": "Ruby on Rails sur Outscale avec bige-ops : Puma, Sidekiq, PostgreSQL, Redis. Routes Rails et before_action détectés, stack suivie sur OpenCVE, coût réel.", "inLanguage": "fr", "url": "https://bige.dev/lang-ruby.html", "keywords": "Ruby, Ruby on Rails, Rails, Puma, Sidekiq, Devise, Rack, PostgreSQL, Redis, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Ruby on Rails sur Outscale : Puma, Sidekiq, PostgreSQL", "item": "https://bige.dev/lang-ruby.html"}]}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Ruby on Rails sur Outscale : Puma, Sidekiq, PostgreSQL", "description": "Ruby on Rails sur Outscale avec bige-ops : Puma, Sidekiq, PostgreSQL, Redis. Routes Rails et before_action détectés, stack suivie sur OpenCVE.", "inLanguage": "fr", "url": "https://bige.dev/lang-ruby.html", "keywords": "Ruby, Ruby on Rails, Rails, Puma, Sidekiq, Devise, Rack, PostgreSQL, Redis, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Ruby on Rails sur Outscale : Puma, Sidekiq, PostgreSQL", "item": "https://bige.dev/lang-ruby.html"}]}]}</script>
 </head>
 <body>
   <main>
@@ -31,7 +31,7 @@
     </div>
     <h1>Ruby on Rails sur Outscale</h1>
     <p class="lead">
-      Rails reste l’un des chemins les plus courts entre une idée et un produit en ligne. Sur Outscale, bige-ops pose Puma et Sidekiq sur la VM app, PostgreSQL et Redis en subnet privé, chiffre l’ensemble et vérifie si tes routes Rails demandent une connexion.
+      Rails reste l’un des chemins les plus courts entre une idée et un produit en ligne. Sur Outscale, bige-ops pose Puma et Sidekiq sur la VM app, PostgreSQL et Redis en subnet privé et vérifie si tes routes Rails demandent une connexion.
     </p>
 
     <div class="callout">
@@ -70,7 +70,7 @@ api:
     RAILS_ENV: {mode: literal, value: production}
 worker:
   runtime: custom</pre>
-    <p>La page <a href="stack-rails-sidekiq-postgresql-redis.html">Rails + Sidekiq</a> donne le projet complet et son coût.</p>
+    <p>La page <a href="stack-rails-sidekiq-postgresql-redis.html">Rails + Sidekiq</a> donne le projet complet.</p>
 
     <h2 id="scan">Ce que bige-ops vérifie dans ton code Ruby</h2>
     <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. Sans clé ni IA (le « mode direct »), bige-ops lit le code de tes dépôts sur ton poste :</p>
@@ -116,9 +116,9 @@ worker:
       chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
-    <h2 id="stacks">Stacks Ruby chiffrées</h2>
+    <h2 id="stacks">Stacks Ruby de référence</h2>
     <ul>
-      <li><a href="stack-rails-sidekiq-postgresql-redis.html">Rails + Sidekiq + PostgreSQL + Redis</a> (423,06 € HT/mois estimés)</li>
+      <li><a href="stack-rails-sidekiq-postgresql-redis.html">Rails + Sidekiq + PostgreSQL + Redis</a></li>
     </ul>
 
     <h2 id="docs">Docs officielles</h2>

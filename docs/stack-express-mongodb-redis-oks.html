@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Express, MongoDB, Redis et BullMQ sur OKS — bige-ops</title>
-  <meta name="description" content="Express, MongoDB 8.0, Redis et BullMQ sur OKS, le Kubernetes managé d’Outscale : HPA, LBU HTTPS, backups OOS, coût réel (457,65 € HT/mois hors LBU)." />
+  <meta name="description" content="Express, MongoDB 8.0, Redis et BullMQ sur OKS, le Kubernetes managé d’Outscale : HPA, LBU HTTPS, backups OOS, CVE." />
   <link rel="canonical" href="https://bige.dev/stack-express-mongodb-redis-oks.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,14 +13,14 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/stack-express-mongodb-redis-oks.html" />
   <meta property="og:title" content="Express, MongoDB, Redis et BullMQ sur OKS — bige-ops" />
-  <meta property="og:description" content="Express, MongoDB 8.0, Redis et BullMQ sur OKS, le Kubernetes managé d’Outscale : HPA, LBU HTTPS, backups OOS, coût réel (457,65 € HT/mois hors LBU)." />
-  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta property="og:description" content="Express, MongoDB 8.0, Redis et BullMQ sur OKS, le Kubernetes managé d’Outscale : HPA, LBU HTTPS, backups OOS, CVE." />
+  <meta property="og:image" content="https://bige.dev/screens/site-simule.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Express, MongoDB, Redis et BullMQ sur OKS", "description": "Express, MongoDB 8.0, Redis et BullMQ sur OKS, le Kubernetes managé d’Outscale : HPA, LBU HTTPS, backups OOS, coût réel (457,65 € HT/mois hors LBU).", "inLanguage": "fr", "url": "https://bige.dev/stack-express-mongodb-redis-oks.html", "keywords": "Express, Node.js, MongoDB, Mongoose, Redis, BullMQ, Kubernetes, OKS, HPA, LBU, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Express, MongoDB, Redis et BullMQ sur OKS", "item": "https://bige.dev/stack-express-mongodb-redis-oks.html"}]}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Express, MongoDB, Redis et BullMQ sur OKS", "description": "Express, MongoDB 8.0, Redis et BullMQ sur OKS, le Kubernetes managé d’Outscale : HPA, LBU HTTPS, backups OOS, CVE.", "inLanguage": "fr", "url": "https://bige.dev/stack-express-mongodb-redis-oks.html", "keywords": "Express, Node.js, MongoDB, Mongoose, Redis, BullMQ, Kubernetes, OKS, HPA, LBU, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Express, MongoDB, Redis et BullMQ sur OKS", "item": "https://bige.dev/stack-express-mongodb-redis-oks.html"}]}]}</script>
 </head>
 <body>
   <main>
@@ -36,7 +36,7 @@
 
     <div class="callout">
       <strong>En bref.</strong>
-      Topologie <code>oks</code> : control plane <code>cp.mono.master</code>, nodepool de 3 nœuds <code>tinav6.c4r8p2</code>, Kubernetes 1.34. Deployments api, web, worker BullMQ, MongoDB et Redis ; backups MongoDB vers OOS. Estimation bige-ops : <strong>457,65 € HT par mois</strong>, plus les LBU créés par les Services exposés.
+      Topologie <code>oks</code> : control plane <code>cp.mono.master</code>, nodepool de 3 nœuds <code>tinav6.c4r8p2</code>, Kubernetes 1.34. Deployments api, web, worker BullMQ, MongoDB et Redis ; backups MongoDB vers OOS. Les Services <code>api</code> et <code>web</code> créent chacun leur LBU.
     </div>
 
     <figure class="diagram">
@@ -79,17 +79,16 @@ flowchart TB
     </ul>
     <p>OKS est disponible en <code>eu-west-2</code> et en <code>cloudgouv-eu-west-1</code> (SecNumCloud) et s’active sur demande auprès du support Outscale ; la simulation et l’estimation n’en dépendent pas. Détail : <a href="oks.html">OKS &amp; pods</a>.</p>
 
-    <h2 id="cout">Coût mensuel estimé</h2>
-    <p>Calculé avec <code>bige-ops estimate --json</code> sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région <code>eu-west-2</code>, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.</p>
+    <h2 id="cout">Exemple : ce que la simulation contient</h2>
     <table>
-      <tr><th>Ligne bige-ops</th><th>Ce que c’est</th><th>€ HT / mois</th></tr>
-      <tr><td>OOS express-app-backups — 50 GiB</td><td>sauvegardes MongoDB</td><td>1,25 €</td></tr>
-      <tr><td>OKS control plane — cp.mono.master</td><td>control plane OKS (1 master)</td><td>29,20 €</td></tr>
-      <tr><td>Nodepool default — tinav6.c4r8p2 × 3</td><td>3 nœuds : 12 vCPU, 24 GiB, disques inclus</td><td>427,20 €</td></tr>
-      <tr><th>Total estimé</th><th></th><th>457,65 €</th></tr>
+      <tr><th>Ligne bige-ops</th><th>Ce que c’est</th></tr>
+      <tr><td>OOS express-app-backups — 50 GiB</td><td>sauvegardes MongoDB</td></tr>
+      <tr><td>OKS control plane — cp.mono.master</td><td>control plane OKS (1 master)</td></tr>
+      <tr><td>Nodepool default — tinav6.c4r8p2 × 3</td><td>3 nœuds : 12 vCPU, 24 GiB, disques inclus</td></tr>
     </table>
-    <p><strong>LBU des Services exposés.</strong> <code>api</code> et <code>web</code> sont des Services <code>LoadBalancer</code> : OKS crée un LBU pour chacun, à 21,90 € HT par mois l’unité au même catalogue, soit 43,80 € de plus : <strong>501,45 € HT par mois</strong> au total.</p>
-    <p><strong>Variante production.</strong> Le même cluster avec un control plane haute disponibilité <code>cp.3.masters.small</code> (3 masters, jusqu’à 50 nœuds) : <strong>523,35 € HT par mois</strong> estimés, 567,15 € avec les deux LBU. C’est la recommandation d’Outscale pour la production.</p>
+    <p>L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.</p>
+    <p><strong>LBU des Services exposés.</strong> <code>api</code> et <code>web</code> sont des Services <code>LoadBalancer</code> : OKS crée un LBU pour chacun, en plus des lignes ci-dessus.</p>
+    <p><strong>Variante production.</strong> Le même cluster avec un control plane haute disponibilité <code>cp.3.masters.small</code> (3 masters, jusqu’à 50 nœuds) : c’est la recommandation d’Outscale pour la production.</p>
     <p>Le projet utilisé, à reproduire chez toi :</p>
     <pre>bige-ops init -n stack-express-mongodb-redis-oks
 bige-ops add layout custom --name app --runtime nodejs --web same --worker \

@@ -77,7 +77,7 @@ flowchart TB
     </p>
     <p>
       <strong>2 · Créer une simulation</strong> —
-      variante locale (layout, coût, generate). Au push :
+      variante locale (layout, estimation, test en local, generate). Au push :
       <strong>nouvelle branche</strong> <code>sim/&lt;id&gt;</code>. Tu
       itères sans toucher à la stack live.
     </p>
@@ -199,9 +199,10 @@ sequenceDiagram
     <p>
       Convention <code>main</code> pour la live, <code>sim/…</code> pour les
       drafts, création de repo à la volée, push et
-      <code>promote --push-main</code> : en place. Prochaines étapes : un
-      « deploy simulé » plus visible, un rollback guidé depuis le Hub, et la
-      revue des <strong>diffs et commits</strong> en mode expert —
+      <code>promote --push-main</code> : en place, comme le test en local
+      d’une simulation (Docker Compose ou kind) avant tout déploiement.
+      Prochaines étapes : un rollback guidé depuis le Hub, et la revue des
+      <strong>diffs et commits</strong> en mode expert —
       <a href="expert-config.html">mode expert</a>.
     </p>
 

@@ -22,9 +22,9 @@ sudo apt install ./bige-ops-*-linux-x86_64.deb
 
 **Mises à jour :** l’app vérifie s’il existe une version plus récente via `latest.json` et te le signale.
 
-**CLI embarquée :** le binaire `bige-ops` est packagé dans l’app ; Settings signale une CLI introuvable ou désalignée.
+**CLI embarquée :** le binaire `bige-ops` est packagé dans l’app, oks-cli aussi ; Settings signale une CLI introuvable ou désalignée.
 
-**Dépendances :** écran de diagnostic pour Terraform (plan/apply), oks-cli + kubectl (OKS), Docker/SSH (deploy applicatif).
+**Dépendances :** écran de diagnostic pour Terraform (plan/apply), kubectl (OKS), Docker et kind (tests en local, Docker Compose ou Kubernetes), Docker/SSH (deploy applicatif).
 
 Premier lancement : choisis un workspace local, puis crée un compte Outscale, ou reste en simulation sans identifiants.
 

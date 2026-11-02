@@ -1,6 +1,6 @@
 # PHP sur Outscale
 
-Laravel pour les produits SaaS, WordPress pour les sites et la publication, Symfony pour les applications d’entreprise : PHP reste partout. bige-ops le pose sur Outscale avec ses bases MySQL ou MariaDB en subnet privé, chiffre la stack et vérifie si tes routes Laravel et WordPress demandent une connexion.
+Laravel pour les produits SaaS, WordPress pour les sites et la publication, Symfony pour les applications d’entreprise : PHP reste partout. bige-ops le pose sur Outscale avec ses bases MySQL ou MariaDB en subnet privé et vérifie si tes routes Laravel et WordPress demandent une connexion.
 
 **En bref.** Runtime php dans bige-ops : API sur le port 8080, front sur le 80, 512 MiB par défaut. Côté failles : routes Laravel et WordPress accessibles sans connexion, HTML Blade affiché sans échappement, bibliothèques Composer (Packagist) comparées aux failles connues.
 
@@ -54,10 +54,10 @@ PHP publie ses dates de support : 8.4 (sécurité jusqu’au 31 décembre 2028) 
 
 bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : les failles publiées dans le registre mondial des vulnérabilités (CVE) et ses sources (NVD, MITRE, liste KEV des failles déjà exploitées tenue par la CISA…), avec leur note de gravité sur 10 (CVSS) et leur probabilité d’être exploitées (EPSS), rangées par éditeur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
 
-## Stacks chiffrées
+## Stacks de référence
 
-- [Laravel + Horizon + MySQL + Redis](https://bige.dev/stack-laravel-horizon-mysql-redis.html) (423,06 € HT/mois)
-- [WordPress + MariaDB](https://bige.dev/stack-wordpress-mariadb.html) (236,90 € HT/mois)
+- [Laravel + Horizon + MySQL + Redis](https://bige.dev/stack-laravel-horizon-mysql-redis.html)
+- [WordPress + MariaDB](https://bige.dev/stack-wordpress-mariadb.html)
 
 Docs : [PHP](https://www.php.net/docs.php) · [Laravel](https://laravel.com/docs) · [Laravel Horizon](https://laravel.com/docs/horizon) · [WordPress Developer](https://developer.wordpress.org/) · [Symfony](https://symfony.com/doc/current/index.html) · [Composer](https://getcomposer.org/doc/)
 

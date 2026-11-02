@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Quarkus sur OKS avec PostgreSQL et Kafka — bige-ops</title>
-  <meta name="description" content="Quarkus sur OKS avec PostgreSQL 17 et Kafka : control plane HA, HPA, LBU HTTPS, backups OOS, coût réel (523,35 € HT/mois hors LBU), CVE." />
+  <meta name="description" content="Quarkus sur OKS avec PostgreSQL 17 et Kafka : control plane HA, HPA, LBU HTTPS, backups OOS, CVE." />
   <link rel="canonical" href="https://bige.dev/stack-quarkus-oks-postgresql-kafka.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,14 +13,14 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/stack-quarkus-oks-postgresql-kafka.html" />
   <meta property="og:title" content="Quarkus sur OKS avec PostgreSQL et Kafka — bige-ops" />
-  <meta property="og:description" content="Quarkus sur OKS avec PostgreSQL 17 et Kafka : control plane HA, HPA, LBU HTTPS, backups OOS, coût réel (523,35 € HT/mois hors LBU), CVE." />
-  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta property="og:description" content="Quarkus sur OKS avec PostgreSQL 17 et Kafka : control plane HA, HPA, LBU HTTPS, backups OOS, CVE." />
+  <meta property="og:image" content="https://bige.dev/screens/site-simule.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Quarkus sur OKS avec PostgreSQL et Kafka", "description": "Quarkus sur OKS avec PostgreSQL 17 et Kafka : control plane HA, HPA, LBU HTTPS, backups OOS, coût réel (523,35 € HT/mois hors LBU), CVE.", "inLanguage": "fr", "url": "https://bige.dev/stack-quarkus-oks-postgresql-kafka.html", "keywords": "Quarkus, Java, Kafka, SmallRye Reactive Messaging, PostgreSQL, Hibernate, Panache, GraalVM, Kubernetes, OKS, HPA, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Quarkus sur OKS avec PostgreSQL et Kafka", "item": "https://bige.dev/stack-quarkus-oks-postgresql-kafka.html"}]}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Quarkus sur OKS avec PostgreSQL et Kafka", "description": "Quarkus sur OKS avec PostgreSQL 17 et Kafka : control plane HA, HPA, LBU HTTPS, backups OOS, CVE.", "inLanguage": "fr", "url": "https://bige.dev/stack-quarkus-oks-postgresql-kafka.html", "keywords": "Quarkus, Java, Kafka, SmallRye Reactive Messaging, PostgreSQL, Hibernate, Panache, GraalVM, Kubernetes, OKS, HPA, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Quarkus sur OKS avec PostgreSQL et Kafka", "item": "https://bige.dev/stack-quarkus-oks-postgresql-kafka.html"}]}]}</script>
 </head>
 <body>
   <main>
@@ -31,12 +31,12 @@
     </div>
     <h1>Quarkus sur OKS + PostgreSQL + Kafka</h1>
     <p class="lead">
-      Quarkus démarre en millisecondes et consomme peu de mémoire : sur Kubernetes, ça veut dire plus de pods par nœud et un HPA qui réagit vite. Avec Kafka pour les événements et PostgreSQL pour les données, c’est une base cloud-native solide ; bige-ops la pose sur OKS et la chiffre.
+      Quarkus démarre en millisecondes et consomme peu de mémoire : sur Kubernetes, ça veut dire plus de pods par nœud et un HPA qui réagit vite. Avec Kafka pour les événements et PostgreSQL pour les données, c’est une base cloud-native solide ; bige-ops la pose sur OKS.
     </p>
 
     <div class="callout">
       <strong>En bref.</strong>
-      Topologie <code>oks</code> : control plane <code>cp.3.masters.small</code>, nodepool de 3 nœuds <code>tinav6.c4r8p2</code>. API Quarkus (512 MiB, HPA de 2 à 8), consumers Kafka, Kafka et PostgreSQL en Deployments. Estimation bige-ops : <strong>523,35 € HT par mois</strong>, plus le LBU de l’API.
+      Topologie <code>oks</code> : control plane <code>cp.3.masters.small</code>, nodepool de 3 nœuds <code>tinav6.c4r8p2</code>. API Quarkus (512 MiB, HPA de 2 à 8), consumers Kafka, Kafka et PostgreSQL en Deployments. Le Service <code>api</code> crée son LBU.
     </div>
 
     <figure class="diagram">
@@ -74,16 +74,15 @@ flowchart TB
       <li><strong>Kafka</strong> en service <code>custom</code> (<code>apache/kafka:4.3.1</code>, KRaft), <strong>PostgreSQL 17</strong> du catalogue, Services internes ; backup PostgreSQL vers OOS.</li>
     </ul>
 
-    <h2 id="cout">Coût mensuel estimé</h2>
-    <p>Calculé avec <code>bige-ops estimate --json</code> sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région <code>eu-west-2</code>, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.</p>
+    <h2 id="cout">Exemple : ce que la simulation contient</h2>
     <table>
-      <tr><th>Ligne bige-ops</th><th>Ce que c’est</th><th>€ HT / mois</th></tr>
-      <tr><td>OOS quarkus-backups — 50 GiB</td><td>sauvegardes PostgreSQL</td><td>1,25 €</td></tr>
-      <tr><td>OKS control plane — cp.3.masters.small</td><td>control plane HA (3 masters)</td><td>94,90 €</td></tr>
-      <tr><td>Nodepool default — tinav6.c4r8p2 × 3</td><td>3 nœuds : 12 vCPU, 24 GiB, disques inclus</td><td>427,20 €</td></tr>
-      <tr><th>Total estimé</th><th></th><th>523,35 €</th></tr>
+      <tr><th>Ligne bige-ops</th><th>Ce que c’est</th></tr>
+      <tr><td>OOS quarkus-backups — 50 GiB</td><td>sauvegardes PostgreSQL</td></tr>
+      <tr><td>OKS control plane — cp.3.masters.small</td><td>control plane HA (3 masters)</td></tr>
+      <tr><td>Nodepool default — tinav6.c4r8p2 × 3</td><td>3 nœuds : 12 vCPU, 24 GiB, disques inclus</td></tr>
     </table>
-    <p><strong>LBU de l’API.</strong> Le Service <code>api</code> crée un LBU à 21,90 € HT par mois au même catalogue : <strong>545,25 € HT par mois</strong> au total.</p>
+    <p>L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.</p>
+    <p><strong>LBU de l’API.</strong> Le Service <code>api</code> crée un LBU, en plus des lignes ci-dessus.</p>
     <p>Le projet utilisé, à reproduire chez toi :</p>
     <pre>bige-ops init -n stack-quarkus-oks-postgresql-kafka
 bige-ops add layout custom --name quarkus --runtime java --web none --worker \
@@ -167,7 +166,7 @@ components:
       <tr><td>Quarkus, Hibernate ORM</td><td><a href="https://app.opencve.io/cve/?vendor=redhat&amp;product=quarkus" target="_blank" rel="noopener noreferrer">Quarkus</a> · <a href="https://app.opencve.io/cve/?vendor=hibernate&amp;product=hibernate_orm" target="_blank" rel="noopener noreferrer">Hibernate ORM</a></td><td>fiche de référence (pas encore reconnu automatiquement)</td></tr>
       <tr><td>JDK</td><td><a href="https://app.opencve.io/cve/?vendor=oracle&amp;product=openjdk" target="_blank" rel="noopener noreferrer">OpenJDK</a></td><td>fiche de référence (pas encore reconnu automatiquement)</td></tr>
     </table>
-    <p>L’analyse du code Java arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE, exposition sur OKS et coût sur Outscale. Détail : <a href="lang-java.html">Java sur Outscale</a>.</p>
+    <p>L’analyse du code Java arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE, classés selon leur exposition sur OKS. Détail : <a href="lang-java.html">Java sur Outscale</a>.</p>
 
 
     <h2 id="avant-deploy">Ce que bige-ops vérifie avant le deploy</h2>

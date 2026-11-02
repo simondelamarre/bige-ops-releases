@@ -5,7 +5,7 @@
 - **OKS** : `oks-cli` + `kubectl` sous le capot.
 - Tout commence dans l’app ; outils kube disponibles après generate/apply.
 
-## Commandes 0.6
+## Commandes utiles
 
 ```bash
 bige-ops live status [--sample] [--oks]

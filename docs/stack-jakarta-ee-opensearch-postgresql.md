@@ -1,8 +1,8 @@
 # Jakarta EE + OpenSearch + PostgreSQL sur Outscale
 
-Le socle de nombreuses applications métier : un serveur Jakarta EE, PostgreSQL pour les transactions, un moteur de recherche pour le plein texte et les journaux. bige-ops pose ce trio sur Outscale en multi-VM, avec une VM de recherche dédiée et son volume BSU, et chiffre l’ensemble.
+Le socle de nombreuses applications métier : un serveur Jakarta EE, PostgreSQL pour les transactions, un moteur de recherche pour le plein texte et les journaux. bige-ops pose ce trio sur Outscale en multi-VM, avec une VM de recherche dédiée et son volume BSU.
 
-**En bref.** Topologie multi-vm : VM app tinav6.c8r16p2 (serveur Jakarta EE) derrière un LBU, PostgreSQL 17 sur VM privée tinav6.c4r16p2, OpenSearch sur VM privée dédiée tinav6.c4r16p2 avec 200 GiB de BSU, backups OOS, NAT. Estimation bige-ops : **714,95 € HT/mois**.
+**En bref.** Topologie multi-vm : VM app tinav6.c8r16p2 (serveur Jakarta EE) derrière un LBU, PostgreSQL 17 sur VM privée tinav6.c4r16p2, OpenSearch sur VM privée dédiée tinav6.c4r16p2 avec 200 GiB de BSU, backups OOS, NAT.
 
 ## Pourquoi cette stack tourne bien sur Outscale
 
@@ -14,22 +14,21 @@ Le socle de nombreuses applications métier : un serveur Jakarta EE, PostgreSQL 
 
 VM app tinav6.c8r16p2 (serveur Jakarta EE) derrière LBU ; PostgreSQL 17 (tinav6.c4r16p2, io1) privé ; OpenSearch sur VM privée dédiée tinav6.c4r16p2 + BSU gp2 200 GiB ; OOS backups ; NAT.
 
-## Coût mensuel estimé
+## Exemple : ce que la simulation contient
 
-Calculé avec bige-ops estimate --json sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région eu-west-2, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.
+| Ligne bige-ops | Ce que c’est |
+| --- | --- |
+| LBU erp-web | entrée publique |
+| VM erp-opensearch — tinav6.c4r16p2 | OpenSearch (VM privée dédiée) |
+| Volume erp-opensearch-data — 200 GiB | index OpenSearch (BSU gp2) |
+| OOS erp-backups — 100 GiB | sauvegardes PostgreSQL (100 GiB) |
+| VM erp-app — tinav6.c8r16p2 | serveur Jakarta EE |
+| VM erp-postgres — tinav6.c4r16p2 | PostgreSQL 17, disque io1 |
+| NAT gateway | sortie du subnet privé |
+| EIP VM erp-app (attachée) | IP publique de la VM app |
+| EIP NAT (attachée supplémentaire) | IP publique du NAT |
 
-| Ligne bige-ops | Ce que c’est | € HT / mois |
-| --- | --- | --- |
-| LBU erp-web | entrée publique | 21,90 € |
-| VM erp-opensearch — tinav6.c4r16p2 | OpenSearch (VM privée dédiée) | 162,80 € |
-| Volume erp-opensearch-data — 200 GiB | index OpenSearch (BSU gp2) | 22,00 € |
-| OOS erp-backups — 100 GiB | sauvegardes PostgreSQL (100 GiB) | 2,50 € |
-| VM erp-app — tinav6.c8r16p2 | serveur Jakarta EE | 267,20 € |
-| VM erp-postgres — tinav6.c4r16p2 | PostgreSQL 17, disque io1 | 198,40 € |
-| NAT gateway | sortie du subnet privé | 36,50 € |
-| EIP VM erp-app (attachée — 1ʳᵉ offerte / Net) | IP de la VM app (1ʳᵉ offerte) | 0,00 € |
-| EIP NAT (attachée supplémentaire) | IP publique du NAT | 3,65 € |
-| **Total estimé** | | **714,95 €** |
+L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.
 
 
 
@@ -97,7 +96,7 @@ Avec ta clé OpenCVE, chaque composant reconnu (image, paquet installé) est rap
 | WildFly, Payara, Open Liberty | [WildFly](https://app.opencve.io/cve/?vendor=redhat&product=wildfly) · [Payara](https://app.opencve.io/cve/?vendor=payara&product=payara) · [Open Liberty](https://app.opencve.io/cve/?vendor=ibm&product=open_liberty) | fiche de référence (pas encore reconnu automatiquement) |
 | JDK, Hibernate | [OpenJDK](https://app.opencve.io/cve/?vendor=oracle&product=openjdk) · [Hibernate ORM](https://app.opencve.io/cve/?vendor=hibernate&product=hibernate_orm) | fiche de référence (pas encore reconnu automatiquement) |
 
-L’analyse du code Java arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE, exposition et coût. Détail : Java sur Outscale.
+L’analyse du code Java arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE et classés selon leur exposition. Détail : Java sur Outscale.
 
 ## Avant le deploy
 

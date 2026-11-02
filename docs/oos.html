@@ -101,7 +101,7 @@ flowchart LR
   DB[(Postgres / Mongo…)] -->|backup.enabled| B[backup.sh]
   B --> OOS[(bucket OOS)]
   VOL[Volume / snapshot] -.->|filet bloc| DB
-  OOS -->|dumps / objets| SAFE[Rétention et restauration : ton exploitation]
+  OOS -->|dumps datés| SAFE[Restauration et migration : panneau Données]
       </pre>
       <figcaption>Bloc pour les données chaudes · OOS pour les objets et les dumps.</figcaption>
     </figure>
@@ -111,7 +111,7 @@ flowchart LR
       <li><strong>Un stockage régional.</strong> Un volume BSU vit dans une Subregion ; un bucket OOS vit dans la Région. Outscale y combine erasure coding (gros objets) et réplication (petits objets) entre zones : un objet reste lisible même si une zone entière tombe (<a href="https://docs.outscale.com/fr/userguide/Mécanismes-de-résilience-d-OOS.html" target="_blank" rel="noopener noreferrer">mécanismes de résilience</a>).</li>
       <li><strong>Un endpoint par Région</strong> : <code>https://oos.&lt;région&gt;.outscale.com</code>, disponible dans les cinq Régions publiques.</li>
       <li><strong>Les fonctions S3 attendues</strong> : versioning, cycle de vie, verrouillage d’objets, chiffrement côté serveur, URL pré-signées, CORS, site statique (<a href="https://docs.outscale.com/fr/userguide/Introduction-à-OOS.html" target="_blank" rel="noopener noreferrer">introduction à OOS</a>).</li>
-      <li><strong>Un coût lisible</strong> : au catalogue public, OOS se paie au GiB stocké par mois ; le trafic sortant et les requêtes y sont à 0 € HT en <code>eu-west-2</code>, <code>cloudgouv-eu-west-1</code>, <code>us-east-2</code> et <code>us-west-1</code>.</li>
+      <li><strong>Une ligne simple dans l’estimation</strong> : OOS se compte au GiB stocké ; renseigne la taille attendue d’un bucket pour la voir dans ta simulation.</li>
     </ul>
     <div class="callout">
       <strong>Deux règles Outscale à connaître.</strong>
@@ -147,12 +147,20 @@ flowchart LR
     </p>
     <p>
       Après <code>generate</code>, bige-ops prépare
-      <code>bige-ops/app/&lt;stack&gt;/backup.sh</code> : le bucket,
+      <code>bige-ops/app/&lt;stack&gt;/backup.sh</code> avec le bucket,
       l’endpoint OOS de ta Région, le planning (<code>0 2 * * *</code> par
-      défaut) et la rétention visée (7 jours) y sont renseignés. Tu y branches
-      la commande de dump de ta base, puis tu l’installes en cron sur l’hôte
-      de la base. Pour la rétention, OOS sait expirer les objets lui-même
-      grâce au cycle de vie du bucket.
+      défaut) et la rétention (7 jours). Le <code>deploy</code> l’installe en
+      cron sur l’hôte de chaque base ; sur OKS, chaque base a son CronJob. Le
+      dump passe par l’outil de la base (<code>pg_dump</code>,
+      <code>mongodump</code>, <code>mysqldump</code>…) et part dans le bucket ;
+      sans règle de cycle de vie sur le bucket, les dumps plus vieux que la
+      rétention sont purgés.
+    </p>
+    <p>
+      Le panneau <strong>Données</strong> d’une base te donne la main ensuite :
+      un dump à la demande, une restauration (un dump de sécurité des données
+      actuelles est pris juste avant), ou une migration depuis une autre base.
+      Teste ta restauration avant d’en avoir besoin.
     </p>
 
     <figure class="diagram">
@@ -161,7 +169,7 @@ flowchart TB
   F[Formulaire base] -->|active backup| S[Simulation]
   S -->|generate| T[Terraform OOS + backup.sh]
   T -->|apply| C[Bucket créé]
-  C --> H[Toi : dump, cron, tests de restauration]
+  C -->|deploy| H[Dumps planifiés : cron sur l’hôte ou CronJob OKS]
       </pre>
     </figure>
 

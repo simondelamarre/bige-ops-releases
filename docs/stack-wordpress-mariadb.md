@@ -1,8 +1,8 @@
 # WordPress + MariaDB sur Outscale
 
-Un site WordPress sérieux mérite mieux qu’une machine unique où tout est exposé. bige-ops pose WordPress sur Outscale derrière un LBU HTTPS, MariaDB en subnet privé, sauvegardes dans OOS, et chiffre l’ensemble.
+Un site WordPress sérieux mérite mieux qu’une machine unique où tout est exposé. bige-ops pose WordPress sur Outscale derrière un LBU HTTPS, MariaDB en subnet privé, sauvegardes dans OOS.
 
-**En bref.** Topologie multi-vm : VM app tinav6.c2r4p2 (WordPress, image construite depuis wordpress:7.1-php8.3-apache) derrière un LBU, MariaDB 11.4 sur VM privée tinav6.c2r4p2, backups OOS, NAT. Estimation bige-ops : **236,90 € HT/mois**.
+**En bref.** Topologie multi-vm : VM app tinav6.c2r4p2 (WordPress, image construite depuis wordpress:7.1-php8.3-apache) derrière un LBU, MariaDB 11.4 sur VM privée tinav6.c2r4p2, backups OOS, NAT.
 
 ## Pourquoi cette stack tourne bien sur Outscale
 
@@ -14,20 +14,19 @@ Un site WordPress sérieux mérite mieux qu’une machine unique où tout est ex
 
 VM app tinav6.c2r4p2 (WordPress 7.1, PHP 8.3) derrière LBU ; MariaDB 11.4 LTS (tinav6.c2r4p2, io1) en subnet privé ; OOS backups ; NAT.
 
-## Coût mensuel estimé
+## Exemple : ce que la simulation contient
 
-Calculé avec bige-ops estimate --json sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région eu-west-2, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.
+| Ligne bige-ops | Ce que c’est |
+| --- | --- |
+| LBU app-web | entrée publique |
+| OOS wordpress-backups — 50 GiB | sauvegardes MariaDB |
+| VM app-app — tinav6.c2r4p2 | WordPress (PHP 8.3, Apache) |
+| VM app-mariadb — tinav6.c2r4p2 | MariaDB 11.4, disque io1 |
+| NAT gateway | sortie du subnet privé |
+| EIP VM app-app (attachée) | IP publique de la VM app |
+| EIP NAT (attachée supplémentaire) | IP publique du NAT |
 
-| Ligne bige-ops | Ce que c’est | € HT / mois |
-| --- | --- | --- |
-| LBU app-web | entrée publique | 21,90 € |
-| OOS wordpress-backups — 50 GiB | sauvegardes MariaDB | 1,25 € |
-| VM app-app — tinav6.c2r4p2 | WordPress (PHP 8.3, Apache) | 70,10 € |
-| VM app-mariadb — tinav6.c2r4p2 | MariaDB 11.4, disque io1 | 103,50 € |
-| NAT gateway | sortie du subnet privé | 36,50 € |
-| EIP VM app-app (attachée — 1ʳᵉ offerte / Net) | IP de la VM app (1ʳᵉ offerte) | 0,00 € |
-| EIP NAT (attachée supplémentaire) | IP publique du NAT | 3,65 € |
-| **Total estimé** | | **236,90 €** |
+L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.
 
 
 

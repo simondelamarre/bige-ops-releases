@@ -1,6 +1,6 @@
 # Ruby on Rails sur Outscale
 
-Rails reste l’un des chemins les plus courts entre une idée et un produit en ligne. Sur Outscale, bige-ops pose Puma et Sidekiq sur la VM app, PostgreSQL et Redis en subnet privé, chiffre l’ensemble et vérifie si tes routes Rails demandent une connexion.
+Rails reste l’un des chemins les plus courts entre une idée et un produit en ligne. Sur Outscale, bige-ops pose Puma et Sidekiq sur la VM app, PostgreSQL et Redis en subnet privé et vérifie si tes routes Rails demandent une connexion.
 
 **En bref.** Rails se déclare en runtime custom, construit depuis ton Dockerfile (port 3000 pour Puma). Côté failles : routes Rails (config/routes.rb) accessibles sans connexion, mots de passe ou clés écrits en clair dans le code.
 
@@ -57,9 +57,9 @@ Ruby 4.0 et 3.4 sont en maintenance normale, 3.3 en maintenance de sécurité ju
 
 bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : les failles publiées dans le registre mondial des vulnérabilités (CVE) et ses sources (NVD, MITRE, liste KEV des failles déjà exploitées tenue par la CISA…), avec leur note de gravité sur 10 (CVSS) et leur probabilité d’être exploitées (EPSS), rangées par éditeur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
 
-## Stacks chiffrées
+## Stacks de référence
 
-- [Rails + Sidekiq + PostgreSQL + Redis](https://bige.dev/stack-rails-sidekiq-postgresql-redis.html) (423,06 € HT/mois)
+- [Rails + Sidekiq + PostgreSQL + Redis](https://bige.dev/stack-rails-sidekiq-postgresql-redis.html)
 
 Docs : [Ruby](https://www.ruby-lang.org/en/documentation/) · [Rails Guides](https://guides.rubyonrails.org/) · [Sécurité Rails](https://guides.rubyonrails.org/security.html) · [Sidekiq](https://sidekiq.org/) · [Puma](https://puma.io/)
 

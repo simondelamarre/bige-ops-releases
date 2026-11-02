@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>.NET sur Outscale : ASP.NET Core, Entity Framework Core — bige-ops</title>
-  <meta name="description" content=".NET sur Outscale avec bige-ops : ASP.NET Core, Entity Framework Core, Npgsql, PostgreSQL, RabbitMQ. LBU HTTPS, base privée, CVE OpenCVE, coût réel." />
+  <meta name="description" content=".NET sur Outscale avec bige-ops : ASP.NET Core, Entity Framework Core, Npgsql, PostgreSQL, RabbitMQ. LBU HTTPS, base privée, CVE OpenCVE." />
   <link rel="canonical" href="https://bige.dev/lang-dotnet.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,14 +13,14 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/lang-dotnet.html" />
   <meta property="og:title" content=".NET sur Outscale : ASP.NET Core, Entity Framework Core — bige-ops" />
-  <meta property="og:description" content=".NET sur Outscale avec bige-ops : ASP.NET Core, Entity Framework Core, Npgsql, PostgreSQL, RabbitMQ. LBU HTTPS, base privée, CVE OpenCVE, coût réel." />
-  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta property="og:description" content=".NET sur Outscale avec bige-ops : ASP.NET Core, Entity Framework Core, Npgsql, PostgreSQL, RabbitMQ. LBU HTTPS, base privée, CVE OpenCVE." />
+  <meta property="og:image" content="https://bige.dev/screens/hero.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": ".NET sur Outscale : ASP.NET Core, Entity Framework Core", "description": ".NET sur Outscale avec bige-ops : ASP.NET Core, Entity Framework Core, Npgsql, PostgreSQL, RabbitMQ. LBU HTTPS, base privée, CVE OpenCVE, coût réel.", "inLanguage": "fr", "url": "https://bige.dev/lang-dotnet.html", "keywords": ".NET, ASP.NET Core, Entity Framework Core, EF Core, C#, Npgsql, PostgreSQL, RabbitMQ, Kestrel, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": ".NET sur Outscale : ASP.NET Core, Entity Framework Core", "item": "https://bige.dev/lang-dotnet.html"}]}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": ".NET sur Outscale : ASP.NET Core, Entity Framework Core", "description": ".NET sur Outscale avec bige-ops : ASP.NET Core, Entity Framework Core, Npgsql, PostgreSQL, RabbitMQ. LBU HTTPS, base privée, CVE OpenCVE.", "inLanguage": "fr", "url": "https://bige.dev/lang-dotnet.html", "keywords": ".NET, ASP.NET Core, Entity Framework Core, EF Core, C#, Npgsql, PostgreSQL, RabbitMQ, Kestrel, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": ".NET sur Outscale : ASP.NET Core, Entity Framework Core", "item": "https://bige.dev/lang-dotnet.html"}]}]}</script>
 </head>
 <body>
   <main>
@@ -31,7 +31,7 @@
     </div>
     <h1>.NET sur Outscale</h1>
     <p class="lead">
-      ASP.NET Core est multiplateforme, rapide et tourne parfaitement sous Linux, en conteneur. Sur Outscale, bige-ops pose ton API .NET derrière un LBU, PostgreSQL en subnet privé, RabbitMQ pour la messagerie, et chiffre la stack au catalogue public.
+      ASP.NET Core est multiplateforme, rapide et tourne parfaitement sous Linux, en conteneur. Sur Outscale, bige-ops pose ton API .NET derrière un LBU, PostgreSQL en subnet privé et RabbitMQ pour la messagerie.
     </p>
 
     <div class="callout">
@@ -66,10 +66,10 @@ api:
   memory_mb: 1024
   env:
     ASPNETCORE_ENVIRONMENT: {mode: literal, value: Production}</pre>
-    <p>La page <a href="stack-dotnet-postgresql-rabbitmq.html">ASP.NET Core + PostgreSQL + RabbitMQ</a> donne le projet complet et son coût.</p>
+    <p>La page <a href="stack-dotnet-postgresql-rabbitmq.html">ASP.NET Core + PostgreSQL + RabbitMQ</a> donne le projet complet.</p>
 
     <h2 id="scan">Ce que bige-ops vérifie pour .NET</h2>
-    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code .NET arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation et le coût sur Outscale sont calculés à côté.</p>
+    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code .NET arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation est calculée à côté.</p>
     <p>Tout est classé par urgence : ce qui est exposé à Internet d’abord. <strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, sur ton poste, et c’est gratuit. La méthode complète : <a href="stacks.html#verifications">ce que bige-ops vérifie</a>.</p>
 
     <h2 id="bases">Bases de données typiques</h2>
@@ -106,9 +106,9 @@ api:
       chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
-    <h2 id="stacks">Stacks .NET chiffrées</h2>
+    <h2 id="stacks">Stacks .NET de référence</h2>
     <ul>
-      <li><a href="stack-dotnet-postgresql-rabbitmq.html">ASP.NET Core + PostgreSQL + RabbitMQ</a> (438,40 € HT/mois estimés)</li>
+      <li><a href="stack-dotnet-postgresql-rabbitmq.html">ASP.NET Core + PostgreSQL + RabbitMQ</a></li>
     </ul>
 
     <h2 id="docs">Docs officielles</h2>

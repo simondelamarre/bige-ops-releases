@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kotlin sur Outscale : Ktor, Spring Boot Kotlin — bige-ops</title>
-  <meta name="description" content="Kotlin côté serveur sur Outscale avec bige-ops : Ktor, Spring Boot Kotlin, Gradle, PostgreSQL et Kafka sur OKS. Stack suivie sur OpenCVE, coût réel." />
+  <meta name="description" content="Kotlin côté serveur sur Outscale avec bige-ops : Ktor, Spring Boot Kotlin, Gradle, PostgreSQL et Kafka sur OKS. Stack suivie sur OpenCVE." />
   <link rel="canonical" href="https://bige.dev/lang-kotlin.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,14 +13,14 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/lang-kotlin.html" />
   <meta property="og:title" content="Kotlin sur Outscale : Ktor, Spring Boot Kotlin — bige-ops" />
-  <meta property="og:description" content="Kotlin côté serveur sur Outscale avec bige-ops : Ktor, Spring Boot Kotlin, Gradle, PostgreSQL et Kafka sur OKS. Stack suivie sur OpenCVE, coût réel." />
-  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta property="og:description" content="Kotlin côté serveur sur Outscale avec bige-ops : Ktor, Spring Boot Kotlin, Gradle, PostgreSQL et Kafka sur OKS. Stack suivie sur OpenCVE." />
+  <meta property="og:image" content="https://bige.dev/screens/hero.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Kotlin sur Outscale : Ktor, Spring Boot Kotlin", "description": "Kotlin côté serveur sur Outscale avec bige-ops : Ktor, Spring Boot Kotlin, Gradle, PostgreSQL et Kafka sur OKS. Stack suivie sur OpenCVE, coût réel.", "inLanguage": "fr", "url": "https://bige.dev/lang-kotlin.html", "keywords": "Kotlin, Ktor, Spring Boot, coroutines, Gradle, JVM, PostgreSQL, Kafka, OKS, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Kotlin sur Outscale : Ktor, Spring Boot Kotlin", "item": "https://bige.dev/lang-kotlin.html"}]}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Kotlin sur Outscale : Ktor, Spring Boot Kotlin", "description": "Kotlin côté serveur sur Outscale avec bige-ops : Ktor, Spring Boot Kotlin, Gradle, PostgreSQL et Kafka sur OKS. Stack suivie sur OpenCVE.", "inLanguage": "fr", "url": "https://bige.dev/lang-kotlin.html", "keywords": "Kotlin, Ktor, Spring Boot, coroutines, Gradle, JVM, PostgreSQL, Kafka, OKS, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Kotlin sur Outscale : Ktor, Spring Boot Kotlin", "item": "https://bige.dev/lang-kotlin.html"}]}]}</script>
 </head>
 <body>
   <main>
@@ -64,7 +64,7 @@
     <p>Les pages Spring Boot et Quarkus ci-dessous donnent des architectures complètes, valables en Kotlin.</p>
 
     <h2 id="scan">Ce que bige-ops vérifie pour Kotlin</h2>
-    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code Kotlin arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation et le coût sur Outscale sont calculés à côté.</p>
+    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code Kotlin arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation est calculée à côté.</p>
     <p>Tout est classé par urgence : ce qui est exposé à Internet d’abord. <strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, sur ton poste, et c’est gratuit. La méthode complète : <a href="stacks.html#verifications">ce que bige-ops vérifie</a>.</p>
 
     <h2 id="bases">Bases de données typiques</h2>
@@ -101,10 +101,10 @@
       chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
-    <h2 id="stacks">Stacks Kotlin chiffrées</h2>
+    <h2 id="stacks">Stacks Kotlin de référence</h2>
     <ul>
-      <li><a href="stack-spring-boot-oks-kafka-keycloak.html">Spring Boot sur OKS + Kafka + Keycloak</a> (918,80 € HT/mois estimés)</li>
-      <li><a href="stack-quarkus-oks-postgresql-kafka.html">Quarkus sur OKS + PostgreSQL + Kafka</a> (523,35 € HT/mois estimés)</li>
+      <li><a href="stack-spring-boot-oks-kafka-keycloak.html">Spring Boot sur OKS + Kafka + Keycloak</a></li>
+      <li><a href="stack-quarkus-oks-postgresql-kafka.html">Quarkus sur OKS + PostgreSQL + Kafka</a></li>
     </ul>
 
     <h2 id="docs">Docs officielles</h2>

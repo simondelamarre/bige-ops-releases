@@ -1,8 +1,8 @@
 # Phoenix + PostgreSQL sur Outscale
 
-Phoenix et LiveView tiennent énormément de connexions temps réel sur peu de machines, et Oban fait de PostgreSQL ta file de jobs. bige-ops pose ta release sur Outscale derrière un LBU, PostgreSQL en subnet privé, et chiffre l’ensemble.
+Phoenix et LiveView tiennent énormément de connexions temps réel sur peu de machines, et Oban fait de PostgreSQL ta file de jobs. bige-ops pose ta release sur Outscale derrière un LBU, PostgreSQL en subnet privé.
 
-**En bref.** Topologie multi-vm : VM app tinav6.c4r8p2 (release Phoenix, port 4000) derrière un LBU, PostgreSQL 17 privé, backups OOS, NAT. Estimation bige-ops : **368,30 € HT/mois**.
+**En bref.** Topologie multi-vm : VM app tinav6.c4r8p2 (release Phoenix, port 4000) derrière un LBU, PostgreSQL 17 privé, backups OOS, NAT.
 
 ## Pourquoi cette stack tourne bien sur Outscale
 
@@ -14,20 +14,19 @@ Phoenix et LiveView tiennent énormément de connexions temps réel sur peu de m
 
 VM app tinav6.c4r8p2 (release Phoenix :4000 + Oban) derrière LBU ; PostgreSQL 17 privé ; OOS backups ; NAT.
 
-## Coût mensuel estimé
+## Exemple : ce que la simulation contient
 
-Calculé avec bige-ops estimate --json sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région eu-west-2, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.
+| Ligne bige-ops | Ce que c’est |
+| --- | --- |
+| LBU app-web | entrée publique (HTTP + WebSocket) |
+| OOS phoenix-app-backups — 50 GiB | sauvegardes PostgreSQL |
+| VM app-app — tinav6.c4r8p2 | release Phoenix + Oban |
+| VM app-postgres — tinav6.c4r8p2 | PostgreSQL 17, disque io1 |
+| NAT gateway | sortie du subnet privé |
+| EIP VM app-app (attachée) | IP publique de la VM app |
+| EIP NAT (attachée supplémentaire) | IP publique du NAT |
 
-| Ligne bige-ops | Ce que c’est | € HT / mois |
-| --- | --- | --- |
-| LBU app-web | entrée publique (HTTP + WebSocket) | 21,90 € |
-| OOS phoenix-app-backups — 50 GiB | sauvegardes PostgreSQL | 1,25 € |
-| VM app-app — tinav6.c4r8p2 | release Phoenix + Oban | 135,80 € |
-| VM app-postgres — tinav6.c4r8p2 | PostgreSQL 17, disque io1 | 169,20 € |
-| NAT gateway | sortie du subnet privé | 36,50 € |
-| EIP VM app-app (attachée — 1ʳᵉ offerte / Net) | IP de la VM app (1ʳᵉ offerte) | 0,00 € |
-| EIP NAT (attachée supplémentaire) | IP publique du NAT | 3,65 € |
-| **Total estimé** | | **368,30 €** |
+L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.
 
 
 
@@ -88,7 +87,7 @@ Avec ta clé OpenCVE, chaque composant reconnu (image, paquet installé) est rap
 | PostgreSQL | [PostgreSQL](https://app.opencve.io/cve/?vendor=postgresql&product=postgresql) | reconnu automatiquement depuis l’image postgres:17 · exposition : privée |
 | Elixir, Erlang/OTP, Phoenix | [Elixir](https://app.opencve.io/cve/?vendor=elixir-lang&product=elixir) · [Erlang/OTP](https://app.opencve.io/cve/?vendor=erlang&product=otp) · [Phoenix](https://app.opencve.io/cve/?vendor=phoenixframework&product=phoenix) | fiche de référence (pas encore reconnu automatiquement) |
 
-L’analyse du code Elixir arrive ; ta stack est déjà couverte : PostgreSQL et les images de tes Dockerfile et docker-compose comparés aux failles connues avec OpenCVE, exposition et coût. Détail : Elixir et Phoenix sur Outscale.
+L’analyse du code Elixir arrive ; ta stack est déjà couverte : PostgreSQL et les images de tes Dockerfile et docker-compose comparés aux failles connues avec OpenCVE et classés selon leur exposition. Détail : Elixir et Phoenix sur Outscale.
 
 ## Avant le deploy
 

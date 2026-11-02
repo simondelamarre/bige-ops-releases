@@ -1,8 +1,8 @@
 # Next.js + NestJS + PostgreSQL + Redis sur Outscale
 
-Le choix de nombreuses startups SaaS : Next.js pour le front et le rendu serveur, NestJS pour une API structurée, BullMQ pour les tâches de fond, PostgreSQL pour les données, Redis pour le cache et les files, et un bucket compatible S3 pour les fichiers. Voici cette stack posée sur Outscale par bige-ops, chiffrée ligne par ligne.
+Le choix de nombreuses startups SaaS : Next.js pour le front et le rendu serveur, NestJS pour une API structurée, BullMQ pour les tâches de fond, PostgreSQL pour les données, Redis pour le cache et les files, et un bucket compatible S3 pour les fichiers. Voici cette stack posée sur Outscale par bige-ops.
 
-**En bref.** Topologie multi-vm en eu-west-2 : une VM app (Next.js, NestJS, worker BullMQ) derrière un LBU, PostgreSQL et Redis sur deux VMs privées, deux buckets OOS (uploads et backups), un NAT pour la sortie du subnet privé. Estimation bige-ops : **428,06 € HT/mois**.
+**En bref.** Topologie multi-vm en eu-west-2 : une VM app (Next.js, NestJS, worker BullMQ) derrière un LBU, PostgreSQL et Redis sur deux VMs privées, deux buckets OOS (uploads et backups), un NAT pour la sortie du subnet privé.
 
 ## Pourquoi cette stack tourne bien sur Outscale
 
@@ -14,22 +14,21 @@ Le choix de nombreuses startups SaaS : Next.js pour le front et le rendu serveur
 
 VM app tinav6.c4r8p2 (Next.js :3000, NestJS :3001, worker BullMQ) derrière un LBU HTTPS ; PostgreSQL 17 (tinav6.c4r8p2, io1 60 GiB / 3 000 IOPS) et Redis 8 (tinav6.c2r2p3) en subnet privé ; OOS 200 GiB (uploads) + 50 GiB (backups) ; NAT pour la sortie du privé.
 
-## Coût mensuel estimé
+## Exemple : ce que la simulation contient
 
-Calculé avec bige-ops estimate --json sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région eu-west-2, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.
+| Ligne bige-ops | Ce que c’est |
+| --- | --- |
+| LBU app-web | entrée publique HTTP/HTTPS |
+| OOS saas-app-backups — 50 GiB | sauvegardes PostgreSQL |
+| OOS saas-app-uploads — 200 GiB | fichiers des utilisateurs (S3) |
+| VM app-app — tinav6.c4r8p2 | Next.js + NestJS + worker BullMQ |
+| VM app-redis — tinav6.c2r2p3 | cache, sessions, files BullMQ |
+| VM app-postgres — tinav6.c4r8p2 | PostgreSQL 17, disque io1 |
+| NAT gateway | sortie Internet du subnet privé |
+| EIP VM app-app (attachée) | IP publique de la VM app |
+| EIP NAT (attachée supplémentaire) | IP publique du NAT |
 
-| Ligne bige-ops | Ce que c’est | € HT / mois |
-| --- | --- | --- |
-| LBU app-web | entrée publique HTTP/HTTPS | 21,90 € |
-| OOS saas-app-backups — 50 GiB | sauvegardes PostgreSQL | 1,25 € |
-| OOS saas-app-uploads — 200 GiB | fichiers des utilisateurs (S3) | 5,00 € |
-| VM app-app — tinav6.c4r8p2 | Next.js + NestJS + worker BullMQ | 135,80 € |
-| VM app-redis — tinav6.c2r2p3 | cache, sessions, files BullMQ | 54,76 € |
-| VM app-postgres — tinav6.c4r8p2 | PostgreSQL 17, disque io1 | 169,20 € |
-| NAT gateway | sortie Internet du subnet privé | 36,50 € |
-| EIP VM app-app (attachée — 1ʳᵉ offerte / Net) | IP de la VM app (1ʳᵉ offerte) | 0,00 € |
-| EIP NAT (attachée supplémentaire) | IP publique du NAT | 3,65 € |
-| **Total estimé** | | **428,06 €** |
+L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.
 
 
 

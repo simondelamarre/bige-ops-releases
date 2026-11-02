@@ -33,8 +33,9 @@
       Postgres, MongoDB, Redis (et bases custom) : tu choisis <em>où</em> elles
       tournent (même VM, VM dédiée, ou pods OKS), tu règles réplicas et
       volumes dans le formulaire, et le setup se met à jour
-      <strong>tout de suite</strong>. Le tuning fin et la stratégie de
-      sauvegarde restent les tiens.
+      <strong>tout de suite</strong>. Les sauvegardes se règlent sur la
+      base, et son panneau <strong>Données</strong> fait le dump, la
+      restauration et la migration ; le tuning fin reste le tien.
       Pour MongoDB&nbsp;8, Postgres pour le RAG, Cassandra ou Elasticsearch :
       <a href="bases-complexes.html">bases complexes</a>.
     </p>
@@ -53,7 +54,7 @@ flowchart TB
   DB --> C2[VM data dédiée]
   DB --> C3[Pods OKS]
   C2 --> VOL[Volume BSU]
-  C3 --> REP[Réplicas Deployment]
+  C3 --> REP[StatefulSet + volume persistant]
   C1 --> VOL
   VOL -.->|backup| OOS[(bucket OOS)]
   REP -.->|backup| OOS
@@ -100,15 +101,17 @@ flowchart LR
       </pre>
     </figure>
 
-    <h2>2 · Sur OKS : réplicas de pods</h2>
+    <h2>2 · Sur OKS : StatefulSet et volume persistant</h2>
     <p>
-      En topologie <strong>oks</strong>, la base est un Deployment. Le champ
-      <strong>réplicas</strong> (<code>service_config.*.replicas</code>) règle
-      le nombre de pods. Ce n’est pas un replica set MongoDB ni un cluster
-      Postgres répliqué : la réplication au niveau du moteur se configure dans
-      la base elle-même, ou avec un opérateur. Les pods de base démarrent sur
-      un volume <code>emptyDir</code> : leurs données vivent avec le pod, et le
-      backup vers OOS est le filet. Voir aussi <a href="oks.html">OKS &amp; pods</a>.
+      En topologie <strong>oks</strong>, chaque base est un StatefulSet avec
+      son volume persistant (PVC, 10 GiB par défaut, dans la classe de
+      stockage par défaut du cluster ; <code>storage_gb</code> et
+      <code>storage_class</code> se règlent par base). Pour MongoDB, le champ
+      <strong>réplicas</strong> (<code>service_config.mongodb.replicas</code>,
+      1, 3 ou 5) pose un replica set. Les autres bases restent à un pod : leur
+      réplication se configure dans le moteur, ou avec un opérateur. Le backup
+      vers OOS, un CronJob par base, reste le filet. Voir aussi
+      <a href="oks.html">OKS &amp; pods</a>.
     </p>
 
 <pre>service_config:
@@ -124,7 +127,10 @@ flowchart LR
       premier filet. Pour les dumps applicatifs, on branche
       <strong><a href="https://docs.outscale.com/fr/userguide/À-propos-d-OOS.html" target="_blank" rel="noopener noreferrer">OOS</a></strong> (l’Object Storage Outscale, compatible S3) : bucket
       dédié, lien <code>backup</code> base → OOS dans Visual, script
-      <code>backup.sh</code> préparé après <code>generate</code>.
+      <code>backup.sh</code> préparé après <code>generate</code> et installé
+      en tâche planifiée par le <code>deploy</code> (CronJob sur OKS). Le
+      panneau Données d’une base sert au dump à la demande, à la restauration
+      et à la migration depuis une autre base.
       Détail : <a href="oos.html">OOS &amp; backups</a>.
     </p>
     <p>
@@ -155,8 +161,9 @@ sequenceDiagram
     <h2>Presets par type</h2>
     <p>
       Chaque type amène une image et des champs utiles dans l’inspector.
-      Postgres : volume data, attache à une VM ou à un pod, réplicas OKS.
-      MongoDB et Redis : même logique (coloc, dédiée ou OKS). Custom : image +
+      Postgres : volume data, attache à une VM ou à un pod.
+      MongoDB et Redis : même logique (coloc, dédiée ou OKS), avec le replica
+      set en plus pour MongoDB. Custom : image +
       port + les mêmes leviers de sizing et de réplicas. Un champ changé, et
       le setup est à jour.
     </p>
@@ -169,12 +176,12 @@ sequenceDiagram
         <tr>
           <td><strong>Postgres</strong></td>
           <td>Image + volume</td>
-          <td>VM ou pod, GiB, réplicas OKS</td>
+          <td>VM ou pod, GiB</td>
         </tr>
         <tr>
           <td><strong>MongoDB</strong></td>
           <td>Coloc ou pod</td>
-          <td>Placement, réplicas de pods</td>
+          <td>Placement, replica set (1, 3 ou 5)</td>
         </tr>
         <tr>
           <td><strong>Redis</strong></td>

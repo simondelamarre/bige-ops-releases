@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Spring Boot sur OKS : Kafka, PostgreSQL, Redis, Keycloak — bige-ops</title>
-  <meta name="description" content="Microservices Spring Boot sur OKS avec Kafka, PostgreSQL, Redis et Keycloak : control plane HA, LBU HTTPS, coût réel (918,80 € HT/mois hors LBU)." />
+  <meta name="description" content="Microservices Spring Boot sur OKS avec Kafka, PostgreSQL, Redis et Keycloak : control plane HA, LBU HTTPS, CVE." />
   <link rel="canonical" href="https://bige.dev/stack-spring-boot-oks-kafka-keycloak.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,14 +13,14 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/stack-spring-boot-oks-kafka-keycloak.html" />
   <meta property="og:title" content="Spring Boot sur OKS : Kafka, PostgreSQL, Redis, Keycloak — bige-ops" />
-  <meta property="og:description" content="Microservices Spring Boot sur OKS avec Kafka, PostgreSQL, Redis et Keycloak : control plane HA, LBU HTTPS, coût réel (918,80 € HT/mois hors LBU)." />
-  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta property="og:description" content="Microservices Spring Boot sur OKS avec Kafka, PostgreSQL, Redis et Keycloak : control plane HA, LBU HTTPS, CVE." />
+  <meta property="og:image" content="https://bige.dev/screens/site-simule.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Spring Boot sur OKS : Kafka, PostgreSQL, Redis, Keycloak", "description": "Microservices Spring Boot sur OKS avec Kafka, PostgreSQL, Redis et Keycloak : control plane HA, LBU HTTPS, coût réel (918,80 € HT/mois hors LBU).", "inLanguage": "fr", "url": "https://bige.dev/stack-spring-boot-oks-kafka-keycloak.html", "keywords": "Spring Boot, Spring Cloud Gateway, microservices, Kafka, Keycloak, OIDC, SSO, PostgreSQL, Redis, Java, Kubernetes, OKS, HPA, Outscale, SecNumCloud, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Spring Boot sur OKS : Kafka, PostgreSQL, Redis, Keycloak", "item": "https://bige.dev/stack-spring-boot-oks-kafka-keycloak.html"}]}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Spring Boot sur OKS : Kafka, PostgreSQL, Redis, Keycloak", "description": "Microservices Spring Boot sur OKS avec Kafka, PostgreSQL, Redis et Keycloak : control plane HA, LBU HTTPS, CVE.", "inLanguage": "fr", "url": "https://bige.dev/stack-spring-boot-oks-kafka-keycloak.html", "keywords": "Spring Boot, Spring Cloud Gateway, microservices, Kafka, Keycloak, OIDC, SSO, PostgreSQL, Redis, Java, Kubernetes, OKS, HPA, Outscale, SecNumCloud, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Spring Boot sur OKS : Kafka, PostgreSQL, Redis, Keycloak", "item": "https://bige.dev/stack-spring-boot-oks-kafka-keycloak.html"}]}]}</script>
 </head>
 <body>
   <main>
@@ -31,12 +31,12 @@
     </div>
     <h1>Spring Boot sur OKS + Kafka + PostgreSQL + Redis + Keycloak</h1>
     <p class="lead">
-      Le schéma type des grandes entreprises et des scale-ups Java : des microservices Spring Boot derrière une gateway, Kafka pour les événements, PostgreSQL pour les données, Redis pour le cache, Keycloak pour l’identité. Sur OKS, le Kubernetes managé d’Outscale, disponible aussi en Région SecNumCloud, bige-ops génère le cluster, les manifests et le chiffrage.
+      Le schéma type des grandes entreprises et des scale-ups Java : des microservices Spring Boot derrière une gateway, Kafka pour les événements, PostgreSQL pour les données, Redis pour le cache, Keycloak pour l’identité. Sur OKS, le Kubernetes managé d’Outscale, disponible aussi en Région SecNumCloud, bige-ops génère le cluster et les manifests.
     </p>
 
     <div class="callout">
       <strong>En bref.</strong>
-      Topologie <code>oks</code> : control plane haute disponibilité <code>cp.3.masters.small</code>, nodepool de 3 nœuds <code>tinav6.c8r16p2</code> (24 vCPU, 48 GiB). Gateway, front, consumers Kafka, microservices <code>orders</code> et <code>catalog</code>, Kafka, Keycloak, PostgreSQL et Redis en Deployments. Estimation bige-ops : <strong>918,80 € HT par mois</strong>, plus les trois LBU des Services exposés.
+      Topologie <code>oks</code> : control plane haute disponibilité <code>cp.3.masters.small</code>, nodepool de 3 nœuds <code>tinav6.c8r16p2</code> (24 vCPU, 48 GiB). Gateway, front, consumers Kafka, microservices <code>orders</code> et <code>catalog</code>, Kafka, Keycloak, PostgreSQL et Redis en Deployments. La gateway, le front et Keycloak créent chacun leur LBU.
     </div>
 
     <figure class="diagram">
@@ -88,16 +88,15 @@ flowchart TB
       <li>Les pods de données démarrent sur <code>emptyDir</code> : le filet est le backup PostgreSQL vers OOS, activé ici. Pour un Kafka multi-brokers à stockage persistant, un opérateur comme <a href="https://strimzi.io/" target="_blank" rel="noopener noreferrer">Strimzi</a> s’ajoute ensuite dans ton exploitation (<a href="perimetre.html">périmètre</a>).</li>
     </ul>
 
-    <h2 id="cout">Coût mensuel estimé</h2>
-    <p>Calculé avec <code>bige-ops estimate --json</code> sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région <code>eu-west-2</code>, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.</p>
+    <h2 id="cout">Exemple : ce que la simulation contient</h2>
     <table>
-      <tr><th>Ligne bige-ops</th><th>Ce que c’est</th><th>€ HT / mois</th></tr>
-      <tr><td>OOS platform-backups — 100 GiB</td><td>sauvegardes PostgreSQL (100 GiB)</td><td>2,50 €</td></tr>
-      <tr><td>OKS control plane — cp.3.masters.small</td><td>control plane HA (3 masters)</td><td>94,90 €</td></tr>
-      <tr><td>Nodepool default — tinav6.c8r16p2 × 3</td><td>3 nœuds : 24 vCPU, 48 GiB, disques inclus</td><td>821,40 €</td></tr>
-      <tr><th>Total estimé</th><th></th><th>918,80 €</th></tr>
+      <tr><th>Ligne bige-ops</th><th>Ce que c’est</th></tr>
+      <tr><td>OOS platform-backups — 100 GiB</td><td>sauvegardes PostgreSQL (100 GiB)</td></tr>
+      <tr><td>OKS control plane — cp.3.masters.small</td><td>control plane HA (3 masters)</td></tr>
+      <tr><td>Nodepool default — tinav6.c8r16p2 × 3</td><td>3 nœuds : 24 vCPU, 48 GiB, disques inclus</td></tr>
     </table>
-    <p><strong>LBU des Services exposés.</strong> La gateway, le front et Keycloak sont trois Services <code>LoadBalancer</code> : trois LBU à 21,90 € HT par mois l’unité au même catalogue, soit 65,70 € de plus : <strong>984,50 € HT par mois</strong> au total. Faire passer Keycloak derrière la gateway en retire un.</p>
+    <p>L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.</p>
+    <p><strong>LBU des Services exposés.</strong> La gateway, le front et Keycloak sont trois Services <code>LoadBalancer</code>, donc trois LBU en plus des lignes ci-dessus. Faire passer Keycloak derrière la gateway en retire un.</p>
     <p>Le projet utilisé, à reproduire chez toi :</p>
     <pre>bige-ops init -n stack-spring-boot-oks-kafka-keycloak
 bige-ops add layout custom --name platform --runtime java --web spa --worker \
@@ -199,7 +198,7 @@ components:
       <tr><td>Spring Boot, Spring Cloud Gateway, Spring Security</td><td><a href="https://app.opencve.io/cve/?vendor=vmware&amp;product=spring_boot" target="_blank" rel="noopener noreferrer">Spring Boot</a> · <a href="https://app.opencve.io/cve/?vendor=vmware&amp;product=spring_cloud_gateway" target="_blank" rel="noopener noreferrer">Spring Cloud Gateway</a> · <a href="https://app.opencve.io/cve/?vendor=vmware&amp;product=spring_security" target="_blank" rel="noopener noreferrer">Spring Security</a></td><td>fiche de référence (pas encore reconnu automatiquement)</td></tr>
       <tr><td>JDK</td><td><a href="https://app.opencve.io/cve/?vendor=oracle&amp;product=openjdk" target="_blank" rel="noopener noreferrer">OpenJDK</a></td><td>fiche de référence (pas encore reconnu automatiquement)</td></tr>
     </table>
-    <p>L’analyse du code Java arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE, exposition sur OKS et coût sur Outscale. Détail : <a href="lang-java.html">Java sur Outscale</a>.</p>
+    <p>L’analyse du code Java arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE, classés selon leur exposition sur OKS. Détail : <a href="lang-java.html">Java sur Outscale</a>.</p>
 
 
     <h2 id="avant-deploy">Ce que bige-ops vérifie avant le deploy</h2>

@@ -2,7 +2,7 @@
 
 Des API Go et des services qui échangent par messages NATS : sobre, rapide, facile à faire grandir. Go consomme si peu qu’une petite VM porte l’API, les consumers et le serveur NATS ; bige-ops la pose sur Outscale avec PostgreSQL en subnet privé.
 
-**En bref.** Topologie multi-vm : VM app tinav6.c2r4p2 (API Go, consumers, serveur NATS JetStream en service custom) derrière un LBU, PostgreSQL privé, backups OOS, NAT. Estimation bige-ops : **302,60 € HT/mois**.
+**En bref.** Topologie multi-vm : VM app tinav6.c2r4p2 (API Go, consumers, serveur NATS JetStream en service custom) derrière un LBU, PostgreSQL privé, backups OOS, NAT.
 
 ## Pourquoi cette stack tourne bien sur Outscale
 
@@ -14,22 +14,21 @@ Des API Go et des services qui échangent par messages NATS : sobre, rapide, fac
 
 VM app tinav6.c2r4p2 (API Go :8080, consumers, NATS JetStream :4222 en service custom) derrière LBU ; PostgreSQL 17 privé ; OOS backups ; NAT. Variante : NATS sur VM privée dédiée.
 
-## Coût mensuel estimé
+## Exemple : ce que la simulation contient
 
-Calculé avec bige-ops estimate --json sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région eu-west-2, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.
+| Ligne bige-ops | Ce que c’est |
+| --- | --- |
+| LBU app-web | entrée publique |
+| OOS go-app-backups — 50 GiB | sauvegardes PostgreSQL |
+| VM app-app — tinav6.c2r4p2 | API Go + consumers + NATS |
+| VM app-postgres — tinav6.c4r8p2 | PostgreSQL 17, disque io1 |
+| NAT gateway | sortie du subnet privé |
+| EIP VM app-app (attachée) | IP publique de la VM app |
+| EIP NAT (attachée supplémentaire) | IP publique du NAT |
 
-| Ligne bige-ops | Ce que c’est | € HT / mois |
-| --- | --- | --- |
-| LBU app-web | entrée publique | 21,90 € |
-| OOS go-app-backups — 50 GiB | sauvegardes PostgreSQL | 1,25 € |
-| VM app-app — tinav6.c2r4p2 | API Go + consumers + NATS | 70,10 € |
-| VM app-postgres — tinav6.c4r8p2 | PostgreSQL 17, disque io1 | 169,20 € |
-| NAT gateway | sortie du subnet privé | 36,50 € |
-| EIP VM app-app (attachée — 1ʳᵉ offerte / Net) | IP de la VM app (1ʳᵉ offerte) | 0,00 € |
-| EIP NAT (attachée supplémentaire) | IP publique du NAT | 3,65 € |
-| **Total estimé** | | **302,60 €** |
+L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.
 
-Variante NATS sur VM privée dédiée tinav6.c2r4p2 : 372,70 € HT/mois (dont 70,10 € pour la VM NATS).
+Variante : NATS sur VM privée dédiée tinav6.c2r4p2.
 
 ```
 bige-ops init -n stack-go-postgresql-nats

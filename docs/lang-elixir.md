@@ -1,6 +1,6 @@
 # Elixir et Phoenix sur Outscale
 
-Phoenix et LiveView donnent du temps réel sans JavaScript à écrire, sur la machine virtuelle Erlang qui tient des millions de connexions. bige-ops pose ta release Phoenix sur Outscale avec PostgreSQL en subnet privé et la chiffre au catalogue public.
+Phoenix et LiveView donnent du temps réel sans JavaScript à écrire, sur la machine virtuelle Erlang qui tient des millions de connexions. bige-ops pose ta release Phoenix sur Outscale avec PostgreSQL en subnet privé.
 
 **En bref.** Runtime elixir dans bige-ops : port 4000, 512 MiB, MIX_ENV=prod, image construite avec mix release. Layout prêt à l’emploi : elixir-phoenix.
 
@@ -28,7 +28,7 @@ bige-ops add layout custom --runtime elixir --web none --no-worker \
 
 ## Ce que bige-ops vérifie pour Elixir
 
-Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code Elixir arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation et le coût sur Outscale sont calculés à côté. Références : [Elixir sur OpenCVE](https://app.opencve.io/cve/?vendor=elixir-lang&product=elixir) · [Erlang/OTP sur OpenCVE](https://app.opencve.io/cve/?vendor=erlang&product=otp) · [Phoenix sur OpenCVE](https://app.opencve.io/cve/?vendor=phoenixframework&product=phoenix).
+Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code Elixir arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation est calculée à côté. Références : [Elixir sur OpenCVE](https://app.opencve.io/cve/?vendor=elixir-lang&product=elixir) · [Erlang/OTP sur OpenCVE](https://app.opencve.io/cve/?vendor=erlang&product=otp) · [Phoenix sur OpenCVE](https://app.opencve.io/cve/?vendor=phoenixframework&product=phoenix).
 
 Tout est classé par urgence : ce qui est exposé à Internet d’abord. Pourquoi le refaire toi-même ? C’est chez toi, sur ton poste, et c’est gratuit. Méthode complète : [ce que bige-ops vérifie](https://bige.dev/stacks.html#verifications).
 
@@ -47,9 +47,9 @@ Jamais de base exposée à Internet : subnet privé + security group au CIDR du 
 
 bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : les failles publiées dans le registre mondial des vulnérabilités (CVE) et ses sources (NVD, MITRE, liste KEV des failles déjà exploitées tenue par la CISA…), avec leur note de gravité sur 10 (CVSS) et leur probabilité d’être exploitées (EPSS), rangées par éditeur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
 
-## Stacks chiffrées
+## Stacks de référence
 
-- [Phoenix + PostgreSQL](https://bige.dev/stack-phoenix-postgresql.html) (368,30 € HT/mois)
+- [Phoenix + PostgreSQL](https://bige.dev/stack-phoenix-postgresql.html)
 
 Docs : [Elixir](https://elixir-lang.org/docs.html) · [Phoenix](https://hexdocs.pm/phoenix/overview.html) · [Déployer Phoenix](https://hexdocs.pm/phoenix/deployment.html) · [Ecto](https://hexdocs.pm/ecto/Ecto.html) · [Oban](https://hexdocs.pm/oban/Oban.html)
 

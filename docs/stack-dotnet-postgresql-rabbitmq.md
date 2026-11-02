@@ -1,8 +1,8 @@
 # ASP.NET Core + PostgreSQL + RabbitMQ sur Outscale
 
-Une API ASP.NET Core sous Linux, Entity Framework Core sur PostgreSQL, RabbitMQ pour les commandes et les événements : la stack .NET moderne de nombreuses entreprises. bige-ops la pose sur Outscale, base et broker en subnet privé, et la chiffre.
+Une API ASP.NET Core sous Linux, Entity Framework Core sur PostgreSQL, RabbitMQ pour les commandes et les événements : la stack .NET moderne de nombreuses entreprises. bige-ops la pose sur Outscale, base et broker en subnet privé.
 
-**En bref.** Topologie multi-vm : VM app tinav6.c4r8p2 (API ASP.NET Core et worker, runtime custom, port 8080) derrière un LBU, PostgreSQL 17 privé, RabbitMQ sur VM privée dédiée tinav6.c2r4p2, backups OOS, NAT. Estimation bige-ops : **438,40 € HT/mois**.
+**En bref.** Topologie multi-vm : VM app tinav6.c4r8p2 (API ASP.NET Core et worker, runtime custom, port 8080) derrière un LBU, PostgreSQL 17 privé, RabbitMQ sur VM privée dédiée tinav6.c2r4p2, backups OOS, NAT.
 
 ## Pourquoi cette stack tourne bien sur Outscale
 
@@ -14,21 +14,20 @@ Une API ASP.NET Core sous Linux, Entity Framework Core sur PostgreSQL, RabbitMQ 
 
 VM app tinav6.c4r8p2 (ASP.NET Core :8080 + worker, runtime custom) derrière LBU ; PostgreSQL 17 privé ; RabbitMQ 4.3 sur VM privée dédiée tinav6.c2r4p2 ; OOS backups ; NAT.
 
-## Coût mensuel estimé
+## Exemple : ce que la simulation contient
 
-Calculé avec bige-ops estimate --json sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région eu-west-2, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.
+| Ligne bige-ops | Ce que c’est |
+| --- | --- |
+| LBU dotnet-web | entrée publique |
+| VM dotnet-rabbitmq — tinav6.c2r4p2 | RabbitMQ (VM privée dédiée) |
+| OOS dotnet-backups — 50 GiB | sauvegardes PostgreSQL |
+| VM dotnet-app — tinav6.c4r8p2 | API ASP.NET Core + worker |
+| VM dotnet-postgres — tinav6.c4r8p2 | PostgreSQL 17, disque io1 |
+| NAT gateway | sortie du subnet privé |
+| EIP VM dotnet-app (attachée) | IP publique de la VM app |
+| EIP NAT (attachée supplémentaire) | IP publique du NAT |
 
-| Ligne bige-ops | Ce que c’est | € HT / mois |
-| --- | --- | --- |
-| LBU dotnet-web | entrée publique | 21,90 € |
-| VM dotnet-rabbitmq — tinav6.c2r4p2 | RabbitMQ (VM privée dédiée) | 70,10 € |
-| OOS dotnet-backups — 50 GiB | sauvegardes PostgreSQL | 1,25 € |
-| VM dotnet-app — tinav6.c4r8p2 | API ASP.NET Core + worker | 135,80 € |
-| VM dotnet-postgres — tinav6.c4r8p2 | PostgreSQL 17, disque io1 | 169,20 € |
-| NAT gateway | sortie du subnet privé | 36,50 € |
-| EIP VM dotnet-app (attachée — 1ʳᵉ offerte / Net) | IP de la VM app (1ʳᵉ offerte) | 0,00 € |
-| EIP NAT (attachée supplémentaire) | IP publique du NAT | 3,65 € |
-| **Total estimé** | | **438,40 €** |
+L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.
 
 
 
@@ -93,7 +92,7 @@ Avec ta clé OpenCVE, chaque composant reconnu (image, paquet installé) est rap
 | RabbitMQ | [RabbitMQ](https://app.opencve.io/cve/?vendor=rabbitmq&product=rabbitmq) | fiche de référence (pas encore reconnu automatiquement) |
 | .NET, ASP.NET Core, Npgsql | [.NET](https://app.opencve.io/cve/?vendor=microsoft&product=.net) · [ASP.NET Core](https://app.opencve.io/cve/?vendor=microsoft&product=asp.net_core) · [Npgsql](https://app.opencve.io/cve/?vendor=npgsql&product=npgsql) | fiche de référence (pas encore reconnu automatiquement) |
 
-L’analyse du code .NET arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE, exposition et coût. Détail : .NET sur Outscale.
+L’analyse du code .NET arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE et classés selon leur exposition. Détail : .NET sur Outscale.
 
 ## Avant le deploy
 

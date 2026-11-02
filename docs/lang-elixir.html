@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Elixir et Phoenix sur Outscale : LiveView, Ecto, PostgreSQL — bige-ops</title>
-  <meta name="description" content="Elixir et Phoenix sur Outscale avec bige-ops : LiveView, Ecto, Oban, mix release, PostgreSQL derrière un LBU. Stack suivie sur OpenCVE, coût réel." />
+  <meta name="description" content="Elixir et Phoenix sur Outscale avec bige-ops : LiveView, Ecto, Oban, mix release, PostgreSQL derrière un LBU. Stack suivie sur OpenCVE." />
   <link rel="canonical" href="https://bige.dev/lang-elixir.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,14 +13,14 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/lang-elixir.html" />
   <meta property="og:title" content="Elixir et Phoenix sur Outscale : LiveView, Ecto, PostgreSQL — bige-ops" />
-  <meta property="og:description" content="Elixir et Phoenix sur Outscale avec bige-ops : LiveView, Ecto, Oban, mix release, PostgreSQL derrière un LBU. Stack suivie sur OpenCVE, coût réel." />
-  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta property="og:description" content="Elixir et Phoenix sur Outscale avec bige-ops : LiveView, Ecto, Oban, mix release, PostgreSQL derrière un LBU. Stack suivie sur OpenCVE." />
+  <meta property="og:image" content="https://bige.dev/screens/hero.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Elixir et Phoenix sur Outscale : LiveView, Ecto, PostgreSQL", "description": "Elixir et Phoenix sur Outscale avec bige-ops : LiveView, Ecto, Oban, mix release, PostgreSQL derrière un LBU. Stack suivie sur OpenCVE, coût réel.", "inLanguage": "fr", "url": "https://bige.dev/lang-elixir.html", "keywords": "Elixir, Phoenix, LiveView, Ecto, Oban, Erlang, OTP, BEAM, mix release, PostgreSQL, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Elixir et Phoenix sur Outscale : LiveView, Ecto, PostgreSQL", "item": "https://bige.dev/lang-elixir.html"}]}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Elixir et Phoenix sur Outscale : LiveView, Ecto, PostgreSQL", "description": "Elixir et Phoenix sur Outscale avec bige-ops : LiveView, Ecto, Oban, mix release, PostgreSQL derrière un LBU. Stack suivie sur OpenCVE.", "inLanguage": "fr", "url": "https://bige.dev/lang-elixir.html", "keywords": "Elixir, Phoenix, LiveView, Ecto, Oban, Erlang, OTP, BEAM, mix release, PostgreSQL, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Elixir et Phoenix sur Outscale : LiveView, Ecto, PostgreSQL", "item": "https://bige.dev/lang-elixir.html"}]}]}</script>
 </head>
 <body>
   <main>
@@ -31,7 +31,7 @@
     </div>
     <h1>Elixir et Phoenix sur Outscale</h1>
     <p class="lead">
-      Phoenix et LiveView donnent du temps réel sans JavaScript à écrire, sur la machine virtuelle Erlang qui tient des millions de connexions. bige-ops pose ta release Phoenix sur Outscale avec PostgreSQL en subnet privé et la chiffre au catalogue public.
+      Phoenix et LiveView donnent du temps réel sans JavaScript à écrire, sur la machine virtuelle Erlang qui tient des millions de connexions. bige-ops pose ta release Phoenix sur Outscale avec PostgreSQL en subnet privé.
     </p>
 
     <div class="callout">
@@ -69,7 +69,7 @@ bige-ops add layout custom --runtime elixir --web none --no-worker \
     <p>Le layout <code>elixir-phoenix</code> ajoute un worker et Redis ; avec Oban, PostgreSQL suffit souvent.</p>
 
     <h2 id="scan">Ce que bige-ops vérifie pour Elixir</h2>
-    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code Elixir arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation et le coût sur Outscale sont calculés à côté. PostgreSQL et Redis sont reconnus automatiquement ; garde <a href="https://app.opencve.io/cve/?vendor=elixir-lang&amp;product=elixir" target="_blank" rel="noopener noreferrer">Elixir sur OpenCVE</a>, <a href="https://app.opencve.io/cve/?vendor=erlang&amp;product=otp" target="_blank" rel="noopener noreferrer">Erlang/OTP sur OpenCVE</a> et <a href="https://app.opencve.io/cve/?vendor=phoenixframework&amp;product=phoenix" target="_blank" rel="noopener noreferrer">Phoenix sur OpenCVE</a> en référence pour le runtime et le framework. Si ton dépôt embarque un <code>package.json</code> (assets), ses dépendances npm sont comparées à la base publique des failles connues des bibliothèques open source (<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>).</p>
+    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code Elixir arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation est calculée à côté. PostgreSQL et Redis sont reconnus automatiquement ; garde <a href="https://app.opencve.io/cve/?vendor=elixir-lang&amp;product=elixir" target="_blank" rel="noopener noreferrer">Elixir sur OpenCVE</a>, <a href="https://app.opencve.io/cve/?vendor=erlang&amp;product=otp" target="_blank" rel="noopener noreferrer">Erlang/OTP sur OpenCVE</a> et <a href="https://app.opencve.io/cve/?vendor=phoenixframework&amp;product=phoenix" target="_blank" rel="noopener noreferrer">Phoenix sur OpenCVE</a> en référence pour le runtime et le framework. Si ton dépôt embarque un <code>package.json</code> (assets), ses dépendances npm sont comparées à la base publique des failles connues des bibliothèques open source (<a href="https://osv.dev/" target="_blank" rel="noopener noreferrer">OSV</a>).</p>
     <p>Tout est classé par urgence : ce qui est exposé à Internet d’abord. <strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, sur ton poste, et c’est gratuit. La méthode complète : <a href="stacks.html#verifications">ce que bige-ops vérifie</a>.</p>
 
     <h2 id="bases">Bases de données typiques</h2>
@@ -105,9 +105,9 @@ bige-ops add layout custom --runtime elixir --web none --no-worker \
       chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
-    <h2 id="stacks">Stacks Elixir chiffrées</h2>
+    <h2 id="stacks">Stacks Elixir de référence</h2>
     <ul>
-      <li><a href="stack-phoenix-postgresql.html">Phoenix + PostgreSQL</a> (368,30 € HT/mois estimés)</li>
+      <li><a href="stack-phoenix-postgresql.html">Phoenix + PostgreSQL</a></li>
     </ul>
 
     <h2 id="docs">Docs officielles</h2>

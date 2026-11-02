@@ -1,8 +1,8 @@
 # Stack IA : FastAPI + pgvector + Redis + OOS + GPU sur Outscale
 
-Un assistant RAG ou une API d’inférence qui reste sur un cloud souverain : FastAPI pour l’API, PostgreSQL avec pgvector pour les embeddings, Redis pour le cache et les jobs, OOS pour les documents, et une VM GPU Outscale pour servir le modèle. bige-ops pose l’ensemble et le chiffre, GPU compris.
+Un assistant RAG ou une API d’inférence qui reste sur un cloud souverain : FastAPI pour l’API, PostgreSQL avec pgvector pour les embeddings, Redis pour le cache et les jobs, OOS pour les documents, et une VM GPU Outscale pour servir le modèle. bige-ops pose l’ensemble, GPU compris.
 
-**En bref.** Topologie multi-vm : VM app tinav6.c4r8p2 (FastAPI, front, worker d’ingestion) derrière un LBU, PostgreSQL + pgvector et Redis privés, VM d’inférence privée tinav7.c16r64p1 avec un GPU NVIDIA L40, 500 GiB de documents dans OOS, backups, NAT. Estimation bige-ops : **2 654,65 € HT/mois**.
+**En bref.** Topologie multi-vm : VM app tinav6.c4r8p2 (FastAPI, front, worker d’ingestion) derrière un LBU, PostgreSQL + pgvector et Redis privés, VM d’inférence privée tinav7.c16r64p1 avec un GPU NVIDIA L40, 500 GiB de documents dans OOS, backups, NAT.
 
 ## Pourquoi cette stack tourne bien sur Outscale
 
@@ -15,25 +15,24 @@ Un assistant RAG ou une API d’inférence qui reste sur un cloud souverain : Fa
 
 VM app tinav6.c4r8p2 (FastAPI :8000, front, worker d’ingestion) derrière LBU ; PostgreSQL 17 + pgvector et Redis 8 privés ; VM d’inférence privée tinav7.c16r64p1 + 1 GPU NVIDIA L40 (fGPU) ; OOS 500 GiB documents + 100 GiB backups ; NAT.
 
-## Coût mensuel estimé
+## Exemple : ce que la simulation contient
 
-Calculé avec bige-ops estimate --json sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région eu-west-2, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.
+| Ligne bige-ops | Ce que c’est |
+| --- | --- |
+| LBU rag-web | entrée publique |
+| VM rag-inference — tinav7.c16r64p1 | inférence : 16 vCPU, 64 GiB, 1 × L40, 200 GiB |
+| OOS rag-documents — 500 GiB | documents sources (500 GiB) |
+| OOS rag-backups — 100 GiB | sauvegardes PostgreSQL (100 GiB) |
+| VM rag-app — tinav6.c4r8p2 | FastAPI + front + worker |
+| VM rag-redis — tinav6.c2r2p3 | cache, jobs d’ingestion |
+| VM rag-postgres — tinav6.c4r8p2 | PostgreSQL 17 + pgvector, io1 |
+| NAT gateway | sortie du subnet privé |
+| EIP VM rag-app (attachée) | IP publique de la VM app |
+| EIP NAT (attachée supplémentaire) | IP publique du NAT |
 
-| Ligne bige-ops | Ce que c’est | € HT / mois |
-| --- | --- | --- |
-| LBU rag-web | entrée publique | 21,90 € |
-| VM rag-inference — tinav7.c16r64p1 | inférence : 16 vCPU, 64 GiB, 1 × L40, 200 GiB | 2 217,84 € |
-| OOS rag-documents — 500 GiB | documents sources (500 GiB) | 12,50 € |
-| OOS rag-backups — 100 GiB | sauvegardes PostgreSQL (100 GiB) | 2,50 € |
-| VM rag-app — tinav6.c4r8p2 | FastAPI + front + worker | 135,80 € |
-| VM rag-redis — tinav6.c2r2p3 | cache, jobs d’ingestion | 54,76 € |
-| VM rag-postgres — tinav6.c4r8p2 | PostgreSQL 17 + pgvector, io1 | 169,20 € |
-| NAT gateway | sortie du subnet privé | 36,50 € |
-| EIP VM rag-app (attachée — 1ʳᵉ offerte / Net) | IP de la VM app (1ʳᵉ offerte) | 0,00 € |
-| EIP NAT (attachée supplémentaire) | IP publique du NAT | 3,65 € |
-| **Total estimé** | | **2 654,65 €** |
+L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.
 
-VM GPU : 2 217,84 € ; reste de la stack : 436,81 € HT/mois.
+Outscale propose aussi des GPU A100, H100 et H200 selon la taille du modèle.
 
 ```
 bige-ops init -n stack-ai-fastapi-pgvector-gpu

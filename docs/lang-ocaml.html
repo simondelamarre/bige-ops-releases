@@ -14,7 +14,7 @@
   <meta property="og:url" content="https://bige.dev/lang-ocaml.html" />
   <meta property="og:title" content="OCaml sur Outscale : Dream, Opium, Ocsigen — bige-ops" />
   <meta property="og:description" content="OCaml sur Outscale avec bige-ops : Dream, Opium, Ocsigen / Eliom, Caqti pour PostgreSQL et MariaDB, opam et dune. Service custom, CVE OpenCVE." />
-  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta property="og:image" content="https://bige.dev/screens/hero.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -74,7 +74,7 @@ web:
     <p>Les bases du catalogue bige-ops (PostgreSQL, MariaDB, Redis…) se déclarent à côté, en VM privée ou en pod.</p>
 
     <h2 id="scan">Ce que bige-ops vérifie pour OCaml</h2>
-    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code OCaml arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation et le coût sur Outscale sont calculés à côté.</p>
+    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code OCaml arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation est calculée à côté.</p>
     <p>Tout est classé par urgence : ce qui est exposé à Internet d’abord. <strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, sur ton poste, et c’est gratuit. La méthode complète : <a href="stacks.html#verifications">ce que bige-ops vérifie</a>.</p>
 
     <h2 id="bases">Bases de données typiques</h2>
@@ -111,7 +111,7 @@ web:
       chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
-    <h2 id="stacks">Stacks OCaml chiffrées</h2>
+    <h2 id="stacks">Stacks OCaml de référence</h2>
     <ul>
       <li>Les architectures multi-VM des pages <a href="stack-phoenix-postgresql.html">Phoenix + PostgreSQL</a> et <a href="stack-wordpress-mariadb.html">WordPress + MariaDB</a> se transposent à un service OCaml.</li>
     </ul>

@@ -1,6 +1,6 @@
 # Python sur Outscale
 
-Django pour les produits complets, FastAPI pour les API et l’IA, Flask pour aller vite : Python couvre le web comme la data. bige-ops le pose sur Outscale, des VMs aux GPU, chiffre la stack et cherche les failles de ton code et de tes bibliothèques PyPI.
+Django pour les produits complets, FastAPI pour les API et l’IA, Flask pour aller vite : Python couvre le web comme la data. bige-ops le pose sur Outscale, des VMs aux GPU, et cherche les failles de ton code et de tes bibliothèques PyPI.
 
 **En bref.** Runtime python dans bige-ops : port 8000, 512 MiB par défaut, Gunicorn, Uvicorn ou serveur intégré selon ton Dockerfile. Côté failles : pages Django, FastAPI et Flask accessibles sans connexion, réglages risqués, bibliothèques PyPI épinglées comparées aux failles connues.
 
@@ -13,7 +13,7 @@ Django pour les produits complets, FastAPI pour les API et l’IA, Flask pour al
 
 ## Sur Outscale avec bige-ops
 
-Le runtime python expose l’API sur le port 8000 (512 MiB). Le worker (Celery, RQ, Dramatiq) tourne sur la même VM app en multi-VM, ou dans son propre Deployment sur OKS. Pour l’inférence, une VM GPU Outscale se déclare à côté et se chiffre avec le reste.
+Le runtime python expose l’API sur le port 8000 (512 MiB). Le worker (Celery, RQ, Dramatiq) tourne sur la même VM app en multi-VM, ou dans son propre Deployment sur OKS. Pour l’inférence, une VM GPU Outscale se déclare à côté, dans la même simulation.
 
 - `single-vm` : une VM publique, apps + bases en Docker Compose (prototype, démo).
 - `multi-vm` : VM app derrière un LBU, une VM privée par base, NAT pour la sortie (production lisible).
@@ -54,10 +54,10 @@ Python publie son calendrier : 3.14 et 3.15 reçoivent les corrections, 3.11 à 
 
 bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : les failles publiées dans le registre mondial des vulnérabilités (CVE) et ses sources (NVD, MITRE, liste KEV des failles déjà exploitées tenue par la CISA…), avec leur note de gravité sur 10 (CVSS) et leur probabilité d’être exploitées (EPSS), rangées par éditeur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
 
-## Stacks chiffrées
+## Stacks de référence
 
-- [Django + Celery + PostgreSQL + Redis](https://bige.dev/stack-django-celery-postgresql-redis.html) (423,06 € HT/mois)
-- [IA : FastAPI + pgvector + GPU](https://bige.dev/stack-ai-fastapi-pgvector-gpu.html) (2 654,65 € HT/mois)
+- [Django + Celery + PostgreSQL + Redis](https://bige.dev/stack-django-celery-postgresql-redis.html)
+- [IA : FastAPI + pgvector + GPU](https://bige.dev/stack-ai-fastapi-pgvector-gpu.html)
 
 Docs : [Python](https://docs.python.org/3/) · [Django](https://docs.djangoproject.com/) · [FastAPI](https://fastapi.tiangolo.com/) · [Flask](https://flask.palletsprojects.com/) · [Celery](https://docs.celeryq.dev/) · [Déployer Django](https://docs.djangoproject.com/en/stable/howto/deployment/)
 

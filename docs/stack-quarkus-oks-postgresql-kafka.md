@@ -1,8 +1,8 @@
 # Quarkus sur OKS + PostgreSQL + Kafka
 
-Quarkus démarre en millisecondes et consomme peu de mémoire : sur Kubernetes, ça veut dire plus de pods par nœud et un HPA qui réagit vite. Avec Kafka pour les événements et PostgreSQL pour les données, c’est une base cloud-native solide ; bige-ops la pose sur OKS et la chiffre.
+Quarkus démarre en millisecondes et consomme peu de mémoire : sur Kubernetes, ça veut dire plus de pods par nœud et un HPA qui réagit vite. Avec Kafka pour les événements et PostgreSQL pour les données, c’est une base cloud-native solide ; bige-ops la pose sur OKS.
 
-**En bref.** Topologie oks : control plane cp.3.masters.small, nodepool de 3 nœuds tinav6.c4r8p2. API Quarkus (512 MiB, HPA de 2 à 8), consumers Kafka, Kafka et PostgreSQL en Deployments. Estimation bige-ops : **523,35 € HT/mois**, plus le LBU de l’API.
+**En bref.** Topologie oks : control plane cp.3.masters.small, nodepool de 3 nœuds tinav6.c4r8p2. API Quarkus (512 MiB, HPA de 2 à 8), consumers Kafka, Kafka et PostgreSQL en Deployments. Le Service api crée son LBU.
 
 ## Pourquoi cette stack tourne bien sur Outscale
 
@@ -15,18 +15,17 @@ Quarkus démarre en millisecondes et consomme peu de mémoire : sur Kubernetes, 
 
 OKS cp.3.masters.small, nodepool 3 × tinav6.c4r8p2 ; api Quarkus (512 MiB, HPA 2→8), worker consumers Kafka ; Kafka 4.3.1 (custom, KRaft) et PostgreSQL 17 internes ; backup OOS.
 
-## Coût mensuel estimé
+## Exemple : ce que la simulation contient
 
-Calculé avec bige-ops estimate --json sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région eu-west-2, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.
+| Ligne bige-ops | Ce que c’est |
+| --- | --- |
+| OOS quarkus-backups — 50 GiB | sauvegardes PostgreSQL |
+| OKS control plane — cp.3.masters.small | control plane HA (3 masters) |
+| Nodepool default — tinav6.c4r8p2 × 3 | 3 nœuds : 12 vCPU, 24 GiB, disques inclus |
 
-| Ligne bige-ops | Ce que c’est | € HT / mois |
-| --- | --- | --- |
-| OOS quarkus-backups — 50 GiB | sauvegardes PostgreSQL | 1,25 € |
-| OKS control plane — cp.3.masters.small | control plane HA (3 masters) | 94,90 € |
-| Nodepool default — tinav6.c4r8p2 × 3 | 3 nœuds : 12 vCPU, 24 GiB, disques inclus | 427,20 € |
-| **Total estimé** | | **523,35 €** |
+L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.
 
-LBU de l’API : 21,90 € → 545,25 € HT/mois au total.
+Le Service api crée un LBU, en plus des lignes ci-dessus.
 
 ```
 bige-ops init -n stack-quarkus-oks-postgresql-kafka
@@ -87,7 +86,7 @@ Avec ta clé OpenCVE, chaque composant reconnu (image, paquet installé) est rap
 | Quarkus, Hibernate ORM | [Quarkus](https://app.opencve.io/cve/?vendor=redhat&product=quarkus) · [Hibernate ORM](https://app.opencve.io/cve/?vendor=hibernate&product=hibernate_orm) | fiche de référence (pas encore reconnu automatiquement) |
 | JDK | [OpenJDK](https://app.opencve.io/cve/?vendor=oracle&product=openjdk) | fiche de référence (pas encore reconnu automatiquement) |
 
-L’analyse du code Java arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE, exposition sur OKS et coût sur Outscale. Détail : Java sur Outscale.
+L’analyse du code Java arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE, classés selon leur exposition sur OKS. Détail : Java sur Outscale.
 
 ## Avant le deploy
 

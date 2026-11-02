@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Par où commencer : choisir sa topologie — bige-ops</title>
-  <meta name="description" content="Startup, TPE ou PME, sans équipe DevOps : choisis un point de départ selon ton activité. Une machine, l’app et ses données séparées, ou Kubernetes managé, avec le budget mensuel réel sur Outscale." />
+  <meta name="description" content="Startup, TPE ou PME, sans équipe DevOps : choisis un point de départ selon ton activité. Une machine, l’app et ses données séparées, ou Kubernetes managé : ce que contient chaque point de départ et quand passer au suivant." />
   <link rel="canonical" href="https://bige.dev/layouts.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -30,39 +30,38 @@
     <h2>Trois façons de démarrer</h2>
     <table>
       <thead>
-        <tr><th></th><th>Pour qui</th><th>Ce que tu obtiens</th><th>Budget indicatif</th></tr>
+        <tr><th></th><th>Pour qui</th><th>Ce que tu obtiens</th><th>Exemple concret</th></tr>
       </thead>
       <tbody>
         <tr>
           <td><strong>Une machine</strong></td>
           <td>Une TPE, un outil métier, un site, la première version d’un produit</td>
           <td>Une VM qui porte ton app et sa base, une adresse publique, les sauvegardes vers l’Object Storage</td>
-          <td>à partir de <strong>~75 €/mois</strong></td>
+          <td><code>node-lite</code> : une VM de 2 vCPU et 4 Gio qui fait tourner l’API, le web et PostgreSQL, avec une IP publique et sans load balancer</td>
         </tr>
         <tr>
           <td><strong>L’app et ses données séparées</strong></td>
           <td>Une activité qui tourne, des clients qui comptent sur toi</td>
           <td>L’app derrière un load balancer, chaque base sur sa propre VM dans un réseau privé</td>
-          <td><strong>~380 €/mois</strong></td>
+          <td><code>python-app</code> : une VM app de 4 vCPU et 8 Gio (API, front, worker) derrière un LBU ; PostgreSQL sur sa VM privée de 4 vCPU et 8 Gio, disque io1 ; Redis sur une VM de 2 vCPU et 2 Gio</td>
         </tr>
         <tr>
           <td><strong>Kubernetes managé</strong></td>
           <td>Plusieurs services, des pics de charge, une équipe qui grandit</td>
-          <td>Un cluster OKS dédié (control plane à 3 masters), des nœuds qui s’ajustent à la charge</td>
-          <td><strong>~500 €/mois</strong></td>
+          <td>Un cluster OKS dont Outscale opère le control plane, des nodepools que tu dimensionnes, l’autoscaling des nœuds en option</td>
+          <td>Tes services en Deployments sur un nodepool <code>compute-pool</code> (2 nœuds de 4 vCPU et 8 Gio), tes bases sur un <code>data-pool</code> (2 nœuds de 4 vCPU et 16 Gio)</td>
         </tr>
       </tbody>
     </table>
     <p>
-      Les montants sont des estimations hors taxes, calculées par bige-ops sur la grille publique Outscale
-      (eu-west-2) : une machine de 2 vCPU et 4 Gio ; une app Python avec PostgreSQL et Redis ;
-      un cluster OKS de trois nœuds de 4 vCPU et 6 Gio. Ta simulation te donne le montant exact, ligne par ligne.
+      Ce sont les tailles de départ : tu les changes dans le Visual. Une fois l’app installée, ta simulation
+      affiche son estimation ligne par ligne, sur la grille publique Outscale, avant tout déploiement.
     </p>
 
     <h2>Optimise tes bases à tes usages</h2>
     <p>
       Chaque base démarre avec des réglages pensés pour son usage : tu gagnes le temps du réglage fin,
-      et tu ajustes ensuite en voyant le coût changer dans ta simulation.
+      et tu ajustes ensuite en voyant l’estimation de ta simulation suivre.
     </p>
     <table>
       <thead>
@@ -97,8 +96,8 @@
       </tbody>
     </table>
     <p>
-      Repère de prix : un disque io1 coûte 0,13 € par Gio et par mois, plus 0,01 € par IOPS : 3 000 IOPS garanties
-      reviennent à 30 € par mois. Ta simulation affiche le total exact. <a href="volumes-bsu.html">Volumes et IOPS</a> · <a href="bases.html">Bases de données</a>
+      Un disque io1 se compte à sa taille et à ses IOPS provisionnées : ta simulation en tient compte, ligne par ligne.
+      <a href="volumes-bsu.html">Volumes et IOPS</a> · <a href="bases.html">Bases de données</a>
     </p>
 
     <h2>Quand passer à l’étape suivante</h2>
@@ -106,31 +105,31 @@
       <li><strong>D’une machine à l’app et ses données séparées</strong> : quand une panne de la machine devient un vrai problème pour tes clients, ou quand ta base grossit et mérite sa propre machine.</li>
       <li><strong>Vers Kubernetes managé</strong> : quand tu as plusieurs services à faire évoluer séparément, ou des pics de charge à absorber sans intervenir.</li>
     </ul>
-    <p>Dans les deux cas, tu dupliques ta simulation, tu changes la topologie et tu compares les deux coûts avant de décider.</p>
+    <p>Dans les deux cas, tu dupliques ta simulation, tu changes la topologie et tu compares les deux versions (machines, bases, estimation) avant de décider.</p>
 
     <h2>Quel que soit ton choix, bige-ops s’occupe de</h2>
     <ul>
       <li><strong>Le réseau</strong> : réseau privé, règles d’ouverture, bases jamais exposées à Internet. <a href="reseau.html">Réseau</a></li>
-      <li><strong>Les sauvegardes</strong> : un clic sur une base pour l’envoyer vers l’Object Storage. <a href="oos.html">Object Storage</a></li>
+      <li><strong>Les données</strong> : depuis le panneau Données d’une base, un dump vers l’Object Storage, une restauration ou une migration depuis une autre base. <a href="oos.html">Object Storage</a></li>
       <li><strong>Le HTTPS</strong> : load balancer et certificat. <a href="lbu.html">LBU</a></li>
       <li><strong>Les secrets</strong> : coffre local, jamais dans tes fichiers de config. <a href="secrets.html">Secrets</a></li>
-      <li><strong>Le coût et les risques</strong>, affichés avant chaque déploiement. <a href="catalogue-prix.html">Catalogue de prix</a></li>
+      <li><strong>L’estimation et les risques</strong>, affichés avant chaque déploiement. <a href="catalogue-prix.html">Catalogue de prix</a></li>
     </ul>
 
     <h2>Des points de départ prêts à l’emploi</h2>
     <table>
       <thead>
-        <tr><th>Ton projet</th><th>Point de départ</th><th>Topologie</th><th>Budget indicatif</th></tr>
+        <tr><th>Ton projet</th><th>Point de départ</th><th>Topologie</th><th>Ce qu’il contient</th></tr>
       </thead>
       <tbody>
-        <tr><td>Une petite app ou un outil interne en Node.js</td><td><code>node-lite</code></td><td>Une machine</td><td>~75 €/mois</td></tr>
-        <tr><td>Une API Python avec son front</td><td><code>python-app</code></td><td>App et données séparées</td><td>~380 €/mois</td></tr>
-        <tr><td>Une application Java / Spring Boot</td><td><code>java-spring</code></td><td>App et données séparées</td><td>~380 €/mois</td></tr>
-        <tr><td>Une application PHP (Laravel, Symfony)</td><td><code>php-app</code></td><td>App et données séparées</td><td>~380 €/mois</td></tr>
-        <tr><td>Une API Go</td><td><code>go-app</code></td><td>App et données séparées</td><td>~380 €/mois</td></tr>
-        <tr><td>Du temps réel avec Elixir / Phoenix</td><td><code>elixir-phoenix</code></td><td>App et données séparées</td><td>~380 €/mois</td></tr>
-        <tr><td>Un SaaS Node.js complet (API, front, worker, recherche)</td><td><code>node-app</code></td><td>App et données séparées</td><td>~550 €/mois</td></tr>
-        <tr><td>Un produit data / IA en Python</td><td><code>python-ml</code></td><td>App et données séparées</td><td>~550 €/mois</td></tr>
+        <tr><td>Une petite app ou un outil interne en Node.js</td><td><code>node-lite</code></td><td>Une machine</td><td>API et web Node.js, PostgreSQL sur la même VM, IP publique</td></tr>
+        <tr><td>Une API Python avec son front</td><td><code>python-app</code></td><td>App et données séparées</td><td>API Python, front SPA, worker · PostgreSQL et Redis · LBU</td></tr>
+        <tr><td>Une application Java / Spring Boot</td><td><code>java-spring</code></td><td>App et données séparées</td><td>API Spring Boot, front SPA · PostgreSQL et Redis · LBU</td></tr>
+        <tr><td>Une application PHP (Laravel, Symfony)</td><td><code>php-app</code></td><td>App et données séparées</td><td>API PHP, front SPA, worker · PostgreSQL et Redis · LBU</td></tr>
+        <tr><td>Une API Go</td><td><code>go-app</code></td><td>App et données séparées</td><td>API Go, front SPA, worker · PostgreSQL et Redis · LBU</td></tr>
+        <tr><td>Du temps réel avec Elixir / Phoenix</td><td><code>elixir-phoenix</code></td><td>App et données séparées</td><td>Phoenix (API et LiveView), worker · PostgreSQL et Redis · LBU</td></tr>
+        <tr><td>Un SaaS Node.js complet (API, front, worker, recherche)</td><td><code>node-app</code></td><td>App et données séparées</td><td>API, web, worker · MongoDB, Redis et Weaviate · LBU</td></tr>
+        <tr><td>Un produit data / IA en Python</td><td><code>python-ml</code></td><td>App et données séparées</td><td>API Python, front SPA, worker · PostgreSQL, Redis et Weaviate · LBU</td></tr>
       </tbody>
     </table>
     <p>Chaque point de départ se modifie ensuite dans le Visual : taille des machines, bases, services, topologie.</p>

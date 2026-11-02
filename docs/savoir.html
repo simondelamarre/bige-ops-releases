@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ce que bige-ops sait</title>
-  <meta name="description" content="Le périmètre du simulateur bige-ops pour Outscale : estimation, topologies, materialization, analyses." />
+  <meta name="description" content="Ce que fait bige-ops sur Outscale : simulation, tests en local, estimation, déploiement sur ton compte, données et analyse des failles." />
   <link rel="canonical" href="https://bige.dev/savoir.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/savoir.html" />
   <meta property="og:title" content="Ce que bige-ops sait" />
-  <meta property="og:description" content="Le périmètre du simulateur bige-ops pour Outscale : estimation, topologies, materialization, analyses." />
+  <meta property="og:description" content="Ce que fait bige-ops sur Outscale : simulation, tests en local, estimation, déploiement sur ton compte, données et analyse des failles." />
   <meta property="og:image" content="https://bige.dev/screens/hero.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,24 +30,29 @@
     </div>
     <h1>Ce que bige-ops sait</h1>
     <p class="lead">
-      bige-ops est un <strong>simulateur</strong> pour Outscale. Il embarque le catalogue
-      public Outscale, les topologies de référence et tout ce qu’il faut pour générer puis
-      déployer ta stack sur ton compte.
+      Simple comme un PaaS, flexible comme un IaaS : bige-ops est une app desktop
+      gratuite qui simule ta stack, la teste en local, puis la déploie sur
+      <strong>ton</strong> compte Outscale. Elle embarque le catalogue public
+      Outscale, les topologies de référence et tout ce qu’il faut pour générer
+      puis déployer.
     </p>
 
-    <h2>Dans le simulateur</h2>
+    <h2>Dans l’app</h2>
     <ul>
-      <li><strong>Estimation</strong> : coût mensuel € HT sur le catalogue public Outscale, synchronisable via l’API.</li>
-      <li><strong>Topologies</strong> : mono-VM, multi-VM, OKS, avec volumes BSU, Object Storage et LBU.</li>
-      <li><strong>Materialization</strong> : Terraform et manifests Kubernetes générés, puis plan, apply et deploy sur ton compte.</li>
-      <li><strong>Analyses</strong> : contrôles avant déploiement, risques sur les données, CVE des dépôts (clé OpenCVE).</li>
+      <li><strong>Topologies</strong> : mono-VM, multi-VM, OKS, avec volumes BSU, Object Storage et LBU. Config et Visual restent synchronisés par un seul Apply atomique.</li>
+      <li><strong>Estimation</strong> : coût mensuel hors taxes estimé sur le catalogue public Outscale, synchronisable via l’API.</li>
+      <li><strong>Tests en local</strong> : Docker Compose ou Kubernetes local (kind), depuis un brouillon, sans compte cloud.</li>
+      <li><strong>Materialization</strong> : Terraform et manifests Kubernetes générés, plan relu avant apply, puis deploy sur ton compte.</li>
+      <li><strong>Données</strong> : Storage Explorer (S3, R2, OOS) avec migration reprenable ; un panneau Données par base pour le dump, la restauration et la migration.</li>
+      <li><strong>Analyses</strong> : contrôles avant déploiement, risques sur les données, routes exposées et failles (CWE, CVE avec ta clé OpenCVE) classées par exposition.</li>
     </ul>
 
     <figure class="diagram">
       <pre class="mermaid">
 flowchart LR
-  Cat[Catalogue public Outscale] --> Est[Estimation € HT]
+  Cat[Catalogue public Outscale] --> Est[Estimation]
   Sim[Simulation] --> Est
+  Sim --> Loc[Test en local]
   Sim --> Gen[Terraform + manifests]
   Gen --> Out[Ton compte Outscale]
       </pre>
@@ -56,7 +61,7 @@ flowchart LR
 
     <h2>Chez Outscale</h2>
     <ul>
-      <li><strong>Ta facture et tes offres commerciales</strong> : l’estimation du simulateur repose sur la grille publique, ton interlocuteur Outscale reste la référence pour un devis.</li>
+      <li><strong>Ta facture et tes offres commerciales</strong> : l’estimation de l’app repose sur la grille publique, ton interlocuteur Outscale reste la référence pour un devis.</li>
       <li><strong>Les nouveautés de l’offre</strong> : nouvelles régions, nouveaux types de VM ou de stockage. bige-ops les intègre au fil des versions.</li>
     </ul>
 

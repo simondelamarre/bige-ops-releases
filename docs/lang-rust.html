@@ -14,7 +14,7 @@
   <meta property="og:url" content="https://bige.dev/lang-rust.html" />
   <meta property="og:title" content="Rust sur Outscale : Axum, Actix Web, Tokio — bige-ops" />
   <meta property="og:description" content="Rust sur Outscale avec bige-ops : Axum, Actix Web, Tokio, SQLx, PostgreSQL. Binaires compacts sur petites VMs ou OKS, stack suivie sur OpenCVE." />
-  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta property="og:image" content="https://bige.dev/screens/hero.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -67,7 +67,7 @@ api:
     <p>Pour une architecture complète avec PostgreSQL et un bus de messages, la page <a href="stack-go-postgresql-nats.html">Go + PostgreSQL + NATS</a> se transpose telle quelle à Rust.</p>
 
     <h2 id="scan">Ce que bige-ops vérifie pour Rust</h2>
-    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code Rust arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation et le coût sur Outscale sont calculés à côté.</p>
+    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code Rust arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation est calculée à côté.</p>
     <p>Tout est classé par urgence : ce qui est exposé à Internet d’abord. <strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, sur ton poste, et c’est gratuit. La méthode complète : <a href="stacks.html#verifications">ce que bige-ops vérifie</a>.</p>
 
     <h2 id="bases">Bases de données typiques</h2>
@@ -104,7 +104,7 @@ api:
       chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
-    <h2 id="stacks">Stacks Rust chiffrées</h2>
+    <h2 id="stacks">Stacks Rust de référence</h2>
     <ul>
       <li><a href="stack-go-postgresql-nats.html">Go + PostgreSQL + NATS</a> : même architecture pour une API Rust.</li>
     </ul>

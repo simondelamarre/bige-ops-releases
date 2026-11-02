@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <title>bige-ops — simule, sécurise et migre ton cloud (gratuit, local)</title>
-  <meta name="description" content="Gratuit et 100 % local : dessine ta stack, vérifie ses failles, vois son prix, déploie-la et explore ou migre tes buckets AWS S3, Cloudflare R2 et Outscale OOS." />
+  <title>bige-ops — simple comme un PaaS, flexible comme un IaaS</title>
+  <meta name="description" content="Application gratuite, installée sur ton poste : tu simules ta stack, tu la testes en local, tu la déploies sur ton compte cloud, tu migres tes données et tu suis tes failles. Sans DevOps." />
   <link rel="canonical" href="https://bige.dev/" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -14,14 +14,14 @@
   <meta property="og:site_name" content="bige-ops" />
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/" />
-  <meta property="og:title" content="bige-ops — simule, sécurise et migre ton cloud" />
-  <meta property="og:description" content="Gratuit · 100 % local. Simule ta stack, vérifie-la, puis explore et migre tes buckets AWS S3, Cloudflare R2 et Outscale OOS." />
-  <meta property="og:image" content="https://bige.dev/screens/shot-simule.png" />
-  <meta property="og:image:alt" content="Capture de bige-ops : une stack sur une machine estimée à 74,50 € HT par mois" />
+  <meta property="og:title" content="bige-ops — simple comme un PaaS, flexible comme un IaaS" />
+  <meta property="og:description" content="Gratuit, sur ton poste. Simule ta stack, teste-la en local, déploie-la sur ton compte cloud, migre tes données, suis tes failles." />
+  <meta property="og:image" content="https://bige.dev/screens/site-simule.png" />
+  <meta property="og:image:alt" content="Capture de bige-ops : le Visual d’une stack, l’app sur une VM publique, PostgreSQL et Redis sur des VMs privées." />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="bige-ops — simule, sécurise et migre ton cloud" />
-  <meta name="twitter:description" content="Gratuit · 100 % local. Simule, vérifie, déploie et migre tes buckets S3, R2 et OOS." />
-  <meta name="twitter:image" content="https://bige.dev/screens/shot-simule.png" />
+  <meta name="twitter:title" content="bige-ops — simple comme un PaaS, flexible comme un IaaS" />
+  <meta name="twitter:description" content="Gratuit, sur ton poste. Simule, teste en local, déploie sur ton compte, migre tes données, suis tes failles." />
+  <meta name="twitter:image" content="https://bige.dev/screens/site-simule.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -619,7 +619,7 @@
     .slides::-webkit-scrollbar { display: none; }
     .slides:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 4px; }
     .slide { flex: 0 0 100%; scroll-snap-align: center; margin: 0; }
-    .slide img { width: 100%; height: auto; aspect-ratio: 2.2 / 1; object-fit: cover; object-position: left top; display: block; border: 1px solid var(--ink-700); border-radius: 14px; }
+    .slide img { width: 100%; height: auto; aspect-ratio: 1.6 / 1; object-fit: cover; object-position: left top; display: block; border: 1px solid var(--ink-700); border-radius: 14px; }
     .slide figcaption { margin-top: 0.6rem; font-size: 0.92rem; color: var(--mist); text-align: center; }
     .slide figcaption a { color: var(--accent-bright); }
     .slider-nav { display: flex; align-items: center; justify-content: center; gap: 0.9rem; margin-top: 0.6rem; }
@@ -628,7 +628,7 @@
     .dots { display: flex; gap: 0.45rem; }
     .dots button { width: 0.6rem; height: 0.6rem; border-radius: 999px; border: 0; padding: 0; background: var(--ink-600); cursor: pointer; }
     .dots button[aria-current="true"] { background: var(--accent-bright); }
-    .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-top: 1rem; }
     .fact { border: 1px solid var(--ink-700); background: var(--ink-900); border-radius: 14px; padding: 1.1rem 1.2rem; }
     .fact h3 { margin: 0 0 0.4rem; font-family: var(--font-display); font-size: 1.35rem; color: var(--accent-bright); }
     .fact p { margin: 0.3rem 0; color: #d7dde2; }
@@ -645,15 +645,15 @@
 </head>
 <body>
   <a class="skip-link" href="#contenu">Aller au contenu</a>
-  <!-- landing build: 2026-10-19-slider -->
+  <!-- landing build: 2026-11-02-paas-iaas -->
   <main id="contenu">
     <div class="brand-row">
       <p class="brand">bige<span class="ops">-ops</span></p>
       <span class="brand-badge">Gratuit</span>
     </div>
     <span id="why-outscale"></span><span id="outscale"></span><span id="clouds"></span>
-    <h1 class="hero-title">Dessine ta stack.<br>Vois le prix.<br><span>Déploie.</span></h1>
-    <p class="baseline">bige-ops simule ton infra, te montre ce qu’elle coûte, la déploie et simplifie la migration de tes données vers <a href="pourquoi-outscale.html">Outscale</a>. Gratuit, installé en une commande.</p>
+    <h1 class="hero-title">Simple comme un PaaS.<br><span>Flexible comme un IaaS.</span></h1>
+    <p class="baseline">bige-ops est une application gratuite, installée sur ton poste. Tu relies ton dépôt, tu simules ta stack, tu la testes en local et tu la déploies sur ton propre compte cloud, aujourd’hui chez <a href="pourquoi-outscale.html">Outscale</a>. Sans DevOps.</p>
 
     <div id="download" class="download-inline">
       <p class="brew">
@@ -671,21 +671,29 @@
 
     <section class="slider" aria-roledescription="carousel" aria-label="Aperçus de bige-ops">
       <div class="slides" id="slides" tabindex="0">
-        <figure class="slide" aria-roledescription="slide" aria-label="1 sur 4">
-          <img src="screens/shot-simule.png" width="2400" height="1089" alt="Capture de bige-ops : le Visual d’une stack sur une machine (API, front, PostgreSQL et sauvegardes), estimée à 74,50 € HT par mois." />
-          <figcaption>Une app et sa base sur une machine&nbsp;: 74,50&nbsp;€ HT/mois, ligne par ligne.</figcaption>
+        <figure class="slide" aria-roledescription="slide" aria-label="1 sur 6">
+          <img src="screens/site-simule.webp" width="2000" height="1250" alt="Capture de bige-ops : le Visual d’une stack. L’API, le front et le worker sur une VM publique, PostgreSQL et Redis chacun sur une VM privée, sauvegardes vers l’Object Storage, bouton Déployer en production." />
+          <figcaption>Ta stack telle qu’elle tournera&nbsp;: l’app sur une VM, chaque base sur sa VM privée, les sauvegardes vers l’Object Storage.</figcaption>
         </figure>
-        <figure class="slide" aria-roledescription="slide" aria-label="2 sur 4">
-          <img src="screens/shot-grandis.png" width="2400" height="1106" loading="lazy" alt="Capture de bige-ops : le Visual d’une stack multi-VM, VM app à 136 €, VM PostgreSQL à 169 € et VM Redis à 55 € par mois, total 381,66 € HT." />
-          <figcaption>Quand tu grandis&nbsp;: l’app et ses données séparées, 381,66&nbsp;€ HT/mois, chaque VM avec son prix.</figcaption>
+        <figure class="slide" aria-roledescription="slide" aria-label="2 sur 6">
+          <img src="screens/site-kubernetes.webp" width="2000" height="1250" loading="lazy" alt="Capture de bige-ops : la même stack sur Kubernetes, un cluster OKS, un node pool de trois nœuds, les pods api, worker et web, MongoDB et Redis, avec les boutons Tester Kubernetes et Déployer en production." />
+          <figcaption>La même stack sur Kubernetes&nbsp;: ton cluster, ton node pool, tes pods. Testée en local avant le cloud.</figcaption>
         </figure>
-        <figure class="slide" aria-roledescription="slide" aria-label="3 sur 4">
-          <img src="screens/shot-failles.png" width="2068" height="957" loading="lazy" alt="Capture de bige-ops : l’arbre des routes de Juice Shop jusqu’à login.ts, et la ligne 34 surlignée, une requête SQL construite avec l’email et le mot de passe saisis." />
-          <figcaption>Une faille réelle, trouvée sur ton poste, sans clé ni IA (<a href="https://owasp.org/projects/juice-shop" target="_blank" rel="noopener">OWASP Juice Shop</a>).</figcaption>
+        <figure class="slide" aria-roledescription="slide" aria-label="3 sur 6">
+          <img src="screens/site-migration.webp" width="2000" height="1250" loading="lazy" alt="Capture de bige-ops : migration de trois buckets AWS S3 vers Outscale OOS, mêmes noms, deux buckets à créer, seize transferts en parallèle." />
+          <figcaption>Tes buckets S3 reproduits sur OOS&nbsp;: mêmes noms, copie reprenable, la source reste intacte.</figcaption>
         </figure>
-        <figure class="slide" aria-roledescription="slide" aria-label="4 sur 4">
-          <img src="screens/shot-deps.png" width="2068" height="957" loading="lazy" alt="Capture de bige-ops : la fiche CVE-2022-25887 sur sanitize-html 1.4.2, exposée à Internet, priorité 1, avec son lien OpenCVE." />
-          <figcaption>Les failles connues de tes bibliothèques, reliées à <a href="https://www.opencve.io/" target="_blank" rel="noopener">OpenCVE</a>.</figcaption>
+        <figure class="slide" aria-roledescription="slide" aria-label="4 sur 6">
+          <img src="screens/site-donnees.webp" width="2000" height="1250" loading="lazy" alt="Capture de bige-ops : le panneau Données d’une base MongoDB, dump créé, envoi vers l’Object Storage en cours, boutons Créer un dump, Restaurer et Migrer depuis une base." />
+          <figcaption>Chaque base a son panneau Données&nbsp;: dump, envoi vers l’Object Storage, restauration, migration.</figcaption>
+        </figure>
+        <figure class="slide" aria-roledescription="slide" aria-label="5 sur 6">
+          <img src="screens/site-failles.webp" width="2000" height="1250" loading="lazy" alt="Capture de bige-ops : une injection SQL dans OWASP Juice Shop, ligne 34 de routes/login.ts surlignée, exposée à Internet, priorité 1, avec le bouton Proposer une issue GitHub." />
+          <figcaption>Une faille réelle, la ligne de code, l’issue GitHub en un clic. Trouvée sur ton poste, sans clé ni IA (<a href="https://owasp.org/projects/juice-shop" target="_blank" rel="noopener">OWASP Juice Shop</a>).</figcaption>
+        </figure>
+        <figure class="slide" aria-roledescription="slide" aria-label="6 sur 6">
+          <img src="screens/site-cve.webp" width="2000" height="1250" loading="lazy" alt="Capture de bige-ops : la fiche CVE-2022-25887 sur sanitize-html 1.4.2, plage affectée, version corrigée 2.7.1, lien OpenCVE et action recommandée." />
+          <figcaption>Les failles connues de tes bibliothèques, avec la version corrigée (<a href="https://www.opencve.io/" target="_blank" rel="noopener">OpenCVE</a>).</figcaption>
         </figure>
       </div>
       <div class="slider-nav">
@@ -696,74 +704,42 @@
     </section>
 
     <section class="block" id="pourquoi">
-      <span id="features"></span><span id="why-projection"></span>
-      <h2>Simple, facile et pratique</h2>
+      <span id="features"></span>
+      <h2>Simple comme un PaaS</h2>
+      <p>Tu veux mettre ton produit en ligne, pas devenir DevOps. bige-ops fait le travail d’une plateforme managée, sur ton poste.</p>
       <div class="facts">
         <article class="fact" id="why-less">
           <h3>Simule</h3>
-          <p>Dessine ta stack ou pars d’un modèle. Visual et configuration restent synchronisés par un Apply local et atomique ; le prix s’affiche ligne par ligne.</p>
+          <p>Pars d’une stack prête ou dessine la tienne. Le Visual et la configuration restent la même chose&nbsp;: un seul Appliquer, local et vérifié.</p>
           <p><a href="layouts.html">Par où commencer →</a></p>
+        </article>
+        <article class="fact" id="why-projection">
+          <h3>Teste en local</h3>
+          <p>Tes conteneurs, ou ton Kubernetes en local, avant de toucher au cloud. Pas besoin de compte cloud pour ça.</p>
+          <p><a href="repos-vms-docker.html">Repos, VMs et Docker →</a></p>
         </article>
         <article class="fact" id="why-deploy">
           <h3>Déploie</h3>
-          <p>Tu relies ton dépôt, bige-ops crée l’infra et déploie sur ton compte. Pas besoin de DevOps.</p>
+          <p>Tu relies ton dépôt et tu cliques sur Déployer. bige-ops écrit le Terraform et les manifests, te montre le plan, puis déploie sur ton compte.</p>
           <p><a href="stacks.html">Stacks et langages →</a></p>
         </article>
         <article class="fact" id="why-vulns">
           <h3>Sécurise</h3>
-          <p>Routes groupées par dépôt, stack et service ; code analysé sur la branche active ; CVE et CWE actuelles classées par exposition, gravité et correctif.</p>
+          <p>Tes failles, les plus exposées d’abord&nbsp;: la ligne de code, la version corrigée, l’issue GitHub en un clic.</p>
           <p><a href="#failles">Comment ça marche →</a></p>
-        </article>
-        <article class="fact" id="why-storage">
-          <h3>Migre</h3>
-          <p>Explore AWS S3, Cloudflare R2 et Outscale OOS, prévisualise tes fichiers et reproduis un ou plusieurs buckets sur OOS sans supprimer la source.</p>
-          <p><a href="#object-storage">Voir le parcours →</a></p>
         </article>
       </div>
     </section>
 
-    <section class="block" id="object-storage">
-      <h2>Explorer et migrer l’Object Storage</h2>
-      <p>
-        Connecte un compte <strong>AWS S3</strong>, <strong>Cloudflare R2</strong>,
-        <strong>Outscale OOS</strong> ou un endpoint compatible S3. Le Storage
-        Explorer rassemble les buckets dans une vue locale sans mélanger les
-        credentials entre tes espaces de travail.
-      </p>
-      <ol>
-        <li><strong>Visualise</strong> les poids courants, l’exposition publique, l’arbre dossiers/fichiers, les métadonnées et les aperçus d’images, PDF, médias et documents bureautiques.</li>
-        <li><strong>Gère</strong> les objets : recherche, upload, téléchargement, suppression d’un fichier, d’un dossier complet ou d’un bucket avec confirmation et progression.</li>
-        <li><strong>Migre</strong> un bucket ou toute une connexion vers OOS. Les buckets absents sont créés avec les mêmes noms, puis les objets sont copiés en parallèle.</li>
-        <li><strong>Reprends</strong> après une fermeture ou une erreur : le journal persistant évite de recommencer les objets déjà vérifiés et n’écrase jamais un objet arrivé entre-temps.</li>
-      </ol>
-      <p>
-        La migration est une copie contrôlée <strong>Source → Destination</strong> :
-        elle ne supprime jamais automatiquement la source. Les backups de bases
-        restent un usage séparé, avec leur propre planning et leur restauration.
-      </p>
-      <p><a href="oos.html">Object Storage, migrations S3/R2/OOS et backups →</a></p>
-    </section>
-
-    <section class="block" id="failles">
-      <h2>Comment bige-ops trouve tes failles</h2>
-      <ol>
-        <li>Il lit sur ton poste la branche sélectionnée de chaque dépôt et oublie les résultats devenus obsolètes quand tu changes de branche.</li>
-        <li>Il groupe les pages et API par dépôt, stack et service, puis les relie à leur exposition réelle : publique, interne ou source uniquement.</li>
-        <li>Il cherche les erreurs classiques : mots de passe écrits en clair, requêtes à la base construites avec ce que tape l’utilisateur, API ouverte à n’importe quel site.</li>
-        <li>Il compare les versions réellement installées aux bases publiques (<a href="https://osv.dev/" target="_blank" rel="noopener">OSV</a>) et, avec ta clé <a href="https://www.opencve.io/" target="_blank" rel="noopener">OpenCVE</a>, enrichit les CVE avec leur statut et leurs correctifs connus.</li>
-        <li>Il écarte le bruit historique non applicable et classe les actions : exposition Internet, sévérité, exploitabilité puis version corrigée.</li>
-      </ol>
-      <p><strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, et c’est gratuit.</p>
-    </section>
-
-    <section class="block" id="prix">
-      <h2>Pas cher, maîtrisé et sans VPS</h2>
-      <p><strong>bige-ops&nbsp;: 0&nbsp;€.</strong> Ton cloud, tu le paies au prix public, et tu le vois ligne par ligne avant chaque déploiement.</p>
+    <section class="block" id="iaas">
+      <h2>Flexible comme un IaaS</h2>
+      <p>Ce que tu gagnes à quitter un PaaS, sans perdre sa simplicité.</p>
       <ul>
-        <li>Une app et sa base sur une machine&nbsp;: <strong>~75&nbsp;€ HT/mois</strong>. <a href="layouts.html">Par où commencer</a></li>
-        <li>L’app et ses données séparées&nbsp;: <strong>~382&nbsp;€ HT/mois</strong>. <a href="stacks.html">Stacks et langages</a></li>
-        <li>Kubernetes managé, cluster dédié&nbsp;: <strong>dès ~458&nbsp;€ HT/mois</strong>. <a href="stack-express-mongodb-redis-oks.html">Node.js sur Kubernetes</a></li>
-        <li>Grands comptes, Spring Boot + Kafka + Keycloak&nbsp;: <strong>~919&nbsp;€ HT/mois</strong>. <a href="stack-spring-boot-oks-kafka-keycloak.html">Voir la stack</a></li>
+        <li><strong>Ton compte, tes machines.</strong> VMs, cluster Kubernetes dédié, réseau privé, load balancer&nbsp;: tout est créé sur ton compte, rien ne passe par nous.</li>
+        <li><strong>Tes versions, tes licences.</strong> PostgreSQL, MongoDB, Redis&nbsp;: tu choisis l’image et la version. Pas d’image revendue, pas de base captive.</li>
+        <li><strong>Ton infra en clair.</strong> Terraform et manifests générés, lisibles, versionnés dans ton Git&nbsp;: chaque simulation est une branche. <a href="github-config.html">Voir</a></li>
+        <li><strong>Une seule facture cloud.</strong> Tes services et tes données rejoignent ton compte, au lieu d’un abonnement par PaaS, BaaS et SaaS.</li>
+        <li><strong>Tu grandis sans tout réécrire.</strong> Une machine, puis l’app et ses données séparées, puis Kubernetes&nbsp;: la même stack, décrite une fois. <a href="layouts.html">Voir</a></li>
       </ul>
       <p>Ne perds pas ton temps sur Heroku, Fly.io, Render, Railway, Vercel, Netlify, Clever Cloud, Koyeb, Northflank, DigitalOcean, Linode, Vultr, Hetzner, Contabo, Hostinger…</p>
       <p><strong>Si tu cherches un vrai cloud provider pour avancer&nbsp;: <a href="pourquoi-outscale.html">Outscale</a>.</strong></p>
@@ -771,30 +747,57 @@
         <li><strong>Premier cloud qualifié SecNumCloud&nbsp;3.2</strong>, le visa de l’ANSSI (<a href="https://www.3ds.com/newsroom/press-releases/outscale-first-cloud-qualified-secnumcloud-32" target="_blank" rel="noopener">source</a>).</li>
         <li><strong>Kubernetes dédié</strong>&nbsp;: ton cluster, ton control plane, rien de partagé.</li>
         <li><strong>13&nbsp;000 IOPS garanties</strong> par volume pour tes bases.</li>
-        <li><strong>Un prix public</strong>, ligne par ligne, sans devis.</li>
+        <li><strong>Prêt pour les clients exigeants</strong>&nbsp;: HDS pour la santé, ISO&nbsp;27001, 27017 et 27018.</li>
       </ul>
-      <p><a href="layouts.html">Le budget selon ta topologie →</a> · <a href="catalogue-prix.html">Catalogue de prix →</a></p>
+    </section>
+
+    <section class="block" id="object-storage">
+      <span id="why-storage"></span>
+      <h2>Migre sans peur</h2>
+      <p>Quitter un PaaS, c’est d’abord déplacer des données. bige-ops le fait en copie contrôlée&nbsp;: la source n’est jamais supprimée, rien n’est écrasé.</p>
+      <ul>
+        <li><strong>Object Storage.</strong> Connecte AWS S3, Cloudflare R2, Outscale OOS ou un endpoint compatible S3. Explore, prévisualise tes fichiers, puis reproduis un bucket ou tous sur OOS&nbsp;: mêmes noms, copie parallèle, reprise après une coupure. <a href="oos.html">Voir</a></li>
+        <li><strong>Bases de données.</strong> Chaque base a son panneau Données&nbsp;: dump, envoi vers l’Object Storage, restauration, migration depuis une autre base. <a href="bases.html">Voir</a></li>
+      </ul>
+    </section>
+
+    <section class="block" id="failles">
+      <h2>Comment bige-ops trouve tes failles</h2>
+      <ol>
+        <li>Il lit sur ton poste la branche sélectionnée de chaque dépôt et oublie les résultats devenus obsolètes quand tu changes de branche.</li>
+        <li>Il groupe les pages et API par dépôt, stack et service, puis les relie à leur exposition réelle&nbsp;: publique, interne ou source uniquement.</li>
+        <li>Il cherche les erreurs classiques&nbsp;: mots de passe écrits en clair, requêtes à la base construites avec ce que tape l’utilisateur, API ouverte à n’importe quel site.</li>
+        <li>Il compare les versions réellement installées aux bases publiques (<a href="https://osv.dev/" target="_blank" rel="noopener">OSV</a>) et, avec ta clé <a href="https://www.opencve.io/" target="_blank" rel="noopener">OpenCVE</a>, enrichit les CVE avec leur statut et leurs correctifs connus.</li>
+        <li>Il écarte le bruit historique non applicable et classe les actions&nbsp;: exposition Internet, sévérité, exploitabilité puis version corrigée.</li>
+      </ol>
+      <p><strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, et c’est gratuit.</p>
+    </section>
+
+    <section class="block" id="gratuit">
+      <span id="prix"></span><span id="pricing"></span>
+      <h2>Gratuit, sans intermédiaire</h2>
+      <p><strong>bige-ops est gratuit.</strong> Ton cloud, tu le paies à ton fournisseur, sur ton compte. Personne ne se place entre les deux.</p>
+      <p>Avant de déployer, la simulation t’en donne une estimation dans l’app, sur les tarifs publics du fournisseur&nbsp;: le catalogue se synchronise par la CLI, et la remise que tu négocies vient en plus. <a href="catalogue-prix.html">Comment l’estimation est faite</a></p>
     </section>
 
     <section class="block" id="demarrer">
-      <h2>Encore plus simple, basique et pratique</h2>
+      <h2>Démarrer en trois étapes</h2>
       <ol>
-        <li><strong>Installe</strong> : la commande ci-dessus sur macOS, l’AppImage ou le .deb sur Linux.</li>
-        <li><strong>Simule</strong> : connecte-toi avec GitHub, choisis un dossier, pars d’une topologie prête.</li>
-        <li><strong>Décide</strong> : coût, risques, vulnérabilités. Tu connectes ton compte cloud quand tu veux déployer.</li>
+        <li><strong>Installe</strong>&nbsp;: la commande ci-dessus sur macOS, l’AppImage ou le .deb sur Linux.</li>
+        <li><strong>Simule et teste</strong>&nbsp;: connecte-toi avec GitHub, choisis un dossier, pars d’une stack prête et lance-la en local.</li>
+        <li><strong>Déploie</strong>&nbsp;: tu connectes ton compte cloud quand tu es prêt, tu relis le plan, tu déploies.</li>
       </ol>
     </section>
 
     <section class="block" id="aussi">
       <h2>Et aussi</h2>
       <ul>
-        <li><strong>Un dépôt, plusieurs workloads</strong> : front, API et workers d’un monorepo restent identifiés séparément pour préparer VM, pod ou nodepool. <a href="repos-vms-docker.html">Voir</a></li>
-        <li><strong>Une seule réalité</strong> : Config et Visual sont réconciliés, validés et régénérés en une opération atomique avant plan ou déploiement. <a href="expert-config.html">Voir</a></li>
-        <li><strong>Des bases réglées pour leur usage</strong> : disque, IOPS, sauvegardes. <a href="layouts.html">Voir</a></li>
-        <li><strong>Tes buckets dans une seule interface</strong> : exploration, aperçu, transfert et migration reprenable entre S3, R2 et OOS. <a href="oos.html">Voir</a></li>
-        <li id="why-byok"><strong>L’audit profond en option</strong> : bige-ops advanced lit ton code plus en profondeur avec ta propre clé d’IA, et classe chaque faille par type. <a href="agent.html">Voir</a></li>
-        <li><strong>Tes secrets chez toi</strong> : coffre local, jamais dans tes fichiers. <a href="secrets.html">Voir</a></li>
-        <li><strong>Bientôt</strong> : ta conso réelle face à ta simulation.</li>
+        <li><strong>Un dépôt, plusieurs workloads</strong>&nbsp;: front, API et workers d’un monorepo restent identifiés séparément pour préparer VM, pod ou node pool. <a href="repos-vms-docker.html">Voir</a></li>
+        <li><strong>Une seule réalité</strong>&nbsp;: Config et Visual sont réconciliés, validés et régénérés en une opération atomique avant plan ou déploiement. <a href="expert-config.html">Voir</a></li>
+        <li><strong>Des bases réglées pour leur usage</strong>&nbsp;: disque, IOPS, sauvegardes planifiées. <a href="bases.html">Voir</a></li>
+        <li><strong>Tes secrets chez toi</strong>&nbsp;: coffre local, jamais dans tes fichiers. <a href="secrets.html">Voir</a></li>
+        <li><strong>Un assistant DevOps intégré</strong>&nbsp;: il lit ta configuration et t’aide à la corriger, avec ta propre clé d’IA. <a href="agent.html">Voir</a></li>
+        <li id="why-byok"><strong>L’audit profond en option</strong>&nbsp;: bige-ops advanced lit ton code plus en profondeur avec ta propre clé d’IA, et classe chaque faille par type. <a href="agent.html">Voir</a></li>
       </ul>
     </section>
 
@@ -802,19 +805,19 @@
       <h2>FAQ</h2>
       <dl class="faq">
         <dt>Faut-il un compte cloud&nbsp;?</dt>
-        <dd>Pas pour commencer : la simulation et l’estimation fonctionnent hors ligne. Ton compte sert au moment de déployer.</dd>
+        <dd>Pas pour commencer&nbsp;: simulation et tests locaux fonctionnent sans. Ton compte sert au moment de déployer.</dd>
         <dt>C’est vraiment gratuit&nbsp;?</dt>
-        <dd>Oui. Tu paies ton cloud au prix public, rien de plus.</dd>
+        <dd>Oui. Tu paies ton cloud à ton fournisseur, rien à bige-ops.</dd>
+        <dt>Et l’estimation des coûts&nbsp;?</dt>
+        <dd>Elle est dans l’app, après l’install&nbsp;: ligne par ligne, sur les tarifs publics du fournisseur, recalculée à chaque modification. Ce n’est pas un devis&nbsp;; ta remise négociée vient en plus.</dd>
         <dt>Où sont mes secrets&nbsp;?</dt>
         <dd>Sur ton poste, dans un coffre local. <a href="secrets.html">Détail</a>.</dd>
         <dt>C’est prêt pour la prod&nbsp;?</dt>
-        <dd>bige-ops est jeune (v0.7) et avance vite. Avant chaque déploiement, une étape de revue te montre ce qui va changer, et ta stack reste un fichier versionné dans ton Git. Pour une infra critique, garde un expert dans la boucle.</dd>
+        <dd>bige-ops est jeune (0.10) et avance vite. Avant chaque déploiement, tu relis le plan de ce qui va changer, et ta stack reste un fichier versionné dans ton Git. Pour une infra critique, garde un expert dans la boucle.</dd>
         <dt>Et le HTTPS&nbsp;?</dt>
         <dd>Il passe par le load balancer, avec ton certificat chargé dans le cloud&nbsp;: bige-ops le branche pour toi. <a href="lbu.html">Détail</a>.</dd>
         <dt>Pourquoi brew sur macOS&nbsp;?</dt>
         <dd>Une commande installe l’app et la prépare pour macOS. Sur Linux&nbsp;: AppImage ou .deb.</dd>
-        <dt>Les prix sont-ils justes&nbsp;?</dt>
-        <dd>Ce sont les prix publics du catalogue, ligne par ligne, recalculés à chaque modification. Si tu négocies une remise, elle vient en plus.</dd>
         <dt>Un seul cloud aujourd’hui&nbsp;?</dt>
         <dd>Oui, le premier qualifié SecNumCloud&nbsp;3.2. D’autres providers SecNumCloud et français arrivent, et ta stack les suivra.</dd>
         <dt id="why-ecoute">Une idée, un bug&nbsp;?</dt>
@@ -822,14 +825,14 @@
       </dl>
     </section>
 
-    <p class="panel-lead" style="margin-top:2.5rem;font-size:1.15rem;font-weight:600;color:#fff;text-align:center">Le prix compte, mais pas seul : où vivent tes données, qui les protège et qui te répond comptent autant.</p>
+    <p class="panel-lead" style="margin-top:2.5rem;font-size:1.15rem;font-weight:600;color:#fff;text-align:center">Où vivent tes données, qui les protège et qui te répond&nbsp;: c’est ça, ton cloud.</p>
     <section class="block panel" id="a-venir">
       <p class="panel-kicker">Bientôt d’autres providers SecNumCloud et français</p>
       <h2 class="panel-title">Installe maintenant.<br>La suite, c’est toi qui choisis.</h2>
       <p class="panel-text">
         <strong>bige-ops est indépendant.</strong> Ta stack est décrite une fois, dans un format ouvert, versionné dans ton Git.
-        Quand d’autres clouds français arriveront dans bige-ops, tu compareras la même stack,
-        prix à l’appui, et tu migreras si ça vaut le coup. Sans tout réécrire.
+        Quand d’autres clouds français arriveront dans bige-ops, tu déploieras la même stack chez eux
+        et tu migreras si ça vaut le coup. Sans tout réécrire.
       </p>
       <p class="panel-clouds">
         <a href="https://www.ovhcloud.com/fr/" target="_blank" rel="noopener">OVHcloud</a>

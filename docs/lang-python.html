@@ -14,7 +14,7 @@
   <meta property="og:url" content="https://bige.dev/lang-python.html" />
   <meta property="og:title" content="Python sur Outscale : Django, FastAPI, Flask — bige-ops" />
   <meta property="og:description" content="Python sur Outscale avec bige-ops : Django, FastAPI, Flask, Celery, PostgreSQL, GPU. Routes scannées, dépendances PyPI via OSV, CVE suivies sur OpenCVE." />
-  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta property="og:image" content="https://bige.dev/screens/hero.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -31,7 +31,7 @@
     </div>
     <h1>Python sur Outscale</h1>
     <p class="lead">
-      Django pour les produits complets, FastAPI pour les API et l’IA, Flask pour aller vite : Python couvre le web comme la data. bige-ops le pose sur Outscale, des VMs aux GPU, chiffre la stack et cherche les failles de ton code et de tes bibliothèques PyPI.
+      Django pour les produits complets, FastAPI pour les API et l’IA, Flask pour aller vite : Python couvre le web comme la data. bige-ops le pose sur Outscale, des VMs aux GPU, et cherche les failles de ton code et de tes bibliothèques PyPI.
     </p>
 
     <div class="callout">
@@ -55,7 +55,7 @@
     <p><a href="https://docs.celeryq.dev/" target="_blank" rel="noopener noreferrer">documentation officielle</a> · <a href="https://app.opencve.io/cve/?vendor=celeryproject&amp;product=celery" target="_blank" rel="noopener noreferrer">Celery sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=gunicorn&amp;product=gunicorn" target="_blank" rel="noopener noreferrer">Gunicorn sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=encode&amp;product=uvicorn" target="_blank" rel="noopener noreferrer">Uvicorn sur OpenCVE</a> · <a href="https://app.opencve.io/cve/?vendor=sqlalchemy&amp;product=sqlalchemy" target="_blank" rel="noopener noreferrer">SQLAlchemy sur OpenCVE</a></p>
 
     <h2 id="outscale">Faire tourner Python sur Outscale avec bige-ops</h2>
-<p>Le runtime <code>python</code> expose l’API sur le port 8000 (512 MiB). Le worker (Celery, RQ, Dramatiq) tourne sur la même VM app en multi-VM, ou dans son propre Deployment sur OKS. Pour l’inférence, une VM GPU Outscale se déclare à côté et se chiffre avec le reste.</p>
+<p>Le runtime <code>python</code> expose l’API sur le port 8000 (512 MiB). Le worker (Celery, RQ, Dramatiq) tourne sur la même VM app en multi-VM, ou dans son propre Deployment sur OKS. Pour l’inférence, une VM GPU Outscale se déclare à côté, dans la même simulation.</p>
     <table>
       <tr><th>Topologie</th><th>Sur Outscale</th><th>Pour</th></tr>
       <tr><td><code>single-vm</code></td><td>une VM <code>{name}-all</code> avec IP publique : apps et bases en Docker Compose</td><td>prototype, démo, environnement de test</td></tr>
@@ -113,10 +113,10 @@ bige-ops add layout custom --runtime python --web none --worker \
       chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
-    <h2 id="stacks">Stacks Python chiffrées</h2>
+    <h2 id="stacks">Stacks Python de référence</h2>
     <ul>
-      <li><a href="stack-django-celery-postgresql-redis.html">Django + Celery + PostgreSQL + Redis</a> (423,06 € HT/mois estimés)</li>
-      <li><a href="stack-ai-fastapi-pgvector-gpu.html">IA : FastAPI + pgvector + GPU</a> (2 654,65 € HT/mois estimés)</li>
+      <li><a href="stack-django-celery-postgresql-redis.html">Django + Celery + PostgreSQL + Redis</a></li>
+      <li><a href="stack-ai-fastapi-pgvector-gpu.html">IA : FastAPI + pgvector + GPU</a></li>
     </ul>
 
     <h2 id="docs">Docs officielles</h2>

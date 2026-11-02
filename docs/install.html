@@ -54,9 +54,9 @@ open /Applications/bige-ops.app</pre>
     <p>
       L’application <strong>vérifie</strong> s’il existe une version plus
       récente en lisant <code>latest.json</code> sur le dépôt de releases.
-      Elle vous le signale — et c’est tout. Il n’y a
+      Elle te le signale — et c’est tout. Il n’y a
       <strong>pas d’auto-install</strong>, pas d’updater silencieux, rien qui
-      remplace le binaire dans votre dos.
+      remplace le binaire dans ton dos.
     </p>
     <table>
       <thead>
@@ -73,13 +73,14 @@ open /Applications/bige-ops.app</pre>
       Le binaire <code>bige-ops</code> (build PyInstaller) est
       <strong>packagé dans l’application</strong> : c’est lui que l’app appelle
       pour <code>validate</code>, <code>generate</code>, <code>estimate</code>,
-      <code>plan</code>, <code>apply</code>, <code>deploy</code>. Vous
-      n’installez rien de plus pour démarrer.
+      <code>plan</code>, <code>apply</code>, <code>deploy</code>. Tu
+      n’installes rien de plus pour démarrer. La CLI <strong>oks-cli</strong>
+      d’Outscale est embarquée de la même façon.
     </p>
     <p>
       La version de la CLI doit rester <strong>alignée</strong> avec celle de
       l’app. L’écran <strong>Settings</strong> affiche l’état :
-      CLI introuvable, CLI désalignée, ou à jour. Si c’est désaligné, mettez
+      CLI introuvable, CLI désalignée, ou à jour. Si c’est désaligné, mets
       l’app à jour plutôt que de bricoler le PATH.
       Détail des commandes : <a href="cli.html">CLI · app · OKS</a>.
     </p>
@@ -87,10 +88,10 @@ open /Applications/bige-ops.app</pre>
     <h2>Dépendances système</h2>
     <p>
       L’app embarque un écran de diagnostic <strong>« Dépendances »</strong>
-      qui teste ce qui est présent sur votre poste. Vous pouvez utiliser
+      qui teste ce qui est présent sur ton poste. Tu peux utiliser
       bige-ops en <strong>mode projection</strong> (design + estimation) sans
-      rien de tout ça ; les outils deviennent nécessaires dès que vous
-      matérialisez ou déployez.
+      rien de tout ça ; les outils deviennent nécessaires dès que tu
+      testes en local, matérialises ou déploies.
     </p>
     <table>
       <thead>
@@ -99,17 +100,18 @@ open /Applications/bige-ops.app</pre>
       <tbody>
         <tr><td>CLI <code>bige-ops</code> embarquée</td><td>Tout le moteur : validate, generate, estimate</td></tr>
         <tr><td><strong>Terraform</strong></td><td><code>plan</code> et <code>apply</code> sur l’infra Outscale</td></tr>
-        <tr><td><strong>oks-cli</strong></td><td>Cluster OKS : création, nodepools, kubeconfig</td></tr>
-        <tr><td><strong>kubectl</strong></td><td>Deploy des manifests sur OKS</td></tr>
-        <tr><td><strong>Docker</strong> / SSH</td><td>Deploy applicatif sur VMs (build + compose)</td></tr>
+        <tr><td><strong>oks-cli</strong> embarqué</td><td>Cluster OKS : création, nodepools, kubeconfig</td></tr>
+        <tr><td><strong>kubectl</strong></td><td>Deploy des manifests sur OKS, et sur le cluster local</td></tr>
+        <tr><td><strong>Docker</strong> / SSH</td><td>Tests en local (Docker Compose) et deploy applicatif sur VMs (build + compose)</td></tr>
+        <tr><td><strong>kind</strong></td><td>Tests en local sur un cluster Kubernetes, sans compte cloud</td></tr>
       </tbody>
     </table>
 
     <h2>Premier lancement</h2>
     <ul>
-      <li>Choisissez un <strong>workspace</strong> : un simple dossier local où vivront vos simulations.</li>
-      <li>Créez un <strong>compte Outscale</strong> dans l’app et renseignez vos clés API — ou restez sans credentials en <strong>mode projection</strong> pour designer et estimer.</li>
-      <li>Créez une première simulation, puis <code>validate</code> / <code>generate</code> avant tout <code>plan</code>.</li>
+      <li>Choisis un <strong>workspace</strong> : un simple dossier local où vivront tes simulations.</li>
+      <li>Crée un <strong>compte Outscale</strong> dans l’app et renseigne tes clés API — ou reste sans credentials en <strong>mode projection</strong> pour designer et estimer.</li>
+      <li>Crée une première simulation, teste-la en local si tu veux, puis <code>validate</code> / <code>generate</code> avant tout <code>plan</code>.</li>
     </ul>
     <p>
       Où atterrissent les clés et les secrets : <a href="secrets.html">Secrets, coffre &amp; credentials</a>.
@@ -120,11 +122,10 @@ open /Applications/bige-ops.app</pre>
     <h2>Bon à savoir</h2>
     <div class="callout callout-warn">
       <strong>Ce que l’installation couvre.</strong>
-      Pas de Windows. Pas de mise à jour automatique : c’est vous qui
-      remplacez le binaire. Pas de packaging des dépendances tierces —
-      Terraform, oks-cli, kubectl et Docker restent à votre charge, avec les
-      versions de votre poste. Et l’app ne remplace ni votre SRE ni votre DBA :
-      c’est un kickoff.
+      Pas de Windows. Pas de mise à jour automatique : c’est toi qui
+      remplaces le binaire. Hors CLI <code>bige-ops</code> et oks-cli, pas de
+      packaging des dépendances tierces : Terraform, kubectl, kind et Docker
+      restent à ta charge, avec les versions de ton poste.
     </div>
 
     <footer class="site-footer">

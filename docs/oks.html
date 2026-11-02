@@ -82,7 +82,7 @@ flowchart TB
     </table>
     <p>
       bige-ops part sur <code>cp.mono.master</code> et Kubernetes
-      <strong>1.34</strong> : le bon choix pour simuler, tester ou monter un
+      <strong>1.36</strong> : le bon choix pour simuler, tester ou monter un
       cluster éphémère. Pour la production, Outscale recommande un control
       plane à 3 masters (le mono-master n’a ni HA ni SLA). On peut passer de
       <code>cp.mono.master</code> à un type supérieur après création, pas
@@ -101,7 +101,12 @@ flowchart TB
       <li><code>apply --target oks</code> → <strong>oks-cli</strong> : projet, cluster, nodepools, kubeconfig.</li>
       <li><code>deploy</code> → <strong>kubectl apply</strong> sur <code>oks/apps/</code>.</li>
     </ul>
-    <p>Détail : <a href="cli.html">CLI · app · OKS</a>.</p>
+    <p>
+      Avant l’apply, tu peux tester la même stack en local, sur un cluster
+      Kubernetes <strong>kind</strong> (Docker et kubectl requis), depuis un
+      brouillon et sans compte cloud.
+      Détail : <a href="cli.html">CLI · app · OKS</a>.
+    </p>
 
     <h2>Cluster et nœuds</h2>
     <p>
@@ -116,8 +121,8 @@ flowchart TB
 
     <h2>Pods et réplicas</h2>
     <p>
-      Les services (api, web, worker, bases…) deviennent des Deployments sous
-      <code>oks/apps/</code>. Le champ <strong>réplicas</strong>
+      Les services applicatifs (api, web, worker) deviennent des Deployments
+      sous <code>oks/apps/</code>, les bases des StatefulSets. Le champ <strong>réplicas</strong>
       (<code>service_config.*.replicas</code>) de l’inspector réécrit le setup
       directement. Par défaut : api et web à 2, worker et bases à 1. Puis
       <code>deploy</code> applique via kubectl. Réplicas ≠ exposition
@@ -142,9 +147,12 @@ flowchart TB
       Visual, puis <code>generate</code>).
     </p>
     <p>
-      Les bases déployées en pods démarrent sur un volume
-      <code>emptyDir</code> : leurs données vivent avec le pod. Le filet de
-      sécurité, c’est le backup vers <a href="oos.html">OOS</a>.
+      Les bases déployées en pods gardent leurs données sur un volume
+      persistant (PVC, 10 GiB par défaut) de la classe de stockage par défaut
+      du cluster ; taille et classe se règlent base par base
+      (<code>storage_gb</code>, <code>storage_class</code>). Le filet de
+      sécurité, c’est le backup vers <a href="oos.html">OOS</a> : un CronJob
+      par base.
     </p>
     <p>
       HTTPS public : Service LoadBalancer avec
@@ -153,7 +161,7 @@ flowchart TB
       cert-manager à maintenir.
     </p>
 
-    <h2>Le périmètre du kit</h2>
+    <h2>Le périmètre de bige-ops</h2>
     <p>
       bige-ops pose le cluster et les workloads. Opérateurs de bases, service
       mesh et politiques réseau avancées s’ajoutent ensuite dans ton

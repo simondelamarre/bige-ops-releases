@@ -1,8 +1,8 @@
 # Django + Celery + PostgreSQL + Redis sur Outscale
 
-Django pour le produit et l’admin, Celery pour les tâches asynchrones, PostgreSQL et Redis : la stack Python des startups qui veulent livrer vite et solide. bige-ops la pose sur Outscale en multi-VM et la chiffre ligne par ligne.
+Django pour le produit et l’admin, Celery pour les tâches asynchrones, PostgreSQL et Redis : la stack Python des startups qui veulent livrer vite et solide. bige-ops la pose sur Outscale en multi-VM.
 
-**En bref.** Topologie multi-vm : VM app (Gunicorn + worker Celery) derrière un LBU, PostgreSQL et Redis sur VMs privées, backups OOS, NAT. Estimation bige-ops : **423,06 € HT/mois**.
+**En bref.** Topologie multi-vm : VM app (Gunicorn + worker Celery) derrière un LBU, PostgreSQL et Redis sur VMs privées, backups OOS, NAT.
 
 ## Pourquoi cette stack tourne bien sur Outscale
 
@@ -14,21 +14,20 @@ Django pour le produit et l’admin, Celery pour les tâches asynchrones, Postgr
 
 VM app tinav6.c4r8p2 (Gunicorn :8000 + worker Celery) derrière LBU ; PostgreSQL 17 et Redis 8 en subnet privé ; OOS backups ; NAT.
 
-## Coût mensuel estimé
+## Exemple : ce que la simulation contient
 
-Calculé avec bige-ops estimate --json sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région eu-west-2, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.
+| Ligne bige-ops | Ce que c’est |
+| --- | --- |
+| LBU app-web | entrée publique |
+| OOS django-app-backups — 50 GiB | sauvegardes PostgreSQL |
+| VM app-app — tinav6.c4r8p2 | Django (Gunicorn) + worker Celery |
+| VM app-redis — tinav6.c2r2p3 | broker Celery, cache |
+| VM app-postgres — tinav6.c4r8p2 | PostgreSQL 17, disque io1 |
+| NAT gateway | sortie du subnet privé |
+| EIP VM app-app (attachée) | IP publique de la VM app |
+| EIP NAT (attachée supplémentaire) | IP publique du NAT |
 
-| Ligne bige-ops | Ce que c’est | € HT / mois |
-| --- | --- | --- |
-| LBU app-web | entrée publique | 21,90 € |
-| OOS django-app-backups — 50 GiB | sauvegardes PostgreSQL | 1,25 € |
-| VM app-app — tinav6.c4r8p2 | Django (Gunicorn) + worker Celery | 135,80 € |
-| VM app-redis — tinav6.c2r2p3 | broker Celery, cache | 54,76 € |
-| VM app-postgres — tinav6.c4r8p2 | PostgreSQL 17, disque io1 | 169,20 € |
-| NAT gateway | sortie du subnet privé | 36,50 € |
-| EIP VM app-app (attachée — 1ʳᵉ offerte / Net) | IP de la VM app (1ʳᵉ offerte) | 0,00 € |
-| EIP NAT (attachée supplémentaire) | IP publique du NAT | 3,65 € |
-| **Total estimé** | | **423,06 €** |
+L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.
 
 
 

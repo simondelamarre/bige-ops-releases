@@ -1,6 +1,6 @@
 # Pourquoi bige-ops a choisi Outscale
 
-bige-ops est construit pour un seul cloud, et ce n’est pas un hasard. Outscale maîtrise ses technologies, de la VM au Kubernetes managé, et les propose au juste prix, avec une grille publique.
+bige-ops est construit pour un seul cloud, et ce n’est pas un hasard. Outscale maîtrise ses technologies, de la VM au Kubernetes managé, et publie sa grille tarifaire.
 
 ## L’humain d’abord
 
@@ -22,14 +22,14 @@ C’est aussi ce qui nous plaît chez Outscale : une équipe soudée, à taille 
 - **Certifications** : HDS, ISO 27001, 27017 et 27018, CISPE, TISAX.
 - **Une marque de Dassault Systèmes** : la même infrastructure porte la plateforme 3DEXPERIENCE.
 
-## Le juste prix
+## Une grille publique
 
-Outscale publie sa grille tarifaire. C’est elle que bige-ops embarque : chaque estimation part du prix public, ligne par ligne, et les engagements sur 1 à 3 ans réduisent encore la facture. [Tarifs Outscale](https://fr.outscale.com/tarifs/)
+Outscale publie sa grille tarifaire. C’est elle que bige-ops embarque : l’estimation de ta simulation part de la grille publique, ligne par ligne ; les engagements et les remises négociées avec Outscale s’appliquent ensuite sur ta facture. [Tarifs Outscale](https://fr.outscale.com/tarifs/)
 
 ## Ce que ça change pour toi
 
 - **Tu sais où sont tes données** : en France, chez un opérateur qualifié SecNumCloud 3.2.
-- **Tu sais ce que tu paies** : une grille publique, ligne par ligne, et des remises quand tu t’engages sur 1 à 3 ans.
+- **Tu lis l’estimation avant de déployer** : la grille publique, ligne par ligne ; les remises d’engagement viennent en plus.
 - **Tu grandis sans changer de cloud** : d’une machine à Kubernetes managé, avec la même API et les mêmes outils.
 - **Tu réponds aux exigences de tes clients** : santé (HDS), secteur public (SecNumCloud), industrie automobile (TISAX).
 

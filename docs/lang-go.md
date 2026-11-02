@@ -1,6 +1,6 @@
 # Go sur Outscale
 
-Un binaire statique, une empreinte mémoire minuscule, une concurrence native : Go est taillé pour les API et les services réseau. Sur Outscale, une VM modeste suffit souvent ; bige-ops la dimensionne, la chiffre et vérifie si tes routes Gin et net/http demandent une connexion.
+Un binaire statique, une empreinte mémoire minuscule, une concurrence native : Go est taillé pour les API et les services réseau. Sur Outscale, une VM modeste suffit souvent ; bige-ops la dimensionne et vérifie si tes routes Gin et net/http demandent une connexion.
 
 **En bref.** Runtime go dans bige-ops : port 8080, 256 MiB par service par défaut. Côté failles : routes net/http et Gin accessibles sans connexion, modules Go (go.mod) et image golang comparés aux failles connues.
 
@@ -52,9 +52,9 @@ Chaque version majeure de Go est maintenue jusqu’à la sortie de deux versions
 
 bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : les failles publiées dans le registre mondial des vulnérabilités (CVE) et ses sources (NVD, MITRE, liste KEV des failles déjà exploitées tenue par la CISA…), avec leur note de gravité sur 10 (CVSS) et leur probabilité d’être exploitées (EPSS), rangées par éditeur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
 
-## Stacks chiffrées
+## Stacks de référence
 
-- [Go + PostgreSQL + NATS](https://bige.dev/stack-go-postgresql-nats.html) (302,60 € HT/mois)
+- [Go + PostgreSQL + NATS](https://bige.dev/stack-go-postgresql-nats.html)
 
 Docs : [Go](https://go.dev/doc/) · [net/http](https://pkg.go.dev/net/http) · [Gin](https://gin-gonic.com/en/docs/) · [pgx](https://pkg.go.dev/github.com/jackc/pgx/v5) · [NATS](https://docs.nats.io/)
 

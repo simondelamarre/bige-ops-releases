@@ -1,6 +1,6 @@
 # Node.js sur Outscale
 
-Express, Fastify, NestJS, Next.js : l’écosystème Node.js fait tourner une bonne part des API et des fronts modernes. Sur Outscale, bige-ops le pose en mono-VM, en multi-VM derrière un LBU ou sur OKS, chiffre la stack au catalogue public et lit tes dépôts pour trouver les pages et les API accessibles sans connexion, et les bibliothèques qui ont une faille connue.
+Express, Fastify, NestJS, Next.js : l’écosystème Node.js fait tourner une bonne part des API et des fronts modernes. Sur Outscale, bige-ops le pose en mono-VM, en multi-VM derrière un LBU ou sur OKS, et lit tes dépôts pour trouver les pages et les API accessibles sans connexion, et les bibliothèques qui ont une faille connue.
 
 **En bref.** Runtime nodejs dans bige-ops : API sur le port 3001, front sur le 3000, 512 MiB par service par défaut. C’est le langage que bige-ops analyse le plus en détail : routes de huit frameworks back, failles côté navigateur (React, Vue, Svelte) et bibliothèques npm comparées aux failles connues.
 
@@ -58,10 +58,10 @@ En production, Node.js recommande une version LTS : aujourd’hui Node.js 24 (LT
 
 bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : les failles publiées dans le registre mondial des vulnérabilités (CVE) et ses sources (NVD, MITRE, liste KEV des failles déjà exploitées tenue par la CISA…), avec leur note de gravité sur 10 (CVSS) et leur probabilité d’être exploitées (EPSS), rangées par éditeur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
 
-## Stacks chiffrées
+## Stacks de référence
 
-- [Next.js + NestJS + PostgreSQL + Redis + OOS](https://bige.dev/stack-nextjs-nestjs-postgresql-redis.html) (428,06 € HT/mois)
-- [Express + MongoDB + Redis + BullMQ sur OKS](https://bige.dev/stack-express-mongodb-redis-oks.html) (457,65 € HT/mois)
+- [Next.js + NestJS + PostgreSQL + Redis + OOS](https://bige.dev/stack-nextjs-nestjs-postgresql-redis.html)
+- [Express + MongoDB + Redis + BullMQ sur OKS](https://bige.dev/stack-express-mongodb-redis-oks.html)
 
 Docs : [Node.js API](https://nodejs.org/docs/latest/api/) · [Express](https://expressjs.com/) · [Fastify](https://fastify.dev/docs/latest/) · [NestJS](https://docs.nestjs.com/) · [Next.js](https://nextjs.org/docs) · [tRPC](https://trpc.io/docs) · [BullMQ](https://docs.bullmq.io/) · [OSV](https://osv.dev/)
 

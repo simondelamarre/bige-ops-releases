@@ -2,7 +2,7 @@
 
 Workspace (dossier local) → compte (`accounts/<id>/` = un compte Outscale, credentials + inventory + `shared.yaml`) → simulations (`accounts/<id>/simulations/<name>/`).
 
-**Live** = `existing/` ou la simulation promue, orientée prod. **Draft** = variante parallèle, ne remplace rien tant qu’on ne fait pas `promote`.
+**Live** = `existing/` ou la simulation promue, orientée prod. **Draft** = variante parallèle, testable en local (Docker Compose ou kind), ne remplace rien tant qu’on ne fait pas `promote`.
 
 | Commande | Effet |
 | --- | --- |

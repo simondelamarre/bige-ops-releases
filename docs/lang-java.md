@@ -1,6 +1,6 @@
 # Java sur Outscale
 
-Java fait tourner l’essentiel des systèmes d’information des grandes entreprises, et une bonne part des plateformes des scale-ups. Spring Boot en microservices sur Kubernetes, Quarkus natif, Jakarta EE sur serveur d’applications : bige-ops pose chacun sur Outscale, sur OKS ou en multi-VM, avec PostgreSQL, Kafka ou Keycloak, et chiffre l’ensemble au catalogue public.
+Java fait tourner l’essentiel des systèmes d’information des grandes entreprises, et une bonne part des plateformes des scale-ups. Spring Boot en microservices sur Kubernetes, Quarkus natif, Jakarta EE sur serveur d’applications : bige-ops pose chacun sur Outscale, sur OKS ou en multi-VM, avec PostgreSQL, Kafka ou Keycloak.
 
 **En bref.** Runtime java dans bige-ops : port 8080, 1 GiB par service par défaut, SPRING_PROFILES_ACTIVE=prod. Layout prêt à l’emploi : java-spring (Spring Boot + SPA, PostgreSQL, Redis, LBU). Kafka, Keycloak ou OpenSearch se déclarent en services custom ou en VMs dédiées.
 
@@ -32,7 +32,7 @@ bige-ops add layout custom --runtime java --web spa --worker \
 
 ## Ce que bige-ops vérifie pour Java
 
-Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code Java arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation et le coût sur Outscale sont calculés à côté. Reconnus automatiquement : PostgreSQL, Redis, Kubernetes ; références : [Spring Boot sur OpenCVE](https://app.opencve.io/cve/?vendor=vmware&product=spring_boot) · [Quarkus sur OpenCVE](https://app.opencve.io/cve/?vendor=redhat&product=quarkus) · [Apache Kafka sur OpenCVE](https://app.opencve.io/cve/?vendor=apache&product=kafka) · [Keycloak sur OpenCVE](https://app.opencve.io/cve/?vendor=redhat&product=keycloak).
+Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code Java arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation est calculée à côté. Reconnus automatiquement : PostgreSQL, Redis, Kubernetes ; références : [Spring Boot sur OpenCVE](https://app.opencve.io/cve/?vendor=vmware&product=spring_boot) · [Quarkus sur OpenCVE](https://app.opencve.io/cve/?vendor=redhat&product=quarkus) · [Apache Kafka sur OpenCVE](https://app.opencve.io/cve/?vendor=apache&product=kafka) · [Keycloak sur OpenCVE](https://app.opencve.io/cve/?vendor=redhat&product=keycloak).
 
 Tout est classé par urgence : ce qui est exposé à Internet d’abord. Pourquoi le refaire toi-même ? C’est chez toi, sur ton poste, et c’est gratuit. Méthode complète : [ce que bige-ops vérifie](https://bige.dev/stacks.html#verifications).
 
@@ -54,11 +54,11 @@ Vise un JDK LTS : 25 (septembre 2025) ou 21, distribués notamment par Eclipse T
 
 bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : les failles publiées dans le registre mondial des vulnérabilités (CVE) et ses sources (NVD, MITRE, liste KEV des failles déjà exploitées tenue par la CISA…), avec leur note de gravité sur 10 (CVSS) et leur probabilité d’être exploitées (EPSS), rangées par éditeur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
 
-## Stacks chiffrées
+## Stacks de référence
 
-- [Spring Boot sur OKS + Kafka + Keycloak](https://bige.dev/stack-spring-boot-oks-kafka-keycloak.html) (918,80 € HT/mois)
-- [Quarkus sur OKS + PostgreSQL + Kafka](https://bige.dev/stack-quarkus-oks-postgresql-kafka.html) (523,35 € HT/mois)
-- [Jakarta EE + OpenSearch + PostgreSQL](https://bige.dev/stack-jakarta-ee-opensearch-postgresql.html) (714,95 € HT/mois)
+- [Spring Boot sur OKS + Kafka + Keycloak](https://bige.dev/stack-spring-boot-oks-kafka-keycloak.html)
+- [Quarkus sur OKS + PostgreSQL + Kafka](https://bige.dev/stack-quarkus-oks-postgresql-kafka.html)
+- [Jakarta EE + OpenSearch + PostgreSQL](https://bige.dev/stack-jakarta-ee-opensearch-postgresql.html)
 
 Docs : [dev.java](https://dev.java/) · [Spring Boot](https://docs.spring.io/spring-boot/index.html) · [Spring Cloud](https://spring.io/projects/spring-cloud) · [Quarkus](https://quarkus.io/guides/) · [Micronaut](https://docs.micronaut.io/latest/guide/) · [Jakarta EE](https://jakarta.ee/) · [WildFly](https://docs.wildfly.org/) · [Vert.x](https://vertx.io/docs/) · [Hibernate ORM](https://hibernate.org/orm/) · [Maven](https://maven.apache.org/)
 

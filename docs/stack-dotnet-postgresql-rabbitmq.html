@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ASP.NET Core, PostgreSQL et RabbitMQ sur Outscale — bige-ops</title>
-  <meta name="description" content="ASP.NET Core, EF Core, PostgreSQL 17 et RabbitMQ sur Outscale : LBU HTTPS, base et broker privés, coût réel (438,40 € HT/mois), CVE." />
+  <meta name="description" content="ASP.NET Core, EF Core, PostgreSQL 17 et RabbitMQ sur Outscale : LBU HTTPS, base et broker privés, backups OOS, CVE." />
   <link rel="canonical" href="https://bige.dev/stack-dotnet-postgresql-rabbitmq.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,14 +13,14 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/stack-dotnet-postgresql-rabbitmq.html" />
   <meta property="og:title" content="ASP.NET Core, PostgreSQL et RabbitMQ sur Outscale — bige-ops" />
-  <meta property="og:description" content="ASP.NET Core, EF Core, PostgreSQL 17 et RabbitMQ sur Outscale : LBU HTTPS, base et broker privés, coût réel (438,40 € HT/mois), CVE." />
-  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta property="og:description" content="ASP.NET Core, EF Core, PostgreSQL 17 et RabbitMQ sur Outscale : LBU HTTPS, base et broker privés, backups OOS, CVE." />
+  <meta property="og:image" content="https://bige.dev/screens/site-simule.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "ASP.NET Core, PostgreSQL et RabbitMQ sur Outscale", "description": "ASP.NET Core, EF Core, PostgreSQL 17 et RabbitMQ sur Outscale : LBU HTTPS, base et broker privés, coût réel (438,40 € HT/mois), CVE.", "inLanguage": "fr", "url": "https://bige.dev/stack-dotnet-postgresql-rabbitmq.html", "keywords": ".NET, ASP.NET Core, Entity Framework Core, Npgsql, PostgreSQL, RabbitMQ, MassTransit, Linux, LBU, OOS, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "ASP.NET Core, PostgreSQL et RabbitMQ sur Outscale", "item": "https://bige.dev/stack-dotnet-postgresql-rabbitmq.html"}]}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "ASP.NET Core, PostgreSQL et RabbitMQ sur Outscale", "description": "ASP.NET Core, EF Core, PostgreSQL 17 et RabbitMQ sur Outscale : LBU HTTPS, base et broker privés, backups OOS, CVE.", "inLanguage": "fr", "url": "https://bige.dev/stack-dotnet-postgresql-rabbitmq.html", "keywords": ".NET, ASP.NET Core, Entity Framework Core, Npgsql, PostgreSQL, RabbitMQ, MassTransit, Linux, LBU, OOS, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "ASP.NET Core, PostgreSQL et RabbitMQ sur Outscale", "item": "https://bige.dev/stack-dotnet-postgresql-rabbitmq.html"}]}]}</script>
 </head>
 <body>
   <main>
@@ -31,12 +31,12 @@
     </div>
     <h1>ASP.NET Core + PostgreSQL + RabbitMQ sur Outscale</h1>
     <p class="lead">
-      Une API ASP.NET Core sous Linux, Entity Framework Core sur PostgreSQL, RabbitMQ pour les commandes et les événements : la stack .NET moderne de nombreuses entreprises. bige-ops la pose sur Outscale, base et broker en subnet privé, et la chiffre.
+      Une API ASP.NET Core sous Linux, Entity Framework Core sur PostgreSQL, RabbitMQ pour les commandes et les événements : la stack .NET moderne de nombreuses entreprises. bige-ops la pose sur Outscale, base et broker en subnet privé.
     </p>
 
     <div class="callout">
       <strong>En bref.</strong>
-      Topologie <code>multi-vm</code> : VM app <code>tinav6.c4r8p2</code> (API ASP.NET Core et worker, runtime <code>custom</code>, port 8080) derrière un LBU, PostgreSQL 17 privé, RabbitMQ sur VM privée dédiée <code>tinav6.c2r4p2</code>, backups OOS, NAT. Estimation bige-ops : <strong>438,40 € HT par mois</strong>.
+      Topologie <code>multi-vm</code> : VM app <code>tinav6.c4r8p2</code> (API ASP.NET Core et worker, runtime <code>custom</code>, port 8080) derrière un LBU, PostgreSQL 17 privé, RabbitMQ sur VM privée dédiée <code>tinav6.c2r4p2</code>, backups OOS, NAT.
     </div>
 
     <figure class="diagram">
@@ -71,21 +71,19 @@ flowchart LR
       <li><strong>LBU</strong> HTTPS, <strong>NAT</strong>, <strong>OOS</strong> pour les backups.</li>
     </ul>
 
-    <h2 id="cout">Coût mensuel estimé</h2>
-    <p>Calculé avec <code>bige-ops estimate --json</code> sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région <code>eu-west-2</code>, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.</p>
+    <h2 id="cout">Exemple : ce que la simulation contient</h2>
     <table>
-      <tr><th>Ligne bige-ops</th><th>Ce que c’est</th><th>€ HT / mois</th></tr>
-      <tr><td>LBU dotnet-web</td><td>entrée publique</td><td>21,90 €</td></tr>
-      <tr><td>VM dotnet-rabbitmq — tinav6.c2r4p2</td><td>RabbitMQ (VM privée dédiée)</td><td>70,10 €</td></tr>
-      <tr><td>OOS dotnet-backups — 50 GiB</td><td>sauvegardes PostgreSQL</td><td>1,25 €</td></tr>
-      <tr><td>VM dotnet-app — tinav6.c4r8p2</td><td>API ASP.NET Core + worker</td><td>135,80 €</td></tr>
-      <tr><td>VM dotnet-postgres — tinav6.c4r8p2</td><td>PostgreSQL 17, disque io1</td><td>169,20 €</td></tr>
-      <tr><td>NAT gateway</td><td>sortie du subnet privé</td><td>36,50 €</td></tr>
-      <tr><td>EIP VM dotnet-app (attachée — 1ʳᵉ offerte / Net)</td><td>IP de la VM app (1ʳᵉ offerte)</td><td>0,00 €</td></tr>
-      <tr><td>EIP NAT (attachée supplémentaire)</td><td>IP publique du NAT</td><td>3,65 €</td></tr>
-      <tr><th>Total estimé</th><th></th><th>438,40 €</th></tr>
+      <tr><th>Ligne bige-ops</th><th>Ce que c’est</th></tr>
+      <tr><td>LBU dotnet-web</td><td>entrée publique</td></tr>
+      <tr><td>VM dotnet-rabbitmq — tinav6.c2r4p2</td><td>RabbitMQ (VM privée dédiée)</td></tr>
+      <tr><td>OOS dotnet-backups — 50 GiB</td><td>sauvegardes PostgreSQL</td></tr>
+      <tr><td>VM dotnet-app — tinav6.c4r8p2</td><td>API ASP.NET Core + worker</td></tr>
+      <tr><td>VM dotnet-postgres — tinav6.c4r8p2</td><td>PostgreSQL 17, disque io1</td></tr>
+      <tr><td>NAT gateway</td><td>sortie du subnet privé</td></tr>
+      <tr><td>EIP VM dotnet-app (attachée)</td><td>IP publique de la VM app</td></tr>
+      <tr><td>EIP NAT (attachée supplémentaire)</td><td>IP publique du NAT</td></tr>
     </table>
-
+    <p>L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.</p>
     <p>Le projet utilisé, à reproduire chez toi :</p>
     <pre>bige-ops init -n stack-dotnet-postgresql-rabbitmq
 bige-ops add layout custom --name dotnet --runtime go --web none --worker \
@@ -129,7 +127,7 @@ components:
     <h2 id="exposition">Exposition : ce qui est ouvert, et à qui</h2>
     <ul>
       <li><strong>Une seule entrée publique</strong> : le LBU <code>internet-facing</code>. Ajoute-lui un listener HTTPS 443 avec le <code>server_certificate_id</code> (ORN d’un certificat chargé dans <a href="https://docs.outscale.com/fr/userguide/À-propos-des-certificats-serveurs-dans-EIM.html" target="_blank" rel="noopener noreferrer">EIM</a>) vers le port 8080 de la VM app ; le TLS se termine sur le LBU.</li>
-      <li><strong>VM app</strong> en subnet public : avec un LBU, ses ports applicatifs (ceux de tes services : 3000, 3001, 8000, 8080…) n’acceptent que le CIDR du Net (<code>10.0.0.0/16</code>), donc le trafic applicatif passe par le LBU. Sa première IP publique est offerte et sert au deploy SSH.</li>
+      <li><strong>VM app</strong> en subnet public : avec un LBU, ses ports applicatifs (ceux de tes services : 3000, 3001, 8000, 8080…) n’acceptent que le CIDR du Net (<code>10.0.0.0/16</code>), donc le trafic applicatif passe par le LBU. Son IP publique sert au deploy SSH.</li>
       <li><strong>Bases en subnet privé</strong>, sans IP publique, chacune derrière son security group qui n’accepte que le CIDR du Net sur son port. Jamais de listener LBU, d’IP publique ni de règle <code>0.0.0.0/0</code> vers une base : pour l’administrer, passe par un tunnel SSH via la VM app.</li>
       <li><strong>Security group de la VM app</strong> : il ouvre SSH (22) pour le deploy, ainsi que HTTP (80) et HTTPS (443). Resserre SSH sur tes CIDR connus avant la production, et fais écouter ton app sur un port applicatif (3000, 8000, 8080…), que seul le Net atteint.</li>
       <li><strong>NAT service</strong> : la sortie Internet du subnet privé (images, mises à jour), sans aucune entrée.</li>
@@ -171,7 +169,7 @@ components:
       <tr><td>RabbitMQ</td><td><a href="https://app.opencve.io/cve/?vendor=rabbitmq&amp;product=rabbitmq" target="_blank" rel="noopener noreferrer">RabbitMQ</a></td><td>fiche de référence (pas encore reconnu automatiquement)</td></tr>
       <tr><td>.NET, ASP.NET Core, Npgsql</td><td><a href="https://app.opencve.io/cve/?vendor=microsoft&amp;product=.net" target="_blank" rel="noopener noreferrer">.NET</a> · <a href="https://app.opencve.io/cve/?vendor=microsoft&amp;product=asp.net_core" target="_blank" rel="noopener noreferrer">ASP.NET Core</a> · <a href="https://app.opencve.io/cve/?vendor=npgsql&amp;product=npgsql" target="_blank" rel="noopener noreferrer">Npgsql</a></td><td>fiche de référence (pas encore reconnu automatiquement)</td></tr>
     </table>
-    <p>L’analyse du code .NET arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE, exposition et coût. Détail : <a href="lang-dotnet.html">.NET sur Outscale</a>.</p>
+    <p>L’analyse du code .NET arrive ; ta stack est déjà couverte : composants et images comparés aux failles connues avec OpenCVE et classés selon leur exposition. Détail : <a href="lang-dotnet.html">.NET sur Outscale</a>.</p>
 
 
     <h2 id="avant-deploy">Ce que bige-ops vérifie avant le deploy</h2>

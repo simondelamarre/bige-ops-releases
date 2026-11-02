@@ -1,6 +1,6 @@
 # Inventaire & import (reverse)
 
-`inventory fetch` lit le compte et stocke un snapshot. `inventory show` = résumé + coût. UI : badges status.
+`inventory fetch` lit le compte et stocke un snapshot. `inventory show` = résumé + estimation. UI : badges status.
 
 `import selection --id i-xxxx` → YAML + `generate`. `import plan` = terraform import suggéré.
 

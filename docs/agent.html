@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Assistant IA — bige-ops</title>
-  <meta name="description" content="L’assistant IA de bige-ops : Claude Sonnet 4.5 par défaut, ou OpenAI, Gemini, Mistral, avec ta propre clé API. Outils de config en lecture et écriture ; jamais d’apply, de deploy ni de push." />
+  <meta name="description" content="L’assistant IA de bige-ops : Claude Sonnet 5.5 par défaut, ou OpenAI, Gemini, Mistral, avec ta propre clé API. Outils de config en lecture et écriture ; jamais d’apply, de deploy ni de push." />
   <link rel="canonical" href="https://bige.dev/agent.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -32,7 +32,7 @@
 
     <div class="callout">
       <strong>Ta clé, ton fournisseur.</strong>
-      Modèle par défaut : <strong>Claude Sonnet 4.5</strong> (Anthropic). Tu
+      Modèle par défaut : <strong>Claude Sonnet 5.5</strong> (Anthropic). Tu
       peux aussi choisir un modèle OpenAI, Gemini ou Mistral. Tu saisis
       <strong>ta propre clé API</strong> dans Settings ; elle est stockée
       localement dans <code>~/.config/bige-ops/settings.json</code>. Les appels
@@ -56,7 +56,7 @@ flowchart LR
     <h2>Ce que l’agent peut faire</h2>
     <ul>
       <li>Lister les <strong>simulations</strong> du workspace et en <strong>créer</strong> une nouvelle.</li>
-      <li>Lire le <strong>contexte</strong> du projet : statut, <code>project.yaml</code>, estimation de coût.</li>
+      <li>Lire le <strong>contexte</strong> du projet : statut, <code>project.yaml</code>, estimation.</li>
       <li>Lister et lire les fichiers de la simulation.</li>
       <li>Éditer <code>project.yaml</code> : mise à jour complète ou patch ciblé.</li>
       <li><strong>Retirer</strong> un composant, <strong>ajouter</strong> une stack.</li>
@@ -144,7 +144,7 @@ flowchart LR
 
     <h2>Comment bien s’en servir</h2>
     <ul>
-      <li>Donne une intention et une contrainte : « API + Postgres, budget sous X € HT/mois, Région eu-west-2 ».</li>
+      <li>Donne une intention et une contrainte : « API + Postgres, une seule VM pour commencer, Région eu-west-2 ».</li>
       <li>Fais-lui lire le contexte avant d’éditer, puis relance <code>validate</code> et <code>generate</code>.</li>
       <li>Relis le diff de <code>project.yaml</code> : c’est la référence.</li>
       <li>Pour l’exposition réseau, vérifie ses choix : <a href="reseau.html">ouvrir ou non</a>.</li>
@@ -155,7 +155,7 @@ flowchart LR
     <div class="callout">
       <strong>Un co-pilote de configuration.</strong>
       L’agent propose ; tu décides. Un dimensionnement, une règle réseau ou
-      un coût se relisent avant <code>plan</code> et <code>apply</code>.
+      une estimation se relisent avant <code>plan</code> et <code>apply</code>.
       Ses outils et garde-fous s’enrichissent d’une version à l’autre. La consommation de tokens est facturée sur
       <strong>ton compte</strong> chez le fournisseur choisi.
     </div>

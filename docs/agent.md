@@ -1,6 +1,6 @@
 # Assistant IA (agent)
 
-Chat intégré sur la **config** de la simulation. Modèle par défaut : **Claude Sonnet 4.5** ; aussi OpenAI, Gemini ou Mistral. Clé API : **la tienne** (Settings, en local). Pas de backend bige-ops.
+Chat intégré sur la **config** de la simulation. Modèle par défaut : **Claude Sonnet 5.5** ; aussi OpenAI, Gemini ou Mistral. Clé API : **la tienne** (Settings, en local). Pas de backend bige-ops.
 
 **Il peut :** simulations, contexte, estimation, fichiers, patch `project.yaml`, stacks, CLI en lecture (`validate`, `generate`, `estimate`, `status`…), doc, Dockerfile + PR.
 

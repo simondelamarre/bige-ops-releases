@@ -1,8 +1,8 @@
 # Laravel + Horizon + MySQL + Redis sur Outscale
 
-Laravel pour le produit, Horizon pour piloter les queues Redis, MySQL pour les données : la stack PHP moderne de nombreuses startups. bige-ops la pose sur Outscale en multi-VM, MySQL et Redis en subnet privé, et la chiffre.
+Laravel pour le produit, Horizon pour piloter les queues Redis, MySQL pour les données : la stack PHP moderne de nombreuses startups. bige-ops la pose sur Outscale en multi-VM, MySQL et Redis en subnet privé.
 
-**En bref.** Topologie multi-vm : VM app (Laravel + workers Horizon) derrière un LBU, MySQL 8.4 et Redis sur VMs privées, backups OOS, NAT. Estimation bige-ops : **423,06 € HT/mois**.
+**En bref.** Topologie multi-vm : VM app (Laravel + workers Horizon) derrière un LBU, MySQL 8.4 et Redis sur VMs privées, backups OOS, NAT.
 
 ## Pourquoi cette stack tourne bien sur Outscale
 
@@ -14,21 +14,20 @@ Laravel pour le produit, Horizon pour piloter les queues Redis, MySQL pour les d
 
 VM app tinav6.c4r8p2 (Laravel PHP-FPM + Horizon) derrière LBU ; MySQL 8.4 LTS et Redis 8 privés ; OOS backups ; NAT.
 
-## Coût mensuel estimé
+## Exemple : ce que la simulation contient
 
-Calculé avec bige-ops estimate --json sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région eu-west-2, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.
+| Ligne bige-ops | Ce que c’est |
+| --- | --- |
+| LBU app-web | entrée publique |
+| OOS laravel-app-backups — 50 GiB | sauvegardes MySQL |
+| VM app-app — tinav6.c4r8p2 | Laravel + Horizon |
+| VM app-redis — tinav6.c2r2p3 | queues Horizon, cache, sessions |
+| VM app-mysql — tinav6.c4r8p2 | MySQL 8.4, disque io1 |
+| NAT gateway | sortie du subnet privé |
+| EIP VM app-app (attachée) | IP publique de la VM app |
+| EIP NAT (attachée supplémentaire) | IP publique du NAT |
 
-| Ligne bige-ops | Ce que c’est | € HT / mois |
-| --- | --- | --- |
-| LBU app-web | entrée publique | 21,90 € |
-| OOS laravel-app-backups — 50 GiB | sauvegardes MySQL | 1,25 € |
-| VM app-app — tinav6.c4r8p2 | Laravel + Horizon | 135,80 € |
-| VM app-redis — tinav6.c2r2p3 | queues Horizon, cache, sessions | 54,76 € |
-| VM app-mysql — tinav6.c4r8p2 | MySQL 8.4, disque io1 | 169,20 € |
-| NAT gateway | sortie du subnet privé | 36,50 € |
-| EIP VM app-app (attachée — 1ʳᵉ offerte / Net) | IP de la VM app (1ʳᵉ offerte) | 0,00 € |
-| EIP NAT (attachée supplémentaire) | IP publique du NAT | 3,65 € |
-| **Total estimé** | | **423,06 €** |
+L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.
 
 
 

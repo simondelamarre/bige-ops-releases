@@ -1,6 +1,6 @@
 # Secrets, coffre & credentials
 
-**Pas de vault SaaS bige-ops**, aucun backend à nous. Tout est local ; après deploy, les secrets d’exécution vivent côté Outscale / vos VMs.
+**Pas de vault SaaS bige-ops**, aucun backend à nous. Tout est local ; après deploy, les secrets d’exécution vivent côté Outscale / tes VMs.
 
 Où vit quoi :
 
@@ -21,7 +21,7 @@ Où vit quoi :
 
 `build.secrets` = secrets de build des images Docker, injectés au deploy depuis le coffre.
 
-**Warn :** vos secrets = votre responsabilité. Chiffrez le disque, verrouillez la session.
+**Warn :** tes secrets = ta responsabilité. Chiffre le disque, verrouille la session.
 
 ## Solutions actuelles (`#backends`)
 

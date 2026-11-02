@@ -1,36 +1,36 @@
 # Stacks et langages sur Outscale
 
-Les architectures que les équipes font vraiment tourner, posées sur Outscale par bige-ops : coût mensuel calculé avec la CLI (catalogue public synchronisé le 17 septembre 2026, `eu-west-2`, € HT, 730 h), versions à épingler, exposition, failles connues suivies avec OpenCVE.
+Les architectures que les équipes font vraiment tourner, posées sur Outscale par bige-ops : architecture, versions à épingler, exposition, failles connues suivies avec OpenCVE et commandes pour reproduire chaque stack.
 
 ## Startups
 
-| Stack | Sur Outscale | € HT / mois |
-| --- | --- | --- |
-| [Next.js + NestJS + PostgreSQL + Redis + OOS](https://bige.dev/stack-nextjs-nestjs-postgresql-redis.html) | multi-VM · LBU · OOS | 428,06 € |
-| [Express + MongoDB + Redis + BullMQ sur OKS](https://bige.dev/stack-express-mongodb-redis-oks.html) | OKS · 3 nœuds | 457,65 € · 501,45 € avec 2 LBU |
-| [Django + Celery + PostgreSQL + Redis](https://bige.dev/stack-django-celery-postgresql-redis.html) | multi-VM · LBU | 423,06 € |
-| [Rails + Sidekiq + PostgreSQL + Redis](https://bige.dev/stack-rails-sidekiq-postgresql-redis.html) | multi-VM · LBU | 423,06 € |
-| [Laravel + Horizon + MySQL + Redis](https://bige.dev/stack-laravel-horizon-mysql-redis.html) | multi-VM · LBU | 423,06 € |
-| [Go + PostgreSQL + NATS](https://bige.dev/stack-go-postgresql-nats.html) | multi-VM · LBU | 302,60 € |
+| Stack | Sur Outscale |
+| --- | --- |
+| [Next.js + NestJS + PostgreSQL + Redis + OOS](https://bige.dev/stack-nextjs-nestjs-postgresql-redis.html) | multi-VM · LBU · OOS |
+| [Express + MongoDB + Redis + BullMQ sur OKS](https://bige.dev/stack-express-mongodb-redis-oks.html) | OKS · 3 nœuds · 2 LBU |
+| [Django + Celery + PostgreSQL + Redis](https://bige.dev/stack-django-celery-postgresql-redis.html) | multi-VM · LBU |
+| [Rails + Sidekiq + PostgreSQL + Redis](https://bige.dev/stack-rails-sidekiq-postgresql-redis.html) | multi-VM · LBU |
+| [Laravel + Horizon + MySQL + Redis](https://bige.dev/stack-laravel-horizon-mysql-redis.html) | multi-VM · LBU |
+| [Go + PostgreSQL + NATS](https://bige.dev/stack-go-postgresql-nats.html) | multi-VM · LBU |
 
 ## Grandes entreprises
 
-| Stack | Sur Outscale | € HT / mois |
-| --- | --- | --- |
-| [Spring Boot sur OKS + Kafka + Keycloak](https://bige.dev/stack-spring-boot-oks-kafka-keycloak.html) | OKS HA · 3 nœuds c8r16 | 918,80 € · 984,50 € avec 3 LBU |
-| [Quarkus sur OKS + PostgreSQL + Kafka](https://bige.dev/stack-quarkus-oks-postgresql-kafka.html) | OKS HA · 3 nœuds | 523,35 € · 545,25 € avec 1 LBU |
-| [Jakarta EE + OpenSearch + PostgreSQL](https://bige.dev/stack-jakarta-ee-opensearch-postgresql.html) | multi-VM · VM de recherche | 714,95 € |
-| [ASP.NET Core + PostgreSQL + RabbitMQ](https://bige.dev/stack-dotnet-postgresql-rabbitmq.html) | multi-VM · VM broker | 438,40 € |
-| [IA : FastAPI + pgvector + GPU](https://bige.dev/stack-ai-fastapi-pgvector-gpu.html) | multi-VM · VM GPU L40 | 2 654,65 € |
+| Stack | Sur Outscale |
+| --- | --- |
+| [Spring Boot sur OKS + Kafka + Keycloak](https://bige.dev/stack-spring-boot-oks-kafka-keycloak.html) | OKS HA · 3 nœuds c8r16 · 3 LBU |
+| [Quarkus sur OKS + PostgreSQL + Kafka](https://bige.dev/stack-quarkus-oks-postgresql-kafka.html) | OKS HA · 3 nœuds · 1 LBU |
+| [Jakarta EE + OpenSearch + PostgreSQL](https://bige.dev/stack-jakarta-ee-opensearch-postgresql.html) | multi-VM · VM de recherche |
+| [ASP.NET Core + PostgreSQL + RabbitMQ](https://bige.dev/stack-dotnet-postgresql-rabbitmq.html) | multi-VM · VM broker |
+| [IA : FastAPI + pgvector + GPU](https://bige.dev/stack-ai-fastapi-pgvector-gpu.html) | multi-VM · VM GPU L40 |
 
-Sur OKS, chaque Service exposé crée un LBU (21,90 € HT/mois l’unité).
+Sur OKS, chaque Service exposé crée son propre LBU : le tableau en donne le nombre.
 
 ## Sites et temps réel
 
-| Stack | Sur Outscale | € HT / mois |
-| --- | --- | --- |
-| [WordPress + MariaDB](https://bige.dev/stack-wordpress-mariadb.html) | multi-VM · LBU | 236,90 € |
-| [Phoenix + PostgreSQL](https://bige.dev/stack-phoenix-postgresql.html) | multi-VM · LBU | 368,30 € |
+| Stack | Sur Outscale |
+| --- | --- |
+| [WordPress + MariaDB](https://bige.dev/stack-wordpress-mariadb.html) | multi-VM · LBU |
+| [Phoenix + PostgreSQL](https://bige.dev/stack-phoenix-postgresql.html) | multi-VM · LBU |
 
 ## Langages
 
@@ -60,7 +60,7 @@ Des failles, il y en aura toujours : l’important est de voir d’abord celles 
 
 En mode direct, ton code ne quitte pas ton poste : vers OSV et OpenCVE ne partent que des noms de bibliothèques et de composants (avec leur version, pour OSV). Pourquoi le refaire toi-même ? C’est chez toi, sur ton poste, et c’est gratuit.
 
-Pour Java, .NET, Kotlin, Scala, Rust, Elixir et OCaml, la lecture du code arrive ; leurs stacks sont déjà couvertes : composants et images comparés aux failles connues avec OpenCVE, exposition et coût.
+Pour Java, .NET, Kotlin, Scala, Rust, Elixir et OCaml, la lecture du code arrive ; leurs stacks sont déjà couvertes : composants et images comparés aux failles connues avec OpenCVE et classés selon leur exposition.
 
 Reconnus automatiquement sur OpenCVE : [postgresql](https://app.opencve.io/cve/?vendor=postgresql&product=postgresql) · [mysql](https://app.opencve.io/cve/?vendor=oracle&product=mysql) · [mariadb](https://app.opencve.io/cve/?vendor=mariadb&product=mariadb) · [mongodb](https://app.opencve.io/cve/?vendor=mongodb&product=mongodb) · [redis](https://app.opencve.io/cve/?vendor=redis&product=redis) · [nginx](https://app.opencve.io/cve/?vendor=f5&product=nginx) · [node](https://app.opencve.io/cve/?vendor=nodejs&product=node.js) · [python](https://app.opencve.io/cve/?vendor=python&product=python) · [go](https://app.opencve.io/cve/?vendor=golang&product=go) · [kubernetes](https://app.opencve.io/cve/?vendor=kubernetes&product=kubernetes) · [docker](https://app.opencve.io/cve/?vendor=docker&product=docker).
 

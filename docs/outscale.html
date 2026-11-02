@@ -43,7 +43,7 @@
       <tr><th>Service Outscale</th><th>Dans bige-ops</th><th>Doc</th></tr>
       <tr><td>VMs (types Tina)</td><td><strong>Créé</strong> — type, disque racine, subnet, user_data, keypair</td><td><a href="vms.html">vms</a></td></tr>
       <tr><td>Keypairs SSH</td><td><strong>Créé</strong> (module Terraform) ou réutilisé à l’import</td><td><a href="secrets.html">secrets</a></td></tr>
-      <tr><td>Flexible GPU (fGPU)</td><td><strong>Estimation</strong> — nombre et modèle déclarés sur la VM, comptés au coût. Un fGPU se facture dès qu’il est alloué, attaché ou non</td><td><a href="catalogue-prix.html">catalogue</a></td></tr>
+      <tr><td>Flexible GPU (fGPU)</td><td><strong>Estimation</strong> — nombre et modèle déclarés sur la VM, comptés dans l’estimation. Un fGPU se facture dès qu’il est alloué, attaché ou non</td><td><a href="catalogue-prix.html">catalogue</a></td></tr>
       <tr><td>Dedicated groups (VM dédiées)</td><td><strong>Prix</strong></td><td><a href="catalogue-prix.html">catalogue</a></td></tr>
       <tr><td>Licences Windows, SQL Server, RHEL</td><td><strong>Prix</strong> — OMI Linux par défaut</td><td><a href="catalogue-prix.html">catalogue</a></td></tr>
     </table>
@@ -65,7 +65,7 @@
       <tr><td>Security groups</td><td><strong>Auto</strong> (règles entrantes) ; import = observé</td><td><a href="reseau-avance.html">réseau avancé</a></td></tr>
       <tr><td>Route tables, internet service</td><td><strong>Auto</strong> via le module réseau</td><td><a href="reseau-avance.html">réseau avancé</a></td></tr>
       <tr><td>NAT service</td><td><strong>Auto</strong> si <code>enable_nat</code>, désactivé par défaut</td><td><a href="reseau-avance.html">réseau avancé</a></td></tr>
-      <tr><td>IP publiques (EIP)</td><td><strong>Créé</strong> (VM publique, NAT) ; IP non associée comptée au coût</td><td><a href="reseau-avance.html">réseau avancé</a></td></tr>
+      <tr><td>IP publiques (EIP)</td><td><strong>Créé</strong> (VM publique, NAT) ; IP non associée comptée dans l’estimation</td><td><a href="reseau-avance.html">réseau avancé</a></td></tr>
       <tr><td>NIC</td><td><strong>Canvas</strong></td><td><a href="reseau-avance.html">réseau avancé</a></td></tr>
       <tr><td>Options DHCP</td><td><strong>Canvas</strong></td><td><a href="reseau-avance.html">réseau avancé</a></td></tr>
     </table>
@@ -111,7 +111,7 @@
       <tr><td>Access keys</td><td>Connexion locale, jamais poussées sur Git</td><td><a href="secrets.html">secrets</a></td></tr>
       <tr><td>EIM (utilisateurs, politiques)</td><td><strong>Cockpit / API</strong> ; bige-ops référence les certificats serveur par leur ORN</td><td><a href="lbu.html">lbu</a></td></tr>
       <tr><td>Quotas du compte</td><td><strong>Cockpit / API</strong></td><td><a href="regions.html#acces">accès</a></td></tr>
-      <tr><td>Trafic sortant (VMs, OOS, LBU)</td><td><strong>Prix</strong> — 0 € HT au catalogue public dans quatre Régions sur cinq</td><td><a href="catalogue-prix.html">catalogue</a></td></tr>
+      <tr><td>Trafic sortant (VMs, OOS, LBU)</td><td><strong>Prix</strong> — tarifé au catalogue public selon la Région, hors estimation</td><td><a href="catalogue-prix.html">catalogue</a></td></tr>
     </table>
 
     <h2>Ce que ça implique</h2>

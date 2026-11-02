@@ -1,6 +1,6 @@
 # .NET sur Outscale
 
-ASP.NET Core est multiplateforme, rapide et tourne parfaitement sous Linux, en conteneur. Sur Outscale, bige-ops pose ton API .NET derrière un LBU, PostgreSQL en subnet privé, RabbitMQ pour la messagerie, et chiffre la stack au catalogue public.
+ASP.NET Core est multiplateforme, rapide et tourne parfaitement sous Linux, en conteneur. Sur Outscale, bige-ops pose ton API .NET derrière un LBU, PostgreSQL en subnet privé et RabbitMQ pour la messagerie.
 
 **En bref.** Un service .NET se déclare en runtime custom construit depuis ton Dockerfile (port 8080, le port par défaut des images ASP.NET Core récentes), avec ASPNETCORE_ENVIRONMENT=Production.
 
@@ -30,7 +30,7 @@ api:
 
 ## Ce que bige-ops vérifie pour .NET
 
-Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code .NET arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation et le coût sur Outscale sont calculés à côté.
+Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code .NET arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation est calculée à côté.
 
 Tout est classé par urgence : ce qui est exposé à Internet d’abord. Pourquoi le refaire toi-même ? C’est chez toi, sur ton poste, et c’est gratuit. Méthode complète : [ce que bige-ops vérifie](https://bige.dev/stacks.html#verifications).
 
@@ -50,9 +50,9 @@ Jamais de base exposée à Internet : subnet privé + security group au CIDR du 
 
 bige-ops s’appuie sur [OpenCVE](https://www.opencve.io/) : les failles publiées dans le registre mondial des vulnérabilités (CVE) et ses sources (NVD, MITRE, liste KEV des failles déjà exploitées tenue par la CISA…), avec leur note de gravité sur 10 (CVSS) et leur probabilité d’être exploitées (EPSS), rangées par éditeur et produit ([explorateur](https://app.opencve.io/)). Projet open source, code et communauté sur [GitHub](https://github.com/opencve/opencve), installable chez toi. Merci à ses mainteneurs et contributeurs.
 
-## Stacks chiffrées
+## Stacks de référence
 
-- [ASP.NET Core + PostgreSQL + RabbitMQ](https://bige.dev/stack-dotnet-postgresql-rabbitmq.html) (438,40 € HT/mois)
+- [ASP.NET Core + PostgreSQL + RabbitMQ](https://bige.dev/stack-dotnet-postgresql-rabbitmq.html)
 
 Docs : [.NET](https://learn.microsoft.com/dotnet/) · [ASP.NET Core](https://learn.microsoft.com/aspnet/core/) · [Entity Framework Core](https://learn.microsoft.com/ef/core/) · [Npgsql](https://www.npgsql.org/) · [RabbitMQ](https://www.rabbitmq.com/docs)
 

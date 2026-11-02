@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Périmètre — bige-ops</title>
-  <meta name="description" content="Le périmètre de bige-ops sur Outscale : simuler, estimer, générer, appliquer. Ensuite, tu pilotes l’exploitation." />
+  <meta name="description" content="Le périmètre de bige-ops sur Outscale : simuler, tester en local, déployer sur ton compte, migrer tes données, analyser tes failles. Ensuite, tu pilotes l’exploitation." />
   <link rel="canonical" href="https://bige.dev/perimetre.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/perimetre.html" />
   <meta property="og:title" content="Périmètre — bige-ops" />
-  <meta property="og:description" content="Le périmètre de bige-ops sur Outscale : simuler, estimer, générer, appliquer. Ensuite, tu pilotes l’exploitation." />
+  <meta property="og:description" content="Le périmètre de bige-ops sur Outscale : simuler, tester en local, déployer sur ton compte, migrer tes données, analyser tes failles. Ensuite, tu pilotes l’exploitation." />
   <meta property="og:image" content="https://bige.dev/screens/hero.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,18 +30,18 @@
     </div>
     <h1>Le périmètre de bige-ops</h1>
     <p class="lead">
-      bige-ops est un <strong>simulateur et un kit de démarrage</strong> pour
-      Outscale : projeter, estimer, composer, générer, appliquer. Il pose une
-      stack propre sur ton compte ; l’exploitation au quotidien reste entre
-      tes mains.
+      Simple comme un PaaS, flexible comme un IaaS : bige-ops simule ta stack,
+      la teste en local, la déploie sur <strong>ton</strong> compte Outscale,
+      migre tes données et analyse tes failles. Il pose une stack propre sur
+      ton compte ; l’exploitation au quotidien reste entre tes mains.
     </p>
 
     <figure class="diagram">
       <pre class="mermaid">
 flowchart LR
   A[Idée] --> B[Simulation]
-  B --> C[Estimation]
-  C --> D[Generate]
+  B --> C[Test en local]
+  C --> D[Generate + plan]
   D --> E[Apply infra]
   E --> F[Deploy apps]
   F --> G[Tu pilotes le run]
@@ -52,14 +52,16 @@ flowchart LR
 
     <div class="callout">
       <strong>Après le déploiement, c’est ton exploitation.</strong>
-      Capacité, incidents, durcissement, sauvegardes et montée en charge se
-      pilotent de ton côté, avec les services Outscale et ton équipe.
+      Capacité, incidents, durcissement et montée en charge se pilotent de
+      ton côté, avec les services Outscale et ton équipe. bige-ops installe
+      les sauvegardes planifiées de tes bases et te donne le dump, la
+      restauration et la migration ; tester une restauration reste ton geste.
     </div>
 
     <div class="callout">
-      <strong>Prix et offre Outscale.</strong>
-      L’estimation repose sur le catalogue public Outscale ; ton devis et les
-      conditions de ton compte viennent d’Outscale. bige-ops intègre les
+      <strong>Estimation et offre Outscale.</strong>
+      L’estimation repose sur le catalogue public Outscale ; ton devis, tes
+      remises négociées et les conditions de ton compte viennent d’Outscale. bige-ops intègre les
       nouveautés de l’offre au fil des versions — une suggestion se dépose sur
       <a href="https://github.com/simondelamarre/bige-ops-releases/issues">GitHub</a>.
       Détail : <a href="savoir.html">ce que bige-ops sait</a>.
@@ -67,8 +69,8 @@ flowchart LR
 
     <h2>Deux couches</h2>
     <p>
-      D’un côté la <strong>simulation</strong> (layout + coût au catalogue) :
-      tu explores sans engagement. De l’autre le <strong>compte
+      D’un côté la <strong>simulation</strong> (layout, estimation au
+      catalogue public, tests en local) : tu explores sans engagement. De l’autre le <strong>compte
       Outscale</strong> : inventaire, plan, apply, avec tes credentials. Le
       passage de l’une à l’autre est toujours volontaire.
     </p>
@@ -93,9 +95,11 @@ flowchart TB
     <h2>Ce que bige-ops couvre</h2>
     <p>
       Simulations et layouts (<a href="vms.html">VMs</a>, OKS, services),
-      estimation sur le catalogue public, génération Terraform, specs OKS et
-      YAML d’apps, plan · apply · deploy sur <em>ton</em> compte, presets
-      Visual, inventaire et import, buckets <a href="oos.html">OOS</a>.
+      estimation sur le catalogue public, tests en local (Docker Compose ou
+      kind), génération Terraform, specs OKS et YAML d’apps, plan · apply ·
+      deploy sur <em>ton</em> compte, presets Visual, inventaire et import,
+      buckets <a href="oos.html">OOS</a> et Storage Explorer, sauvegardes et
+      migration de tes bases, analyse des failles de tes dépôts.
     </p>
 
     <h2>Ce qui reste de ton côté</h2>
@@ -109,8 +113,9 @@ flowchart TB
     <h2>En pratique</h2>
     <p>
       bige-ops pose des <strong>standards opérationnels</strong> pour démarrer
-      vite et proprement. Ensuite, toi ou ton équipe DevOps portez la montée
-      en charge.
+      vite et proprement, sans équipe DevOps dédiée. Le compte, les machines
+      et les données restent à toi : tu gardes la main sur la montée en
+      charge.
     </p>
     <footer class="site-footer">
       <div class="cols">

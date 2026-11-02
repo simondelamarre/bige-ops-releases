@@ -2,7 +2,7 @@
 
 Une API Express, MongoDB pour la souplesse du document, Redis et BullMQ pour les jobs : un classique des startups Node. Sur OKS, chaque brique devient un Deployment, l’API et ses workers montent en charge avec l’HPA, et Outscale opère le control plane.
 
-**En bref.** Topologie oks : control plane cp.mono.master, nodepool de 3 nœuds tinav6.c4r8p2, Kubernetes 1.34. Deployments api, web, worker BullMQ, MongoDB et Redis ; backups MongoDB vers OOS. Estimation bige-ops : **457,65 € HT/mois**, plus les LBU créés par les Services exposés.
+**En bref.** Topologie oks : control plane cp.mono.master, nodepool de 3 nœuds tinav6.c4r8p2, Kubernetes 1.34. Deployments api, web, worker BullMQ, MongoDB et Redis ; backups MongoDB vers OOS. Les Services api et web créent chacun leur LBU.
 
 ## Pourquoi cette stack tourne bien sur Outscale
 
@@ -15,18 +15,17 @@ Une API Express, MongoDB pour la souplesse du document, Redis et BullMQ pour les
 
 OKS (cp.mono.master, Kubernetes 1.34), nodepool 3 × tinav6.c4r8p2 ; Deployments api (Express, HPA), web, worker BullMQ ; MongoDB 8.0 et Redis 8 en ClusterIP sur emptyDir, backup MongoDB vers OOS.
 
-## Coût mensuel estimé
+## Exemple : ce que la simulation contient
 
-Calculé avec bige-ops estimate --json sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région eu-west-2, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.
+| Ligne bige-ops | Ce que c’est |
+| --- | --- |
+| OOS express-app-backups — 50 GiB | sauvegardes MongoDB |
+| OKS control plane — cp.mono.master | control plane OKS (1 master) |
+| Nodepool default — tinav6.c4r8p2 × 3 | 3 nœuds : 12 vCPU, 24 GiB, disques inclus |
 
-| Ligne bige-ops | Ce que c’est | € HT / mois |
-| --- | --- | --- |
-| OOS express-app-backups — 50 GiB | sauvegardes MongoDB | 1,25 € |
-| OKS control plane — cp.mono.master | control plane OKS (1 master) | 29,20 € |
-| Nodepool default — tinav6.c4r8p2 × 3 | 3 nœuds : 12 vCPU, 24 GiB, disques inclus | 427,20 € |
-| **Total estimé** | | **457,65 €** |
+L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.
 
-LBU des Services api et web : 2 × 21,90 € → 501,45 € HT/mois au total. Variante production cp.3.masters.small : 523,35 € (567,15 € avec les LBU).
+Les Services api et web créent chacun un LBU, en plus des lignes ci-dessus. Variante production : control plane haute disponibilité cp.3.masters.small, recommandé par Outscale pour la production.
 
 ```
 bige-ops init -n stack-express-mongodb-redis-oks

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Stacks et langages sur Outscale — bige-ops</title>
-  <meta name="description" content="Stacks de startups et de grandes entreprises sur Outscale : Next.js, Django, Rails, Laravel, Go, Spring Boot, Quarkus, .NET, IA. Coût réel, CVE, exposition." />
+  <meta name="description" content="Stacks de startups et de grandes entreprises sur Outscale : Next.js, Django, Rails, Laravel, Go, Spring Boot, Quarkus, .NET, IA. Architecture, CVE, exposition." />
   <link rel="canonical" href="https://bige.dev/stacks.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,14 +13,14 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/stacks.html" />
   <meta property="og:title" content="Stacks et langages sur Outscale — bige-ops" />
-  <meta property="og:description" content="Stacks de startups et de grandes entreprises sur Outscale : Next.js, Django, Rails, Laravel, Go, Spring Boot, Quarkus, .NET, IA. Coût réel, CVE, exposition." />
-  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta property="og:description" content="Stacks de startups et de grandes entreprises sur Outscale : Next.js, Django, Rails, Laravel, Go, Spring Boot, Quarkus, .NET, IA. Architecture, CVE, exposition." />
+  <meta property="og:image" content="https://bige.dev/screens/site-simule.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Stacks et langages sur Outscale", "description": "Stacks de startups et de grandes entreprises sur Outscale : Next.js, Django, Rails, Laravel, Go, Spring Boot, Quarkus, .NET, IA. Coût réel, CVE, exposition.", "inLanguage": "fr", "url": "https://bige.dev/stacks.html", "keywords": "Outscale, stacks, Next.js, NestJS, Django, Rails, Laravel, Go, Spring Boot, Quarkus, Jakarta EE, .NET, Kafka, Keycloak, PostgreSQL, Redis, MongoDB, MySQL, OKS, OpenCVE, coût cloud, SecNumCloud", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages sur Outscale", "item": "https://bige.dev/stacks.html"}]}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Stacks et langages sur Outscale", "description": "Stacks de startups et de grandes entreprises sur Outscale : Next.js, Django, Rails, Laravel, Go, Spring Boot, Quarkus, .NET, IA. Architecture, CVE, exposition.", "inLanguage": "fr", "url": "https://bige.dev/stacks.html", "keywords": "Outscale, stacks, Next.js, NestJS, Django, Rails, Laravel, Go, Spring Boot, Quarkus, Jakarta EE, .NET, Kafka, Keycloak, PostgreSQL, Redis, MongoDB, MySQL, OKS, OpenCVE, SecNumCloud", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages sur Outscale", "item": "https://bige.dev/stacks.html"}]}]}</script>
 </head>
 <body>
   <main>
@@ -31,15 +31,14 @@
     </div>
     <h1>Stacks et langages sur Outscale</h1>
     <p class="lead">
-      Next.js et NestJS, Django, Rails, Laravel, Go, Spring Boot sur Kubernetes, Quarkus, Jakarta EE, .NET, une stack IA avec GPU : les architectures que les équipes font vraiment tourner, posées sur Outscale par bige-ops. Pour chacune, le coût mensuel calculé au catalogue public, les versions à épingler, l’exposition réseau et les failles connues suivies avec OpenCVE.
+      Next.js et NestJS, Django, Rails, Laravel, Go, Spring Boot sur Kubernetes, Quarkus, Jakarta EE, .NET, une stack IA avec GPU : les architectures que les équipes font vraiment tourner, posées sur Outscale par bige-ops. Pour chacune, l’architecture, les versions à épingler, l’exposition réseau, les failles connues suivies avec OpenCVE et les commandes pour la reproduire.
     </p>
 
     <div class="callout">
       <strong>Comment lire cette section.</strong>
-      Chaque page de stack donne une architecture sur Outscale, un coût mensuel calculé avec
-      la CLI bige-ops sur le catalogue public Outscale (synchronisé le 17 septembre 2026,
-      Région <code>eu-west-2</code>, € HT, 730 heures), les versions à épingler, les règles
-      d’exposition et les failles connues suivies avec OpenCVE. Chaque page de langage donne
+      Chaque page de stack donne une architecture sur Outscale, les versions à épingler, les
+      règles d’exposition, les failles connues suivies avec OpenCVE et les commandes pour la
+      reproduire avec la CLI bige-ops. Chaque page de langage donne
       les frameworks, la façon de les faire tourner avec bige-ops et ce que bige-ops vérifie
       dans ton code.
     </div>
@@ -47,32 +46,32 @@
     <h2 id="startups">Startups : livrer vite, sur une base saine</h2>
     <p>Des stacks très répandues chez les équipes produit, posées en multi-VM derrière un LBU ou sur OKS, avec bases en subnet privé et backups dans OOS.</p>
     <table>
-      <tr><th>Stack</th><th>Sur Outscale</th><th>€ HT / mois</th></tr>
-      <tr><td><a href="stack-nextjs-nestjs-postgresql-redis.html">Next.js + NestJS + PostgreSQL + Redis + OOS</a></td><td>multi-VM · LBU · OOS</td><td>428,06 €</td></tr>
-      <tr><td><a href="stack-express-mongodb-redis-oks.html">Express + MongoDB + Redis + BullMQ sur OKS</a></td><td>OKS · 3 nœuds</td><td>457,65 €<br />501,45 € avec 2 LBU</td></tr>
-      <tr><td><a href="stack-django-celery-postgresql-redis.html">Django + Celery + PostgreSQL + Redis</a></td><td>multi-VM · LBU</td><td>423,06 €</td></tr>
-      <tr><td><a href="stack-rails-sidekiq-postgresql-redis.html">Rails + Sidekiq + PostgreSQL + Redis</a></td><td>multi-VM · LBU</td><td>423,06 €</td></tr>
-      <tr><td><a href="stack-laravel-horizon-mysql-redis.html">Laravel + Horizon + MySQL + Redis</a></td><td>multi-VM · LBU</td><td>423,06 €</td></tr>
-      <tr><td><a href="stack-go-postgresql-nats.html">Go + PostgreSQL + NATS</a></td><td>multi-VM · LBU</td><td>302,60 €</td></tr>
+      <tr><th>Stack</th><th>Sur Outscale</th></tr>
+      <tr><td><a href="stack-nextjs-nestjs-postgresql-redis.html">Next.js + NestJS + PostgreSQL + Redis + OOS</a></td><td>multi-VM · LBU · OOS</td></tr>
+      <tr><td><a href="stack-express-mongodb-redis-oks.html">Express + MongoDB + Redis + BullMQ sur OKS</a></td><td>OKS · 3 nœuds · 2 LBU</td></tr>
+      <tr><td><a href="stack-django-celery-postgresql-redis.html">Django + Celery + PostgreSQL + Redis</a></td><td>multi-VM · LBU</td></tr>
+      <tr><td><a href="stack-rails-sidekiq-postgresql-redis.html">Rails + Sidekiq + PostgreSQL + Redis</a></td><td>multi-VM · LBU</td></tr>
+      <tr><td><a href="stack-laravel-horizon-mysql-redis.html">Laravel + Horizon + MySQL + Redis</a></td><td>multi-VM · LBU</td></tr>
+      <tr><td><a href="stack-go-postgresql-nats.html">Go + PostgreSQL + NATS</a></td><td>multi-VM · LBU</td></tr>
     </table>
 
     <h2 id="entreprises">Grandes entreprises : les architectures du SI</h2>
     <p>Microservices JVM sur Kubernetes, serveurs Jakarta EE, .NET, Kafka, Keycloak, recherche et IA : des architectures de production, avec control plane haute disponibilité sur OKS et la Région SecNumCloud <code>cloudgouv-eu-west-1</code> à disposition (<a href="regions.html">régions</a>).</p>
     <table>
-      <tr><th>Stack</th><th>Sur Outscale</th><th>€ HT / mois</th></tr>
-      <tr><td><a href="stack-spring-boot-oks-kafka-keycloak.html">Spring Boot sur OKS + Kafka + Keycloak</a></td><td>OKS HA · 3 nœuds c8r16</td><td>918,80 €<br />984,50 € avec 3 LBU</td></tr>
-      <tr><td><a href="stack-quarkus-oks-postgresql-kafka.html">Quarkus sur OKS + PostgreSQL + Kafka</a></td><td>OKS HA · 3 nœuds</td><td>523,35 €<br />545,25 € avec 1 LBU</td></tr>
-      <tr><td><a href="stack-jakarta-ee-opensearch-postgresql.html">Jakarta EE + OpenSearch + PostgreSQL</a></td><td>multi-VM · VM de recherche</td><td>714,95 €</td></tr>
-      <tr><td><a href="stack-dotnet-postgresql-rabbitmq.html">ASP.NET Core + PostgreSQL + RabbitMQ</a></td><td>multi-VM · VM broker</td><td>438,40 €</td></tr>
-      <tr><td><a href="stack-ai-fastapi-pgvector-gpu.html">IA : FastAPI + pgvector + GPU</a></td><td>multi-VM · VM GPU L40</td><td>2 654,65 €</td></tr>
+      <tr><th>Stack</th><th>Sur Outscale</th></tr>
+      <tr><td><a href="stack-spring-boot-oks-kafka-keycloak.html">Spring Boot sur OKS + Kafka + Keycloak</a></td><td>OKS HA · 3 nœuds c8r16 · 3 LBU</td></tr>
+      <tr><td><a href="stack-quarkus-oks-postgresql-kafka.html">Quarkus sur OKS + PostgreSQL + Kafka</a></td><td>OKS HA · 3 nœuds · 1 LBU</td></tr>
+      <tr><td><a href="stack-jakarta-ee-opensearch-postgresql.html">Jakarta EE + OpenSearch + PostgreSQL</a></td><td>multi-VM · VM de recherche</td></tr>
+      <tr><td><a href="stack-dotnet-postgresql-rabbitmq.html">ASP.NET Core + PostgreSQL + RabbitMQ</a></td><td>multi-VM · VM broker</td></tr>
+      <tr><td><a href="stack-ai-fastapi-pgvector-gpu.html">IA : FastAPI + pgvector + GPU</a></td><td>multi-VM · VM GPU L40</td></tr>
     </table>
-    <p>Sur OKS, chaque Service exposé crée un LBU, compté à part à 21,90 € HT par mois l’unité : le tableau donne les deux montants.</p>
+    <p>Sur OKS, chaque Service exposé crée son propre LBU : le tableau en donne le nombre.</p>
 
     <h2 id="sites">Sites et temps réel</h2>
     <table>
-      <tr><th>Stack</th><th>Sur Outscale</th><th>€ HT / mois</th></tr>
-      <tr><td><a href="stack-wordpress-mariadb.html">WordPress + MariaDB</a></td><td>multi-VM · LBU</td><td>236,90 €</td></tr>
-      <tr><td><a href="stack-phoenix-postgresql.html">Phoenix + PostgreSQL</a></td><td>multi-VM · LBU</td><td>368,30 €</td></tr>
+      <tr><th>Stack</th><th>Sur Outscale</th></tr>
+      <tr><td><a href="stack-wordpress-mariadb.html">WordPress + MariaDB</a></td><td>multi-VM · LBU</td></tr>
+      <tr><td><a href="stack-phoenix-postgresql.html">Phoenix + PostgreSQL</a></td><td>multi-VM · LBU</td></tr>
     </table>
 
     <h2 id="langages">Langages et frameworks</h2>
@@ -103,7 +102,7 @@
       <li><strong>Il classe tout par urgence</strong> : ce qui est exposé à Internet d’abord.</li>
     </ol>
     <p>En mode direct, ton code ne quitte pas ton poste : vers OSV et OpenCVE ne partent que des noms de bibliothèques et de composants (avec leur version, pour OSV). <strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, sur ton poste, et c’est gratuit.</p>
-    <p>Pour Java, .NET, Kotlin, Scala, Rust, Elixir et OCaml, la lecture du code arrive ; leurs stacks sont déjà couvertes : composants et images comparés aux failles connues avec OpenCVE, exposition et coût.</p>
+    <p>Pour Java, .NET, Kotlin, Scala, Rust, Elixir et OCaml, la lecture du code arrive ; leurs stacks sont déjà couvertes : composants et images comparés aux failles connues avec OpenCVE et classés selon leur exposition.</p>
 
     <p><strong>La stack, avec OpenCVE.</strong> Les composants de ta simulation sont rapprochés automatiquement de leur fiche OpenCVE quand bige-ops les reconnaît : <a href="https://app.opencve.io/cve/?vendor=postgresql&amp;product=postgresql" target="_blank" rel="noopener noreferrer">PostgreSQL</a>, <a href="https://app.opencve.io/cve/?vendor=oracle&amp;product=mysql" target="_blank" rel="noopener noreferrer">MySQL</a>, <a href="https://app.opencve.io/cve/?vendor=mariadb&amp;product=mariadb" target="_blank" rel="noopener noreferrer">MariaDB</a>, <a href="https://app.opencve.io/cve/?vendor=mongodb&amp;product=mongodb" target="_blank" rel="noopener noreferrer">MongoDB</a>, <a href="https://app.opencve.io/cve/?vendor=redis&amp;product=redis" target="_blank" rel="noopener noreferrer">Redis</a>, <a href="https://app.opencve.io/cve/?vendor=f5&amp;product=nginx" target="_blank" rel="noopener noreferrer">nginx</a>, <a href="https://app.opencve.io/cve/?vendor=nodejs&amp;product=node.js" target="_blank" rel="noopener noreferrer">Node.js</a>, <a href="https://app.opencve.io/cve/?vendor=python&amp;product=python" target="_blank" rel="noopener noreferrer">Python</a>, <a href="https://app.opencve.io/cve/?vendor=golang&amp;product=go" target="_blank" rel="noopener noreferrer">Go</a>, <a href="https://app.opencve.io/cve/?vendor=kubernetes&amp;product=kubernetes" target="_blank" rel="noopener noreferrer">Kubernetes</a>, <a href="https://app.opencve.io/cve/?vendor=docker&amp;product=docker" target="_blank" rel="noopener noreferrer">Docker</a>. Les autres briques (Kafka, Keycloak, RabbitMQ, NATS, OpenSearch, frameworks…) ont leurs fiches de référence sur chaque page.</p>
 
@@ -143,16 +142,16 @@
       chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
-    <h2 id="estimations">D’où viennent les chiffres</h2>
+    <h2 id="estimations">D’où viennent ces exemples</h2>
     <p>
       Pour chaque page, un projet bige-ops a été construit avec le bâtisseur de layouts
       (<code>bige-ops add layout custom …</code>), ajusté (images épinglées, backups, NAT,
-      VMs dédiées), validé par <code>bige-ops validate</code>, puis chiffré par
-      <code>bige-ops estimate --json</code>. Les lignes viennent telles quelles de la CLI :
-      vCPU et RAM des types Tina, disques BSU (<code>io1</code> à 3 000 IOPS pour les bases),
-      LBU, NAT, IP publiques (la première est offerte), OKS (control plane et nœuds), OOS,
-      GPU. Estimation indicative sur la grille publique ; le détail du calcul est sur
-      <a href="catalogue-prix.html">catalogue de prix</a>.
+      VMs dédiées) et validé par <code>bige-ops validate</code>. Les lignes de chaque exemple
+      viennent de <code>bige-ops estimate --json</code> : vCPU et RAM des types Tina, disques
+      BSU (<code>io1</code> à 3 000 IOPS pour les bases), LBU, NAT, IP publiques, OKS (control
+      plane et nœuds), OOS, GPU. L’estimation, ligne par ligne sur les tarifs publics
+      d’Outscale, s’affiche dans l’app dès que tu ouvres une simulation ; le détail du calcul
+      est sur <a href="catalogue-prix.html">catalogue de prix</a>.
     </p>
     <p>Pour aller plus loin : <a href="layouts.html">layouts &amp; topologies</a>, <a href="vms.html">VMs</a>, <a href="oks.html">OKS</a>, <a href="volumes-bsu.html">volumes BSU</a>, <a href="oos.html">OOS</a>, <a href="lbu.html">LBU</a>, <a href="reseau.html">réseau</a>, <a href="regions.html">régions</a>, <a href="bases.html">bases de données</a>, <a href="catalogue-prix.html">catalogue de prix</a>.</p>
 

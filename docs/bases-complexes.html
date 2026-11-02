@@ -78,12 +78,12 @@ flowchart LR
       <tbody>
         <tr>
           <td><strong>MongoDB 8</strong></td>
-          <td>Service du catalogue, coloc / VM / OKS, réplicas de pods, backup → OOS</td>
-          <td>Preset replica set multi-nœuds en un clic</td>
+          <td>Service du catalogue, coloc / VM / OKS, replica set de 1, 3 ou 5 membres, backup → OOS</td>
+          <td>Arbitre et réglages avancés du replica set : dans ton exploitation</td>
         </tr>
         <tr>
           <td><strong>Postgres</strong></td>
-          <td>Service du catalogue, volume, réplicas OKS, backup → OOS</td>
+          <td>Service du catalogue, volume (BSU, ou PVC sur OKS), backup → OOS, dump / restauration / migration</td>
           <td>Extensions RAG (pgvector…) en un prompt</td>
         </tr>
         <tr>
@@ -109,36 +109,36 @@ flowchart LR
       Image <code>mongo:8</code> par défaut : on démarre sur la version
       courante. Placement : coloc, <strong>VM data dédiée</strong> (disque
       racine <code>io1</code>), ou pods OKS. Leviers du formulaire : type Tina,
-      volume, <strong>réplicas</strong> du Deployment, <strong>backup →
-      OOS</strong> en un geste dans Visual (edge backup + script préparé).
+      volume, <strong>réplicas</strong> du replica set, <strong>backup →
+      OOS</strong> en un geste dans Visual (edge backup, sauvegarde planifiée
+      installée au deploy).
     </p>
     <p>
-      <strong>Réplicas de pods et replica set MongoDB ne sont pas la même
-      chose.</strong> Un replica set, c’est un primaire et des secondaires qui
-      se répliquent entre eux ; des réplicas de pods, ce sont des copies
-      indépendantes du conteneur. Prochaine étape : un preset replica set
-      (primaire, secondaires, arbitre) sur multi-VM ou sur OKS.
+      <strong>Le replica set est en place.</strong> Avec 3 ou 5 réplicas,
+      bige-ops pose un membre par VM en multi-VM, ou un StatefulSet sur OKS,
+      et initialise le replica set au deploy : un primaire et des secondaires
+      qui se répliquent entre eux. Un nombre impair garde la majorité des
+      votes ; l’arbitre et les réglages fins restent dans ton exploitation.
     </p>
 
     <figure class="diagram">
       <pre class="mermaid">
 flowchart TB
   F[Formulaire / Visual] --> S[Simulation mongo:8]
-  S --> R[Réplicas de pods]
+  S --> RS[Replica set : 1, 3 ou 5 membres]
   S --> B[Backup OOS]
-  S -.->|prochaine étape| RS[Replica set multi-nœuds]
       </pre>
     </figure>
 
     <h2>Postgres pour le RAG</h2>
     <p>
-      Postgres reste la base relationnelle du kit (<code>postgres:16</code>
+      Postgres reste la base relationnelle du catalogue (<code>postgres:16</code>
       par défaut). Le cas qui revient partout : le <strong>RAG</strong>,
       embeddings et recherche par similarité dans la base (pgvector).
     </p>
     <p>
-      <strong>Aujourd’hui :</strong> Postgres, volume, réplicas et backup OOS
-      sont en place. <strong>Prochaine étape :</strong> un preset
+      <strong>Aujourd’hui :</strong> Postgres, volume, backup OOS et panneau
+      Données (dump, restauration, migration) sont en place. <strong>Prochaine étape :</strong> un preset
       <em>RAG starter</em> (extension, indice de schéma, estimation du disque)
       pour l’obtenir en un prompt.
     </p>

@@ -1,8 +1,8 @@
 # Rails + Sidekiq + PostgreSQL + Redis sur Outscale
 
-Puma pour servir Rails, Sidekiq pour les jobs, PostgreSQL et Redis : la stack Rails de production, telle que la font tourner beaucoup de produits. bige-ops la pose sur Outscale en multi-VM, avec les bases en subnet privé, et la chiffre.
+Puma pour servir Rails, Sidekiq pour les jobs, PostgreSQL et Redis : la stack Rails de production, telle que la font tourner beaucoup de produits. bige-ops la pose sur Outscale en multi-VM, avec les bases en subnet privé.
 
-**En bref.** Topologie multi-vm : VM app (Puma + Sidekiq, services custom construits depuis ton Dockerfile, port 3000) derrière un LBU, PostgreSQL et Redis privés, backups OOS, NAT. Estimation bige-ops : **423,06 € HT/mois**.
+**En bref.** Topologie multi-vm : VM app (Puma + Sidekiq, services custom construits depuis ton Dockerfile, port 3000) derrière un LBU, PostgreSQL et Redis privés, backups OOS, NAT.
 
 ## Pourquoi cette stack tourne bien sur Outscale
 
@@ -14,21 +14,20 @@ Puma pour servir Rails, Sidekiq pour les jobs, PostgreSQL et Redis : la stack Ra
 
 VM app tinav6.c4r8p2 (Puma :3000 + Sidekiq, runtime custom) derrière LBU ; PostgreSQL 17 et Redis 8 privés ; OOS backups ; NAT.
 
-## Coût mensuel estimé
+## Exemple : ce que la simulation contient
 
-Calculé avec bige-ops estimate --json sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région eu-west-2, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.
+| Ligne bige-ops | Ce que c’est |
+| --- | --- |
+| LBU app-web | entrée publique (→ Puma :3000) |
+| OOS rails-app-backups — 50 GiB | sauvegardes PostgreSQL |
+| VM app-app — tinav6.c4r8p2 | Rails (Puma) + Sidekiq |
+| VM app-redis — tinav6.c2r2p3 | Sidekiq, cache, Action Cable |
+| VM app-postgres — tinav6.c4r8p2 | PostgreSQL 17, disque io1 |
+| NAT gateway | sortie du subnet privé |
+| EIP VM app-app (attachée) | IP publique de la VM app |
+| EIP NAT (attachée supplémentaire) | IP publique du NAT |
 
-| Ligne bige-ops | Ce que c’est | € HT / mois |
-| --- | --- | --- |
-| LBU app-web | entrée publique (→ Puma :3000) | 21,90 € |
-| OOS rails-app-backups — 50 GiB | sauvegardes PostgreSQL | 1,25 € |
-| VM app-app — tinav6.c4r8p2 | Rails (Puma) + Sidekiq | 135,80 € |
-| VM app-redis — tinav6.c2r2p3 | Sidekiq, cache, Action Cable | 54,76 € |
-| VM app-postgres — tinav6.c4r8p2 | PostgreSQL 17, disque io1 | 169,20 € |
-| NAT gateway | sortie du subnet privé | 36,50 € |
-| EIP VM app-app (attachée — 1ʳᵉ offerte / Net) | IP de la VM app (1ʳᵉ offerte) | 0,00 € |
-| EIP NAT (attachée supplémentaire) | IP publique du NAT | 3,65 € |
-| **Total estimé** | | **423,06 €** |
+L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.
 
 
 

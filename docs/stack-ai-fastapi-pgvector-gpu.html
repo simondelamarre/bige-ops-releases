@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Stack IA sur Outscale : FastAPI, pgvector et GPU — bige-ops</title>
-  <meta name="description" content="Stack IA souveraine sur Outscale : FastAPI, PostgreSQL pgvector, Redis, documents OOS et GPU NVIDIA L40. Coût réel (2 654,65 € HT/mois), CVE." />
+  <meta name="description" content="Stack IA souveraine sur Outscale : FastAPI, PostgreSQL pgvector, Redis, documents OOS et GPU NVIDIA L40. Architecture, exposition, CVE." />
   <link rel="canonical" href="https://bige.dev/stack-ai-fastapi-pgvector-gpu.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,14 +13,14 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/stack-ai-fastapi-pgvector-gpu.html" />
   <meta property="og:title" content="Stack IA sur Outscale : FastAPI, pgvector et GPU — bige-ops" />
-  <meta property="og:description" content="Stack IA souveraine sur Outscale : FastAPI, PostgreSQL pgvector, Redis, documents OOS et GPU NVIDIA L40. Coût réel (2 654,65 € HT/mois), CVE." />
-  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta property="og:description" content="Stack IA souveraine sur Outscale : FastAPI, PostgreSQL pgvector, Redis, documents OOS et GPU NVIDIA L40. Architecture, exposition, CVE." />
+  <meta property="og:image" content="https://bige.dev/screens/site-simule.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Stack IA sur Outscale : FastAPI, pgvector et GPU", "description": "Stack IA souveraine sur Outscale : FastAPI, PostgreSQL pgvector, Redis, documents OOS et GPU NVIDIA L40. Coût réel (2 654,65 € HT/mois), CVE.", "inLanguage": "fr", "url": "https://bige.dev/stack-ai-fastapi-pgvector-gpu.html", "keywords": "IA, RAG, LLM, FastAPI, pgvector, PostgreSQL, embeddings, Redis, OOS, GPU, NVIDIA L40, fGPU, inférence, Outscale, SecNumCloud, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Stack IA sur Outscale : FastAPI, pgvector et GPU", "item": "https://bige.dev/stack-ai-fastapi-pgvector-gpu.html"}]}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Stack IA sur Outscale : FastAPI, pgvector et GPU", "description": "Stack IA souveraine sur Outscale : FastAPI, PostgreSQL pgvector, Redis, documents OOS et GPU NVIDIA L40. Architecture, exposition, CVE.", "inLanguage": "fr", "url": "https://bige.dev/stack-ai-fastapi-pgvector-gpu.html", "keywords": "IA, RAG, LLM, FastAPI, pgvector, PostgreSQL, embeddings, Redis, OOS, GPU, NVIDIA L40, fGPU, inférence, Outscale, SecNumCloud, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Stack IA sur Outscale : FastAPI, pgvector et GPU", "item": "https://bige.dev/stack-ai-fastapi-pgvector-gpu.html"}]}]}</script>
 </head>
 <body>
   <main>
@@ -31,12 +31,12 @@
     </div>
     <h1>Stack IA : FastAPI + pgvector + Redis + OOS + GPU sur Outscale</h1>
     <p class="lead">
-      Un assistant RAG ou une API d’inférence qui reste sur un cloud souverain : FastAPI pour l’API, PostgreSQL avec pgvector pour les embeddings, Redis pour le cache et les jobs, OOS pour les documents, et une VM GPU Outscale pour servir le modèle. bige-ops pose l’ensemble et le chiffre, GPU compris.
+      Un assistant RAG ou une API d’inférence qui reste sur un cloud souverain : FastAPI pour l’API, PostgreSQL avec pgvector pour les embeddings, Redis pour le cache et les jobs, OOS pour les documents, et une VM GPU Outscale pour servir le modèle. bige-ops pose l’ensemble, GPU compris.
     </p>
 
     <div class="callout">
       <strong>En bref.</strong>
-      Topologie <code>multi-vm</code> : VM app <code>tinav6.c4r8p2</code> (FastAPI, front, worker d’ingestion) derrière un LBU, PostgreSQL + pgvector et Redis privés, VM d’inférence privée <code>tinav7.c16r64p1</code> avec un GPU NVIDIA L40, 500 GiB de documents dans OOS, backups, NAT. Estimation bige-ops : <strong>2 654,65 € HT par mois</strong>.
+      Topologie <code>multi-vm</code> : VM app <code>tinav6.c4r8p2</code> (FastAPI, front, worker d’ingestion) derrière un LBU, PostgreSQL + pgvector et Redis privés, VM d’inférence privée <code>tinav7.c16r64p1</code> avec un GPU NVIDIA L40, 500 GiB de documents dans OOS, backups, NAT.
     </div>
 
     <figure class="diagram">
@@ -71,27 +71,26 @@ flowchart LR
       <li><strong>VM app</strong> <code>tinav6.c4r8p2</code> : l’API FastAPI (Uvicorn, port 8000), le front et le worker qui découpe, vectorise et indexe les documents.</li>
       <li><strong>PostgreSQL 17 + pgvector</strong> sur VM privée (image <code>pgvector/pgvector:pg17</code>, disque <code>io1</code>) : données métier et embeddings dans la même base, index HNSW ou IVFFlat.</li>
       <li><strong>Redis 8</strong> privé : cache de réponses, files de jobs d’ingestion.</li>
-      <li><strong>VM d’inférence</strong> privée <code>tinav7.c16r64p1</code> (16 vCPU, 64 GiB, performance la plus haute) avec un <a href="https://docs.outscale.com/fr/userguide/À-propos-des-flexible-GPU.html" target="_blank" rel="noopener noreferrer">GPU flexible</a> NVIDIA L40 de 48 Go de VRAM, disque de 200 GiB pour les poids du modèle. Le L40 se rattache à une VM de génération v7 en <code>p1</code>, jusqu’à 35 vCPU et 250 GiB : <code>tinav7.c16r64p1</code> est dans les clous. bige-ops chiffre la VM et son GPU déclaré ; l’allocation et l’attachement du fGPU se font dans Cockpit ou par l’API Outscale.</li>
+      <li><strong>VM d’inférence</strong> privée <code>tinav7.c16r64p1</code> (16 vCPU, 64 GiB, performance la plus haute) avec un <a href="https://docs.outscale.com/fr/userguide/À-propos-des-flexible-GPU.html" target="_blank" rel="noopener noreferrer">GPU flexible</a> NVIDIA L40 de 48 Go de VRAM, disque de 200 GiB pour les poids du modèle. Le L40 se rattache à une VM de génération v7 en <code>p1</code>, jusqu’à 35 vCPU et 250 GiB : <code>tinav7.c16r64p1</code> est dans les clous. La simulation porte la VM et son GPU déclaré ; l’allocation et l’attachement du fGPU se font dans Cockpit ou par l’API Outscale.</li>
       <li><strong>OOS</strong> : 500 GiB de documents sources (API S3) et 100 GiB de backups PostgreSQL.</li>
     </ul>
 
-    <h2 id="cout">Coût mensuel estimé</h2>
-    <p>Calculé avec <code>bige-ops estimate --json</code> sur le catalogue public Outscale synchronisé le 17 septembre 2026, Région <code>eu-west-2</code>, en € HT par mois (730 heures). Estimation indicative, sur la grille publique ; le trafic sortant est à 0 € HT au catalogue public de cette Région.</p>
+    <h2 id="cout">Exemple : ce que la simulation contient</h2>
     <table>
-      <tr><th>Ligne bige-ops</th><th>Ce que c’est</th><th>€ HT / mois</th></tr>
-      <tr><td>LBU rag-web</td><td>entrée publique</td><td>21,90 €</td></tr>
-      <tr><td>VM rag-inference — tinav7.c16r64p1</td><td>inférence : 16 vCPU, 64 GiB, 1 × L40, 200 GiB</td><td>2 217,84 €</td></tr>
-      <tr><td>OOS rag-documents — 500 GiB</td><td>documents sources (500 GiB)</td><td>12,50 €</td></tr>
-      <tr><td>OOS rag-backups — 100 GiB</td><td>sauvegardes PostgreSQL (100 GiB)</td><td>2,50 €</td></tr>
-      <tr><td>VM rag-app — tinav6.c4r8p2</td><td>FastAPI + front + worker</td><td>135,80 €</td></tr>
-      <tr><td>VM rag-redis — tinav6.c2r2p3</td><td>cache, jobs d’ingestion</td><td>54,76 €</td></tr>
-      <tr><td>VM rag-postgres — tinav6.c4r8p2</td><td>PostgreSQL 17 + pgvector, io1</td><td>169,20 €</td></tr>
-      <tr><td>NAT gateway</td><td>sortie du subnet privé</td><td>36,50 €</td></tr>
-      <tr><td>EIP VM rag-app (attachée — 1ʳᵉ offerte / Net)</td><td>IP de la VM app (1ʳᵉ offerte)</td><td>0,00 €</td></tr>
-      <tr><td>EIP NAT (attachée supplémentaire)</td><td>IP publique du NAT</td><td>3,65 €</td></tr>
-      <tr><th>Total estimé</th><th></th><th>2 654,65 €</th></tr>
+      <tr><th>Ligne bige-ops</th><th>Ce que c’est</th></tr>
+      <tr><td>LBU rag-web</td><td>entrée publique</td></tr>
+      <tr><td>VM rag-inference — tinav7.c16r64p1</td><td>inférence : 16 vCPU, 64 GiB, 1 × L40, 200 GiB</td></tr>
+      <tr><td>OOS rag-documents — 500 GiB</td><td>documents sources (500 GiB)</td></tr>
+      <tr><td>OOS rag-backups — 100 GiB</td><td>sauvegardes PostgreSQL (100 GiB)</td></tr>
+      <tr><td>VM rag-app — tinav6.c4r8p2</td><td>FastAPI + front + worker</td></tr>
+      <tr><td>VM rag-redis — tinav6.c2r2p3</td><td>cache, jobs d’ingestion</td></tr>
+      <tr><td>VM rag-postgres — tinav6.c4r8p2</td><td>PostgreSQL 17 + pgvector, io1</td></tr>
+      <tr><td>NAT gateway</td><td>sortie du subnet privé</td></tr>
+      <tr><td>EIP VM rag-app (attachée)</td><td>IP publique de la VM app</td></tr>
+      <tr><td>EIP NAT (attachée supplémentaire)</td><td>IP publique du NAT</td></tr>
     </table>
-    <p>La VM GPU représente 2 217,84 € du total ; le reste de la stack (app, bases, LBU, OOS, NAT) pèse 436,81 € HT par mois. Le GPU se paie à l’heure : une VM d’inférence arrêtée hors des heures d’usage réduit d’autant la facture. Le catalogue Outscale propose aussi A100, H100 et H200 selon la taille du modèle.</p>
+    <p>L’estimation, ligne par ligne sur les tarifs publics d’Outscale, s’affiche dans l’app dès que tu ouvres cette simulation.</p>
+    <p>Outscale propose aussi des GPU A100, H100 et H200 selon la taille du modèle.</p>
     <p>Le projet utilisé, à reproduire chez toi :</p>
     <pre>bige-ops init -n stack-ai-fastapi-pgvector-gpu
 bige-ops add layout custom --name rag --runtime python --web spa --worker \
@@ -138,7 +137,7 @@ components:
     <h2 id="exposition">Exposition : ce qui est ouvert, et à qui</h2>
     <ul>
       <li><strong>Une seule entrée publique</strong> : le LBU <code>internet-facing</code>. Ajoute-lui un listener HTTPS 443 avec le <code>server_certificate_id</code> (ORN d’un certificat chargé dans <a href="https://docs.outscale.com/fr/userguide/À-propos-des-certificats-serveurs-dans-EIM.html" target="_blank" rel="noopener noreferrer">EIM</a>) vers le port 8000 de la VM app ; le TLS se termine sur le LBU.</li>
-      <li><strong>VM app</strong> en subnet public : avec un LBU, ses ports applicatifs (ceux de tes services : 3000, 3001, 8000, 8080…) n’acceptent que le CIDR du Net (<code>10.0.0.0/16</code>), donc le trafic applicatif passe par le LBU. Sa première IP publique est offerte et sert au deploy SSH.</li>
+      <li><strong>VM app</strong> en subnet public : avec un LBU, ses ports applicatifs (ceux de tes services : 3000, 3001, 8000, 8080…) n’acceptent que le CIDR du Net (<code>10.0.0.0/16</code>), donc le trafic applicatif passe par le LBU. Son IP publique sert au deploy SSH.</li>
       <li><strong>Bases en subnet privé</strong>, sans IP publique, chacune derrière son security group qui n’accepte que le CIDR du Net sur son port. Jamais de listener LBU, d’IP publique ni de règle <code>0.0.0.0/0</code> vers une base : pour l’administrer, passe par un tunnel SSH via la VM app.</li>
       <li><strong>Security group de la VM app</strong> : il ouvre SSH (22) pour le deploy, ainsi que HTTP (80) et HTTPS (443). Resserre SSH sur tes CIDR connus avant la production, et fais écouter ton app sur un port applicatif (3000, 8000, 8080…), que seul le Net atteint.</li>
       <li><strong>NAT service</strong> : la sortie Internet du subnet privé (images, mises à jour), sans aucune entrée.</li>

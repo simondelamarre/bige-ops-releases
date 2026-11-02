@@ -29,7 +29,7 @@
       <span class="brand-badge">Gratuit</span>
     </div>
     <h1>Catalogue de prix &amp; estimation</h1>
-    <p class="lead">L’estimation est calculée <strong>sur ton poste</strong>, à partir du catalogue public Outscale : celui embarqué dans l’app, ou celui que tu synchronises depuis l’API. Elle te donne le coût mensuel € HT d’une simulation, ligne par ligne, avant toute dépense.</p>
+    <p class="lead">L’estimation est calculée <strong>sur ton poste</strong>, à partir du catalogue public Outscale : celui embarqué dans l’app, ou celui que tu synchronises depuis l’API. Elle te donne, dans l’app, une estimation mensuelle hors taxes de ta simulation, ligne par ligne, avant toute dépense.</p>
 
     <h2>D’où viennent les prix</h2>
     <div class="callout">
@@ -61,25 +61,26 @@
       <tr><td>NAT service</td><td>à l’heure, quand le NAT est activé</td></tr>
       <tr><td>IP publique non associée</td><td>à l’heure</td></tr>
       <tr><td>OKS</td><td>control plane à l’heure + type et nombre de nœuds</td></tr>
-      <tr><td>Bucket OOS</td><td>au GiB par mois, quand tu renseignes une taille</td></tr>
+      <tr><td>Bucket OOS</td><td>au GiB stocké, quand tu renseignes une taille</td></tr>
       <tr><td>Snapshots</td><td>dans l’estimation d’inventaire</td></tr>
     </table>
 
     <h2>Ce qui se lit à côté</h2>
     <ul>
-      <li><strong>Le trafic sortant.</strong> Au catalogue public, le trafic sortant des VMs, d’OOS et du LBU est à 0 € HT par GiB en <code>eu-west-2</code>, <code>cloudgouv-eu-west-1</code>, <code>us-east-2</code> et <code>us-west-1</code> ; seule <code>ap-northeast-1</code> le facture. L’estimation ne l’ajoute pas.</li>
+      <li><strong>Le trafic sortant</strong> des VMs, d’OOS et du LBU : tarifé au catalogue public selon la Région, il n’est pas ajouté à l’estimation.</li>
       <li><strong>Le VPN et DirectLink</strong> : tarifés au catalogue, sans composant dans la simulation.</li>
       <li><strong>Les licences et les VM dédiées</strong> : tarifées au catalogue, hors du modèle de composition.</li>
-      <li><strong>Un bucket OOS sans taille</strong> vaut 0 € dans le total : renseigne le volume attendu pour le voir.</li>
+      <li><strong>Un bucket OOS sans taille renseignée</strong> n’est pas compté : renseigne le volume attendu pour le voir apparaître.</li>
     </ul>
 
     <h2>Estimation et devis</h2>
     <p>
       L’estimation s’appuie sur la grille publique, au tarif à la demande.
-      Elle sert à comparer deux layouts, à choisir un type Tina ou un type de
-      volume, et à connaître l’ordre de grandeur avant l’apply. Pour un devis,
-      des engagements ou des conditions propres à ton compte, la référence
-      reste la <a href="https://fr.outscale.com/tarifs/" target="_blank" rel="noopener noreferrer">grille publique Outscale</a>
+      Ce n’est pas un devis : elle sert à comparer deux layouts, à choisir un
+      type Tina ou un type de volume, et à connaître l’ordre de grandeur avant
+      l’apply. Une remise négociée avec Outscale s’applique en plus, sur ta
+      facture. Pour un devis, des engagements ou des conditions propres à ton
+      compte, la référence reste la <a href="https://fr.outscale.com/tarifs/" target="_blank" rel="noopener noreferrer">grille publique Outscale</a>
       et ton interlocuteur Outscale.
     </p>
 

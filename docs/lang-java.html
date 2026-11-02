@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Java sur Outscale : Spring Boot, Quarkus, Micronaut, Jakarta EE — bige-ops</title>
-  <meta name="description" content="Java sur Outscale : Spring Boot, Spring Cloud, Quarkus, Micronaut, Jakarta EE (WildFly, Payara, Open Liberty), Kafka, PostgreSQL. OKS, coût réel, CVE." />
+  <meta name="description" content="Java sur Outscale : Spring Boot, Spring Cloud, Quarkus, Micronaut, Jakarta EE (WildFly, Payara, Open Liberty), Kafka, PostgreSQL. OKS, CVE." />
   <link rel="canonical" href="https://bige.dev/lang-java.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#0b0d10" />
@@ -13,14 +13,14 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/lang-java.html" />
   <meta property="og:title" content="Java sur Outscale : Spring Boot, Quarkus, Micronaut, Jakarta EE — bige-ops" />
-  <meta property="og:description" content="Java sur Outscale : Spring Boot, Spring Cloud, Quarkus, Micronaut, Jakarta EE (WildFly, Payara, Open Liberty), Kafka, PostgreSQL. OKS, coût réel, CVE." />
-  <meta property="og:image" content="https://bige.dev/bige-ops-three-clicks.png" />
+  <meta property="og:description" content="Java sur Outscale : Spring Boot, Spring Cloud, Quarkus, Micronaut, Jakarta EE (WildFly, Payara, Open Liberty), Kafka, PostgreSQL. OKS, CVE." />
+  <meta property="og:image" content="https://bige.dev/screens/hero.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Java sur Outscale : Spring Boot, Quarkus, Micronaut, Jakarta EE", "description": "Java sur Outscale : Spring Boot, Spring Cloud, Quarkus, Micronaut, Jakarta EE (WildFly, Payara, Open Liberty), Kafka, PostgreSQL. OKS, coût réel, CVE.", "inLanguage": "fr", "url": "https://bige.dev/lang-java.html", "keywords": "Java, Spring Boot, Spring Cloud, Quarkus, Micronaut, Jakarta EE, WildFly, Payara, Open Liberty, Vert.x, Dropwizard, Hibernate, JPA, Maven, Gradle, JVM, Kafka, PostgreSQL, OKS, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Java sur Outscale : Spring Boot, Quarkus, Micronaut, Jakarta EE", "item": "https://bige.dev/lang-java.html"}]}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Java sur Outscale : Spring Boot, Quarkus, Micronaut, Jakarta EE", "description": "Java sur Outscale : Spring Boot, Spring Cloud, Quarkus, Micronaut, Jakarta EE (WildFly, Payara, Open Liberty), Kafka, PostgreSQL. OKS, CVE.", "inLanguage": "fr", "url": "https://bige.dev/lang-java.html", "keywords": "Java, Spring Boot, Spring Cloud, Quarkus, Micronaut, Jakarta EE, WildFly, Payara, Open Liberty, Vert.x, Dropwizard, Hibernate, JPA, Maven, Gradle, JVM, Kafka, PostgreSQL, OKS, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Java sur Outscale : Spring Boot, Quarkus, Micronaut, Jakarta EE", "item": "https://bige.dev/lang-java.html"}]}]}</script>
 </head>
 <body>
   <main>
@@ -31,7 +31,7 @@
     </div>
     <h1>Java sur Outscale</h1>
     <p class="lead">
-      Java fait tourner l’essentiel des systèmes d’information des grandes entreprises, et une bonne part des plateformes des scale-ups. Spring Boot en microservices sur Kubernetes, Quarkus natif, Jakarta EE sur serveur d’applications : bige-ops pose chacun sur Outscale, sur OKS ou en multi-VM, avec PostgreSQL, Kafka ou Keycloak, et chiffre l’ensemble au catalogue public.
+      Java fait tourner l’essentiel des systèmes d’information des grandes entreprises, et une bonne part des plateformes des scale-ups. Spring Boot en microservices sur Kubernetes, Quarkus natif, Jakarta EE sur serveur d’applications : bige-ops pose chacun sur Outscale, sur OKS ou en multi-VM, avec PostgreSQL, Kafka ou Keycloak.
     </p>
 
     <div class="callout">
@@ -81,7 +81,7 @@ bige-ops add layout custom --runtime java --web spa --worker \
     <p>Sur OKS, un Service exposé devient un LBU Outscale et le HTTPS se branche avec <code>expose.tls.server_certificate_id</code> (ORN d’un certificat EIM). Détail : <a href="oks.html">OKS &amp; pods</a>.</p>
 
     <h2 id="scan">Ce que bige-ops vérifie pour Java</h2>
-    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code Java arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation et le coût sur Outscale sont calculés à côté. PostgreSQL, Redis et Kubernetes (topologie OKS) sont reconnus automatiquement ; Kafka, Keycloak, OpenSearch et les frameworks Java ont leurs fiches de référence ci-dessus et dans chaque page de stack.</p>
+    <p>Des failles, il y en aura toujours : l’important est de voir d’abord celles qui sont exposées. L’analyse du code Java arrive ; ta stack est déjà couverte : avec ta clé OpenCVE, ses composants et ses images (y compris celles de tes Dockerfile et docker-compose) sont comparés aux failles connues publiées dans le registre mondial des vulnérabilités (CVE) ; l’exposition dans la simulation est calculée à côté. PostgreSQL, Redis et Kubernetes (topologie OKS) sont reconnus automatiquement ; Kafka, Keycloak, OpenSearch et les frameworks Java ont leurs fiches de référence ci-dessus et dans chaque page de stack.</p>
     <p>Tout est classé par urgence : ce qui est exposé à Internet d’abord. <strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, sur ton poste, et c’est gratuit. La méthode complète : <a href="stacks.html#verifications">ce que bige-ops vérifie</a>.</p>
 
     <h2 id="bases">Bases de données typiques</h2>
@@ -120,11 +120,11 @@ bige-ops add layout custom --runtime java --web spa --worker \
       chaque composant de ta simulation a sa fiche de failles à jour.
     </p>
 
-    <h2 id="stacks">Stacks Java chiffrées</h2>
+    <h2 id="stacks">Stacks Java de référence</h2>
     <ul>
-      <li><a href="stack-spring-boot-oks-kafka-keycloak.html">Spring Boot sur OKS + Kafka + Keycloak</a> (918,80 € HT/mois estimés)</li>
-      <li><a href="stack-quarkus-oks-postgresql-kafka.html">Quarkus sur OKS + PostgreSQL + Kafka</a> (523,35 € HT/mois estimés)</li>
-      <li><a href="stack-jakarta-ee-opensearch-postgresql.html">Jakarta EE + OpenSearch + PostgreSQL</a> (714,95 € HT/mois estimés)</li>
+      <li><a href="stack-spring-boot-oks-kafka-keycloak.html">Spring Boot sur OKS + Kafka + Keycloak</a></li>
+      <li><a href="stack-quarkus-oks-postgresql-kafka.html">Quarkus sur OKS + PostgreSQL + Kafka</a></li>
+      <li><a href="stack-jakarta-ee-opensearch-postgresql.html">Jakarta EE + OpenSearch + PostgreSQL</a></li>
     </ul>
 
     <h2 id="docs">Docs officielles</h2>
