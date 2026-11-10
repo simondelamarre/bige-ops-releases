@@ -3,13 +3,17 @@
   <url><loc>https://bige.dev/agent.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/bases-complexes.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/bases.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/billing.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/catalogue-prix.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/cli.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/comprendre-bige-ops.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/config.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/documentation.html</loc><priority>0.8</priority></url>
   <url><loc>https://bige.dev/expert-config.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/features.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/github-config.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/glossaire.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/hub.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/</loc><priority>1.0</priority></url>
   <url><loc>https://bige.dev/install.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/inventory.html</loc><priority>0.7</priority></url>
@@ -27,15 +31,18 @@
   <url><loc>https://bige.dev/lang-scala.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/layouts.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/lbu.html</loc><priority>0.7</priority></url>
-  <url><loc>https://bige.dev/migration-securite.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/live.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/migration.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/notes-rapports.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/oks.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/omi.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/oos.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/optimisation.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/outscale.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/perimetre.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/pourquoi-outscale.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/questions.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/rapports.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/regions.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/repos-vms-docker.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/reseau-avance.html</loc><priority>0.7</priority></url>
@@ -59,4 +66,5 @@
   <url><loc>https://bige.dev/stacks.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/vms.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/volumes-bsu.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/vulnerabilites.html</loc><priority>0.7</priority></url>
 </urlset>

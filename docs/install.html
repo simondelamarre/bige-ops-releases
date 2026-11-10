@@ -1,29 +1,41 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Installer &amp; mettre à jour — bige-ops</title>
-  <meta name="description" content="Installer bige-ops : Homebrew sur macOS, AppImage ou .deb sur Linux. CLI embarquée, dépendances, premier lancement." />
-  <link rel="canonical" href="https://bige.dev/install.html" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <meta name="theme-color" content="#0b0d10" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="navigation.css?v=1"></head>
-<body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
-  <main>
-    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a> · <a href="cli.html">CLI · app</a></p>
-
-    <h1>Installer &amp; mettre à jour</h1>
-    <p class="lead">
-      bige-ops est une application <strong>desktop locale</strong> et gratuite,
-      pour macOS (Apple Silicon) et Linux (x86_64). La CLI est incluse.
-    </p>
-
-    <h2 id="macos">macOS : Homebrew</h2>
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Installer bige-ops gratuitement — macOS et Linux</title><meta name="description" content="Installer bige-ops avec Homebrew, AppImage ou .deb et créer une première simulation sans compte cloud.">
+<link rel="canonical" href="https://bige.dev/install.html"><link rel="icon" href="favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#10191b">
+<meta property="og:type" content="article"><meta property="og:title" content="Installer bige-ops gratuitement — macOS et Linux"><meta property="og:description" content="Installer bige-ops avec Homebrew, AppImage ou .deb et créer une première simulation sans compte cloud."><meta property="og:url" content="https://bige.dev/install.html"><meta property="og:image" content="https://bige.dev/screens/site-simule.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="feature-stories.css?v=notes-20261110-1">
+<script src="feature-stories.js?v=notes-20261110-1" defer></script>
+<noscript><style>.story-stage{display:none}.story-layout{display:block}.story-step,.story-step:last-child{min-height:0}.mobile-proof{display:flex;gap:20px}</style></noscript>
+</head><body class="feature-page" style="--feature-art:url('assets/illustrations/install-riso-v1.webp')"><a class="skip-link" href="#contenu">Aller au contenu</a><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir le parcours</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header><main id="contenu">
+      <p class="feature-breadcrumb"><a href="features.html">Fonctionnalités</a><span aria-hidden="true">/</span><span>Installation &amp; premiers pas</span></p>
+      <header class="feature-hero"><div><p class="feature-eyebrow">INSTALLATION &amp; PREMIERS PAS</p><h1>Une app gratuite. Une première stack à imaginer.</h1><p class="feature-summary">Installer bige-ops sur macOS ou Linux. Commencer par les notes du projet et une simulation, sans compte cloud. Les accès seront nécessaires au moment de déployer.</p><div class="feature-actions"><a class="feature-primary" href="#telecharger">Choisir mon installation ↓</a><a href="#parcours-feature">Voir le fonctionnement ↓</a></div><p class="feature-platforms">Application gratuite · macOS & Linux · Sans IA obligatoire</p></div><div class="feature-art" aria-hidden="true"></div></header>
+      <nav class="feature-logos" aria-label="Outils et fournisseurs cités"><a href="#commandes"><img src="assets/brands/homebrew.svg" alt="" width="40" height="40" loading="lazy"><span><strong>Homebrew</strong><small>macOS · Apple Silicon</small></span></a><a href="#linux-install"><img src="assets/brands/debian.svg" alt="" width="40" height="40" loading="lazy"><span><strong>Debian / Ubuntu</strong><small>Paquet .deb · x86_64</small></span></a><a href="#linux-install"><img src="assets/brands/linux.svg" alt="" width="40" height="40" loading="lazy"><span><strong>Linux</strong><small>AppImage · x86_64</small></span></a></nav><section class="feature-downloads" id="telecharger"><h2>Installer bige-ops.</h2><div><article id="macos-install"><h3>macOS · Apple Silicon</h3><p>Homebrew installe l’app et les CLI embarquées. Retrouver la commande et la mise à jour ci-dessous.</p><a href="#commandes">Installer avec Homebrew ↗</a></article><article id="linux-install"><h3>Linux · x86_64</h3><p>Choisir le paquet .deb pour Debian/Ubuntu, ou l’AppImage. Les deux formats sont disponibles dans la release.</p><a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger pour Linux ↗</a></article></div></section><section class="feature-story" data-feature-story id="parcours-feature" aria-labelledby="parcours-feature-title">
+      <div class="story-heading"><div><p class="feature-section-label">Le parcours dans l’app</p><h2 id="parcours-feature-title">Du premier lancement à la première simulation.</h2></div><p>Faire défiler pour suivre chaque étape.</p></div>
+      <nav class="story-nav" style="--step-count:4" aria-label="Étapes : INSTALLATION &amp; PREMIERS PAS"><a href="#feature-step-0"><b>01</b> Ouvrir</a><a href="#feature-step-1"><b>02</b> Décrire</a><a href="#feature-step-2"><b>03</b> Composer</a><a href="#feature-step-3"><b>04</b> Comprendre</a></nav>
+      <div class="story-layout"><figure class="story-stage" aria-label="Un workspace vide reçoit une note du produit. Cette note accompagne la composition de la simulation. Les fichiers générés deviennent lisibles, sans déploiement cloud.">
+        <div class="story-stage-head"><strong>bige-ops / installation &amp; premiers pas</strong><span data-scene-count>01 / 04</span></div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="feature-diagram" viewBox="0 0 640 480" aria-hidden="true" focusable="false"><text x="36" y="40" font-size="18" fill="#aabdb7" font-weight="500">PREMIÈRE SIMULATION</text><rect x="36" y="72" width="568" height="340" rx="18" fill="#1b2c2e" stroke="#47645c" stroke-width="1.5" /><text x="60" y="108" font-size="18" fill="#67d4b7" font-weight="500">WORKSPACE / MON PRODUIT</text><path d="M60 132H580" stroke="#47645c" /><g data-track="{&quot;opacity&quot;:[0,1,1,1],&quot;x&quot;:[0,0,0,0]}" opacity="0"><rect x="68" y="164" width="226" height="164" rx="18" fill="#1b2c2e" stroke="#47645c" stroke-width="1.5" /><text x="88" y="202" font-size="24" fill="#eef0e9" font-weight="500">Projet.md</text><text x="88" y="240" font-size="18" fill="#aabdb7" font-weight="500">Produit · utilisateurs</text><text x="88" y="272" font-size="18" fill="#aabdb7" font-weight="500">Données · volumes</text><text x="88" y="304" font-size="18" fill="#aabdb7" font-weight="500">Besoins · contraintes</text></g><g data-track="{&quot;opacity&quot;:[0,0,1,1]}" opacity="0"><rect x="334" y="164" width="236" height="164" rx="18" fill="#1b2c2e" stroke="#67d4b7" stroke-width="1.5" /><text x="356" y="199" font-size="24" fill="#eef0e9" font-weight="500">Simulation</text><rect x="354" y="222" width="88" height="62" rx="18" fill="#1b2c2e" stroke="#47645c" stroke-width="1.5" /><text x="366" y="258" font-size="20" fill="#eef0e9" font-weight="500">App</text><rect x="454" y="222" width="96" height="62" rx="18" fill="#1b2c2e" stroke="#47645c" stroke-width="1.5" /><text x="467" y="258" font-size="20" fill="#eef0e9" font-weight="500">Data</text><path d="M442 252H454" stroke="#67d4b7" /></g><g data-track="{&quot;opacity&quot;:[1,0,0,0]}" opacity="1"><text x="68" y="214" font-size="30" fill="#eef0e9" font-weight="500">Un dossier local.</text><text x="68" y="259" font-size="23" fill="#aabdb7" font-weight="500">Le début de l’infrastructure.</text></g><g data-track="{&quot;opacity&quot;:[0,0,0,1]}" opacity="0"><text x="68" y="374" font-size="20" fill="#67d4b7" font-weight="500">Terraform · Ansible · YAML selon le parcours</text></g><text x="36" y="462" font-size="18" fill="#aabdb7" font-weight="500">Composer avant de connecter un compte cloud</text></svg><figcaption>Pas de compte cloud requis pour commencer à simuler.</figcaption><div class="story-meter" aria-hidden="true"></div>
+      </figure><div class="story-copy"><article class="story-step" id="feature-step-0">
+          <span class="step-number">01 / OUVRIR</span>
+          <h3>Un espace pour le projet.</h3><p>Ouvrir bige-ops et choisir le workspace qui conservera les fichiers. La configuration peut ensuite être versionnée dans un dépôt GitHub privé sur son compte.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>App installée</span><i aria-hidden="true">→</i><span>Workspace ouvert</span></div>
+          <p class="step-detail">Pas de compte cloud requis pour commencer à simuler.</p></article><article class="story-step" id="feature-step-1">
+          <span class="step-number">02 / DÉCRIRE</span>
+          <h3>Commencer par ce que le produit doit faire.</h3><p>Décrire le produit, les services PaaS ou BaaS déjà utilisés, les volumes et les contraintes. Les notes deviennent le contexte partagé pour les prochaines décisions.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Projet à expliquer</span><i aria-hidden="true">→</i><span>Contexte consigné</span></div>
+          <p class="step-detail">Les notes se rédigent et se relisent sans IA.</p></article><article class="story-step" id="feature-step-2">
+          <span class="step-number">03 / COMPOSER</span>
+          <h3>Dessiner une première hypothèse.</h3><p>Ouvrir Visual pour composer les ressources. Avec un agent configuré, demander « Dessine mon infra » pour préparer une proposition à examiner. L’IA est une option.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Besoins et contraintes</span><i aria-hidden="true">→</i><span>Simulation à examiner</span></div>
+          <p class="step-detail">Choisir le fournisseur et le modèle ; leurs éventuels frais restent ceux de leurs services.</p></article><article class="story-step" id="feature-step-3">
+          <span class="step-number">04 / COMPRENDRE</span>
+          <h3>Les fichiers restent accessibles.</h3><p>Relire la configuration, les ressources et l’estimation. Les fichiers Terraform, Ansible ou YAML sont générés selon le cloud et le parcours choisi. Comparer une variante avant tout déploiement.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Simulation</span><i aria-hidden="true">→</i><span>Configuration lisible</span></div>
+          <p class="step-detail">La simulation n’engage pas de ressources cloud. Les compromis restent à valider.</p></article></div></div></section><section class="feature-commands" id="commandes"><h2>Les commandes utiles.</h2><article><h3>Installer sur macOS</h3><p>Puis ouvrir bige-ops depuis Applications.</p><pre><code>brew install --cask simondelamarre/bige-ops/bige-ops</code></pre></article><article><h3>Mettre à jour une installation Homebrew</h3><p>La détection d’une nouvelle version dans l’app ne remplace pas l’installation.</p><pre><code>brew update
+brew upgrade --cask bige-ops</code></pre></article><article><h3>Installer le paquet Debian téléchargé</h3><p>Depuis le dossier qui contient le paquet de la release 0.11.1.</p><pre><code>sudo apt install ./bige-ops-0.11.1-linux-x86_64.deb</code></pre></article><article><h3>Lancer l’AppImage téléchargée</h3><p>Depuis le dossier qui contient l’AppImage de la release 0.11.1.</p><pre><code>chmod +x bige-ops-0.11.1-linux-x86_64.AppImage
+./bige-ops-0.11.1-linux-x86_64.AppImage</code></pre></article></section><section class="feature-proof-section"><p class="feature-section-label">Pour aller plus loin</p><h2>Ce que cela change, concrètement.</h2><div class="feature-proof-grid"><article><h3>100 % gratuite.</h3><p>L’application et les simulations sont gratuites. Les ressources cloud déployées et les API IA choisies sont facturées par leurs fournisseurs.</p><a href="perimetre.html">Comprendre le périmètre ↗</a></article><article><h3>Commencer sans IA.</h3><p>Les notes, Visual et la configuration sont utilisables directement. Ajouter un agent lorsque son aide est utile.</p><a href="agent.html">Configurer un agent ↗</a></article><article><h3>Les bons outils au bon moment.</h3><p>bige-ops et oks-cli sont embarqués. Docker sert au test local ; Terraform, Git ou kubectl peuvent être requis selon les opérations.</p><a href="cli.html">Vérifier les dépendances ↗</a></article></div></section><section class="feature-faq"><h2>Les points à connaître.</h2><div><details><summary>Faut-il un compte cloud pour essayer ?</summary><p>Non. Commencer par une simulation locale et son estimation. Le déploiement demande ensuite les accès au compte cloud choisi.</p></details><details><summary>L’app est-elle disponible sur Windows ?</summary><p>Les binaires publiés couvrent macOS Apple Silicon et Linux x86_64. Aucune version Windows n’est annoncée ici.</p></details><details><summary>L’installation a-t-elle été vérifiée ?</summary><p>Les artefacts 0.11.1 sont publiés sur GitHub et les formats ci-dessus correspondent à cette release. Le guide détaille les dépendances et le premier lancement ; une configuration locale particulière peut demander un diagnostic.</p></details></div></section><details class="feature-reference" id="reference"><summary>Ressources, réglages et détails techniques</summary><div><p>Formats, dépendances et mises à jour : les détails pratiques de l’installation.</p><h2 id="macos">macOS : Homebrew</h2>
     <p>Une commande installe l’app et la prépare pour le premier lancement :</p>
 <pre>brew tap simondelamarre/bige-ops
 brew install --cask bige-ops</pre>
@@ -107,7 +119,7 @@ open /Applications/bige-ops.app</pre>
     <h2>Premier lancement</h2>
     <ul>
       <li>Choisis un <strong>workspace</strong> : un simple dossier local où vivront tes simulations.</li>
-      <li>Crée un <strong>compte Outscale</strong> dans l’app et renseigne tes clés API — ou reste sans credentials en <strong>mode projection</strong> pour designer et estimer.</li>
+      <li>Créer l’espace du <strong>cloud choisi</strong> dans l’app : Outscale ou OVHcloud en bêta. Renseigner les accès pour agir sur le compte, ou rester sans credentials en <strong>mode projection</strong> pour composer et estimer.</li>
       <li>Crée une première simulation, teste-la en local si tu veux, puis <code>validate</code> / <code>generate</code> avant tout <code>plan</code>.</li>
     </ul>
     <p>
@@ -125,67 +137,7 @@ open /Applications/bige-ops.app</pre>
       restent à ta charge, avec les versions de ton poste.
     </div>
 
-    <footer class="site-footer">
-      <div class="cols">
-        <div>
-          <h3>Comprendre</h3>
-          <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="documentation.html">Toute la doc</a></li>
-            <li><a href="perimetre.html">Périmètre</a></li>
-            <li><a href="savoir.html">Sait / ne sait pas</a></li>
-            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
-            <li><a href="glossaire.html">Glossaire</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Composer</h3>
-          <ul>
-            <li><a href="layouts.html">Par où commencer</a></li>
-            <li><a href="stacks.html">Stacks &amp; langages</a></li>
-            <li><a href="vms.html">VMs · VPS</a></li>
-            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
-            <li><a href="omi.html">OMI · images</a></li>
-            <li><a href="bases.html">Bases de données</a></li>
-            <li><a href="bases-complexes.html">Bases complexes</a></li>
-            <li><a href="oos.html">OOS &amp; backups</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Réseau &amp; région</h3>
-          <ul>
-            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
-            <li><a href="reseau-avance.html">Réseau avancé</a></li>
-            <li><a href="lbu.html">LBU · entrée publique</a></li>
-            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
-            <li><a href="oks.html">OKS &amp; pods</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Opérer</h3>
-          <ul>
-            <li><a href="simulations.html">Simulations &amp; promote</a></li>
-            <li><a href="inventory.html">Inventaire &amp; import</a></li>
-            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
-            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
-            <li><a href="agent.html">Assistant IA</a></li>
-            <li><a href="cli.html">CLI · app · OKS</a></li>
-            <li><a href="github-config.html">GitHub config</a></li>
-            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
-            <li><a href="expert-config.html">Mode expert · diffs</a></li>
-          </ul>
-        </div>
-      </div>
-      <p class="meta">
-        Gratuit · simulateur local pour Outscale ·
-        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
-        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
-      </p>
-    </footer>
-  </main>
-  <script type="module">
-    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
-  </script>
-</body>
-</html>
+    </div></details>
+      <section class="feature-cta"><div><h2>Passer du concept à sa propre stack.</h2><p>Installer l’app gratuite. Commencer par une simulation, avant d’engager des ressources cloud.</p><a href="install.html">Télécharger bige-ops ↗</a></div><div class="feature-cta-art" aria-hidden="true"></div></section>
+      <nav class="feature-related" aria-label="Fonctionnalités associées"><span>Continuer le parcours</span><a href="hub.html">Organiser les simulations ↗</a><a href="notes-rapports.html">Décrire le projet ↗</a><a href="github-config.html">Versionner dans GitHub ↗</a><a href="layouts.html">Composer dans Visual ↗</a></nav>
+      </main><footer class="site-footer"><div class="footer-intro"><a class="brand" href="index.html"><img src="favicon.svg" width="28" height="28" alt=""> bige-ops</a><p>Simple comme un PaaS. Flexible comme un IaaS.</p></div><div class="cols"><div><h3>Découvrir</h3><ul><li><a href="index.html">Accueil</a></li><li><a href="features.html">Toutes les fonctionnalités</a></li><li><a href="hub.html">Hub &amp; espaces de travail</a></li><li><a href="layouts.html">Simulations</a></li><li><a href="install.html">Installer &amp; mettre à jour</a></li><li><a href="documentation.html">Documentation</a></li><li><a href="glossaire.html">Glossaire</a></li></ul></div><div><h3>Construire & déployer</h3><ul><li><a href="catalogue-prix.html">Catalogue &amp; estimations</a></li><li><a href="repos-vms-docker.html">Build &amp; déploiement</a></li><li><a href="reseau.html">Réseaux &amp; exposition</a></li><li><a href="migration.html">Migration</a></li><li><a href="oos.html">Object Storage</a></li><li><a href="config.html">Configuration</a></li><li><a href="cli.html">Terminal &amp; CLI</a></li></ul></div><div><h3>Observer & décider</h3><ul><li><a href="inventory.html">Inventaire &amp; commandes</a></li><li><a href="live.html">Live analytics</a></li><li><a href="billing.html">Consommation réelle</a></li><li><a href="optimisation.html">Optimisation · en développement</a></li><li><a href="vulnerabilites.html">Vulnérabilités</a></li><li><a href="secrets.html">Coffre &amp; secrets</a></li></ul></div><div><h3>Documenter & partager</h3><ul><li><a href="notes-rapports.html">Notes &amp; documentation</a></li><li><a href="rapports.html">Rapports &amp; slides</a></li><li><a href="agent.html">Agent IA</a></li><li><a href="perimetre.html">Périmètre de la bêta</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/releases">Notes de version</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/issues">Retours &amp; suggestions</a></li></ul></div></div><p class="meta">Application gratuite · macOS & Linux · <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger la bêta</a></p></footer></body></html>

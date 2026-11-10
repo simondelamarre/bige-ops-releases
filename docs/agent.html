@@ -1,56 +1,43 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Assistant IA — bige-ops</title>
-  <meta name="description" content="L’assistant IA de bige-ops : Claude Sonnet 5.5 par défaut, ou OpenAI, Gemini, Mistral, avec ta propre clé API. Outils de config en lecture et écriture ; jamais d’apply, de deploy ni de push." />
-  <link rel="canonical" href="https://bige.dev/agent.html" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <meta name="theme-color" content="#0b0d10" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="navigation.css?v=1"></head>
-<body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
-  <main>
-    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="secrets.html">Secrets</a> · <a href="expert-config.html">Config experte</a></p>
-
-    <h1>Assistant IA (agent)</h1>
-    <p class="lead">
-      Un chat intégré qui travaille sur la <strong>configuration</strong> de ta
-      simulation : lire le contexte, éditer <code>project.yaml</code>, lancer
-      des commandes en lecture, préparer un Dockerfile. Il ne touche jamais à
-      ton cloud : <strong>c’est toi qui fais <code>plan</code> et
-      <code>apply</code></strong>. En option, un agent d’audit relit aussi les
-      failles de ton code (<a href="#audit">audit approfondi</a>).
-    </p>
-
-    <div class="callout">
-      <strong>Ta clé, ton fournisseur.</strong>
-      Modèle par défaut : <strong>Claude Sonnet 5.5</strong> (Anthropic). Tu
-      peux aussi choisir un modèle OpenAI, Gemini ou Mistral. Tu saisis
-      <strong>ta propre clé API</strong> dans Settings ; elle est stockée
-      localement dans <code>~/.config/bige-ops/settings.json</code>. Les appels
-      partent de l’app, sur ton poste, directement vers l’API du fournisseur
-      choisi : aucun backend bige-ops au milieu, aucune clé gérée par nous.
-      Voir la <a href="index.html#faq">FAQ</a>.
-    </div>
-
-    <figure class="diagram">
-      <pre class="mermaid">
-flowchart LR
-  U[Toi — chat] --> A[Agent]
-  A --> R[Lecture contexte et fichiers]
-  A --> W[Écriture project.yaml]
-  W --> V[validate + generate]
-  V --> P[Plan / Apply par toi]
-      </pre>
-      <figcaption>L’agent s’arrête avant le cloud. La dernière étape reste la tienne.</figcaption>
-    </figure>
-
-    <h2>Ce que l’agent peut faire</h2>
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Assistant IA &amp; connexion MCP — bige-ops</title><meta name="description" content="Comprendre une stack, préparer une modification et relire son résultat avec l’assistant bige-ops. IA optionnelle, fournisseur choisi, outils limités et connexion MCP locale.">
+<link rel="canonical" href="https://bige.dev/agent.html"><link rel="icon" href="favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#10191b">
+<meta property="og:type" content="article"><meta property="og:title" content="Assistant IA &amp; connexion MCP — bige-ops"><meta property="og:description" content="Comprendre une stack, préparer une modification et relire son résultat avec l’assistant bige-ops. IA optionnelle, fournisseur choisi, outils limités et connexion MCP locale."><meta property="og:url" content="https://bige.dev/agent.html"><meta property="og:image" content="https://bige.dev/screens/site-simule.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="feature-stories.css?v=notes-20261110-1">
+<script src="feature-stories.js?v=notes-20261110-1" defer></script>
+<noscript><style>.story-stage{display:none}.story-layout{display:block}.story-step,.story-step:last-child{min-height:0}.mobile-proof{display:flex;gap:20px}</style></noscript>
+</head><body class="feature-page" style="--feature-art:url('assets/illustrations/notes-riso-v1.webp')"><a class="skip-link" href="#contenu">Aller au contenu</a><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir le parcours</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header><main id="contenu">
+      <p class="feature-breadcrumb"><a href="features.html">Fonctionnalités</a><span aria-hidden="true">/</span><span>Assistant &amp; mcp</span></p>
+      <header class="feature-hero"><div><p class="feature-eyebrow">ASSISTANT &amp; MCP</p><h1>Choisir son IA. Garder la main sur l’infra.</h1><p class="feature-summary">Utiliser son agent habituel par MCP, choisir un fournisseur API ou le parcours local disponible. Les outils et skills bige-ops donnent le contexte de la stack. Les notes gardent les intentions ; les simulations rendent les propositions visibles.</p><div class="feature-actions"><a class="feature-primary" href="install.html">Installer la bêta ↗</a><a href="#parcours-feature">Voir le fonctionnement ↓</a></div><p class="feature-platforms">Application gratuite · macOS & Linux · Sans IA obligatoire</p></div><div class="feature-art" aria-hidden="true"></div></header>
+      <aside class="feature-status"><strong>Reporting et optimisation · bêta</strong><p>Le bilan cloud et les présentations utilisent les données disponibles. La proposition d’optimisation reste à relire et à travailler dans une simulation avant tout passage en production.</p></aside><section class="feature-story" data-feature-story id="parcours-feature" aria-labelledby="parcours-feature-title">
+      <div class="story-heading"><div><p class="feature-section-label">Le parcours dans l’app</p><h2 id="parcours-feature-title">De l’intention à la décision.</h2></div><p>Faire défiler pour suivre chaque étape.</p></div>
+      <nav class="story-nav" style="--step-count:5" aria-label="Étapes : ASSISTANT &amp; MCP"><a href="#feature-step-0"><b>01</b> Choix</a><a href="#feature-step-1"><b>02</b> Contexte</a><a href="#feature-step-2"><b>03</b> Proposition</a><a href="#feature-step-3"><b>04</b> Bilan</a><a href="#feature-step-4"><b>05</b> Décision</a></nav>
+      <div class="story-layout"><figure class="story-stage" aria-label="Exemple : les notes définissent le besoin, le modèle choisi prépare une simulation, un bilan cloud est consigné puis une optimisation reste à décider.">
+        <div class="story-stage-head"><strong>bige-ops / assistant &amp; mcp</strong><span data-scene-count>01 / 05</span></div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="feature-diagram" viewBox="0 0 640 480" fill="none" aria-hidden="true" focusable="false"><text x="36" y="36" fill="#aabdb7" font-size="18" font-weight="400">UN EXEMPLE · CONSTRUIRE PUIS AMÉLIORER</text><rect x="36" y="68" width="568" height="70" rx="16" fill="#1b2c2e" stroke="#aabdb7" stroke-width="1.5" /><text x="57" y="111" fill="#eef0e9" font-size="26" font-weight="600">Modèle choisi + outils bige-ops</text><g data-track="{&quot;opacity&quot;:[0,1,1,1,1]}" opacity="0"><rect x="36" y="160" width="238" height="166" rx="16" fill="#1b2c2e" stroke="#aabdb7" stroke-width="1.5" /><text x="57" y="196" fill="#eef0e9" font-size="24" font-weight="600">Notes du projet</text><text x="57" y="233" fill="#aabdb7" font-size="20" font-weight="400">Produit</text><text x="57" y="267" fill="#aabdb7" font-size="20" font-weight="400">Besoins</text><text x="57" y="301" fill="#aabdb7" font-size="20" font-weight="400">Contraintes</text></g><g data-track="{&quot;opacity&quot;:[0,0,1,1,1]}" opacity="0"><rect x="330" y="160" width="274" height="166" rx="16" fill="#1b2c2e" stroke="#67d4b7" stroke-width="1.5" /><text x="351" y="196" fill="#67d4b7" font-size="24" font-weight="600">Simulation</text><text x="351" y="233" fill="#eef0e9" font-size="20" font-weight="400">Configuration</text><text x="351" y="267" fill="#eef0e9" font-size="20" font-weight="400">Visual</text><text x="351" y="301" fill="#eef0e9" font-size="20" font-weight="400">Coût estimé</text></g><g data-track="{&quot;opacity&quot;:[0,0,1,1,1]}" opacity="0"><path d="M281 244 L321 244" stroke="#67d4b7" stroke-width="2" /></g><g data-track="{&quot;opacity&quot;:[0,0,0,1,0]}" opacity="0"><rect x="36" y="352" width="568" height="88" rx="16" fill="#1b2c2e" stroke="#aabdb7" stroke-width="1.5" /><text x="57" y="385" fill="#eef0e9" font-size="24" font-weight="600">Bilan du mois · notes et slides</text><text x="57" y="418" fill="#aabdb7" font-size="18" font-weight="400">Données disponibles · parcours bêta</text></g><g data-track="{&quot;opacity&quot;:[0,0,0,0,1]}" opacity="0"><rect x="36" y="352" width="568" height="88" rx="16" fill="#1b2c2e" stroke="#67d4b7" stroke-width="1.5" /><text x="57" y="386" fill="#67d4b7" font-size="24" font-weight="600">Optimisation à comparer</text><text x="57" y="418" fill="#aabdb7" font-size="18" font-weight="400">Nouvelle simulation → décision humaine</text></g></svg><figcaption>L’API intégrée et la session d’un client MCP sont deux modes distincts.</figcaption><div class="story-meter" aria-hidden="true"></div>
+      </figure><div class="story-copy"><article class="story-step" id="feature-step-0">
+          <span class="step-number">01 · Choix</span>
+          <h3>Travailler avec le modèle choisi.</h3><p>Configurer une clé Anthropic, OpenAI, Gemini, Mistral ou OpenRouter dans les réglages, puis choisir un modèle disponible. Autre chemin : relier Codex, Claude Code ou Cursor au serveur MCP local. Le parcours Qwen3 local est proposé lorsqu’il est installé et validé pour les outils.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Fournisseur ou agent</span><i aria-hidden="true">→</i><span>Outils bige-ops accessibles</span></div>
+          <p class="step-detail">L’API intégrée et la session d’un client MCP sont deux modes distincts.</p></article><article class="story-step" id="feature-step-1">
+          <span class="step-number">02 · Contexte</span>
+          <h3>Donner à l’agent la mémoire du projet.</h3><p>Décrire le produit, la stack, les objectifs et les besoins dans les notes du workspace ou de la simulation. Les notes utiles peuvent être apportées au contexte de l’agent. Une demande ponctuelle suffit aussi ; la mémoire écrite permet surtout de suivre les décisions, de les relire et de les partager.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Intention et notes</span><i aria-hidden="true">→</i><span>Contexte du projet</span></div>
+          <p class="step-detail">Le contexte effectivement fourni dépend du parcours et de la sélection ; l’agent ne lit pas automatiquement toutes les notes.</p></article><article class="story-step" id="feature-step-2">
+          <span class="step-number">03 · Proposition</span>
+          <h3>Voir la proposition dans la simulation.</h3><p>Demander une topologie ou un changement de configuration. L’assistant utilise les outils autorisés du produit, puis les validations et la génération. Examiner le résultat dans Visual, relire les coûts estimés et conserver une simulation distincte pour comparer la proposition avant toute décision de production.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Besoin compris</span><i aria-hidden="true">→</i><span>Simulation à examiner</span></div>
+          <p class="step-detail">Les commandes sensibles suivent leur confirmation ; une proposition n’est pas une autorisation générale d’agir sur le cloud.</p></article><article class="story-step" id="feature-step-3">
+          <span class="step-number">04 · Bilan</span>
+          <h3>Demander un bilan. Le garder dans les notes.</h3><p>« Faire un bilan de consommation du mois précédent. » Dans les notes cloud, l’agent peut lire les données d’exploitation disponibles, rédiger un bilan et préparer une présentation. Les informations absentes restent inconnues. Ce parcours de reporting et d’optimisation continue d’être affiné en bêta.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Données du mois</span><i aria-hidden="true">→</i><span>Notes et présentation</span></div>
+          <p class="step-detail">Les coûts, métriques et factures disponibles dépendent du fournisseur et des accès du compte.</p></article><article class="story-step" id="feature-step-4">
+          <span class="step-number">05 · Décision</span>
+          <h3>Optimiser avec une proposition relisible.</h3><p>Utiliser le bilan pour repérer une ressource surdimensionnée, un manque de capacité ou une dépense à examiner. Consigner la recommandation puis la travailler dans une simulation. Comparer la configuration et son estimation avant de choisir ce qui passera en production.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Hypothèse d’optimisation</span><i aria-hidden="true">→</i><span>Simulation puis décision</span></div>
+          <p class="step-detail">Le mode Notes cloud n’exécute pas le déploiement et ne crée pas directement une simulation depuis un bilan.</p></article></div></div></section><section class="feature-detail-section" id="modes"><header><h2>L’IA est un choix. Le fournisseur aussi.</h2><p>Trois chemins distincts ; aucun n’est nécessaire pour utiliser les fonctions principales de l’app.</p></header><div class="feature-detail-grid"><article><h3>Assistant intégré par API</h3><p>Configurer sa clé Anthropic, OpenAI, Gemini, Mistral ou OpenRouter, puis choisir un modèle du catalogue et les options disponibles. Les appels partent de l’app vers le service choisi. La facturation API relève de ce compte fournisseur.</p></article><article><h3>Modèle local</h3><p>Un parcours Qwen3 sur CPU utilise llama-server sur le poste, sans clé API. Le modèle doit être installé et ses outils testés sur la machine avant d’être proposé comme agent disponible. Il n’est pas présenté comme équivalent à tous les modèles distants.</p></article><article><h3>Agent habituel par MCP</h3><p>L’assistant MCP prépare la configuration de Codex, Claude Code ou Cursor vers le CLI local bige-ops. Le client externe gère son modèle, sa session et ses autres permissions. L’app fournit ses outils et les skills du produit dans leur périmètre.</p></article></div></section><section class="feature-detail-section" id="notes-et-rapports"><header><h2>Des notes pour garder l’intention. Des bilans pour décider.</h2><p>L’agent travaille mieux avec un contexte explicite et une trace des choix.</p></header><div class="feature-detail-grid"><article><h3>Commencer par le projet.</h3><p>Décrire l’usage, la stack et les contraintes dans les notes. Elles servent de mémoire relisible par l’équipe et de contexte dans les parcours qui les sélectionnent.</p><a href="notes-rapports.html">Découvrir les notes ↗</a></article><article><h3>Écrire le bilan du mois.</h3><p>Dans les notes cloud, demander une synthèse des coûts et de l’exploitation. L’agent rassemble les données disponibles et consigne ce qui est connu, absent ou à confirmer.</p><a href="billing.html">Voir la consommation cloud ↗</a></article><article><h3>Préparer une présentation.</h3><p>Le parcours de présentation compose des slides à partir du dossier et des notes. Relire les chiffres et les sources avant de partager le bilan.</p><a href="rapports.html">Présenter les résultats ↗</a></article><article><h3>Travailler la suite en simulation.</h3><p>Une recommandation devient un scénario à comparer. Le cycle bilan, optimisation et simulation reste en bêta ; sa continuité ne constitue pas une automatisation autonome de la production.</p><a href="optimisation.html">Optimiser mois après mois ↗</a></article></div></section><section class="feature-detail-section" id="permissions"><header><h2>Le périmètre des outils reste lisible.</h2><p>Une phrase dans un chat n’équivaut pas à une permission générale sur la production.</p></header><div class="feature-detail-grid"><article><h3>Lecture et configuration</h3><p>Les outils lisent le projet autorisé, filtrent les chemins sensibles et appliquent leurs contrats de mutation. Les commandes possibles sont explicitement limitées.</p></article><article><h3>Production et identité</h3><p>Le canal CLI de l’agent refuse apply, deploy et redeploy directs. Des outils dédiés peuvent préparer une action à confirmer dans l’app. Les PR concernent des fichiers de déploiement autorisés sur une branche dédiée ; le mode Notes cloud ne dispose pas de ces outils.</p></article><article><h3>Historique et erreurs</h3><p>Les sessions et traces sont conservées localement. Les appels d’outils, leurs résultats et les erreurs donnent un fil de lecture ; une réponse plausible ne remplace pas la vérification du résultat.</p></article></div></section><section class="feature-detail-section" id="donnees-et-cout"><header><h2>Savoir ce qui part, savoir ce qui coûte.</h2><p>Utiliser un modèle distant signifie lui transmettre le contexte nécessaire à la demande.</p></header><div class="feature-detail-grid"><article><h3>Contexte transmis</h3><p>Les messages et les éléments de projet utilisés par l’assistant partent vers l’API configurée. Les outils bloquent l’accès aux fichiers de coffre et credentials ; il reste nécessaire de ne pas coller de secret dans une demande.</p></article><article><h3>Clés API et sessions</h3><p>Les clés de l’assistant intégré sont stockées dans les réglages locaux, distinctement du coffre applicatif. Une session de conversation bige-ops n’est pas un abonnement ChatGPT ou Claude et ne lui donne pas automatiquement accès.</p></article><article><h3>Coûts et disponibilité</h3><p>Les consommations et coûts disponibles sont affichés ou estimés selon le fournisseur. Les droits du compte et la disponibilité réelle du modèle s’appliquent. Aucun crédit d’usage universel ni quota illimité n’est promis.</p></article></div></section><section class="feature-detail-section" id="fournisseurs"><header><h2>La souveraineté dépend aussi du choix du modèle.</h2><p>Le fournisseur, les données transmises et les conditions du compte restent des choix explicites.</p></header><div class="feature-detail-grid"><article><h3>API configurée dans l’app.</h3><p>Les appels partent directement vers Anthropic, OpenAI, Google Gemini, Mistral ou OpenRouter selon la sélection. OpenRouter est lui-même un intermédiaire choisi. Les clés API restent dans les réglages locaux.</p></article><article><h3>Un modèle local ou un client externe.</h3><p>Le parcours local fonctionne sur le poste quand ses prérequis sont réunis. Pour d’autres modèles ou configurations personnalisées, le choix peut passer par le client MCP externe ; une URL API arbitraire n’est pas une option native du catalogue actuel.</p></article></div></section><section class="feature-glossary" id="glossaire-feature"><h2>Les mots du sujet.</h2><dl><div><dt>MCP</dt><dd>Protocole qui donne à un agent externe accès aux outils exposés par le serveur local bige-ops.</dd></div><div><dt>Provider</dt><dd>Fournisseur du modèle et de son API. Il détermine ses conditions d’usage, coûts et disponibilité.</dd></div><div><dt>Skill</dt><dd>Instructions spécialisées qui guident l’agent dans un parcours, avec les outils et limites du produit.</dd></div></dl></section><section class="feature-proof-section"><p class="feature-section-label">Pour aller plus loin</p><h2>Ce que cela change, concrètement.</h2><div class="feature-proof-grid"><article><h3>L’app fonctionne sans IA.</h3><p>Composer, simuler, migrer et opérer restent des parcours du produit. L’assistant ajoute une façon de travailler ; il n’en verrouille pas l’accès.</p><a href="layouts.html">Découvrir les simulations ↗</a></article><article><h3>Un pont local vers les agents.</h3><p>Le serveur MCP est porté par le CLI bige-ops. Les configurations proposées pointent vers le workspace et le binaire de la machine.</p><a href="cli.html">Comprendre le CLI et MCP ↗</a></article><article><h3>Un audit séparé du chat.</h3><p>La revue assistée des vulnérabilités s’appuie sur les éléments du scan et conserve un périmètre explicite.</p><a href="vulnerabilites.html">Voir l’analyse de vulnérabilités ↗</a></article></div></section><section class="feature-faq"><h2>Les points à connaître.</h2><div><details><summary>Faut-il un abonnement IA pour utiliser bige-ops ?</summary><p>Non. Les fonctions principales s’utilisent sans IA. L’assistant intégré peut utiliser une clé API configurée ou le modèle local lorsqu’il est disponible. Un client externe connecté par MCP conserve ses propres conditions d’accès.</p></details><details><summary>L’agent peut-il déployer tout seul ?</summary><p>Les commandes de production sont bloquées dans le canal CLI de l’agent. Certaines actions sensibles passent par un outil dédié et une confirmation dans l’app. Le mode Notes cloud lit les informations d’exploitation et travaille sur les documents ; il ne déploie pas.</p></details><details><summary>Le modèle voit-il tout mon ordinateur ?</summary><p>Le contexte de travail et les outils sont limités au périmètre exposé par bige-ops. Ce n’est pas un accès général au poste. Un agent externe peut posséder d’autres outils indépendants : leurs permissions relèvent de son propre environnement.</p></details></div></section><details class="feature-reference" id="reference"><summary>Ressources, réglages et détails techniques</summary><div><p>Distinguer le chat intégré, l’audit approfondi et le serveur MCP local. Leurs outils et leurs modèles ne sont pas interchangeables.</p><h2>Outils disponibles selon le contexte</h2>
     <ul>
       <li>Lister les <strong>simulations</strong> du workspace et en <strong>créer</strong> une nouvelle.</li>
       <li>Lire le <strong>contexte</strong> du projet : statut, <code>project.yaml</code>, estimation.</li>
@@ -62,10 +49,10 @@ flowchart LR
       <li>Préparer un <strong>repo applicatif</strong>, lire et écrire un <code>Dockerfile</code>, et ouvrir une <strong>pull request</strong> dessus.</li>
     </ul>
 
-    <h2>Ce que l’agent ne fait jamais</h2>
+    <h2>Commandes refusées dans le canal CLI de l’agent</h2>
     <table>
       <thead>
-        <tr><th>Bloqué</th><th>Pourquoi</th></tr>
+        <tr><th>Commande directe bloquée</th><th>Portée</th></tr>
       </thead>
       <tbody>
         <tr><td><code>apply</code>, <code>deploy</code>, <code>redeploy</code></td><td>Mutations réelles sur ton cloud ou tes workloads</td></tr>
@@ -76,14 +63,13 @@ flowchart LR
       </tbody>
     </table>
     <p>
-      L’agent ne lit ni n’écrit les <a href="secrets.html">fichiers de secrets</a> :
+      Les outils projet filtrent les <a href="secrets.html">fichiers de secrets</a> :
       credentials, coffre, <code>.env</code>, <code>.pem</code>,
       <code>terraform.tfvars</code> sont filtrés côté outils. Les actions
-      sensibles restantes passent par une <strong>demande de confirmation
-      explicite</strong> dans le chat : tu valides, ou non.
+      sensibles prévues par un outil dédié passent par une <strong>demande de confirmation explicite</strong> dans le chat. Le mode Notes cloud se limite aux données d’exploitation en lecture et aux documents ; il ne dispose pas des outils de simulation ou de déploiement.
     </p>
 
-    <h2>Dans tes repos applicatifs</h2>
+    <h2>Dans les dépôts applicatifs</h2>
     <p>
       Quand l’agent travaille sur un repo de code, l’écriture est
       volontairement étroite :
@@ -101,28 +87,25 @@ flowchart LR
     <h2 id="audit">L’audit approfondi des failles (en option)</h2>
     <p>
       Sans clé ni IA, bige-ops repère déjà les failles de tes dépôts, sur ton poste :
-      pages ou API accessibles sans être connecté, erreurs classiques dans le code,
+      pages ou API accessibles sans contrôle d’authentification détecté, erreurs classiques dans le code,
       bibliothèques qui ont une faille connue (<a href="stacks.html#verifications">la méthode</a>).
-      Avec <strong>bige-ops advanced</strong> et ta propre clé d’IA, un agent d’audit va plus loin :
+      Avec une clé API configurée et le modèle choisi, un audit approfondi peut compléter cette lecture :
     </p>
     <ul>
-      <li>il relit les pistes déjà repérées : pages ou API accessibles sans être connecté, passages de code à risque, pièges connus de ton framework ;</li>
-      <li>il confirme les vraies failles et écarte les fausses alertes ;</li>
+      <li>il relit les pistes déjà repérées : pages ou API accessibles sans contrôle d’authentification détecté, passages de code à risque, pièges connus de ton framework ;</li>
+      <li>il propose une qualification des alertes et des faux positifs, à relire dans le contexte du code ;</li>
       <li>il classe chaque faille par type, selon le catalogue de référence (CWE), avec son urgence (de P0, la plus urgente, à P3) et son exposition ;</li>
       <li>chaque faille peut devenir un ticket GitHub (issue) prêt à ouvrir : c’est toi qui l’ouvres, rien n’est corrigé à ta place.</li>
     </ul>
     <p>
-      Seuls des extraits ciblés de ton code partent, avec ta clé, chez le fournisseur d’IA
+      Seuls des éléments de contexte sélectionnés du projet partent, avec ta clé, chez le fournisseur d’IA
       choisi ; la consommation est facturée sur ton compte chez lui. Comme le chat, l’agent
       d’audit n’applique rien et ne lit pas tes secrets.
     </p>
 
-    <h2>MCP local (Cursor / Claude Code)</h2>
+    <h2>MCP local (Codex / Cursor / Claude Code)</h2>
     <p>
-      Même moteur que le chat : <code>bige-ops mcp</code> en stdio (binaire
-      embarqué, rien à installer). Settings → <strong>Agents / MCP</strong> →
-      copier le snippet. Apply, deploy et auth restent refusés. Visual se
-      rafraîchit après chaque écriture.
+      Le binaire embarqué lance <code>bige-ops mcp</code> en stdio. Réglages → <strong>Agents / MCP</strong> prépare la configuration du client externe installé sur le poste. Les outils sont limités ; les commandes apply, deploy et auth sont refusées dans le canal CLI MCP. Le contexte et les permissions du client externe restent distincts.
     </p>
 
     <h2>Traces</h2>
@@ -145,7 +128,7 @@ flowchart LR
       <li>Fais-lui lire le contexte avant d’éditer, puis relance <code>validate</code> et <code>generate</code>.</li>
       <li>Relis le diff de <code>project.yaml</code> : c’est la référence.</li>
       <li>Pour l’exposition réseau, vérifie ses choix : <a href="reseau.html">ouvrir ou non</a>.</li>
-      <li>Pour reprendre la main à la pince : <a href="expert-config.html">mode expert</a>.</li>
+      <li>Pour modifier directement la configuration : <a href="expert-config.html">mode expert</a>.</li>
     </ul>
 
     <h2>Bon usage</h2>
@@ -156,67 +139,7 @@ flowchart LR
       Ses outils et garde-fous s’enrichissent d’une version à l’autre. La consommation de tokens est facturée sur
       <strong>ton compte</strong> chez le fournisseur choisi.
     </div>
-    <footer class="site-footer">
-      <div class="cols">
-        <div>
-          <h3>Comprendre</h3>
-          <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="documentation.html">Toute la doc</a></li>
-            <li><a href="perimetre.html">Périmètre</a></li>
-            <li><a href="savoir.html">Sait / ne sait pas</a></li>
-            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
-            <li><a href="glossaire.html">Glossaire</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Composer</h3>
-          <ul>
-            <li><a href="layouts.html">Par où commencer</a></li>
-            <li><a href="stacks.html">Stacks &amp; langages</a></li>
-            <li><a href="vms.html">VMs · VPS</a></li>
-            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
-            <li><a href="omi.html">OMI · images</a></li>
-            <li><a href="bases.html">Bases de données</a></li>
-            <li><a href="bases-complexes.html">Bases complexes</a></li>
-            <li><a href="oos.html">OOS &amp; backups</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Réseau &amp; région</h3>
-          <ul>
-            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
-            <li><a href="reseau-avance.html">Réseau avancé</a></li>
-            <li><a href="lbu.html">LBU · entrée publique</a></li>
-            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
-            <li><a href="oks.html">OKS &amp; pods</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Opérer</h3>
-          <ul>
-            <li><a href="simulations.html">Simulations &amp; promote</a></li>
-            <li><a href="inventory.html">Inventaire &amp; import</a></li>
-            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
-            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
-            <li><a href="agent.html">Assistant IA</a></li>
-            <li><a href="cli.html">CLI · app · OKS</a></li>
-            <li><a href="github-config.html">GitHub config</a></li>
-            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
-            <li><a href="expert-config.html">Mode expert · diffs</a></li>
-          </ul>
-        </div>
-      </div>
-      <p class="meta">
-        Gratuit · simulateur local pour Outscale ·
-        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
-        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
-      </p>
-    </footer>
-  </main>
-  <script type="module">
-    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
-  </script>
-</body>
-</html>
+</div></details>
+      <section class="feature-cta"><div><h2>Passer du concept à sa propre stack.</h2><p>Installer l’app gratuite. Commencer par une simulation, avant d’engager des ressources cloud.</p><a href="install.html">Télécharger bige-ops ↗</a></div><div class="feature-cta-art" aria-hidden="true"></div></section>
+      <nav class="feature-related" aria-label="Fonctionnalités associées"><span>Continuer le parcours</span><a href="notes-rapports.html">Consigner les intentions ↗</a><a href="optimisation.html">Préparer les optimisations ↗</a><a href="rapports.html">Présenter un bilan ↗</a><a href="secrets.html">Gérer les clés API ↗</a><a href="cli.html">Configurer MCP ↗</a></nav>
+      </main><footer class="site-footer"><div class="footer-intro"><a class="brand" href="index.html"><img src="favicon.svg" width="28" height="28" alt=""> bige-ops</a><p>Simple comme un PaaS. Flexible comme un IaaS.</p></div><div class="cols"><div><h3>Découvrir</h3><ul><li><a href="index.html">Accueil</a></li><li><a href="features.html">Toutes les fonctionnalités</a></li><li><a href="hub.html">Hub &amp; espaces de travail</a></li><li><a href="layouts.html">Simulations</a></li><li><a href="install.html">Installer &amp; mettre à jour</a></li><li><a href="documentation.html">Documentation</a></li><li><a href="glossaire.html">Glossaire</a></li></ul></div><div><h3>Construire & déployer</h3><ul><li><a href="catalogue-prix.html">Catalogue &amp; estimations</a></li><li><a href="repos-vms-docker.html">Build &amp; déploiement</a></li><li><a href="reseau.html">Réseaux &amp; exposition</a></li><li><a href="migration.html">Migration</a></li><li><a href="oos.html">Object Storage</a></li><li><a href="config.html">Configuration</a></li><li><a href="cli.html">Terminal &amp; CLI</a></li></ul></div><div><h3>Observer & décider</h3><ul><li><a href="inventory.html">Inventaire &amp; commandes</a></li><li><a href="live.html">Live analytics</a></li><li><a href="billing.html">Consommation réelle</a></li><li><a href="optimisation.html">Optimisation · en développement</a></li><li><a href="vulnerabilites.html">Vulnérabilités</a></li><li><a href="secrets.html">Coffre &amp; secrets</a></li></ul></div><div><h3>Documenter & partager</h3><ul><li><a href="notes-rapports.html">Notes &amp; documentation</a></li><li><a href="rapports.html">Rapports &amp; slides</a></li><li><a href="agent.html">Agent IA</a></li><li><a href="perimetre.html">Périmètre de la bêta</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/releases">Notes de version</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/issues">Retours &amp; suggestions</a></li></ul></div></div><p class="meta">Application gratuite · macOS & Linux · <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger la bêta</a></p></footer></body></html>

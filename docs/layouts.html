@@ -1,39 +1,64 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Par où commencer : choisir sa topologie — bige-ops</title>
-  <meta name="description" content="Startup, TPE ou PME, sans équipe DevOps : choisis un point de départ selon ton activité. Une machine, l’app et ses données séparées, ou Kubernetes managé : ce que contient chaque point de départ et quand passer au suivant." />
-  <link rel="canonical" href="https://bige.dev/layouts.html" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <meta name="theme-color" content="#0b0d10" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="feature-tour.css?v=3"><script src="feature-tour.js?v=3" defer></script><link rel="stylesheet" href="navigation.css?v=1"></head>
-<body class="feature-page"><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
-  <main>
-    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
-
-    <div class="feature-hero"><p class="feature-eyebrow">BIGE-OPS / FONCTIONNALITÉS</p><h1>Simule. Compare.<br>Déploie la bonne stack.</h1><p class="feature-summary">Explore plusieurs architectures avant de t’engager. Compare leurs coûts estimés, leurs ressources et leur résilience pour choisir celle qui sert ton produit.</p><div class="laptop"><div class="laptop-display"><span class="laptop-camera"></span><figure><a href="screens/site-simule.webp" target="_blank" rel="noopener"><img src="screens/site-simule.webp" loading="lazy" alt="Visual · application, PostgreSQL, Redis et stockage"></a><figcaption>Visual · application, PostgreSQL, Redis et stockage · <a href="screens/site-simule.webp" target="_blank" rel="noopener">Agrandir ↗</a></figcaption></figure></div><div class="laptop-base"></div></div></div><section data-motion-copy='{"titles": ["Une machine pour commencer", "Séparer app et données", "Distribuer les workloads"], "zones": ["VM unique", "Réseau privé", "Cluster Kubernetes"], "notes": ["Services regroupés", "Deux machines, une stack", "Pods et ressources dédiées"], "entities": [["Web + API", "PostgreSQL", "Volumes"], ["VM app", "VM données", "Volumes"], ["Pods app", "Pods données", "Volumes persistants"]]}' class="feature-tour" aria-label="Parcours guidé"><header><p>DANS L’APP / PARCOURS GUIDÉ</p><h2>Compose ton architecture</h2></header><nav aria-label="Étapes de la fonctionnalité"><a href="#feature-step-0">01 Commence avec une app et ses données.</a><a href="#feature-step-1">02 Sépare ce qui doit l’être.</a><a href="#feature-step-2">03 Grandis vers Kubernetes.</a></nav><div class="feature-tour-grid"><div class="feature-tour-copy"><article class="feature-step" id="feature-step-0"><span class="feature-index">01 / 03</span><h3>Commence avec une app et ses données.</h3><p>Choisis une stack prête ou assemble tes services. Le Visual relie les ressources pour rendre leurs dépendances visibles.</p></article><article class="feature-step" id="feature-step-1"><span class="feature-index">02 / 03</span><h3>Sépare ce qui doit l’être.</h3><p>Place les données sur leurs machines et contrôle les connexions. Une topologie plus détaillée rend les responsabilités explicites.</p></article><article class="feature-step" id="feature-step-2"><span class="feature-index">03 / 03</span><h3>Grandis vers Kubernetes.</h3><p>Si ton usage le demande, prépare un cluster et ses node pools. Le choix de topologie précède le plan et le déploiement.</p></article></div><div class="feature-motion" role="img" aria-label="Une machine pour commencer"><div class="motion-top"><span>bige-ops</span><span>LE CONCEPT</span></div><div class="motion-field"><div class="motion-zone"><span>VM unique</span></div><svg viewBox="0 0 600 440" aria-hidden="true"><path class="motion-link" d="M150 200 H300 H450"/></svg><div class="motion-entity entity-0"><span>⌘</span><strong>Application</strong></div><div class="motion-entity entity-1"><span>▤</span><strong>PostgreSQL</strong></div><div class="motion-entity entity-2"><span>◇</span><strong>Stockage</strong></div><div class="motion-result"><small>Une machine pour commencer</small><strong>Services regroupés</strong><div class="motion-meter"><i></i></div></div></div><p class="motion-caption">Services regroupés</p></div></div></section><details class="feature-reference"><summary>Les détails techniques et les limites</summary><div>
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Simulations — comparer avant de déployer · bige-ops</title><meta name="description" content="Composer une infrastructure, garder plusieurs variantes et comparer leurs ressources, leur isolation et leur budget avant de choisir celle à déployer.">
+<link rel="canonical" href="https://bige.dev/layouts.html"><link rel="icon" href="favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#10191b">
+<meta property="og:type" content="article"><meta property="og:title" content="Simulations — comparer avant de déployer · bige-ops"><meta property="og:description" content="Composer une infrastructure, garder plusieurs variantes et comparer leurs ressources, leur isolation et leur budget avant de choisir celle à déployer."><meta property="og:url" content="https://bige.dev/layouts.html"><meta property="og:image" content="https://bige.dev/screens/site-simule.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="feature-stories.css?v=notes-20261110-1">
+<script src="feature-stories.js?v=notes-20261110-1" defer></script>
+<noscript><style>.story-stage{display:none}.story-layout{display:block}.story-step,.story-step:last-child{min-height:0}.mobile-proof{display:flex;gap:20px}</style></noscript>
+</head><body class="feature-page" style="--feature-art:url('assets/illustrations/simulations-riso-v1.webp')"><a class="skip-link" href="#contenu">Aller au contenu</a><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir le parcours</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header><main id="contenu">
+      <p class="feature-breadcrumb"><a href="features.html">Fonctionnalités</a><span aria-hidden="true">/</span><span>Simulations</span></p>
+      <header class="feature-hero"><div><p class="feature-eyebrow">SIMULATIONS</p><h1>Simuler plusieurs stacks. Déployer la bonne.</h1><p class="feature-summary">Une application, ses données, ses fichiers : plusieurs façons de les héberger. Composer une première stack, essayer d’autres architectures et comprendre ce que chaque choix change avant de déployer.</p><div class="feature-actions"><a class="feature-primary" href="install.html">Installer la bêta ↗</a><a href="#parcours-feature">Voir le fonctionnement ↓</a></div><p class="feature-platforms">Application gratuite · macOS & Linux · Sans IA obligatoire</p></div><figure class="feature-laptop"><div class="laptop-display"><span class="laptop-camera" aria-hidden="true"></span><a class="laptop-screen" href="screens/site-simule.webp" target="_blank" rel="noopener" aria-label="Agrandir la capture : Le Visual bige-ops montre les services, les ressources et leurs relations dans une simulation."><img src="screens/site-simule.webp" alt="Le Visual bige-ops montre les services, les ressources et leurs relations dans une simulation." width="1440" height="900" decoding="async"></a></div><div class="laptop-base" aria-hidden="true"></div><figcaption>Le Visual : composer une stack et retrouver ses dépendances. <a href="screens/site-simule.webp" target="_blank" rel="noopener">Agrandir ↗</a></figcaption></figure></header>
+      <section class="feature-story" data-feature-story id="parcours-feature" aria-labelledby="parcours-feature-title">
+      <div class="story-heading"><div><p class="feature-section-label">Le parcours dans l’app</p><h2 id="parcours-feature-title">Du premier essai à la stack retenue.</h2></div><p>Faire défiler pour suivre chaque étape.</p></div>
+      <nav class="story-nav" style="--step-count:6" aria-label="Étapes : SIMULATIONS"><a href="#feature-step-0"><b>01</b> Composer</a><a href="#feature-step-1"><b>02</b> Dupliquer</a><a href="#feature-step-2"><b>03</b> Isoler</a><a href="#feature-step-3"><b>04</b> Comparer</a><a href="#feature-step-4"><b>05</b> Conserver</a><a href="#feature-step-5"><b>06</b> Promouvoir</a></nav>
+      <div class="story-layout"><figure class="story-stage" aria-label="Une première simulation regroupe application et données sur une machine. Une copie conserve le même produit et sépare les données sur une machine privée. Les deux coûts estimés restent comparables. Les variantes sont conservées dans l’historique de configuration ; la seconde est choisie pour préparer un plan de déploiement.">
+        <div class="story-stage-head"><strong>bige-ops / simulations</strong><span data-scene-count>01 / 06</span></div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="feature-diagram" viewBox="0 0 640 480" fill="none" font-family="inherit" aria-hidden="true" focusable="false"><text x="40" y="36" font-size="18" fill="#aabdb7" text-anchor="start">UN PRODUIT · PLUSIEURS CHOIX</text><g data-track="{&quot;y&quot;:[100,0,0,0,0,0],&quot;opacity&quot;:[1,1,1,1,1,0.6]}" opacity="1"><text x="40" y="100" font-size="25" fill="#eef0e9" text-anchor="start">A</text><rect x="104" y="65" width="496" height="124" rx="14" fill="#1b2c2e" stroke="#48665e" stroke-width="1.5" /><text x="125" y="95" font-size="18" fill="#aabdb7" text-anchor="start">1 VM · services regroupés</text><rect x="126" y="115" width="180" height="48" rx="10" fill="#1b2c2e" stroke="#48665e" stroke-width="1.5" /><text x="216" y="146" font-size="21" fill="#eef0e9" text-anchor="middle">Application</text><rect x="366" y="115" width="210" height="48" rx="10" fill="#1b2c2e" stroke="#48665e" stroke-width="1.5" /><text x="471" y="146" font-size="21" fill="#eef0e9" text-anchor="middle">Données</text><path d="M306 139 H366" stroke="#67d4b7" stroke-width="1.5" /><g data-track="{&quot;opacity&quot;:[0,0,0,1,1,1]}" opacity="0"><text x="600" y="219" font-size="20" fill="#aabdb7" text-anchor="end">48 € HT / mois</text></g></g><g data-track="{&quot;y&quot;:[-183,0,0,0,0,0],&quot;opacity&quot;:[0,1,1,1,1,1]}" opacity="0"><text x="40" y="283" font-size="25" fill="#eef0e9" text-anchor="start">B</text><g data-track="{&quot;opacity&quot;:[0,1,0,0,0,0]}" opacity="0"><rect x="104" y="248" width="496" height="124" rx="14" fill="#1b2c2e" stroke="#48665e" stroke-width="1.5" /><text x="125" y="277" font-size="18" fill="#aabdb7" text-anchor="start">1 VM · copie de A</text></g><g data-track="{&quot;opacity&quot;:[0,0,1,1,1,1]}" opacity="0"><rect x="104" y="248" width="218" height="124" rx="14" fill="#1b2c2e" stroke="#48665e" stroke-width="1.5" /><text x="124" y="277" font-size="18" fill="#aabdb7" text-anchor="start">VM · application</text><rect x="350" y="248" width="250" height="124" rx="14" fill="#1b2c2e" stroke="#67d4b7" stroke-width="1.5" /><text x="370" y="277" font-size="18" fill="#67d4b7" text-anchor="start">VM · réseau privé</text></g><rect x="126" y="298" width="180" height="48" rx="10" fill="#1b2c2e" stroke="#48665e" stroke-width="1.5" /><text x="216" y="329" font-size="21" fill="#eef0e9" text-anchor="middle">Application</text><rect x="366" y="298" width="210" height="48" rx="10" fill="#1b2c2e" stroke="#48665e" stroke-width="1.5" /><text x="471" y="329" font-size="21" fill="#eef0e9" text-anchor="middle">Données</text><path d="M306 322 H366" stroke="#67d4b7" stroke-width="1.5" /><g data-track="{&quot;opacity&quot;:[0,0,0,0,0,1]}" opacity="0"><rect x="96" y="240" width="512" height="140" rx="18" fill="none" stroke="#67d4b7" stroke-width="3" /><circle cx="578" cy="268" r="5" fill="#67d4b7" /></g><g data-track="{&quot;opacity&quot;:[0,0,0,1,1,1]}" opacity="0"><text x="600" y="402" font-size="20" fill="#67d4b7" text-anchor="end">72 € HT / mois</text></g></g><g data-track="{&quot;opacity&quot;:[1,0,0,0,0,0]}" opacity="1"><text x="40" y="412" font-size="20" fill="#aabdb7" text-anchor="start">La configuration reste sur le poste.</text></g><g data-track="{&quot;opacity&quot;:[0,1,0,0,0,0]}" opacity="0"><text x="40" y="412" font-size="20" fill="#aabdb7" text-anchor="start">La première simulation reste disponible.</text></g><g data-track="{&quot;opacity&quot;:[0,0,1,0,0,0]}" opacity="0"><text x="40" y="412" font-size="20" fill="#aabdb7" text-anchor="start">Même produit. Données isolées.</text></g><g data-track="{&quot;opacity&quot;:[0,0,0,0,1,0]}" opacity="0"><path d="M54 421 H300" stroke="#67d4b7" stroke-width="1.5" /><circle cx="54" cy="421" r="4" fill="#67d4b7" /><circle cx="177" cy="421" r="4" fill="#67d4b7" /><circle cx="300" cy="421" r="4" fill="#67d4b7" /><text x="322" y="429" font-size="20" fill="#67d4b7" text-anchor="start">Historique Git</text></g><g data-track="{&quot;opacity&quot;:[0,0,0,0,0,1]}" opacity="0"><text x="40" y="430" font-size="23" fill="#67d4b7" text-anchor="start">B retenue → plan de la live</text></g><text x="40" y="466" font-size="18" fill="#aabdb7" text-anchor="start">Schéma de principe · montants illustratifs</text></svg><figcaption>Une VM est une machine virtuelle. Une stack peut en utiliser une ou plusieurs.</figcaption><div class="story-meter" aria-hidden="true"></div>
+      </figure><div class="story-copy"><article class="story-step" id="feature-step-0">
+          <span class="step-number">01 / COMPOSER</span>
+          <h3>Donner une forme au projet.</h3><p>Une stack rassemble les services du produit et les ressources qui les font tourner. Dans le Visual, placer l’application, les données et les fichiers, puis choisir leurs machines et leurs connexions. bige-ops traduit cette composition en configuration d’infrastructure : le dessin décrit ce qui sera préparé pour le cloud.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Application + données + fichiers</span><i aria-hidden="true">→</i><span>Une première stack</span></div>
+          <p class="step-detail">Une VM est une machine virtuelle. Une stack peut en utiliser une ou plusieurs.</p></article><article class="story-step" id="feature-step-1">
+          <span class="step-number">02 / DUPLIQUER</span>
+          <h3>Essayer ailleurs. Garder le point de départ.</h3><p>Dupliquer la simulation pour créer une variante du même projet. Changer cette copie sans écraser le premier scénario. bige-ops copie la configuration utile et écarte l’état d’exécution et les accès sensibles : explorer une autre architecture ne revient pas à cloner les machines ou les données de production.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Simulation A</span><i aria-hidden="true">→</i><span>A conservée + variante B</span></div>
+          <p class="step-detail">La duplication crée un brouillon de configuration, sans nouvelle ressource cloud.</p></article><article class="story-step" id="feature-step-2">
+          <span class="step-number">03 / ISOLER</span>
+          <h3>Séparer ce qui n’a pas à être exposé.</h3><p>Dans la variante, placer les données sur une machine distincte et définir les connexions nécessaires. L’application peut rester accessible au public tandis que sa base utilise un réseau privé. Le Visual rend ce choix lisible : mêmes services, autre répartition des ressources et autre exposition à vérifier avant déploiement.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Application et données regroupées</span><i aria-hidden="true">→</i><span>Application publique + données privées</span></div>
+          <p class="step-detail">Un réseau privé et des règles d’accès se configurent ; ils ne se déduisent pas du dessin.</p></article><article class="story-step" id="feature-step-3">
+          <span class="step-number">04 / COMPARER</span>
+          <h3>Voir ce qu’un choix change.</h3><p>Comparer la capacité prévue, l’isolation des services et le coût mensuel estimé de chaque variante. Ajouter une machine ou modifier sa taille change les postes concernés. Le prix vient du catalogue du fournisseur ; les performances réelles se mesureront par des tests, pas par une promesse du simulateur.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Deux architectures possibles</span><i aria-hidden="true">→</i><span>Des différences explicables</span></div>
+          <p class="step-detail">Coût estimé, ressources prévues et exposition : trois critères concrets pour choisir.</p></article><article class="story-step" id="feature-step-4">
+          <span class="step-number">05 / CONSERVER</span>
+          <h3>Garder les essais. Retrouver les décisions.</h3><p>Les simulations restent séparées et peuvent conserver leur configuration dans GitHub. Avec un dépôt de configuration connecté, chaque brouillon dispose de sa branche : retrouver une version, garder une alternative et expliquer pourquoi elle a été retenue ou écartée. Cet historique concerne l’infrastructure ; le dépôt du code applicatif reste un autre sujet.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Des variantes locales</span><i aria-hidden="true">→</i><span>Un historique de configuration</span></div>
+          <p class="step-detail">La synchronisation GitHub est explicite ; elle n’est pas nécessaire pour commencer à simuler.</p></article><article class="story-step" id="feature-step-5">
+          <span class="step-number">06 / PROMOUVOIR</span>
+          <h3>Choisir la stack. Relire ce qui va changer.</h3><p>Promouvoir la variante retenue vers la simulation live. Si une live existe, bige-ops en sauvegarde d’abord la configuration, puis prépare la nouvelle version en conservant son identité et son état d’infrastructure. Relire ensuite le plan : créations, modifications et suppressions restent à confirmer avant toute application au cloud.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Variante B retenue</span><i aria-hidden="true">→</i><span>Plan de la live à vérifier</span></div>
+          <p class="step-detail">Promouvoir prépare la live. Le déploiement demande une action distincte.</p></article></div></div></section><section class="feature-detail-section" id="simuler-sans-deployer"><header><h2>Essayer une architecture sans la mettre en production.</h2><p></p></header><div class="feature-detail-grid"><article><h3>Ce qu’une simulation contient</h3><p>Les services, les machines prévues, les tailles, les volumes, les réseaux et leurs relations. La configuration et son organisation visuelle restent liées : modifier la composition sert à préparer une infrastructure exécutable.</p></article><article><h3>Ce que dupliquer ne fait pas</h3><p>La copie ne crée pas de VM chez le fournisseur et ne copie pas une base de données. Les états Terraform, les cibles de déploiement et les secrets d’exécution ne sont pas repris dans le brouillon.</p></article><article><h3>Ce qu’il faut pour commencer</h3><p>L’application et le catalogue disponible permettent de composer et d’estimer sur le poste. Lire le compte cloud, vérifier le plan et déployer demandent ensuite les accès et les permissions adaptés.</p></article></div></section><section class="feature-detail-section" id="choisir-architecture"><header><h2>Comparer le coût et la manière de faire tourner le produit.</h2><p></p></header><div class="feature-detail-grid"><article><h3>Une machine ou plusieurs</h3><p>Regrouper les services limite le nombre de ressources. Les séparer permet de choisir leurs tailles et leur exposition indépendamment. Le choix dépend du produit, de ses contraintes et de ce que l’équipe souhaite exploiter.</p></article><article><h3>Des ressources, pas un score magique</h3><p>CPU, mémoire, volumes et relations réseau décrivent la capacité réservée. Une simulation ne mesure pas les temps de réponse, la charge maximale ou la disponibilité : ces points se vérifient avec des tests.</p></article><article><h3>Un budget décomposable</h3><p>L’estimation relie les tarifs aux ressources déclarées. Ouvrir son détail pour comprendre un écart entre variantes, les hypothèses mensuelles et les postes encore inconnus.</p><a href="catalogue-prix.html">Comprendre le calcul du budget ↗</a></article></div></section><section class="feature-detail-section" id="historique-et-live"><header><h2>Conserver les essais. Préparer une seule live.</h2><p></p></header><div class="feature-detail-grid"><article><h3>Deux dépôts, deux rôles</h3><p>Le dépôt de l’application contient le code à construire. Le dépôt de configuration conserve les choix d’infrastructure. Quand la synchronisation est utilisée, les brouillons suivent des branches sim/* et la configuration live suit main.</p></article><article><h3>Une promotion réversible au niveau de la configuration</h3><p>Avant de remplacer une live existante, bige-ops crée un snapshot de sa configuration. Si ce snapshot échoue, la promotion s’arrête. Ce mécanisme n’est pas une sauvegarde des bases ou des fichiers applicatifs.</p></article><article><h3>Un plan avant toute action cloud</h3><p>La promotion ne lance pas l’application du plan. Vérifier ce que le fournisseur va créer, modifier ou supprimer, puis déclencher l’opération. La publication de la configuration live sur GitHub est proposée après un Apply réussi.</p><a href="repos-vms-docker.html">Continuer vers le déploiement ↗</a></article></div></section><section class="feature-proof-section"><p class="feature-section-label">Pour aller plus loin</p><h2>Ce que cela change, concrètement.</h2><div class="feature-proof-grid"><article><h3>Une alternative reste disponible.</h3><p>Dupliquer une configuration permet d’explorer sans écraser le scénario précédent.</p><a href="layouts.html#simuler-sans-deployer">Comprendre une simulation ↗</a></article><article><h3>Un coût se justifie.</h3><p>Machines, volumes et composants pris en charge expliquent le montant mensuel estimé.</p><a href="catalogue-prix.html">Lire les postes estimés ↗</a></article><article><h3>Un choix devient un plan.</h3><p>Promouvoir la configuration retenue prépare la live. L’application au cloud reste une opération explicite.</p><a href="repos-vms-docker.html">Passer au déploiement ↗</a></article></div></section><section class="feature-faq"><h2>Les points à connaître.</h2><div><details><summary>Est-ce un environnement de test qui fait déjà tourner mon application ?</summary><p>Une simulation décrit d’abord une infrastructure. La dupliquer ne démarre aucune machine et ne copie aucune donnée. Lancer une application localement ou sur le cloud est une opération distincte.</p></details><details><summary>Peut-on préparer plusieurs options sans payer plusieurs infrastructures ?</summary><p>Oui : les variantes de configuration peuvent rester sur le poste. Composer, dupliquer ou estimer ne crée pas de ressources chez le fournisseur. Les ressources déployées, elles, sont soumises à sa facturation.</p></details><details><summary>Une promotion remplace-t-elle immédiatement la production ?</summary><p>Non. Elle prépare la configuration de la live, avec un snapshot préalable lorsqu’une live existe. Le plan réel doit ensuite être relu et appliqué explicitement ; une promotion seule n’exécute aucun changement cloud.</p></details></div></section><details class="feature-reference" id="reference"><summary>Ressources, réglages et détails techniques</summary><div><p>Les topologies ci-dessous détaillent les ressources possibles. Leur disponibilité dépend du fournisseur et de la stack. Les tailles proposées sont des points de départ, pas des garanties de performance.</p>
     <p class="lead">
-      Pas besoin d’équipe DevOps. Tu choisis un point de départ selon ton activité, et bige-ops
-      s’occupe du reste : réseau, sauvegardes et déploiement sur ton compte Outscale.
-      Tu pourras changer plus tard : changer de topologie, c’est une simulation de plus.
+      Les exemples de cette référence décrivent les points de départ <strong>Outscale</strong>.
+      Ils préparent une configuration de ressources, de services et de réseau à ajuster dans le Visual.
+      Dupliquer la simulation permet d’explorer une autre topologie avant de la déployer.
+      Le périmètre OVHcloud est détaillé dans <a href="perimetre.html">les services pris en charge</a>.
     </p>
 
     <h2>Trois façons de démarrer</h2>
     <table>
       <thead>
-        <tr><th></th><th>Pour qui</th><th>Ce que tu obtiens</th><th>Exemple concret</th></tr>
+        <tr><th>Topologie</th><th>Usage possible</th><th>Configuration de départ</th><th>Exemple Outscale</th></tr>
       </thead>
       <tbody>
         <tr>
           <td><strong>Une machine</strong></td>
           <td>Une TPE, un outil métier, un site, la première version d’un produit</td>
-          <td>Une VM qui porte ton app et sa base, une adresse publique, les sauvegardes vers l’Object Storage</td>
+          <td>Une VM pour l’app et sa base, avec une adresse publique ; opérations de sauvegarde disponibles selon le moteur et le stockage configurés</td>
           <td><code>node-lite</code> : une VM de 2 vCPU et 4 Gio qui fait tourner l’API, le web et PostgreSQL, avec une IP publique et sans load balancer</td>
         </tr>
         <tr>
@@ -55,10 +80,11 @@
       affiche son estimation ligne par ligne, sur la grille publique Outscale, avant tout déploiement.
     </p>
 
-    <h2>Optimise tes bases à tes usages</h2>
+    <h2>Adapter les ressources aux données</h2>
     <p>
-      Chaque base démarre avec des réglages pensés pour son usage : tu gagnes le temps du réglage fin,
-      et tu ajustes ensuite en voyant l’estimation de ta simulation suivre.
+      Les points de départ proposent des tailles et des types de volumes selon le service.
+      Ce sont des hypothèses de dimensionnement : ajuster la RAM, le stockage et les IOPS aux besoins du projet,
+      puis vérifier leur effet dans l’estimation et dans les tests de charge.
     </p>
     <table>
       <thead>
@@ -67,17 +93,17 @@
       <tbody>
         <tr>
           <td><strong>Données de l’app</strong><br/>PostgreSQL, MySQL, MariaDB, MongoDB</td>
-          <td>Une VM dédiée dans le réseau privé, un disque io1 à 3 000 IOPS garanties, la sauvegarde vers l’Object Storage en un clic</td>
-          <td>Les IOPS (de 100 à 13 000 par volume), la RAM de la VM (c’est elle qui garde les données chaudes en cache), la rétention des sauvegardes</td>
+          <td>Une VM dédiée en réseau privé et un disque io1 configuré à 3 000 IOPS dans ce point de départ ; les opérations de sauvegarde dépendent du moteur et de la destination choisis</td>
+          <td>Les IOPS provisionnées, la RAM, la taille du volume et la rétention des sauvegardes, dans les limites du fournisseur</td>
         </tr>
         <tr>
           <td><strong>Cache et files de jobs</strong><br/>Redis</td>
-          <td>Une petite VM (2 vCPU, 2 Gio) et 20 Gio en gp2 : pour un cache, la mémoire compte plus que le disque</td>
+          <td>Une VM de départ de 2 vCPU et 2 Gio, avec un volume gp2 de 20 Gio</td>
           <td>La RAM, selon la taille de ta file ou de ton cache</td>
         </tr>
         <tr>
           <td><strong>Recherche et vecteurs</strong><br/>Weaviate</td>
-          <td>Une VM dédiée sur disque io1 ; l’index vit en mémoire</td>
+          <td>Une VM dédiée sur disque io1 ; mémoire et stockage à dimensionner selon les index</td>
           <td>La RAM, selon le nombre de vecteurs</td>
         </tr>
         <tr>
@@ -87,7 +113,7 @@
         </tr>
         <tr>
           <td><strong>Pour démarrer</strong><br/>une seule machine</td>
-          <td>La base tourne sur la même machine que l’app, la sauvegarde part vers l’Object Storage</td>
+          <td>La base partage la machine de l’app ; les sauvegardes utilisent la destination configurée</td>
           <td>Le passage à « l’app et ses données séparées » quand la base grossit</td>
         </tr>
       </tbody>
@@ -97,20 +123,20 @@
       <a href="volumes-bsu.html">Volumes et IOPS</a> · <a href="bases.html">Bases de données</a>
     </p>
 
-    <h2>Quand passer à l’étape suivante</h2>
+    <h2>Quand réexaminer la topologie</h2>
     <ul>
-      <li><strong>D’une machine à l’app et ses données séparées</strong> : quand une panne de la machine devient un vrai problème pour tes clients, ou quand ta base grossit et mérite sa propre machine.</li>
-      <li><strong>Vers Kubernetes managé</strong> : quand tu as plusieurs services à faire évoluer séparément, ou des pics de charge à absorber sans intervenir.</li>
+      <li><strong>D’une machine à l’app et ses données séparées</strong> : pour isoler les ressources et les besoins de l’application de ceux de la base. Cette séparation ne constitue pas, à elle seule, une architecture haute disponibilité.</li>
+      <li><strong>Vers Kubernetes managé</strong> : pour orchestrer plusieurs workloads et configurer leur capacité. L’autoscaling et la disponibilité demandent une configuration adaptée ; Kubernetes ne les garantit pas par sa seule présence.</li>
     </ul>
     <p>Dans les deux cas, tu dupliques ta simulation, tu changes la topologie et tu compares les deux versions (machines, bases, estimation) avant de décider.</p>
 
-    <h2>Quel que soit ton choix, bige-ops s’occupe de</h2>
+    <h2>Les réglages et opérations associés</h2>
     <ul>
-      <li><strong>Le réseau</strong> : réseau privé, règles d’ouverture, bases jamais exposées à Internet. <a href="reseau.html">Réseau</a></li>
-      <li><strong>Les données</strong> : depuis le panneau Données d’une base, un dump vers l’Object Storage, une restauration ou une migration depuis une autre base. <a href="oos.html">Object Storage</a></li>
-      <li><strong>Le HTTPS</strong> : load balancer et certificat. <a href="lbu.html">LBU</a></li>
-      <li><strong>Les secrets</strong> : coffre local, jamais dans tes fichiers de config. <a href="secrets.html">Secrets</a></li>
-      <li><strong>L’estimation et les risques</strong>, affichés avant chaque déploiement. <a href="catalogue-prix.html">Catalogue de prix</a></li>
+      <li><strong>Le réseau</strong> : réseau privé et règles d’ouverture explicites. Vérifier l’exposition des services et des bases dans la configuration retenue. <a href="reseau.html">Réseau</a></li>
+      <li><strong>Les données</strong> : depuis le panneau Données, lancer les opérations de sauvegarde, restauration ou migration disponibles pour le moteur et la cible choisis. <a href="oos.html">Object Storage</a></li>
+      <li><strong>Le HTTPS</strong> : configuration du load balancer et du certificat pour les topologies concernées. <a href="lbu.html">LBU</a></li>
+      <li><strong>Les secrets</strong> : coffre local et références dans la configuration, avec injection des valeurs nécessaires à l’exécution. <a href="secrets.html">Secrets</a></li>
+      <li><strong>L’estimation et les risques</strong> : consulter les coûts estimés et lancer les analyses disponibles avant de déployer. <a href="catalogue-prix.html">Catalogue de prix</a></li>
     </ul>
 
     <h2>Des points de départ prêts à l’emploi</h2>
@@ -141,64 +167,7 @@ bige-ops add layout custom --runtime python --db postgres --db redis --web spa -
       <li>Taille de la machine unique : <code>sizing.single_vm</code> sur la stack.</li>
       <li>Les workers partagent la VM de l’app ; en <code>multi-vm</code>, les URLs des bases sont injectées après l’apply (coffre → <code>.env</code>) ; le premier deploy doit être complet avant un <code>--service</code> ciblé.</li>
     </ul>
-
-    <footer class="site-footer">
-      <div class="cols">
-        <div>
-          <h3>Comprendre</h3>
-          <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="documentation.html">Toute la doc</a></li>
-            <li><a href="perimetre.html">Périmètre</a></li>
-            <li><a href="savoir.html">Sait / ne sait pas</a></li>
-            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
-            <li><a href="glossaire.html">Glossaire</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Composer</h3>
-          <ul>
-            <li><a href="layouts.html">Par où commencer</a></li>
-            <li><a href="stacks.html">Stacks &amp; langages</a></li>
-            <li><a href="vms.html">VMs · VPS</a></li>
-            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
-            <li><a href="omi.html">OMI · images</a></li>
-            <li><a href="bases.html">Bases de données</a></li>
-            <li><a href="bases-complexes.html">Bases complexes</a></li>
-            <li><a href="oos.html">OOS &amp; backups</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Réseau &amp; région</h3>
-          <ul>
-            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
-            <li><a href="reseau-avance.html">Réseau avancé</a></li>
-            <li><a href="lbu.html">LBU · entrée publique</a></li>
-            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
-            <li><a href="oks.html">OKS &amp; pods</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Opérer</h3>
-          <ul>
-            <li><a href="simulations.html">Simulations &amp; promote</a></li>
-            <li><a href="inventory.html">Inventaire &amp; import</a></li>
-            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
-            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
-            <li><a href="agent.html">Assistant IA</a></li>
-            <li><a href="cli.html">CLI · app · OKS</a></li>
-            <li><a href="github-config.html">GitHub config</a></li>
-            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
-            <li><a href="expert-config.html">Mode expert · diffs</a></li>
-          </ul>
-        </div>
-      </div>
-      <p class="meta">
-        Gratuit · simulateur local pour Outscale ·
-        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
-        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
-      </p>
-    </footer>
-  </div></details></main>
-</body>
-</html>
+</div></details>
+      <section class="feature-cta"><div><h2>Passer du concept à sa propre stack.</h2><p>Installer l’app gratuite. Commencer par une simulation, avant d’engager des ressources cloud.</p><a href="install.html">Télécharger bige-ops ↗</a></div><div class="feature-cta-art" aria-hidden="true"></div></section>
+      <nav class="feature-related" aria-label="Fonctionnalités associées"><span>Continuer le parcours</span><a href="catalogue-prix.html">Estimer les dépenses ↗</a><a href="reseau.html">Maîtriser les connexions ↗</a><a href="repos-vms-docker.html">Déployer le code ↗</a></nav>
+      </main><footer class="site-footer"><div class="footer-intro"><a class="brand" href="index.html"><img src="favicon.svg" width="28" height="28" alt=""> bige-ops</a><p>Simple comme un PaaS. Flexible comme un IaaS.</p></div><div class="cols"><div><h3>Découvrir</h3><ul><li><a href="index.html">Accueil</a></li><li><a href="features.html">Toutes les fonctionnalités</a></li><li><a href="hub.html">Hub &amp; espaces de travail</a></li><li><a href="layouts.html">Simulations</a></li><li><a href="install.html">Installer &amp; mettre à jour</a></li><li><a href="documentation.html">Documentation</a></li><li><a href="glossaire.html">Glossaire</a></li></ul></div><div><h3>Construire & déployer</h3><ul><li><a href="catalogue-prix.html">Catalogue &amp; estimations</a></li><li><a href="repos-vms-docker.html">Build &amp; déploiement</a></li><li><a href="reseau.html">Réseaux &amp; exposition</a></li><li><a href="migration.html">Migration</a></li><li><a href="oos.html">Object Storage</a></li><li><a href="config.html">Configuration</a></li><li><a href="cli.html">Terminal &amp; CLI</a></li></ul></div><div><h3>Observer & décider</h3><ul><li><a href="inventory.html">Inventaire &amp; commandes</a></li><li><a href="live.html">Live analytics</a></li><li><a href="billing.html">Consommation réelle</a></li><li><a href="optimisation.html">Optimisation · en développement</a></li><li><a href="vulnerabilites.html">Vulnérabilités</a></li><li><a href="secrets.html">Coffre &amp; secrets</a></li></ul></div><div><h3>Documenter & partager</h3><ul><li><a href="notes-rapports.html">Notes &amp; documentation</a></li><li><a href="rapports.html">Rapports &amp; slides</a></li><li><a href="agent.html">Agent IA</a></li><li><a href="perimetre.html">Périmètre de la bêta</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/releases">Notes de version</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/issues">Retours &amp; suggestions</a></li></ul></div></div><p class="meta">Application gratuite · macOS & Linux · <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger la bêta</a></p></footer></body></html>

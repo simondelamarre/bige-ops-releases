@@ -1,240 +1,80 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Inventaire &amp; import — bige-ops</title>
-  <meta name="description" content="Lire un compte Outscale existant : inventory fetch, show, import selection et plan. Ce qui est importé en composant, ce qui est observé." />
-  <link rel="canonical" href="https://bige.dev/inventory.html" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <meta name="theme-color" content="#0b0d10" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="feature-tour.css?v=3"><script src="feature-tour.js?v=3" defer></script><link rel="stylesheet" href="navigation.css?v=1"></head>
-<body class="feature-page"><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
-  <main>
-    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inventaire &amp; opérations — bige-ops</title><meta name="description" content="Retrouver les ressources cloud, déployer une branche, consulter les logs et piloter les VM et services depuis l’inventaire bige-ops.">
+<link rel="canonical" href="https://bige.dev/inventory.html"><link rel="icon" href="favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#10191b">
+<meta property="og:type" content="article"><meta property="og:title" content="Inventaire &amp; opérations — bige-ops"><meta property="og:description" content="Retrouver les ressources cloud, déployer une branche, consulter les logs et piloter les VM et services depuis l’inventaire bige-ops."><meta property="og:url" content="https://bige.dev/inventory.html"><meta property="og:image" content="https://bige.dev/screens/site-inventory-services-demo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="feature-stories.css?v=notes-20261110-1">
+<script src="feature-stories.js?v=notes-20261110-1" defer></script>
+<noscript><style>.story-stage{display:none}.story-layout{display:block}.story-step,.story-step:last-child{min-height:0}.mobile-proof{display:flex;gap:20px}</style></noscript>
+</head><body class="feature-page" style="--feature-art:url('assets/illustrations/operations-riso-v1.webp')"><a class="skip-link" href="#contenu">Aller au contenu</a><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir le parcours</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header><main id="contenu">
+      <p class="feature-breadcrumb"><a href="features.html">Fonctionnalités</a><span aria-hidden="true">/</span><span>Inventaire &amp; opérations</span></p>
+      <header class="feature-hero"><div><p class="feature-eyebrow">INVENTAIRE &amp; OPÉRATIONS</p><h1>Choisir une branche. Déployer le service.</h1><p class="feature-summary">Retrouver les machines, leurs services et leur état réel. Déployer une branche depuis le service concerné, suivre l’opération et relire son résultat : les gestes d’un PaaS, sur son propre compte cloud.</p><div class="feature-actions"><a class="feature-primary" href="install.html">Installer la bêta ↗</a><a href="#parcours-feature">Voir le fonctionnement ↓</a></div><p class="feature-platforms">Application gratuite · macOS & Linux · Sans IA obligatoire</p></div><figure class="feature-laptop"><div class="laptop-display"><span class="laptop-camera" aria-hidden="true"></span><a class="laptop-screen" href="screens/site-inventory-services-demo.webp" target="_blank" rel="noopener" aria-label="Agrandir la capture : Inventaire bige-ops : VM et services api, web et worker, commandes de déploiement et redémarrage."><img src="screens/site-inventory-services-demo.webp" alt="Inventaire bige-ops : VM et services api, web et worker, commandes de déploiement et redémarrage." width="1440" height="900" decoding="async"></a></div><div class="laptop-base" aria-hidden="true"></div><figcaption>Interface réelle, ressources et états de démonstration. <a href="screens/site-inventory-services-demo.webp" target="_blank" rel="noopener">Agrandir ↗</a></figcaption></figure></header>
+      <section class="feature-story" data-feature-story id="parcours-feature" aria-labelledby="parcours-feature-title">
+      <div class="story-heading"><div><p class="feature-section-label">Le parcours dans l’app</p><h2 id="parcours-feature-title">De la version en ligne à la prochaine branche.</h2></div><p>Faire défiler pour suivre chaque étape.</p></div>
+      <nav class="story-nav" style="--step-count:4" aria-label="Étapes : INVENTAIRE &amp; OPÉRATIONS"><a href="#feature-step-0"><b>01</b> Repérer</a><a href="#feature-step-1"><b>02</b> Choisir</a><a href="#feature-step-2"><b>03</b> Délimiter</a><a href="#feature-step-3"><b>04</b> Vérifier</a></nav>
+      <div class="story-layout"><figure class="story-stage" aria-label="La VM conserve API, Web et Worker. Le contexte Git apparaît auprès de l’API, API et Web sont sélectionnés ensemble, puis leurs références et leur état sont relus après le déploiement.">
+        <div class="story-stage-head"><strong>bige-ops / inventaire &amp; opérations</strong><span data-scene-count>01 / 04</span></div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="feature-diagram" viewBox="0 0 640 480" aria-hidden="true" font-family="inherit" focusable="false"><text x="32" y="34" font-size="18" fill="#aabdb7" font-weight="500">LE SERVICE RESTE LE POINT DE DÉPART.</text><rect x="32" y="64" width="576" height="298" rx="24" fill="#1b2c2e" stroke="#445d59" stroke-width="1.5" /><text x="54" y="102" font-size="20" fill="#aabdb7" font-weight="500">VM APPLICATION</text><circle cx="570" cy="96" r="5" fill="#67d4b7" /><rect x="52" y="126" width="228" height="52" rx="12" fill="#1b2c2e" stroke="#445d59" stroke-width="1.5" /><text x="72" y="160" font-size="24" fill="#eef0e9" font-weight="600">API</text><rect x="52" y="196" width="228" height="52" rx="12" fill="#1b2c2e" stroke="#445d59" stroke-width="1.5" /><text x="72" y="230" font-size="24" fill="#eef0e9" font-weight="600">Web</text><rect x="52" y="266" width="228" height="52" rx="12" fill="#1b2c2e" stroke="#445d59" stroke-width="1.5" /><text x="72" y="300" font-size="24" fill="#eef0e9" font-weight="600">Worker</text><g data-track="{&quot;opacity&quot;:[1,0,0,0]}" opacity="1"><circle cx="260" cy="154" r="5" fill="#67d4b7" /><circle cx="260" cy="224" r="5" fill="#67d4b7" /><circle cx="260" cy="294" r="5" fill="#67d4b7" /><text x="312" y="159" font-size="22" fill="#67d4b7" font-weight="400">Services en ligne</text><text x="312" y="196" font-size="20" fill="#aabdb7" font-weight="400">Dernier état lu</text></g><g data-track="{&quot;opacity&quot;:[0,1,1,0]}" opacity="0"><rect x="52" y="126" width="228" height="52" rx="12" fill="none" stroke="#67d4b7" stroke-width="1.5" /><path d="M282 152 H312" fill="none" stroke="#67d4b7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><text x="328" y="148" font-size="18" fill="#aabdb7" font-weight="400">EN LIGNE</text><text x="328" y="180" font-size="22" fill="#eef0e9" font-weight="400">main · 61ad</text><text x="328" y="220" font-size="18" fill="#aabdb7" font-weight="400">À DÉPLOYER</text><text x="328" y="252" font-size="22" fill="#67d4b7" font-weight="400">release · 8b42</text></g><g data-track="{&quot;opacity&quot;:[0,0,1,0]}" opacity="0"><rect x="52" y="196" width="228" height="52" rx="12" fill="none" stroke="#67d4b7" stroke-width="1.5" /><text x="328" y="302" font-size="20" fill="#67d4b7" font-weight="400">API + Web retenus</text><text x="54" y="342" font-size="18" fill="#aabdb7" font-weight="400">Services du même dépôt : portée à relire</text></g><g data-track="{&quot;opacity&quot;:[0,0,0,1]}" opacity="0"><circle cx="260" cy="154" r="5" fill="#67d4b7" /><circle cx="260" cy="224" r="5" fill="#67d4b7" /><circle cx="260" cy="294" r="5" fill="#67d4b7" /><text x="312" y="150" font-size="22" fill="#eef0e9" font-weight="600">API + Web</text><text x="312" y="184" font-size="22" fill="#67d4b7" font-weight="400">release · 8b42</text><text x="312" y="234" font-size="20" fill="#eef0e9" font-weight="400">Logs consultables</text><text x="312" y="270" font-size="20" fill="#67d4b7" font-weight="400">État rechargé</text><text x="54" y="342" font-size="18" fill="#aabdb7" font-weight="400">Worker conservé dans cet exemple</text></g><g data-track="{&quot;opacity&quot;:[0,0,0,1]}" opacity="0"><rect x="32" y="382" width="576" height="42" rx="12" fill="#243d36" stroke="#67d4b7" stroke-width="1.5" /><text x="52" y="410" font-size="21" fill="#eef0e9" font-weight="400">Déploiement suivi → résultat à vérifier</text></g><text x="32" y="456" font-size="18" fill="#aabdb7" font-weight="400">Exemple de portée choisie · commits illustratifs</text></svg><figcaption>Les états et les actions dépendent du fournisseur, de la cible et des accès.</figcaption><div class="story-meter" aria-hidden="true"></div>
+      </figure><div class="story-copy"><article class="story-step" id="feature-step-0">
+          <span class="step-number">01 · REPÉRER</span>
+          <h3>Partir du service qui tourne.</h3><p>Ouvrir la VM pour retrouver ses services, leur état et les actions disponibles. Application, API et traitements restent rattachés à la bonne machine. Les filtres et la dernière actualisation aident à se repérer dans les ressources du compte.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>VM du cloud</span><i aria-hidden="true">→</i><span>Services et états visibles</span></div>
+          <p class="step-detail">Les états et les actions dépendent du fournisseur, de la cible et des accès.</p></article><article class="story-step" id="feature-step-1">
+          <span class="step-number">02 · CHOISIR</span>
+          <h3>Voir ce qui va remplacer la version en ligne.</h3><p>Depuis le service, ouvrir Déployer et choisir la branche Git. Le dialogue rapproche le commit en ligne et celui qui sera déployé. Le changement porte sur une version identifiable, pas sur un bouton de mise à jour sans contexte.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Version en ligne</span><i aria-hidden="true">→</i><span>Branche et commit choisis</span></div>
+          <p class="step-detail">Branche choisie, commit cible et commit en ligne sont présentés ensemble.</p></article><article class="story-step" id="feature-step-2">
+          <span class="step-number">03 · DÉLIMITER</span>
+          <h3>Relire la portée, puis lancer.</h3><p>Les services issus du même dépôt peuvent être déployés ensemble. Vérifier les cases « Déployer aussi… » et le texte d’impact avant de confirmer. bige-ops exécute ensuite l’opération sur cette sélection et affiche son suivi.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Services associés proposés</span><i aria-hidden="true">→</i><span>Sélection confirmée</span></div>
+          <p class="step-detail">Les services associés sont présélectionnés ; leur portée se relit avant le clic.</p></article><article class="story-step" id="feature-step-3">
+          <span class="step-number">04 · VÉRIFIER</span>
+          <h3>Suivre le déploiement. Relire le résultat.</h3><p>Le job et les logs rendent la progression visible. À la fin, bige-ops recharge les informations d’exécution pour retrouver la version et l’état des services. Redémarrer un service ou mettre une VM en pause reste une commande distincte, selon l’action recherchée.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Opération en cours</span><i aria-hidden="true">→</i><span>État relu dans l’inventaire</span></div>
+          <p class="step-detail">Déployer du code, redémarrer un service et mettre une VM en pause ont des effets différents.</p></article></div></div></section><section class="feature-detail-section" id="commandes-services"><header><h2>Le bon geste, sur la bonne cible.</h2><p>Un seul inventaire, des opérations dont la portée reste visible.</p></header><div class="feature-detail-grid"><article><h3>Déployer une branche</h3><p>Mettre à jour le service et les compagnons sélectionnés depuis leur dépôt. La branche, les commits et l’impact prévu restent lisibles avant de lancer.</p></article><article><h3>Relire les logs</h3><p>Ouvrir le contexte du service pour comprendre son démarrage ou chercher la cause d’un problème. Un processus en ligne ne prouve pas à lui seul la santé de l’application.</p></article><article><h3>Redémarrer ou mettre en pause</h3><p>Le redémarrage cible un service et, si nécessaire, ses conteneurs liés. La pause concerne la VM et affecte ce qui s’y exécute. Les deux commandes ne sont pas interchangeables.</p></article></div></section><section class="feature-focuses" id="dans-l-app"><article class="feature-focus"><div><p class="feature-section-label">Dans l’app</p><h2>Une branche. Les services à mettre à jour.</h2><p>Le formulaire affiche la référence à déployer et les services du même dépôt. Sélectionner le périmètre, puis lancer le déploiement. Le suivi reste dans l’app.</p></div><figure><a href="screens/site-deploy-branch-demo.webp" target="_blank" rel="noopener"><img src="screens/site-deploy-branch-demo.webp" alt="Formulaire bige-ops : branche release/next et services du même dépôt à redéployer." loading="lazy" decoding="async"></a><figcaption>Extrait de l’interface réelle. Dépôt, branche et références de démonstration ; aucun déploiement exécuté. <a href="screens/site-deploy-branch-demo.webp" target="_blank" rel="noopener">Agrandir ↗</a></figcaption></figure></article></section><section class="feature-proof-section"><p class="feature-section-label">Pour aller plus loin</p><h2>Ce que cela change, concrètement.</h2><div class="feature-proof-grid"><article><h3>Construire avant de déployer.</h3><p>Choisir le mode de construction adapté au service : sur VM ou avec GitHub Actions et GHCR selon la configuration.</p><a href="repos-vms-docker.html">Voir le build ↗</a></article><article><h3>Observer après le changement.</h3><p>Retrouver les mesures disponibles et les variations de charge pour examiner le comportement de la ressource.</p><a href="live.html">Ouvrir le parcours Live ↗</a></article><article><h3>Lire la consommation.</h3><p>Les dépenses du compte se consultent dans un parcours dédié, distinct de l’état d’un service.</p><a href="billing.html">Comprendre Billing ↗</a></article></div></section><section class="feature-faq"><h2>Les points à connaître.</h2><div><details><summary>Déployer un service ne change que lui ?</summary><p>Le dialogue propose aussi les services apparentés du même dépôt, cochés par défaut. Il faut relire cette sélection avant de lancer. Un redémarrage peut également concerner des conteneurs qui partagent le réseau du service.</p></details><details><summary>Le déploiement est-il toujours sans interruption ?</summary><p>Non. Cela dépend du service, de l’architecture et du mode de remplacement disponible. Le dialogue indique l’impact prévu ; une courte interruption reste possible.</p></details><details><summary>Les mêmes commandes sont-elles disponibles sur chaque cloud ?</summary><p>Les actions varient selon le fournisseur, le type de ressource, son état et les accès configurés. L’inventaire garde ce contexte ; il ne présente pas toutes les ressources comme interchangeables.</p></details></div></section><details class="feature-reference" id="reference"><summary>Ressources, réglages et détails techniques</summary><div><p>Réglages, périmètres et détails utiles à ce parcours.</p><p class="lead">L’inventaire lit les ressources du compte cloud et conserve un état local daté. Les actions proposées dépendent du fournisseur, de la ressource et du contexte de déploiement retrouvé. Voir une ressource ne signifie pas qu’elle est entièrement gérée par bige-ops.</p>
 
-    <div class="feature-hero"><p class="feature-eyebrow">BIGE-OPS / FONCTIONNALITÉS</p><h1>Tu progresses.<br>Ton infra suit.</h1><p class="feature-summary">Retrouve tes ressources, interviens sur tes VM et services, déploie la prochaine branche. Les opérations et leur contexte restent dans la même app.</p><div class="laptop"><div class="laptop-display"><span class="laptop-camera"></span><figure><a href="screens/site-simule.webp" target="_blank" rel="noopener"><img src="screens/site-simule.webp" loading="lazy" alt="Visual · contexte de la stack, distinct de l’inventaire"></a><figcaption>Visual · contexte de la stack, distinct de l’inventaire · <a href="screens/site-simule.webp" target="_blank" rel="noopener">Agrandir ↗</a></figcaption></figure></div><div class="laptop-base"></div></div></div><section data-motion-copy='{"titles": ["Retrouver sa stack", "Agir au bon niveau", "Livrer la prochaine version"], "zones": ["INVENTAIRE", "OPÉRATIONS", "DÉPLOIEMENT"], "notes": ["Les ressources de ton compte", "VM : pause / start · service : restart", "Branche choisie → deploy → logs"], "entities": [["VM", "Service", "Code Git"], ["Pause / Start", "Restart", "Logs"], ["Branche choisie", "Deploy", "Résultat"]]}' class="feature-tour" aria-label="Parcours guidé"><header><p>DANS L’APP / PARCOURS GUIDÉ</p><h2>Garde la main après le déploiement</h2></header><nav aria-label="Étapes de la fonctionnalité"><a href="#feature-step-0">01 Retrouve les ressources de ton compte.</a><a href="#feature-step-1">02 Interviens au bon niveau.</a><a href="#feature-step-2">03 Déploie la prochaine branche.</a></nav><div class="feature-tour-grid"><div class="feature-tour-copy"><article class="feature-step" id="feature-step-0"><span class="feature-index">01 / 03</span><h3>Retrouve les ressources de ton compte.</h3><p>L’inventaire distingue les ressources cloud et les simulations. Tu gardes le contexte avant de lancer une opération.</p></article><article class="feature-step" id="feature-step-1"><span class="feature-index">02 / 03</span><h3>Interviens au bon niveau.</h3><p>Pause et démarrage concernent les VM compatibles. Redémarrer un service est une opération distincte du build ou du déploiement.</p></article><article class="feature-step" id="feature-step-2"><span class="feature-index">03 / 03</span><h3>Déploie la prochaine branche.</h3><p>Choisis le code à déployer, puis consulte les logs et le résultat. Le cycle continue sans reconstruire ton architecture à chaque évolution.</p></article></div><div class="feature-motion" role="img" aria-label="Retrouver sa stack"><div class="motion-top"><span>bige-ops</span><span>LE CONCEPT</span></div><div class="motion-field"><div class="motion-zone"><span>INVENTAIRE</span></div><svg viewBox="0 0 600 440" aria-hidden="true"><path class="motion-link" d="M150 200 H300 H450"/></svg><div class="motion-entity entity-0"><span>⌘</span><strong>VM</strong></div><div class="motion-entity entity-1"><span>▤</span><strong>Service</strong></div><div class="motion-entity entity-2"><span>◇</span><strong>Branche Git</strong></div><div class="motion-result"><small>Retrouver sa stack</small><strong>Les ressources de ton compte</strong><div class="motion-meter"><i></i></div></div></div><p class="motion-caption">Les ressources de ton compte</p></div></div></section><details class="feature-reference"><summary>Les détails techniques et les limites</summary><div>
-    <p class="lead">
-      Ton compte Outscale existe déjà ? bige-ops le <strong>lit</strong>,
-      le comprend et l’affiche, avec une estimation de coût. Une partie est
-      importable en composants, le reste est observé, et chaque ressource
-      dit dans quel cas elle se trouve.
-    </p>
+<h2>Trois niveaux à distinguer</h2>
+<table>
+  <thead><tr><th>Niveau</th><th>Ce qu’il décrit</th><th>Ce qu’il permet</th></tr></thead>
+  <tbody>
+    <tr><td>Ressource cloud</td><td>VM, volume, réseau, stockage et état remonté par le fournisseur.</td><td>Retrouver une cible et les opérations compatibles.</td></tr>
+    <tr><td>Service</td><td>Application exécutée sur une VM ou un cluster connu.</td><td>Lire les logs, redémarrer ou déployer lorsque le contexte est disponible.</td></tr>
+    <tr><td>Simulation</td><td>Description et fichiers générés d’une infrastructure.</td><td>Préparer une configuration, une estimation et un plan avant application.</td></tr>
+  </tbody>
+</table>
+<p>Après un restart ou un deploy, l’app recharge les informations d’exécution. Une erreur de lecture, un état inconnu et un contrôle de santé absent restent différents d’un service confirmé en bonne santé.</p>
 
-    <h2>Lire le compte</h2>
-    <figure class="diagram">
-      <pre class="mermaid">
-flowchart LR
-  A[Compte Outscale] --> F[inventory fetch]
-  F --> SN[Snapshot local]
-  SN --> SH[inventory show]
-  SN --> IS[import selection]
-  IS --> Y[YAML puis generate]
-  IS --> IP[import plan]
-      </pre>
-      <figcaption>On part du compte réel, pas d’une feuille blanche.</figcaption>
-    </figure>
-
-    <ul>
-      <li>
-        <code>bige-ops inventory fetch</code> — interroge le compte et
-        stocke un <strong>snapshot local</strong> : nets, subnets, VMs,
-        volumes, snapshots, buckets OOS, security groups, keypairs, IP
-        publiques, route tables, NAT, internet service, LBU, net peering,
-        VPN, OKS.
-        <br />
-        Les gateways VPN (client et virtual gateways) et les Subregions sont
-        aussi récupérées : elles restent dans le snapshot brut, sans ligne
-        dédiée dans la liste affichée.
-      </li>
-      <li>
-        <code>bige-ops inventory show</code> — affiche le résumé et
-        l’<strong>estimation de coût</strong>.
-      </li>
-      <li>
-        <code>bige-ops import selection --id i-xxxx</code> — écrit du YAML
-        depuis l’inventaire, puis lance <code>generate</code>.
-      </li>
-      <li>
-        <code>bige-ops import plan</code> — imprime les commandes
-        <code>terraform import</code> suggérées. Rien n’est exécuté.
-      </li>
-    </ul>
-
+<h2>Lire sans importer</h2>
+<p>La lecture de l’inventaire n’adopte pas automatiquement les ressources dans Terraform. Les commandes ci-dessous récupèrent l’état du compte et affichent son résumé ; elles ne créent ni ne suppriment les ressources.</p>
 <pre>bige-ops inventory fetch
-bige-ops inventory show
-bige-ops import selection --id i-0123456789abcdef
+bige-ops inventory show</pre>
+<p>Outscale et OVHcloud ont des inventaires propres à leur fournisseur. Les types disponibles, les informations retournées et les opérations possibles ne sont pas identiques. Une lecture partielle ou une erreur d’API doit être relue avant d’interpréter les totaux.</p>
+
+<h2>Importer une sélection Outscale</h2>
+<p>La reconstruction d’une configuration depuis un inventaire existant concerne actuellement Outscale. Elle ne constitue pas une fonctionnalité d’import d’infrastructure existante pour OVHcloud.</p>
+<p>La sélection écrit les composants pris en charge dans la configuration et génère les fichiers associés. Le plan d’import affiche les commandes Terraform suggérées ; il ne les exécute pas.</p>
+<pre>bige-ops import selection --id i-0123456789abcdef
 bige-ops import plan</pre>
+<table>
+  <thead><tr><th>Traitement</th><th>Périmètre</th></tr></thead>
+  <tbody>
+    <tr><td>Reconstruction des composants pris en charge</td><td>Notamment VM, réseaux, sous-réseaux, volumes et groupes de sécurité, selon la sélection et les informations récupérées.</td></tr>
+    <tr><td>Lecture ou observation partielle</td><td>Certains objets ne sont pas entièrement reconstruits : les listeners des load balancers, par exemple, ne sont pas rétro-ingéniérés.</td></tr>
+    <tr><td>Présence dans l’inventaire sans reconstruction</td><td>Les buckets OOS et les projets OKS observés ne deviennent pas, par cette opération, une configuration complète de création.</td></tr>
+  </tbody>
+</table>
+<p>Le résultat d’import comporte les objets reconstruits, les éléments laissés de côté et les avertissements. Une ressource visible n’est donc pas une preuve d’import complet. <a href="reseau-avance.html">Réseau avancé</a> et <a href="lbu.html">load balancers</a> détaillent ces distinctions.</p>
 
-    <h2>La matrice</h2>
-    <p>
-      Chaque ressource renvoyée par l’API Outscale entre dans un état précis :
-    </p>
-    <table>
-      <thead>
-        <tr>
-          <th>État</th>
-          <th>Ressources</th>
-          <th>Ce que tu peux en faire</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Importé en composant</strong></td>
-          <td>VMs, volumes, nets, subnets, security groups (IDs adoptés), keypairs</td>
-          <td>YAML généré, Terraform, édition dans l’app</td>
-        </tr>
-        <tr>
-          <td><strong>Observé seulement</strong></td>
-          <td>
-            route tables, NAT, internet service, IP publiques, Net peering,
-            VPN, buckets OOS (listés, non réécrits en YAML), LBU importés
-            (sans listeners ni backends), OKS (projets listés, non réécrits
-            en YAML)
-          </td>
-          <td>affiché et compté, mais <strong>aucun Terraform de création</strong></td>
-        </tr>
-        <tr>
-          <td><strong>Local seulement</strong></td>
-          <td><code>nic</code>, <code>dhcp_options</code></td>
-          <td>visibles en Visual / YAML, <strong>pas de Terraform généré</strong></td>
-        </tr>
-        <tr>
-          <td><strong>Catalogue de prix</strong></td>
-          <td>DirectLink</td>
-          <td>tarifé au catalogue de prix</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>
-      Le détail ressource par ressource, avec le pourquoi de chaque état, est
-      sur <a href="reseau-avance.html">Réseau avancé</a> et
-      <a href="lbu.html">LBU</a>.
-    </p>
+<h2>Suppression et oubli local</h2>
+<p><strong>Supprimer une ressource cloud</strong> et <strong>oublier une entrée du snapshot local</strong> sont deux opérations différentes. Les commandes de destruction et de nettoyage ne font pas partie du parcours de simple lecture ou de redémarrage d’un service. Elles demandent de contrôler explicitement leur portée et leurs dépendances.</p>
+<p>Le nettoyage global peut détruire des ressources gérées ou importables. Ce n’est pas une commande d’entretien quotidien à lancer sur un compte de production. Consulter son plan et le <a href="perimetre.html">périmètre de prise en charge</a> avant toute opération de suppression.</p>
 
-    <div class="callout">
-      <strong>La philosophie.</strong>
-      On <strong>lit, comprend et affiche</strong>. Un compte construit à la
-      main reste le tien : l’inventaire te donne une carte et une estimation, sans
-      rien réécrire derrière toi.
-    </div>
-
-    <h2>Status, destroy, forget</h2>
-    <p>
-      L’UI Inventaire montre des <strong>badges d’état</strong>
-      (running / terminated / …) et une estimation. Pour supprimer une
-      ressource cloud avec vérification :
-    </p>
-<pre>bige-ops inventory destroy --id vpc-xxx --cascade --plan
-bige-ops inventory destroy --id i-xxx --cascade --yes
-bige-ops inventory forget --terminated</pre>
-    <p>
-      Sans <code>--yes</code> : plan seulement. Avec <code>--yes</code> :
-      delete + re-fetch ; le succès exige que la ressource ait disparu
-      (ou soit un tombeau oublié). <code>forget</code> = snapshot local
-      seulement (zombies API).
-    </p>
-
-    <div class="callout callout-warn">
-      <strong>Danger — <code>inventory clean --yes</code> est destructif.</strong>
-      Cette commande importe tout ce qui est importable, vide le projet, puis
-      lance un <code>terraform destroy</code> sur le compte. Elle est
-      <strong>à réserver aux comptes de test</strong>. Elle refuse de
-      détruire les buckets OOS ; relis tout de même deux fois avant de la
-      lancer.
-    </div>
-
-    <h2>Bon à savoir</h2>
-    <ul>
-      <li>
-        L’import adopte les ressources que tu sélectionnes ; il ne fait pas
-        entrer tout le compte dans un state Terraform.
-      </li>
-      <li>
-        Le tableau ci-dessus décrit exactement ce que l’import réécrit.
-      </li>
-      <li>
-        Les security groups affichés sont un point de départ de lecture ;
-        l’audit de sécurité et de conformité se mène à côté.
-      </li>
-      <li>
-        L’exploitation du compte reste la tienne —
-        <a href="perimetre.html">périmètre</a>.
-      </li>
-    </ul>
-
-    <p>
-      Câblage réseau : <a href="reseau.html">réseau</a>.
-      Machines : <a href="vms.html">VMs</a>.
-      Objet et backups : <a href="oos.html">OOS</a>.
-      Où vit l’inventaire : <a href="simulations.html">projets &amp; simulations</a>.
-    </p>
-
-    <footer class="site-footer">
-      <div class="cols">
-        <div>
-          <h3>Comprendre</h3>
-          <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="documentation.html">Toute la doc</a></li>
-            <li><a href="perimetre.html">Périmètre</a></li>
-            <li><a href="savoir.html">Sait / ne sait pas</a></li>
-            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
-            <li><a href="glossaire.html">Glossaire</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Composer</h3>
-          <ul>
-            <li><a href="layouts.html">Par où commencer</a></li>
-            <li><a href="stacks.html">Stacks &amp; langages</a></li>
-            <li><a href="vms.html">VMs · VPS</a></li>
-            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
-            <li><a href="omi.html">OMI · images</a></li>
-            <li><a href="bases.html">Bases de données</a></li>
-            <li><a href="bases-complexes.html">Bases complexes</a></li>
-            <li><a href="oos.html">OOS &amp; backups</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Réseau &amp; région</h3>
-          <ul>
-            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
-            <li><a href="reseau-avance.html">Réseau avancé</a></li>
-            <li><a href="lbu.html">LBU · entrée publique</a></li>
-            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
-            <li><a href="oks.html">OKS &amp; pods</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Opérer</h3>
-          <ul>
-            <li><a href="simulations.html">Simulations &amp; promote</a></li>
-            <li><a href="inventory.html">Inventaire &amp; import</a></li>
-            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
-            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
-            <li><a href="agent.html">Assistant IA</a></li>
-            <li><a href="cli.html">CLI · app · OKS</a></li>
-            <li><a href="github-config.html">GitHub config</a></li>
-            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
-            <li><a href="expert-config.html">Mode expert · diffs</a></li>
-          </ul>
-        </div>
-      </div>
-      <p class="meta">
-        Gratuit · simulateur local pour Outscale ·
-        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
-        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
-      </p>
-    </footer>
-  </div></details></main>
-  <script type="module">
-    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
-  </script>
-</body>
-</html>
+<h2>Une pause ne supprime pas tous les coûts</h2>
+<p>Arrêter une VM compatible interrompt ses services. Les volumes, le stockage ou d’autres ressources associées peuvent continuer à être facturés. Le <a href="catalogue-prix.html">détail des coûts</a> aide à distinguer la machine de ce qui l’accompagne.</p>
+<p><a href="repos-vms-docker.html">Déploiement des services</a> · <a href="vms.html">VM</a> · <a href="oos.html">Object Storage</a> · <a href="simulations.html">Simulations</a></p>
+</div></details>
+      <section class="feature-cta"><div><h2>Passer du concept à sa propre stack.</h2><p>Installer l’app gratuite. Commencer par une simulation, avant d’engager des ressources cloud.</p><a href="install.html">Télécharger bige-ops ↗</a></div><div class="feature-cta-art" aria-hidden="true"></div></section>
+      <nav class="feature-related" aria-label="Fonctionnalités associées"><span>Continuer le parcours</span><a href="repos-vms-docker.html">Construire et déployer ↗</a><a href="live.html">Observer la charge ↗</a><a href="billing.html">Suivre les dépenses ↗</a></nav>
+      </main><footer class="site-footer"><div class="footer-intro"><a class="brand" href="index.html"><img src="favicon.svg" width="28" height="28" alt=""> bige-ops</a><p>Simple comme un PaaS. Flexible comme un IaaS.</p></div><div class="cols"><div><h3>Découvrir</h3><ul><li><a href="index.html">Accueil</a></li><li><a href="features.html">Toutes les fonctionnalités</a></li><li><a href="hub.html">Hub &amp; espaces de travail</a></li><li><a href="layouts.html">Simulations</a></li><li><a href="install.html">Installer &amp; mettre à jour</a></li><li><a href="documentation.html">Documentation</a></li><li><a href="glossaire.html">Glossaire</a></li></ul></div><div><h3>Construire & déployer</h3><ul><li><a href="catalogue-prix.html">Catalogue &amp; estimations</a></li><li><a href="repos-vms-docker.html">Build &amp; déploiement</a></li><li><a href="reseau.html">Réseaux &amp; exposition</a></li><li><a href="migration.html">Migration</a></li><li><a href="oos.html">Object Storage</a></li><li><a href="config.html">Configuration</a></li><li><a href="cli.html">Terminal &amp; CLI</a></li></ul></div><div><h3>Observer & décider</h3><ul><li><a href="inventory.html">Inventaire &amp; commandes</a></li><li><a href="live.html">Live analytics</a></li><li><a href="billing.html">Consommation réelle</a></li><li><a href="optimisation.html">Optimisation · en développement</a></li><li><a href="vulnerabilites.html">Vulnérabilités</a></li><li><a href="secrets.html">Coffre &amp; secrets</a></li></ul></div><div><h3>Documenter & partager</h3><ul><li><a href="notes-rapports.html">Notes &amp; documentation</a></li><li><a href="rapports.html">Rapports &amp; slides</a></li><li><a href="agent.html">Agent IA</a></li><li><a href="perimetre.html">Périmètre de la bêta</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/releases">Notes de version</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/issues">Retours &amp; suggestions</a></li></ul></div></div><p class="meta">Application gratuite · macOS & Linux · <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger la bêta</a></p></footer></body></html>

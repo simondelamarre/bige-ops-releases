@@ -1,62 +1,45 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CLI bige-ops &amp; OKS — bige-ops</title>
-  <meta name="description" content="App desktop d’abord. CLI bige-ops = même moteur. OKS : oks-cli + kubectl sous le capot." />
-  <link rel="canonical" href="https://bige.dev/cli.html" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <meta name="theme-color" content="#0b0d10" />
-  <meta property="og:type" content="article" />
-  <meta property="og:site_name" content="bige-ops" />
-  <meta property="og:locale" content="fr_FR" />
-  <meta property="og:url" content="https://bige.dev/cli.html" />
-  <meta property="og:title" content="CLI bige-ops &amp; OKS — bige-ops" />
-  <meta property="og:description" content="App desktop d’abord. CLI bige-ops = même moteur. OKS : oks-cli + kubectl sous le capot." />
-  <meta property="og:image" content="https://bige.dev/screens/hero.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="navigation.css?v=1"></head>
-<body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
-  <main>
-    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="oks.html">OKS</a> · <a href="perimetre.html">Périmètre</a></p>
-
-    <h1>CLI · app · OKS</h1>
-    <p class="lead">
-      Tout commence dans l’<strong>app desktop</strong> (Visual, Workspace,
-      Chat). La <strong>CLI <code>bige-ops</code></strong> est le
-      <strong>même moteur</strong> : l’app l’appelle. Pour
-      <strong>OKS</strong>, bige-ops s’appuie sur les outils officiels,
-      <code>oks-cli</code> et <code>kubectl</code>, sous le capot.
-    </p>
-
-    <div class="callout">
-      <strong>On utilise la CLI pour OKS ?</strong>
-      Oui, sans être un produit « terminal-first ». L’app (ou
-      <code>bige-ops apply --target oks</code> /
-      <code>bige-ops deploy</code>) lance <code>oks-cli</code> pour le
-      cluster et <code>kubectl apply</code> pour les manifests. Tu peux
-      aussi enchaîner à la main une fois le kubeconfig généré.
-    </div>
-
-    <figure class="diagram">
-      <pre class="mermaid">
-flowchart LR
-  App[App desktop] --> Engine[bige-ops CLI]
-  Engine -->|IaaS| TF[Terraform]
-  Engine -->|OKS cluster| OKSCLI[oks-cli]
-  Engine -->|workloads| KUBECTL[kubectl]
-  OKSCLI --> Cloud[Outscale OKS]
-  KUBECTL --> Cloud
-      </pre>
-      <figcaption>App → même CLI → Terraform / oks-cli / kubectl.</figcaption>
-    </figure>
-
-    <h2>Qui fait quoi</h2>
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CLI, terminal &amp; outils intégrés — bige-ops</title><meta name="description" content="Passer de l’interface au terminal avec le moteur bige-ops, comprendre les dépendances et connecter un agent via le serveur MCP local.">
+<link rel="canonical" href="https://bige.dev/cli.html"><link rel="icon" href="favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#10191b">
+<meta property="og:type" content="article"><meta property="og:title" content="CLI, terminal &amp; outils intégrés — bige-ops"><meta property="og:description" content="Passer de l’interface au terminal avec le moteur bige-ops, comprendre les dépendances et connecter un agent via le serveur MCP local."><meta property="og:url" content="https://bige.dev/cli.html"><meta property="og:image" content="https://bige.dev/screens/site-simule.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="feature-stories.css?v=notes-20261110-1">
+<script src="feature-stories.js?v=notes-20261110-1" defer></script>
+<noscript><style>.story-stage{display:none}.story-layout{display:block}.story-step,.story-step:last-child{min-height:0}.mobile-proof{display:flex;gap:20px}</style></noscript>
+</head><body class="feature-page" style="--feature-art:url('assets/illustrations/build-riso-v1.webp')"><a class="skip-link" href="#contenu">Aller au contenu</a><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir le parcours</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header><main id="contenu">
+      <p class="feature-breadcrumb"><a href="features.html">Fonctionnalités</a><span aria-hidden="true">/</span><span>Cli &amp; environnement local</span></p>
+      <header class="feature-hero"><div><p class="feature-eyebrow">CLI &amp; ENVIRONNEMENT LOCAL</p><h1>Le moteur est livré. Les commandes restent accessibles.</h1><p class="feature-summary">bige-ops et oks-cli accompagnent l’app desktop. Retrouver le terminal, les commandes et leurs résultats dans le contexte du projet. Les outils supplémentaires sont vérifiés selon le parcours : Docker pour tester localement, Terraform ou kubectl lorsque la cible l’exige.</p><div class="feature-actions"><a class="feature-primary" href="install.html">Installer la bêta ↗</a><a href="#parcours-feature">Voir le fonctionnement ↓</a></div><p class="feature-platforms">Application gratuite · macOS & Linux · Sans IA obligatoire</p></div><div class="feature-art" aria-hidden="true"></div></header>
+      <nav class="feature-logos" aria-label="Outils et fournisseurs cités"><a href="https://brew.sh/"><img src="assets/brands/homebrew.svg" alt="" width="40" height="40" loading="lazy"><span><strong>Homebrew</strong><small>Installation de dépendances prises en charge</small></span></a></nav><section class="feature-story" data-feature-story id="parcours-feature" aria-labelledby="parcours-feature-title">
+      <div class="story-heading"><div><p class="feature-section-label">Le parcours dans l’app</p><h2 id="parcours-feature-title">La même configuration, une exécution explicite.</h2></div><p>Faire défiler pour suivre chaque étape.</p></div>
+      <nav class="story-nav" style="--step-count:4" aria-label="Étapes : CLI &amp; ENVIRONNEMENT LOCAL"><a href="#feature-step-0"><b>01</b> Partir du bon projet</a><a href="#feature-step-1"><b>02</b> Valider &amp; générer</a><a href="#feature-step-2"><b>03</b> Lire le plan</a><a href="#feature-step-3"><b>04</b> Retrouver le résultat</a></nav>
+      <div class="story-layout"><figure class="story-stage" aria-label="Un même fichier projet est validé, transformé en fichiers générés, puis examiné par un plan. Le résultat retourne à la lecture utilisateur, sans exécuter automatiquement la mise en production.">
+        <div class="story-stage-head"><strong>bige-ops / cli &amp; environnement local</strong><span data-scene-count>01 / 04</span></div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="feature-diagram" viewBox="0 0 640 480" fill="none" aria-hidden="true" focusable="false">
+<rect x="32" y="32" width="576" height="402" rx="22" fill="#1b2c2e" stroke="#526a64" /><circle cx="57" cy="57" r="5" fill="#aabdb7" /><circle cx="75" cy="57" r="5" fill="#aabdb7" /><circle cx="93" cy="57" r="5" fill="#aabdb7" /><text x="120" y="64" fill="#aabdb7" font-size="19">Terminal · simulation sélectionnée</text><path d="M32 82H608" stroke="#526a64" />
+<text x="55" y="127" fill="#eef0e9" font-size="23">bige-ops / project.yaml</text><text x="55" y="161" fill="#aabdb7" font-size="20">La configuration du projet</text>
+<g data-track="{&quot;opacity&quot;:[0,1,1,1]}" opacity="0"><text x="55" y="211" fill="#67d4b7" font-size="23">$ bige-ops validate</text><text x="55" y="249" fill="#67d4b7" font-size="23">$ bige-ops generate</text></g>
+<g data-track="{&quot;opacity&quot;:[0,0,1,1]}" opacity="0"><text x="55" y="301" fill="#67d4b7" font-size="23">$ bige-ops plan</text><text x="55" y="339" fill="#aabdb7" font-size="20">Changements à examiner</text></g>
+<g data-track="{&quot;opacity&quot;:[0,0,0,1]}" opacity="0"><rect x="49" y="365" width="542" height="45" rx="10" fill="#233c38" /><text x="65" y="395" fill="#eef0e9" font-size="22">Lire la sortie. Décider de la suite.</text></g>
+<text x="35" y="467" fill="#aabdb7" font-size="18">Séquence illustrative · aucune mutation cloud déclenchée.</text></svg><figcaption>Les builds desktop livrent leur CLI ; son emplacement interne ne signifie pas qu’une commande globale est déjà installée dans tous les terminaux.</figcaption><div class="story-meter" aria-hidden="true"></div>
+      </figure><div class="story-copy"><article class="story-step" id="feature-step-0">
+          <span class="step-number">01 / PARTIR DU BON PROJET</span>
+          <h3>Garder le contexte de l’app.</h3><p>L’app utilise en priorité ses binaires bige-ops et oks-cli embarqués. Dans les réglages, retrouver leur chemin, leur version et les dépendances détectées. Le terminal s’ouvre dans le contexte de la simulation pour travailler sur les mêmes fichiers que l’interface.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Simulation ouverte</span><i aria-hidden="true">→</i><span>Projet et binaire identifiés</span></div>
+          <p class="step-detail">Les builds desktop livrent leur CLI ; son emplacement interne ne signifie pas qu’une commande globale est déjà installée dans tous les terminaux.</p></article><article class="story-step" id="feature-step-1">
+          <span class="step-number">02 / VALIDER &amp; GÉNÉRER</span>
+          <h3>Passer d’une configuration à des fichiers relisibles.</h3><p>Valider le projet, puis générer les fichiers attendus par son mode de déploiement. Les erreurs doivent être traitées avant de poursuivre. La ligne de commande donne une autre entrée vers le travail du produit ; elle ne demande pas de reconstruire manuellement toute la configuration générée.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Configuration</span><i aria-hidden="true">→</i><span>Validation et génération</span></div>
+          <p class="step-detail">La génération prépare des fichiers. Elle n’applique pas les changements au cloud.</p></article><article class="story-step" id="feature-step-2">
+          <span class="step-number">03 / LIRE LE PLAN</span>
+          <h3>Voir l’effet avant de l’exécuter.</h3><p>Lancer le plan de la cible sélectionnée et lire les ressources concernées. La commande, sa sortie et son code de retour rendent le résultat explicite. Un plan réussi prépare une décision : l’application au cloud ou le déploiement reste une opération distincte, lancée avec les accès nécessaires.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Fichiers générés</span><i aria-hidden="true">→</i><span>Plan de la cible</span></div>
+          <p class="step-detail">Un script qui exécute des mutations conserve ses responsabilités d’authentification, de portée et de confirmation.</p></article><article class="story-step" id="feature-step-3">
+          <span class="step-number">04 / RETROUVER LE RÉSULTAT</span>
+          <h3>Diagnostiquer sans changer d’outil mental.</h3><p>Consulter les états, les logs ou les résultats d’opération avec les commandes disponibles. L’interface reste le chemin principal pour lire et agir ; le terminal sert à approfondir, automatiser une séquence maîtrisée ou fournir un diagnostic précis. Les limites de chaque commande restent celles du produit.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Commande exécutée</span><i aria-hidden="true">→</i><span>État, sortie et logs</span></div>
+          <p class="step-detail">Toutes les fonctions desktop, notamment certains parcours de vulnérabilités, n’ont pas un équivalent CLI complet.</p></article></div></div></section><section class="feature-detail-section" id="moteur"><header><h2>Le moteur du produit, livré avec l’app.</h2><p>Le desktop ne demande pas d’installer le projet Python source pour commencer.</p></header><div class="feature-detail-grid"><article><h3>CLI bige-ops embarqué</h3><p>bige-ops et oks-cli sont livrés avec les builds desktop et recherchés en priorité. Le panneau Dépendances affiche leurs versions et les chemins retenus. Le CLI bige-ops porte les commandes de configuration et d’infrastructure ; oks-cli intervient dans les parcours Outscale Kubernetes.</p></article><article><h3>Terminal et scripts</h3><p>Les commandes exposées peuvent être lancées depuis un contexte de projet approprié. Certaines offrent des sorties JSON utiles aux intégrations. Il faut vérifier les arguments et les sorties de la commande choisie, sans supposer une parité totale entre toutes les vues desktop et la CLI.</p><a href="cli.md">Lire le mémo des commandes ↗</a></article><article><h3>MCP local</h3><p>Le même binaire peut lancer le serveur MCP en stdio. Les agents externes utilisent des outils dédiés et limités, pas automatiquement toutes les commandes accessibles à l’utilisateur dans son terminal.</p></article></div></section><section class="feature-detail-section" id="dependances"><header><h2>Savoir ce qui est installé. Ajouter ce qui manque.</h2><p>Embarquer le moteur ne signifie pas embarquer tous les outils de l’écosystème.</p></header><div class="feature-detail-grid"><article><h3>Diagnostic de l’environnement</h3><p>Le panneau Dépendances recherche les outils disponibles et leur version : Terraform, Docker et Compose, kubectl, kind, SSH, Git et les outils de cloud concernés. Le besoin dépend du parcours choisi.</p></article><article><h3>Installation guidée</h3><p>Pour les outils pris en charge, l’app peut lancer une installation ou une mise à jour, notamment par Homebrew ou un mécanisme de téléchargement prévu. Les logs et l’échec éventuel restent visibles. Certains outils demandent une installation manuelle.</p></article><article><h3>Exécution locale</h3><p>Tester une stack en conteneurs exige un environnement Docker opérationnel ; un binaire détecté ne suffit pas si le moteur n’est pas démarré. Kubernetes local et cloud ont également leurs prérequis propres.</p><a href="layouts.html">Tester une stack en local ↗</a></article></div></section><section class="feature-detail-section" id="operations"><header><h2>Des commandes pour des moments précis.</h2><p>Le CLI est utile quand l’action et son périmètre sont déjà clairs.</p></header><div class="feature-detail-grid"><article><h3>Préparer</h3><p>Valider, générer et estimer la simulation. Relire les erreurs ou les différences avant le plan.</p></article><article><h3>Agir</h3><p>Appliquer les changements d’infrastructure ou déployer une application via leurs commandes distinctes, avec le compte et la cible voulus.</p></article><article><h3>Comprendre</h3><p>Lire les états, les logs ou les informations d’inventaire disponibles ; joindre une sortie utile à un diagnostic sans exposer de secret.</p></article></div></section><section class="feature-detail-section" id="documentation"><header><h2>Une commande, son contexte, sa documentation.</h2><p>Partir d’un projet identifié et des commandes prises en charge.</p></header><div class="feature-detail-grid"><article><h3>Découvrir les commandes.</h3><p>Le mémo présente les points d’entrée utiles. La documentation embarquée détaille cli/overview, cli/live et cli/inventory. Utiliser --help pour relire les arguments de la version installée.</p><a href="cli.md">Ouvrir le mémo CLI ↗</a></article><article><h3>Conserver un diagnostic exploitable.</h3><p>La sortie et le code de retour permettent de distinguer succès et erreur. Les logs d’une commande aident à comprendre son résultat ; les accès sensibles restent à masquer dans un rapport partagé.</p></article></div></section><section class="feature-glossary" id="glossaire-feature"><h2>Les mots du sujet.</h2><dl><div><dt>CLI</dt><dd>Interface en ligne de commande : une façon de déclencher les fonctions du moteur depuis un terminal.</dd></div><div><dt>Binaire embarqué</dt><dd>Exécutable livré dans l’application, sans installation séparée de ses sources.</dd></div><div><dt>Dépendance</dt><dd>Outil nécessaire à une opération, par exemple Docker pour exécuter les conteneurs localement.</dd></div></dl></section><section class="feature-proof-section"><p class="feature-section-label">Pour aller plus loin</p><h2>Ce que cela change, concrètement.</h2><div class="feature-proof-grid"><article><h3>Une configuration commune.</h3><p>Visual, configuration et moteur s’appuient sur le projet de simulation. Le terminal n’introduit pas une seconde infrastructure à maintenir.</p><a href="layouts.html">Comprendre les simulations ↗</a></article><article><h3>Un plan avant l’exécution.</h3><p>La lecture des changements est une étape propre. Générer des fichiers ou lancer un plan ne vaut pas mise en production.</p><a href="repos-vms-docker.html">Suivre le déploiement ↗</a></article><article><h3>Les agents ont un périmètre réduit.</h3><p>MCP expose les outils du produit avec leurs garde-fous. Il ne donne pas à l’agent un shell global sur la machine.</p><a href="agent.html">Connecter un agent ↗</a></article></div></section><section class="feature-faq"><h2>Les points à connaître.</h2><div><details><summary>Faut-il installer Python pour utiliser l’app ?</summary><p>Les builds desktop livrent le moteur CLI nécessaire à l’application ; l’utilisateur n’a pas à installer les sources Python pour ce parcours. Un environnement de développement depuis le dépôt a ses propres dépendances.</p></details><details><summary>Tout fonctionne-t-il sans dépendances supplémentaires ?</summary><p>Terraform, Docker, kubectl ou d’autres outils peuvent être nécessaires selon l’opération. L’app diagnostique l’environnement et guide l’installation des outils pris en charge. Le panneau Dépendances permet de vérifier les prérequis avant de lancer le parcours choisi.</p></details><details><summary>Puis-je remplacer toute l’interface par des scripts ?</summary><p>Les commandes disponibles couvrent de nombreux parcours d’infrastructure et d’exploitation. Certaines fonctions restent propres au desktop, notamment une partie de l’analyse de vulnérabilités et des éditeurs. Vérifier le périmètre de la commande avant de construire un automatisme.</p></details></div></section><details class="feature-reference" id="reference"><summary>Ressources, réglages et détails techniques</summary><div><p>Les commandes doivent être lancées dans le contexte du bon projet. Le binaire embarqué, les outils installés et la connexion au fournisseur déterminent les capacités réellement disponibles.</p><h2>Qui fait quoi</h2>
     <table>
       <thead>
         <tr><th>Outil</th><th>Rôle</th><th>Quand</th></tr>
@@ -64,7 +47,7 @@ flowchart LR
       <tbody>
         <tr>
           <td><strong>App desktop</strong></td>
-          <td>Composer, estimate, review, deploy</td>
+          <td>Composer, estimer, relire et déployer</td>
           <td>Chemin nominal</td>
         </tr>
         <tr>
@@ -105,21 +88,19 @@ flowchart LR
     <h2>Terminal de l’app</h2>
     <p>
       Vrai shell PTY (<code>$SHELL</code>) : <code>ls</code>, <code>git</code>,
-      <code>bige-ops …</code>. Le binaire est sur le PATH. Les onglets restent
+      <code>bige-ops …</code> dans le contexte fourni par l’app. Le chemin du binaire utilisé se vérifie dans les réglages. Les onglets restent
       actifs quand tu changes de vue.
     </p>
 
     <h2>Commandes utiles</h2>
 <pre>bige-ops live status [--sample] [--oks]
 bige-ops live sample --id i-xxxxxxxx
-bige-ops inventory destroy --id … --cascade [--plan|--yes]
-bige-ops inventory forget --terminated
 bige-ops pricing catalog-sync
-bige-ops mcp                        # stdio pour Cursor / Claude Code</pre>
+bige-ops mcp                        # stdio pour un client MCP</pre>
     <p>
       Live = état lu par l’API Outscale + capacité Tina ; l’usage dans la VM
       (CPU, RAM, disque) s’obtient avec <code>sample</code>, par SSH.
-      Inventaire : badges status, destroy vérifié, forget local.
+      L’inventaire présente les états et les opérations disponibles, avec leur portée propre.
       Tarifs : sync du catalogue public Outscale par <code>ReadPublicCatalog</code> (page Tarifs dans l’app).
     </p>
 
@@ -130,67 +111,9 @@ bige-ops mcp                        # stdio pour Cursor / Claude Code</pre>
       dans le terminal de l’app.
     </p>
 
-    <footer class="site-footer">
-      <div class="cols">
-        <div>
-          <h3>Comprendre</h3>
-          <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="documentation.html">Toute la doc</a></li>
-            <li><a href="perimetre.html">Périmètre</a></li>
-            <li><a href="savoir.html">Sait / ne sait pas</a></li>
-            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
-            <li><a href="glossaire.html">Glossaire</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Composer</h3>
-          <ul>
-            <li><a href="layouts.html">Par où commencer</a></li>
-            <li><a href="stacks.html">Stacks &amp; langages</a></li>
-            <li><a href="vms.html">VMs · VPS</a></li>
-            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
-            <li><a href="omi.html">OMI · images</a></li>
-            <li><a href="bases.html">Bases de données</a></li>
-            <li><a href="bases-complexes.html">Bases complexes</a></li>
-            <li><a href="oos.html">OOS &amp; backups</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Réseau &amp; région</h3>
-          <ul>
-            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
-            <li><a href="reseau-avance.html">Réseau avancé</a></li>
-            <li><a href="lbu.html">LBU · entrée publique</a></li>
-            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
-            <li><a href="oks.html">OKS &amp; pods</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Opérer</h3>
-          <ul>
-            <li><a href="simulations.html">Simulations &amp; promote</a></li>
-            <li><a href="inventory.html">Inventaire &amp; import</a></li>
-            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
-            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
-            <li><a href="agent.html">Assistant IA</a></li>
-            <li><a href="cli.html">CLI · app · OKS</a></li>
-            <li><a href="github-config.html">GitHub config</a></li>
-            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
-            <li><a href="expert-config.html">Mode expert · diffs</a></li>
-          </ul>
-        </div>
-      </div>
-      <p class="meta">
-        Gratuit · simulateur local pour Outscale ·
-        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
-        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
-      </p>
-    </footer>
-  </main>
-  <script type="module">
-    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
-  </script>
-</body>
-</html>
+<h2>Outils embarqués et dépendances</h2>
+<p><code>bige-ops</code> et <code>oks-cli</code> sont livrés avec le desktop. Terraform, Docker/Compose, kubectl, kind, SSH ou Git peuvent être nécessaires selon le parcours. Le panneau Dépendances les vérifie et propose une installation pour les outils pris en charge. Exécuter une stack locale demande notamment un moteur Docker démarré.</p>
+</div></details>
+      <section class="feature-cta"><div><h2>Passer du concept à sa propre stack.</h2><p>Installer l’app gratuite. Commencer par une simulation, avant d’engager des ressources cloud.</p><a href="install.html">Télécharger bige-ops ↗</a></div><div class="feature-cta-art" aria-hidden="true"></div></section>
+      <nav class="feature-related" aria-label="Fonctionnalités associées"><span>Continuer le parcours</span><a href="config.html">Comprendre la configuration ↗</a><a href="agent.html">Connecter un agent par MCP ↗</a><a href="inventory.html">Exploiter les ressources ↗</a></nav>
+      </main><footer class="site-footer"><div class="footer-intro"><a class="brand" href="index.html"><img src="favicon.svg" width="28" height="28" alt=""> bige-ops</a><p>Simple comme un PaaS. Flexible comme un IaaS.</p></div><div class="cols"><div><h3>Découvrir</h3><ul><li><a href="index.html">Accueil</a></li><li><a href="features.html">Toutes les fonctionnalités</a></li><li><a href="hub.html">Hub &amp; espaces de travail</a></li><li><a href="layouts.html">Simulations</a></li><li><a href="install.html">Installer &amp; mettre à jour</a></li><li><a href="documentation.html">Documentation</a></li><li><a href="glossaire.html">Glossaire</a></li></ul></div><div><h3>Construire & déployer</h3><ul><li><a href="catalogue-prix.html">Catalogue &amp; estimations</a></li><li><a href="repos-vms-docker.html">Build &amp; déploiement</a></li><li><a href="reseau.html">Réseaux &amp; exposition</a></li><li><a href="migration.html">Migration</a></li><li><a href="oos.html">Object Storage</a></li><li><a href="config.html">Configuration</a></li><li><a href="cli.html">Terminal &amp; CLI</a></li></ul></div><div><h3>Observer & décider</h3><ul><li><a href="inventory.html">Inventaire &amp; commandes</a></li><li><a href="live.html">Live analytics</a></li><li><a href="billing.html">Consommation réelle</a></li><li><a href="optimisation.html">Optimisation · en développement</a></li><li><a href="vulnerabilites.html">Vulnérabilités</a></li><li><a href="secrets.html">Coffre &amp; secrets</a></li></ul></div><div><h3>Documenter & partager</h3><ul><li><a href="notes-rapports.html">Notes &amp; documentation</a></li><li><a href="rapports.html">Rapports &amp; slides</a></li><li><a href="agent.html">Agent IA</a></li><li><a href="perimetre.html">Périmètre de la bêta</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/releases">Notes de version</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/issues">Retours &amp; suggestions</a></li></ul></div></div><p class="meta">Application gratuite · macOS & Linux · <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger la bêta</a></p></footer></body></html>

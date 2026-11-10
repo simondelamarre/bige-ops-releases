@@ -1,294 +1,73 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Object Storage · S3, R2, OOS &amp; backups — bige-ops</title>
-  <meta name="description" content="Explore, prévisualise et migre un ou plusieurs buckets AWS S3, Cloudflare R2 ou compatibles S3 vers Outscale OOS, avec copie parallèle et reprise après interruption." />
-  <link rel="canonical" href="https://bige.dev/oos.html" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <meta name="theme-color" content="#0b0d10" />
-  <meta property="og:type" content="article" />
-  <meta property="og:site_name" content="bige-ops" />
-  <meta property="og:locale" content="fr_FR" />
-  <meta property="og:url" content="https://bige.dev/oos.html" />
-  <meta property="og:title" content="Object Storage · S3, R2, OOS &amp; backups — bige-ops" />
-  <meta property="og:description" content="Explore, prévisualise et migre un ou plusieurs buckets AWS S3, Cloudflare R2 ou compatibles S3 vers Outscale OOS, avec copie parallèle et reprise après interruption." />
-  <meta property="og:image" content="https://bige.dev/screens/hero.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="feature-tour.css?v=3"><script src="feature-tour.js?v=3" defer></script><link rel="stylesheet" href="navigation.css?v=1"></head>
-<body class="feature-page"><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
-  <main>
-    <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a> · <a href="bases.html">Bases</a></p>
-
-    <div class="feature-hero"><p class="feature-eyebrow">BIGE-OPS / FONCTIONNALITÉS</p><h1>Object Storage · S3, R2, OOS &amp; backups</h1><p class="feature-summary">Choisir les deux côtés. Vérifier la destination. Le contrôle reste dans ton app.</p><div class="laptop"><div class="laptop-display"><span class="laptop-camera"></span><figure><a href="screens/site-migration.webp" target="_blank" rel="noopener"><img src="screens/site-migration.webp" loading="lazy" alt="Storage Explorer · choix des buckets"></a><figcaption>Storage Explorer · choix des buckets · <a href="screens/site-migration.webp" target="_blank" rel="noopener">Agrandir ↗</a></figcaption></figure></div><div class="laptop-base"></div></div></div><section data-motion-copy='{"titles": ["Choisir les deux côtés", "Copier les objets", "Vérifier la destination"], "zones": ["SOURCE → CIBLE", "TRANSFERT", "COPIE VÉRIFIÉE"], "notes": ["La source reste intacte", "Reprise après interruption", "Changer les accès après vérification"], "entities": [["Source S3", "Objets", "Cible OOS"], ["Source intacte", "Copie en cours", "Objets copiés"], ["Source intacte", "Vérification", "Cible prête"]]}' class="feature-tour" aria-label="Parcours guidé"><header><p>DANS L’APP / PARCOURS GUIDÉ</p><h2>Emporte tes objets, étape par étape</h2></header><nav aria-label="Étapes de la fonctionnalité"><a href="#feature-step-0">01 Choisis la source et la destination.</a><a href="#feature-step-1">02 Suis la copie.</a><a href="#feature-step-2">03 Relie le stockage à tes données.</a></nav><div class="feature-tour-grid"><div class="feature-tour-copy"><article class="feature-step" id="feature-step-0"><span class="feature-index">01 / 03</span><h3>Choisis la source et la destination.</h3><p>Retrouve tes buckets compatibles S3 et prépare la destination OOS. Les noms et les chemins restent visibles avant le transfert.</p></article><article class="feature-step" id="feature-step-1"><span class="feature-index">02 / 03</span><h3>Suis la copie.</h3><p>Les objets sont copiés vers la cible. Le suivi et la reprise permettent de traiter une interruption sans supprimer la source.</p></article><article class="feature-step" id="feature-step-2"><span class="feature-index">03 / 03</span><h3>Relie le stockage à tes données.</h3><p>Le panneau Données d’une base donne accès aux sauvegardes et à leur stockage. Vérifie les objets copiés avant de changer les accès de ton app.</p></article></div><div class="feature-motion" role="img" aria-label="Choisir les deux côtés"><div class="motion-top"><span>bige-ops</span><span>LE CONCEPT</span></div><div class="motion-field"><div class="motion-zone"><span>SOURCE → CIBLE</span></div><svg viewBox="0 0 600 440" aria-hidden="true"><path class="motion-link" d="M150 200 H300 H450"/></svg><div class="motion-entity entity-0"><span>⌘</span><strong>Bucket source</strong></div><div class="motion-entity entity-1"><span>▤</span><strong>Objets</strong></div><div class="motion-entity entity-2"><span>◇</span><strong>Bucket cible</strong></div><div class="motion-result"><small>Choisir les deux côtés</small><strong>La source reste intacte</strong><div class="motion-meter"><i></i></div></div></div><p class="motion-caption">La source reste intacte</p></div></div></section><details class="feature-reference"><summary>Les détails techniques et les limites</summary><div>
-    <p class="lead">
-      Connecte <strong>AWS S3</strong>, <strong>Cloudflare R2</strong>,
-      <strong>Outscale OOS</strong> ou un endpoint compatible S3 pour explorer,
-      prévisualiser et transférer tes objets. Bige Ops peut reproduire un ou
-      plusieurs buckets sur OOS, conserver leurs noms et reprendre une copie
-      interrompue sans supprimer la source.
-    </p>
-
-    <div class="callout">
-      <strong>Deux usages séparés.</strong>
-      Le <strong>Storage Explorer</strong> sert à parcourir, rechercher,
-      prévisualiser, transférer et migrer les objets. Les
-      <strong>backups de bases de données</strong> utilisent aussi un bucket,
-      mais gardent leur propre configuration, leur planning, leur rétention et
-      leur restauration.
-    </div>
-
-    <h2>Storage Explorer multi-provider</h2>
-    <p>
-      Dans l’app, l’onglet <strong>Storage</strong> accepte AWS S3, OOS,
-      Cloudflare R2 et un endpoint compatible S3. Une connexion manuelle et ses
-      secrets restent dans le workspace courant : elle n’apparaît pas dans les
-      autres espaces de travail. Les buckets OOS déjà détectés dans l’inventaire
-      peuvent être ouverts directement par une connexion gérée liée au compte.
-    </p>
-    <ul>
-      <li><strong>Parcourir et chercher :</strong> arbre paresseux dossiers/fichiers, fil d’Ariane, pagination et recherche bornée par lots.</li>
-      <li><strong>Comprendre :</strong> poids des objets courants, nombre d’objets, métadonnées, tags et nom original lorsqu’il existe — sans appeler cette mesure la facture exacte.</li>
-      <li><strong>Contrôler l’exposition :</strong> état privé, potentiellement public ou inconnu selon les protections et policies réellement lisibles.</li>
-      <li><strong>Agir :</strong> aperçu local intégré, téléchargement, upload et suppression récursive d’un dossier ou d’un bucket avec inventaire, confirmation exacte et progression.</li>
-      <li><strong>Migrer :</strong> flux Source → Destination, 16 transferts parallèles par défaut (réglables), reprise après interruption, recherche des clés manquantes et vérification ; la source n’est jamais supprimée ni écrasée automatiquement.</li>
-      <li><strong>Reproduire plusieurs buckets :</strong> sélection partielle ou globale d’une connexion S3, création automatique des buckets OOS manquants avec les mêmes noms, puis suivi et reprise par bucket et par objet.</li>
-    </ul>
-    <div class="callout">
-      <strong>Migration complète en quatre étapes.</strong>
-      Choisis la connexion source, sélectionne un ou tous ses buckets, choisis
-      la connexion OOS de destination, puis prépare le plan. Bige Ops crée les
-      buckets OOS manquants avec les mêmes noms et lance les copies parallèles.
-      La console affiche le bucket, les objets terminés, les octets, le débit,
-      l’estimation et le nombre de transferts actifs. Fermer l’app interrompt le
-      processus local et libère son verrou sans détruire le suivi : l’action
-      <strong>Reprendre</strong> continue les objets non terminés ou non vérifiés.
-    </div>
-    <figure class="diagram">
-      <pre class="mermaid">
-flowchart LR
-  SRC["AWS S3 / R2 / S3 custom"] -->|sélectionner un ou tous les buckets| PLAN[Plan local]
-  PLAN -->|créer les buckets manquants avec les mêmes noms| OOS[(Outscale OOS)]
-  PLAN -->|copie parallèle et reprenable| OOS
-  SRC -.->|source conservée| SRC
-      </pre>
-      <figcaption>Un plan liste les métadonnées ; les contenus ne sont copiés qu’au lancement de la migration.</figcaption>
-    </figure>
-    <p>
-      Une clé contenant des caractères non imprimables peut être refusée par OOS.
-      Bige Ops ne la renomme jamais silencieusement : l’objet reste dans la
-      source et apparaît dans le rapport d’alerte pour une correction ciblée.
-    </p>
-    <p>
-      Les aperçus utilisent un cache privé et borné du workspace. Images, texte,
-      PDF, audio, vidéo et principaux formats bureautiques (DOC/DOCX, RTF,
-      OpenDocument, XLS/XLSX et PPT/PPTX) sont rendus dans l’app lorsque le
-      format le permet. Les variantes non prises en charge gardent un repli
-      explicite vers le téléchargement ou l’application système.
-    </p>
-
-    <figure class="diagram">
-      <pre class="mermaid">
-flowchart LR
-  DB[(Postgres / Mongo…)] -->|backup.enabled| B[backup.sh]
-  B --> OOS[(bucket OOS)]
-  VOL[Volume / snapshot] -.->|filet bloc| DB
-  OOS -->|dumps datés| SAFE[Restauration et migration : panneau Données]
-      </pre>
-      <figcaption>Bloc pour les données chaudes · OOS pour les objets et les dumps.</figcaption>
-    </figure>
-
-    <h2>Ce qu’OOS apporte</h2>
-    <ul>
-      <li><strong>Un stockage régional.</strong> Un volume BSU vit dans une Subregion ; un bucket OOS vit dans la Région. Outscale y combine erasure coding (gros objets) et réplication (petits objets) entre zones : un objet reste lisible même si une zone entière tombe (<a href="https://docs.outscale.com/fr/userguide/Mécanismes-de-résilience-d-OOS.html" target="_blank" rel="noopener noreferrer">mécanismes de résilience</a>).</li>
-      <li><strong>Un endpoint par Région</strong> : <code>https://oos.&lt;région&gt;.outscale.com</code>, disponible dans les cinq Régions publiques.</li>
-      <li><strong>Les fonctions S3 attendues</strong> : versioning, cycle de vie, verrouillage d’objets, chiffrement côté serveur, URL pré-signées, CORS, site statique (<a href="https://docs.outscale.com/fr/userguide/Introduction-à-OOS.html" target="_blank" rel="noopener noreferrer">introduction à OOS</a>).</li>
-      <li><strong>Une ligne simple dans l’estimation</strong> : OOS se compte au GiB stocké ; renseigne la taille attendue d’un bucket pour la voir dans ta simulation.</li>
-    </ul>
-    <div class="callout">
-      <strong>Deux règles Outscale à connaître.</strong>
-      Un nom de bucket est unique dans toute la Région, fait 3 à 63
-      caractères (minuscules, chiffres, tirets) et ne se renomme pas. Et OOS
-      s’utilise avec les access keys du compte : les utilisateurs EIM n’y ont
-      pas accès.
-    </div>
-
-    <h2>Déclarer un bucket</h2>
-    <p>
-      Pose un <code>oos_bucket</code> dans la simulation (palette Storage de
-      Visual, ou YAML). <code>generate</code> produit les ressources Terraform
-      S3 pointées sur l’endpoint OOS de ta Région, avec versioning en option.
-      L’apply crée le bucket sur <em>ton</em> compte.
-    </p>
-    <!-- Other clouds hidden for now (ENABLED_PROVIDER_IDS in desktop/src/lib/providers.ts). Previous copy:
-    generate produit du Terraform (provider AWS pointé sur l’endpoint OOS régional, ex. oos.eu-west-2.outscale.com), avec versioning optionnel. -->
-
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Storage Explorer · S3, R2 &amp; OOS — bige-ops</title><meta name="description" content="Parcourir les buckets S3, R2 et OOS, inspecter les objets et suivre leurs transferts dans le Storage Explorer de bige-ops.">
+<link rel="canonical" href="https://bige.dev/oos.html"><link rel="icon" href="favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#10191b">
+<meta property="og:type" content="article"><meta property="og:title" content="Storage Explorer · S3, R2 &amp; OOS — bige-ops"><meta property="og:description" content="Parcourir les buckets S3, R2 et OOS, inspecter les objets et suivre leurs transferts dans le Storage Explorer de bige-ops."><meta property="og:url" content="https://bige.dev/oos.html"><meta property="og:image" content="https://bige.dev/screens/site-migration.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="feature-stories.css?v=notes-20261110-1">
+<script src="feature-stories.js?v=notes-20261110-1" defer></script>
+<noscript><style>.story-stage{display:none}.story-layout{display:block}.story-step,.story-step:last-child{min-height:0}.mobile-proof{display:flex;gap:20px}</style></noscript>
+</head><body class="feature-page" style="--feature-art:url('assets/illustrations/migration-riso-v1.webp')"><a class="skip-link" href="#contenu">Aller au contenu</a><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir le parcours</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header><main id="contenu">
+      <p class="feature-breadcrumb"><a href="features.html">Fonctionnalités</a><span aria-hidden="true">/</span><span>Storage explorer</span></p>
+      <header class="feature-hero"><div><p class="feature-eyebrow">STORAGE EXPLORER</p><h1>Les fichiers restent. Les retrouver aussi.</h1><p class="feature-summary">Des fichiers déposés sur un Object Storage puis oubliés : le Storage Explorer permet de les retrouver, les ouvrir et les gérer. Parcourir S3, R2 et OOS dans une même interface, puis vérifier ce qui a été copié.</p><div class="feature-actions"><a class="feature-primary" href="install.html">Installer la bêta ↗</a><a href="#parcours-feature">Voir le fonctionnement ↓</a></div><p class="feature-platforms">Application gratuite · macOS & Linux · Sans IA obligatoire</p></div><figure class="feature-laptop"><div class="laptop-display"><span class="laptop-camera" aria-hidden="true"></span><a class="laptop-screen" href="screens/site-migration.webp" target="_blank" rel="noopener" aria-label="Agrandir la capture : Storage Explorer de bige-ops avec les connexions AWS S3, Cloudflare R2 et Outscale OOS, et le dialogue de copie."><img src="screens/site-migration.webp" alt="Storage Explorer de bige-ops avec les connexions AWS S3, Cloudflare R2 et Outscale OOS, et le dialogue de copie." width="1440" height="900" decoding="async"></a></div><div class="laptop-base" aria-hidden="true"></div><figcaption>Dans l’app · connexions de stockage et préparation d’une copie. Capture réelle, informations de compte masquées. <a href="screens/site-migration.webp" target="_blank" rel="noopener">Agrandir ↗</a></figcaption></figure></header>
+      <nav class="feature-logos" aria-label="Outils et fournisseurs cités"><a href="https://www.cloudflare.com/developer-platform/products/r2/"><img src="assets/brands/cloudflare.svg" alt="" width="40" height="40" loading="lazy"><span><strong>Cloudflare R2</strong><small>Connexion compatible S3</small></span></a><a href="https://fr.outscale.com/"><img src="assets/brands/outscale.webp" alt="" width="40" height="40" loading="lazy"><span><strong>Outscale OOS</strong><small>Exploration et copie</small></span></a></nav><section class="feature-story" data-feature-story id="parcours-feature" aria-labelledby="parcours-feature-title">
+      <div class="story-heading"><div><p class="feature-section-label">Le parcours dans l’app</p><h2 id="parcours-feature-title">Du bucket au fichier retrouvé.</h2></div><p>Faire défiler pour suivre chaque étape.</p></div>
+      <nav class="story-nav" style="--step-count:4" aria-label="Étapes : STORAGE EXPLORER"><a href="#feature-step-0"><b>01</b> Choisir la connexion</a><a href="#feature-step-1"><b>02</b> Explorer</a><a href="#feature-step-2"><b>03</b> Agir</a><a href="#feature-step-3"><b>04</b> Contrôler</a></nav>
+      <div class="story-layout"><figure class="story-stage" aria-label="Exemple d’exploration : une connexion ouvre un bucket, un préfixe révèle ses fichiers, l’objet sélectionné affiche ses informations puis le résultat de copie est contrôlé.">
+        <div class="story-stage-head"><strong>bige-ops / storage explorer</strong><span data-scene-count>01 / 04</span></div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="feature-diagram" viewBox="0 0 640 480" fill="none" aria-hidden="true" focusable="false"><text x="36" y="36" fill="#aabdb7" font-size="18" font-weight="400">STORAGE EXPLORER · EXEMPLE</text><rect x="36" y="66" width="568" height="360" rx="16" fill="#1b2c2e" stroke="#aabdb7" stroke-width="1.5" /><text x="58" y="103" fill="#eef0e9" font-size="24" font-weight="600">Connexion S3 / R2 / OOS</text><path d="M36 122 L604 122" stroke="#aabdb7" stroke-width="2" /><text x="59" y="163" fill="#67d4b7" font-size="22" font-weight="400">bucket</text><g data-track="{&quot;opacity&quot;:[0,1,1,1]}" opacity="0"><path d="M80 180 L80 300" stroke="#aabdb7" stroke-width="2" /><text x="98" y="211" fill="#eef0e9" font-size="22" font-weight="400">images/</text><text x="98" y="257" fill="#eef0e9" font-size="22" font-weight="400">documents/</text><text x="98" y="303" fill="#eef0e9" font-size="22" font-weight="400">exports/</text></g><g data-track="{&quot;opacity&quot;:[0,1,1,1]}" opacity="0"><rect x="303" y="151" width="273" height="206" rx="16" fill="#1b2c2e" stroke="#67d4b7" stroke-width="1.5" /><text x="326" y="190" fill="#eef0e9" font-size="24" font-weight="600">rapport.pdf</text><path d="M327 210 L551 210" stroke="#aabdb7" stroke-width="2" /><text x="326" y="247" fill="#aabdb7" font-size="18" font-weight="400">Taille · métadonnées</text><text x="326" y="290" fill="#eef0e9" font-size="20" font-weight="400">Aperçu du fichier</text><text x="326" y="332" fill="#67d4b7" font-size="18" font-weight="400">Ouvrir · Télécharger</text></g><g data-track="{&quot;opacity&quot;:[0,0,1,0]}" opacity="0"><text x="61" y="394" fill="#67d4b7" font-size="22" font-weight="400">Copier vers…</text></g><g data-track="{&quot;opacity&quot;:[0,0,0,1]}" opacity="0"><text x="61" y="394" fill="#67d4b7" font-size="22" font-weight="400">Copie : taille + SHA-256 contrôlés</text></g></svg><figcaption>Les buckets OOS détectés dans l’inventaire peuvent aussi être ouverts depuis leur connexion gérée.</figcaption><div class="story-meter" aria-hidden="true"></div>
+      </figure><div class="story-copy"><article class="story-step" id="feature-step-0">
+          <span class="step-number">01 / CHOISIR LA CONNEXION</span>
+          <h3>Retrouver ses espaces de stockage.</h3><p>Relier AWS S3, Cloudflare R2, Outscale OOS ou un endpoint compatible. Le Storage Explorer liste les buckets accessibles depuis chaque connexion. Retrouver ses stockages dans l’espace de travail, en gardant le compte et l’environnement identifiables.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>S3 · R2 · OOS</span><i aria-hidden="true">→</i><span>Connexion sélectionnée</span></div>
+          <p class="step-detail">Les buckets OOS détectés dans l’inventaire peuvent aussi être ouverts depuis leur connexion gérée.</p></article><article class="story-step" id="feature-step-1">
+          <span class="step-number">02 · Explorer</span>
+          <h3>Voir ce qui se cache dans les buckets.</h3><p>Déplier les préfixes, retrouver un nom de fichier et ouvrir un objet. L’explorateur présente sa taille, ses métadonnées et un aperçu pour les formats pris en charge. Télécharger le fichier reste disponible lorsque son format nécessite un outil extérieur.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Bucket et préfixes</span><i aria-hidden="true">→</i><span>Objet et informations</span></div>
+          <p class="step-detail">Les préfixes organisent des clés d’objets ; ils ne correspondent pas à un disque monté sur le poste.</p></article><article class="story-step" id="feature-step-2">
+          <span class="step-number">03 · Agir</span>
+          <h3>Gérer les fichiers depuis la même vue.</h3><p>Envoyer, télécharger ou copier les objets sélectionnés avec une source et une destination identifiables. Les actions sont distinctes : ouvrir un fichier ne lance pas de migration. Une suppression suit sa propre confirmation, pour ne pas confondre exploration et nettoyage.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Objet sélectionné</span><i aria-hidden="true">→</i><span>Action et cible choisies</span></div>
+          <p class="step-detail">Pour déplacer un ensemble de buckets, ouvrir le parcours Migration et relire son plan.</p></article><article class="story-step" id="feature-step-3">
+          <span class="step-number">04 · Contrôler</span>
+          <h3>Comparer avant de tourner la page.</h3><p>Après une copie, relire les objets transférés, déjà présents ou en erreur et ouvrir la destination. Le suivi de migration contrôle la taille et une preuve SHA-256 ; une relecture complète est proposée en option. Retrouver les fichiers est aussi une façon de repérer ce qui manque.</p>
+          <div class="mobile-proof" aria-label="Transformation illustrée"><span>Copie suivie</span><i aria-hidden="true">→</i><span>Destination contrôlée</span></div>
+          <p class="step-detail">L’ETag d’un objet n’est pas utilisé comme preuve universelle d’intégrité entre fournisseurs.</p></article></div></div></section><section class="feature-detail-section" id="explorer"><header><h2>Un explorateur pour des fichiers qu’on oublie trop vite.</h2><p>Revenir dans les buckets avec des repères familiers.</p></header><div class="feature-detail-grid"><article><h3>Retrouver le bon espace.</h3><p>Choisir la connexion, le bucket et le préfixe. La navigation garde ces repères visibles pour éviter d’agir dans le mauvais compte.</p></article><article><h3>Ouvrir avant de télécharger.</h3><p>Consulter les aperçus pris en charge, les informations de l’objet et sa taille. Les formats non prévisualisables restent téléchargeables.</p></article><article><h3>Nettoyer avec une portée explicite.</h3><p>Une suppression est une opération distincte. Retirer un bucket du Visual enlève sa référence de simulation ; supprimer le bucket cloud demande son propre parcours confirmé.</p></article></div></section><section class="feature-detail-section" id="verification"><header><h2>Une copie se vérifie.</h2><p>La présence d’un nom de fichier ne suffit pas à conclure.</p></header><div class="feature-detail-grid"><article><h3>Taille et empreinte.</h3><p>Le suivi de migration confronte la taille et la preuve SHA-256 disponible à la destination. Ce contrôle est différent d’une simple égalité de taille.</p></article><article><h3>Relire le contenu si nécessaire.</h3><p>L’option de vérification complète relit le fichier distant et recalcule son empreinte. Le temps de transfert et les accès au stockage augmentent en conséquence.</p></article><article><h3>Reprendre le parcours complet.</h3><p>Source S3 ou R2, cible, plan, copie et reprise après interruption : la page Migration déroule cette opération de bout en bout.</p><a href="migration.html">Migrer les données ↗</a></article></div></section><section class="feature-glossary" id="glossaire-feature"><h2>Les mots du sujet.</h2><dl><div><dt>Objet</dt><dd>Fichier stocké avec une clé, un contenu et des métadonnées.</dd></div><div><dt>Préfixe</dt><dd>Début de clé utilisé pour organiser et parcourir les objets comme des dossiers.</dd></div><div><dt>ETag</dt><dd>Identifiant retourné par le stockage ; ce n’est pas toujours l’empreinte simple du contenu.</dd></div></dl></section><section class="feature-proof-section"><p class="feature-section-label">Pour aller plus loin</p><h2>Ce que cela change, concrètement.</h2><div class="feature-proof-grid"><article><h3>Explorer sans déployer.</h3><p>Le Storage Explorer parcourt les connexions existantes. Consulter un bucket ne crée pas de stack et ne lance aucune migration.</p><a href="inventory.html">Comprendre l’inventaire ↗</a></article><article><h3>Une copie n’est pas un backup de base.</h3><p>Les dumps, la planification, la rétention et la restauration sont gérés par le parcours Données de la base. Le bucket stocke leurs fichiers, mais ne remplace pas ce suivi.</p><a href="bases.html">Voir les sauvegardes de bases ↗</a></article><article><h3>Changer de stockage avec un suivi.</h3><p>Pour une migration, retrouver la sélection des buckets, le plan, la copie et les vérifications dans un parcours complet. Les sources restent identifiables.</p><a href="migration.html">Voir le parcours de migration ↗</a></article></div></section><section class="feature-faq"><h2>Les points à connaître.</h2><div><details><summary>Tous les stockages compatibles S3 se comportent-ils de la même façon ?</summary><p>Non. L’explorateur partage les opérations compatibles, mais les capacités, les règles de nommage et les permissions varient selon l’endpoint. La copie multi-buckets est prévue vers Outscale OOS. Les incompatibilités restent visibles dans le plan ou le résultat.</p></details><details><summary>La taille affichée correspond-elle à la facture ?</summary><p>Non. Le volume des objets courants et les informations de consommation disponibles décrivent un usage. Versions conservées, requêtes, trafic ou conditions du compte peuvent modifier la facture. L’estimation et la facture fournisseur restent des informations distinctes.</p></details><details><summary>Retirer un bucket de la simulation le supprime-t-il ?</summary><p>Non. Retirer sa référence du Visual ne supprime pas le bucket cloud. La suppression cloud se fait depuis le Storage Explorer, avec confirmation du nom et, si nécessaire, une purge explicite après inspection des éléments concernés.</p></details></div></section><details class="feature-reference" id="reference"><summary>Ressources, réglages et détails techniques</summary><div><p>Les connexions, les formats d’aperçu et les opérations dépendent des capacités de l’endpoint. Les règles de copie, de suppression et de sauvegarde sont séparées ci-dessous.</p><h2>Connexions et périmètre</h2>
+<p>Le Storage Explorer accepte AWS S3, Cloudflare R2, Outscale OOS et les endpoints compatibles S3 pris en charge. Une connexion manuelle appartient au workspace courant. Les buckets OOS détectés dans l’inventaire peuvent être ouverts via une connexion gérée liée au compte. Le nom de la connexion, le bucket et le préfixe définissent la portée affichée.</p>
+<p>L’arbre charge les éléments à la demande. La pagination et la recherche bornée par lots évitent de charger tout un stockage pour ouvrir un fichier. Les volumes indiqués pour les objets courants ne constituent pas une facture : les versions, les requêtes, le trafic et les conditions du fournisseur se lisent séparément.</p>
+<h2>Aperçus et fichiers</h2>
+<p>Les aperçus utilisent un cache privé et borné du workspace. Images, texte, PDF, audio, vidéo et formats bureautiques pris en charge sont affichés dans l’app. Si le format ne peut pas être rendu, le téléchargement ou l’ouverture avec l’application système reste un choix explicite. Les métadonnées et tags accessibles complètent l’aperçu.</p>
+<h2>Copier et reprendre</h2>
+<p>Le parcours Source → Destination prépare un plan à partir des listes et métadonnées, puis transfère les contenus au lancement. La source reste conservée. Le suivi distingue les objets copiés, déjà présents et en échec ; les copies prises en charge peuvent reprendre les éléments restants ou non vérifiés.</p>
+<p>La copie de plusieurs buckets est actuellement destinée à Outscale OOS : sélectionner les buckets source, choisir la connexion OOS et relire le plan. Les buckets manquants sont créés avec les mêmes noms, puis les copies sont lancées. Les contraintes de nommage, permissions et autres incompatibilités sont signalées ; les clés refusées ne sont pas renommées silencieusement.</p>
+<p>Le travail multi-buckets s’exécute dans un processus local indépendant de la page et de l’app. Fermer la fenêtre n’arrête donc pas automatiquement la copie. Le suivi permet de retrouver l’opération, de demander son arrêt et de reprendre après une interruption. L’ordinateur et ses accès réseau restent nécessaires au travail local.</p>
+<p>La vérification intégrale du contenu est une option du transfert ; elle peut ajouter des lectures et des coûts. Un résultat terminé avec avertissements ne signifie pas que tous les éléments ont été copiés et vérifiés.</p>
+<h2>Exposition : conserver l’incertitude visible</h2>
+<p>Le diagnostic peut indiquer privé, potentiellement public ou inconnu, selon les protections et policies que l’endpoint permet réellement de lire. Une permission insuffisante ne devient pas un état « privé ». Le détail doit être relu avant de conclure sur l’exposition du bucket.</p>
+<h2>Stockage d’objets et sauvegardes de bases</h2>
+<p>Le Storage Explorer manipule des objets. Le parcours de sauvegarde d’une base gère un autre ensemble : moteur, dump, destination, planification, rétention et restauration. Ces deux usages peuvent viser le même bucket sans devenir la même opération.</p>
+<p>Sur les cibles compatibles, l’activation des sauvegardes prépare les scripts ou jobs nécessaires au déploiement. Le panneau Données de la base donne ensuite accès aux actions disponibles. La restauration dépend du moteur et de la cible ; elle peut remplacer des données de destination. Tester une restauration fait partie de la vérification d’une stratégie de sauvegarde.</p>
+<p><a href="bases.html">Moteurs et parcours de données</a> · <a href="migration-securite.html">Migration vers une nouvelle stack</a></p>
+<h2>Déclarer un bucket dans une simulation Outscale</h2>
+<p>Un composant <code>oos_bucket</code> déclare le stockage utilisé par la simulation. La génération prépare les ressources Terraform pour l’endpoint régional OOS ; le plan et l’application déterminent ce qui sera créé sur le compte sélectionné. Le volume attendu doit être renseigné pour apparaître dans l’estimation.</p>
 <pre>components:
   - type: oos_bucket
     name: app-backups
     bucket: app-backups
     versioning: true</pre>
-
-    <h2>Lien base → backup</h2>
-    <p>
-      Sur un nœud base, active le backup et choisis le bucket
-      (<code>backup.enabled</code> + <code>oos_bucket</code>). Visual dessine
-      l’edge <strong>backup</strong> et, si aucun bucket n’existe encore, en
-      ajoute un à la simulation (<code>&lt;stack&gt;-backups</code>, versioning
-      activé).
-    </p>
-    <p>
-      Après <code>generate</code>, bige-ops prépare
-      <code>bige-ops/app/&lt;stack&gt;/backup.sh</code> avec le bucket,
-      l’endpoint OOS de ta Région, le planning (<code>0 2 * * *</code> par
-      défaut) et la rétention (7 jours). Le <code>deploy</code> l’installe en
-      cron sur l’hôte de chaque base ; sur OKS, chaque base a son CronJob. Le
-      dump passe par l’outil de la base (<code>pg_dump</code>,
-      <code>mongodump</code>, <code>mysqldump</code>…) et part dans le bucket ;
-      sans règle de cycle de vie sur le bucket, les dumps plus vieux que la
-      rétention sont purgés.
-    </p>
-    <p>
-      Le panneau <strong>Données</strong> d’une base te donne la main ensuite :
-      un dump à la demande, une restauration (un dump de sécurité des données
-      actuelles est pris juste avant), ou une migration depuis une autre base.
-      Teste ta restauration avant d’en avoir besoin.
-    </p>
-
-    <figure class="diagram">
-      <pre class="mermaid">
-flowchart TB
-  F[Formulaire base] -->|active backup| S[Simulation]
-  S -->|generate| T[Terraform OOS + backup.sh]
-  T -->|apply| C[Bucket créé]
-  C -->|deploy| H[Dumps planifiés : cron sur l’hôte ou CronJob OKS]
-      </pre>
-    </figure>
-
-    <h2>Secrets</h2>
-    <p>
-      Les access keys OOS passent par le coffre local et
-      <code>terraform.tfvars</code>, <strong>jamais</strong> par
-      <code>project.yaml</code> ni par le config-history Git. Voir
-      <a href="secrets.html">secrets</a>.
-    </p>
-
-    <h2>Un bucket protégé</h2>
-    <p>
-      Un bucket contient tes sauvegardes, alors bige-ops ne le détruit jamais
-      par effet de bord : le Terraform porte <code>prevent_destroy</code>, et
-      <code>plan</code>, <code>apply</code> et <code>inventory clean</code>
-      refusent tout plan qui supprimerait de l’Object Storage.
-    </p>
-    <p>
-      Le catalogue des buckets du compte est enregistré dans
-      <code>shared.yaml</code> et apparaît dans l’Inventaire et le Storage
-      Explorer. Un Visual affiche uniquement les buckets explicitement attachés
-      à sa simulation. Retirer cette référence du Visual ne supprime jamais le
-      bucket cloud.
-    </p>
-    <p>
-      La suppression cloud se fait uniquement depuis le Storage Explorer et
-      demande de saisir le nom exact. Un bucket vide peut être supprimé
-      directement. Pour un bucket non vide, bige-ops inspecte d’abord les
-      objets courants, versions, marqueurs de suppression et uploads multipart,
-      puis exige une confirmation explicite de purge avant toute suppression
-      définitive.
-    </p>
-    <p>
-      <strong>Une base sans backup vers OOS perd ses données à la
-      destruction</strong> de sa VM ou de ses pods (en mono-VM, l’app et les
-      bases partagent le même disque). L’app te le signale dans Visual, au
-      préflight et au plan. Voir <a href="bases.html">bases de données</a>.
-    </p>
-
-    <h2>Inventaire</h2>
-    <p>
-      L’inventaire liste les buckets du compte ; ils ne sont pas réécrits en
-      YAML. Pour piloter un bucket existant depuis bige-ops, déclare-le dans
-      la simulation.
-    </p>
-
-    <h2>Doc Outscale</h2>
-    <ul>
-      <li><a href="https://docs.outscale.com/fr/userguide/À-propos-d-OOS.html" target="_blank" rel="noopener noreferrer">À propos d’OOS</a></li>
-      <li><a href="https://docs.outscale.com/fr/userguide/Introduction-à-OOS.html" target="_blank" rel="noopener noreferrer">Introduction à OOS</a></li>
-      <li><a href="https://docs.outscale.com/fr/userguide/Mécanismes-de-résilience-d-OOS.html" target="_blank" rel="noopener noreferrer">Mécanismes de résilience d’OOS</a></li>
-      <li><a href="https://docs.outscale.com/fr/userguide/Référence-des-endpoints-d-API.html" target="_blank" rel="noopener noreferrer">Référence des endpoints d’API</a></li>
-    </ul>
-
-    <p>
-      Data : <a href="bases.html">bases de données</a>.
-      Config Git : <a href="github-config.html">GitHub config-history</a>.
-      Machines : <a href="vms.html">VMs</a> ·
-      <a href="oks.html">OKS</a>.
-    </p>
-    <footer class="site-footer">
-      <div class="cols">
-        <div>
-          <h3>Comprendre</h3>
-          <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="documentation.html">Toute la doc</a></li>
-            <li><a href="perimetre.html">Périmètre</a></li>
-            <li><a href="savoir.html">Sait / ne sait pas</a></li>
-            <li><a href="install.html">Installer &amp; mettre à jour</a></li>
-            <li><a href="glossaire.html">Glossaire</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Composer</h3>
-          <ul>
-            <li><a href="layouts.html">Par où commencer</a></li>
-            <li><a href="stacks.html">Stacks &amp; langages</a></li>
-            <li><a href="vms.html">VMs · VPS</a></li>
-            <li><a href="volumes-bsu.html">Volumes BSU &amp; snapshots</a></li>
-            <li><a href="omi.html">OMI · images</a></li>
-            <li><a href="bases.html">Bases de données</a></li>
-            <li><a href="bases-complexes.html">Bases complexes</a></li>
-            <li><a href="oos.html">Object Storage · S3, R2, OOS</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Réseau &amp; région</h3>
-          <ul>
-            <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
-            <li><a href="reseau-avance.html">Réseau avancé</a></li>
-            <li><a href="lbu.html">LBU · entrée publique</a></li>
-            <li><a href="regions.html">Régions &amp; SecNumCloud</a></li>
-            <li><a href="oks.html">OKS &amp; pods</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Opérer</h3>
-          <ul>
-            <li><a href="simulations.html">Simulations &amp; promote</a></li>
-            <li><a href="inventory.html">Inventaire &amp; import</a></li>
-            <li><a href="catalogue-prix.html">Catalogue de prix</a></li>
-            <li><a href="secrets.html">Secrets &amp; coffre</a></li>
-            <li><a href="agent.html">Assistant IA</a></li>
-            <li><a href="cli.html">CLI · app · OKS</a></li>
-            <li><a href="github-config.html">GitHub config</a></li>
-            <li><a href="repos-vms-docker.html">Repos · VMs · Docker</a></li>
-            <li><a href="expert-config.html">Mode expert · diffs</a></li>
-          </ul>
-        </div>
-      </div>
-      <p class="meta">
-        Gratuit · simulateur local pour Outscale ·
-        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger</a> ·
-        <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
-      </p>
-    </footer>
-  </div></details></main>
-  <script type="module">
-    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
-  </script>
-</body>
-</html>
+<p>Les accès sensibles restent hors de <code>project.yaml</code> et de l’historique de configuration Git. <a href="secrets.html">Comprendre le coffre et les secrets</a>.</p>
+<h2>Retirer une référence n’est pas supprimer un bucket</h2>
+<p>Le catalogue des buckets et les références d’une simulation sont distincts. Retirer un bucket du Visual ne supprime pas sa ressource cloud. Les protections de plan, d’application et de nettoyage empêchent la destruction implicite de l’Object Storage.</p>
+<p>La suppression cloud passe par le Storage Explorer et exige la saisie du nom exact. Pour un bucket non vide, l’app inspecte les objets courants, versions, marqueurs de suppression et uploads multipart avant une confirmation explicite de purge. Il s’agit d’une suppression définitive, distincte d’une simple copie.</p>
+<h2>Références fournisseur</h2>
+<p>Les règles de nommage, permissions, endpoints et garanties de service dépendent de la région et du fournisseur. Leur documentation fait référence pour ces conditions.</p>
+<ul>
+<li><a href="https://docs.outscale.com/fr/userguide/Introduction-à-OOS.html" target="_blank" rel="noopener noreferrer">Introduction à Outscale OOS</a></li>
+<li><a href="https://docs.outscale.com/fr/userguide/Mécanismes-de-résilience-d-OOS.html" target="_blank" rel="noopener noreferrer">Résilience du service OOS</a></li>
+<li><a href="https://docs.outscale.com/fr/userguide/Référence-des-endpoints-d-API.html" target="_blank" rel="noopener noreferrer">Endpoints Outscale</a></li>
+</ul>
+</div></details>
+      <section class="feature-cta"><div><h2>Passer du concept à sa propre stack.</h2><p>Installer l’app gratuite. Commencer par une simulation, avant d’engager des ressources cloud.</p><a href="install.html">Télécharger bige-ops ↗</a></div><div class="feature-cta-art" aria-hidden="true"></div></section>
+      <nav class="feature-related" aria-label="Fonctionnalités associées"><span>Continuer le parcours</span><a href="migration.html">Migrer les données ↗</a><a href="secrets.html">Gérer les accès ↗</a><a href="billing.html">Lire la consommation ↗</a></nav>
+      </main><footer class="site-footer"><div class="footer-intro"><a class="brand" href="index.html"><img src="favicon.svg" width="28" height="28" alt=""> bige-ops</a><p>Simple comme un PaaS. Flexible comme un IaaS.</p></div><div class="cols"><div><h3>Découvrir</h3><ul><li><a href="index.html">Accueil</a></li><li><a href="features.html">Toutes les fonctionnalités</a></li><li><a href="hub.html">Hub &amp; espaces de travail</a></li><li><a href="layouts.html">Simulations</a></li><li><a href="install.html">Installer &amp; mettre à jour</a></li><li><a href="documentation.html">Documentation</a></li><li><a href="glossaire.html">Glossaire</a></li></ul></div><div><h3>Construire & déployer</h3><ul><li><a href="catalogue-prix.html">Catalogue &amp; estimations</a></li><li><a href="repos-vms-docker.html">Build &amp; déploiement</a></li><li><a href="reseau.html">Réseaux &amp; exposition</a></li><li><a href="migration.html">Migration</a></li><li><a href="oos.html">Object Storage</a></li><li><a href="config.html">Configuration</a></li><li><a href="cli.html">Terminal &amp; CLI</a></li></ul></div><div><h3>Observer & décider</h3><ul><li><a href="inventory.html">Inventaire &amp; commandes</a></li><li><a href="live.html">Live analytics</a></li><li><a href="billing.html">Consommation réelle</a></li><li><a href="optimisation.html">Optimisation · en développement</a></li><li><a href="vulnerabilites.html">Vulnérabilités</a></li><li><a href="secrets.html">Coffre &amp; secrets</a></li></ul></div><div><h3>Documenter & partager</h3><ul><li><a href="notes-rapports.html">Notes &amp; documentation</a></li><li><a href="rapports.html">Rapports &amp; slides</a></li><li><a href="agent.html">Agent IA</a></li><li><a href="perimetre.html">Périmètre de la bêta</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/releases">Notes de version</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/issues">Retours &amp; suggestions</a></li></ul></div></div><p class="meta">Application gratuite · macOS & Linux · <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger la bêta</a></p></footer></body></html>
