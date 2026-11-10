@@ -12,15 +12,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-</head>
-<body>
+<link rel="stylesheet" href="feature-tour.css?v=3"><script src="feature-tour.js?v=3" defer></script><link rel="stylesheet" href="navigation.css?v=1"></head>
+<body class="feature-page"><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
-    <div class="brand-row">
-      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Gratuit</span>
-    </div>
-    <h1>Par où commencer&nbsp;?</h1>
+
+    <div class="feature-hero"><p class="feature-eyebrow">BIGE-OPS / FONCTIONNALITÉS</p><h1>Simule. Compare.<br>Déploie la bonne stack.</h1><p class="feature-summary">Explore plusieurs architectures avant de t’engager. Compare leurs coûts estimés, leurs ressources et leur résilience pour choisir celle qui sert ton produit.</p><div class="laptop"><div class="laptop-display"><span class="laptop-camera"></span><figure><a href="screens/site-simule.webp" target="_blank" rel="noopener"><img src="screens/site-simule.webp" loading="lazy" alt="Visual · application, PostgreSQL, Redis et stockage"></a><figcaption>Visual · application, PostgreSQL, Redis et stockage · <a href="screens/site-simule.webp" target="_blank" rel="noopener">Agrandir ↗</a></figcaption></figure></div><div class="laptop-base"></div></div></div><section data-motion-copy='{"titles": ["Une machine pour commencer", "Séparer app et données", "Distribuer les workloads"], "zones": ["VM unique", "Réseau privé", "Cluster Kubernetes"], "notes": ["Services regroupés", "Deux machines, une stack", "Pods et ressources dédiées"], "entities": [["Web + API", "PostgreSQL", "Volumes"], ["VM app", "VM données", "Volumes"], ["Pods app", "Pods données", "Volumes persistants"]]}' class="feature-tour" aria-label="Parcours guidé"><header><p>DANS L’APP / PARCOURS GUIDÉ</p><h2>Compose ton architecture</h2></header><nav aria-label="Étapes de la fonctionnalité"><a href="#feature-step-0">01 Commence avec une app et ses données.</a><a href="#feature-step-1">02 Sépare ce qui doit l’être.</a><a href="#feature-step-2">03 Grandis vers Kubernetes.</a></nav><div class="feature-tour-grid"><div class="feature-tour-copy"><article class="feature-step" id="feature-step-0"><span class="feature-index">01 / 03</span><h3>Commence avec une app et ses données.</h3><p>Choisis une stack prête ou assemble tes services. Le Visual relie les ressources pour rendre leurs dépendances visibles.</p></article><article class="feature-step" id="feature-step-1"><span class="feature-index">02 / 03</span><h3>Sépare ce qui doit l’être.</h3><p>Place les données sur leurs machines et contrôle les connexions. Une topologie plus détaillée rend les responsabilités explicites.</p></article><article class="feature-step" id="feature-step-2"><span class="feature-index">03 / 03</span><h3>Grandis vers Kubernetes.</h3><p>Si ton usage le demande, prépare un cluster et ses node pools. Le choix de topologie précède le plan et le déploiement.</p></article></div><div class="feature-motion" role="img" aria-label="Une machine pour commencer"><div class="motion-top"><span>bige-ops</span><span>LE CONCEPT</span></div><div class="motion-field"><div class="motion-zone"><span>VM unique</span></div><svg viewBox="0 0 600 440" aria-hidden="true"><path class="motion-link" d="M150 200 H300 H450"/></svg><div class="motion-entity entity-0"><span>⌘</span><strong>Application</strong></div><div class="motion-entity entity-1"><span>▤</span><strong>PostgreSQL</strong></div><div class="motion-entity entity-2"><span>◇</span><strong>Stockage</strong></div><div class="motion-result"><small>Une machine pour commencer</small><strong>Services regroupés</strong><div class="motion-meter"><i></i></div></div></div><p class="motion-caption">Services regroupés</p></div></div></section><details class="feature-reference"><summary>Les détails techniques et les limites</summary><div>
     <p class="lead">
       Pas besoin d’équipe DevOps. Tu choisis un point de départ selon ton activité, et bige-ops
       s’occupe du reste : réseau, sauvegardes et déploiement sur ton compte Outscale.
@@ -202,6 +199,6 @@ bige-ops add layout custom --runtime python --db postgres --db redis --web spa -
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>
     </footer>
-  </main>
+  </div></details></main>
 </body>
 </html>

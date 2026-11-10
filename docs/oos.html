@@ -20,15 +20,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-</head>
-<body>
+<link rel="stylesheet" href="feature-tour.css?v=3"><script src="feature-tour.js?v=3" defer></script><link rel="stylesheet" href="navigation.css?v=1"></head>
+<body class="feature-page"><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a> · <a href="bases.html">Bases</a></p>
-    <div class="brand-row">
-      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Gratuit</span>
-    </div>
-    <h1>Object Storage · S3, R2, OOS &amp; backups</h1>
+
+    <div class="feature-hero"><p class="feature-eyebrow">BIGE-OPS / FONCTIONNALITÉS</p><h1>Object Storage · S3, R2, OOS &amp; backups</h1><p class="feature-summary">Choisir les deux côtés. Vérifier la destination. Le contrôle reste dans ton app.</p><div class="laptop"><div class="laptop-display"><span class="laptop-camera"></span><figure><a href="screens/site-migration.webp" target="_blank" rel="noopener"><img src="screens/site-migration.webp" loading="lazy" alt="Storage Explorer · choix des buckets"></a><figcaption>Storage Explorer · choix des buckets · <a href="screens/site-migration.webp" target="_blank" rel="noopener">Agrandir ↗</a></figcaption></figure></div><div class="laptop-base"></div></div></div><section data-motion-copy='{"titles": ["Choisir les deux côtés", "Copier les objets", "Vérifier la destination"], "zones": ["SOURCE → CIBLE", "TRANSFERT", "COPIE VÉRIFIÉE"], "notes": ["La source reste intacte", "Reprise après interruption", "Changer les accès après vérification"], "entities": [["Source S3", "Objets", "Cible OOS"], ["Source intacte", "Copie en cours", "Objets copiés"], ["Source intacte", "Vérification", "Cible prête"]]}' class="feature-tour" aria-label="Parcours guidé"><header><p>DANS L’APP / PARCOURS GUIDÉ</p><h2>Emporte tes objets, étape par étape</h2></header><nav aria-label="Étapes de la fonctionnalité"><a href="#feature-step-0">01 Choisis la source et la destination.</a><a href="#feature-step-1">02 Suis la copie.</a><a href="#feature-step-2">03 Relie le stockage à tes données.</a></nav><div class="feature-tour-grid"><div class="feature-tour-copy"><article class="feature-step" id="feature-step-0"><span class="feature-index">01 / 03</span><h3>Choisis la source et la destination.</h3><p>Retrouve tes buckets compatibles S3 et prépare la destination OOS. Les noms et les chemins restent visibles avant le transfert.</p></article><article class="feature-step" id="feature-step-1"><span class="feature-index">02 / 03</span><h3>Suis la copie.</h3><p>Les objets sont copiés vers la cible. Le suivi et la reprise permettent de traiter une interruption sans supprimer la source.</p></article><article class="feature-step" id="feature-step-2"><span class="feature-index">03 / 03</span><h3>Relie le stockage à tes données.</h3><p>Le panneau Données d’une base donne accès aux sauvegardes et à leur stockage. Vérifie les objets copiés avant de changer les accès de ton app.</p></article></div><div class="feature-motion" role="img" aria-label="Choisir les deux côtés"><div class="motion-top"><span>bige-ops</span><span>LE CONCEPT</span></div><div class="motion-field"><div class="motion-zone"><span>SOURCE → CIBLE</span></div><svg viewBox="0 0 600 440" aria-hidden="true"><path class="motion-link" d="M150 200 H300 H450"/></svg><div class="motion-entity entity-0"><span>⌘</span><strong>Bucket source</strong></div><div class="motion-entity entity-1"><span>▤</span><strong>Objets</strong></div><div class="motion-entity entity-2"><span>◇</span><strong>Bucket cible</strong></div><div class="motion-result"><small>Choisir les deux côtés</small><strong>La source reste intacte</strong><div class="motion-meter"><i></i></div></div></div><p class="motion-caption">La source reste intacte</p></div></div></section><details class="feature-reference"><summary>Les détails techniques et les limites</summary><div>
     <p class="lead">
       Connecte <strong>AWS S3</strong>, <strong>Cloudflare R2</strong>,
       <strong>Outscale OOS</strong> ou un endpoint compatible S3 pour explorer,
@@ -288,7 +285,7 @@ flowchart TB
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>
     </footer>
-  </main>
+  </div></details></main>
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });

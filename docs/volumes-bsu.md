@@ -10,7 +10,7 @@ Stockage bloc Outscale, attaché à une VM de la même Subregion :
 
 Plafond par VM : 36 000 IOPS, 40 volumes racine comprise. io1 se paie au GiB **et** à l’IOPS provisionnée.
 
-Dans bige-ops : disque racine réglable (taille, type, IOPS) ; par défaut `io1` à 3 000 IOPS pour les rôles base, `gp2` sinon, compté à l’identique dans l’estimation. Volumes de données éditables (taille, type, IOPS, VM, device `/dev/xvdX`). Snapshots régionaux : composant Terraform, ligne d’inventaire.
+Dans bige-ops : disque racine réglable (taille, type, IOPS) ; par défaut `io1` à 3 000 IOPS pour les rôles base, `gp2` sinon, compté à l’identique dans l’estimation. Volumes de données éditables (taille, type, IOPS, VM, device `/dev/xvdX`, point de montage) : formatés s’ils sont vierges, montés par UUID et agrandis au déploiement, jamais recréés pour grandir. Snapshots régionaux : composant Terraform, restauration dans un nouveau volume, snapshot gardé à la suppression en option ; `bige-ops volume orphans` montre ce qui reste facturé.
 
 Doc Outscale : [À propos des volumes](https://docs.outscale.com/fr/userguide/À-propos-des-volumes.html) · [Modifier un volume](https://docs.outscale.com/fr/userguide/Modifier-un-volume.html) · [À propos des snapshots](https://docs.outscale.com/fr/userguide/À-propos-des-snapshots.html)
 

@@ -12,15 +12,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-</head>
-<body>
+<link rel="stylesheet" href="feature-tour.css?v=3"><script src="feature-tour.js?v=3" defer></script><link rel="stylesheet" href="navigation.css?v=1"></head>
+<body class="feature-page"><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
-    <div class="brand-row">
-      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Gratuit</span>
-    </div>
-    <h1>Inventaire &amp; import (reverse)</h1>
+
+    <div class="feature-hero"><p class="feature-eyebrow">BIGE-OPS / FONCTIONNALITÉS</p><h1>Tu progresses.<br>Ton infra suit.</h1><p class="feature-summary">Retrouve tes ressources, interviens sur tes VM et services, déploie la prochaine branche. Les opérations et leur contexte restent dans la même app.</p><div class="laptop"><div class="laptop-display"><span class="laptop-camera"></span><figure><a href="screens/site-simule.webp" target="_blank" rel="noopener"><img src="screens/site-simule.webp" loading="lazy" alt="Visual · contexte de la stack, distinct de l’inventaire"></a><figcaption>Visual · contexte de la stack, distinct de l’inventaire · <a href="screens/site-simule.webp" target="_blank" rel="noopener">Agrandir ↗</a></figcaption></figure></div><div class="laptop-base"></div></div></div><section data-motion-copy='{"titles": ["Retrouver sa stack", "Agir au bon niveau", "Livrer la prochaine version"], "zones": ["INVENTAIRE", "OPÉRATIONS", "DÉPLOIEMENT"], "notes": ["Les ressources de ton compte", "VM : pause / start · service : restart", "Branche choisie → deploy → logs"], "entities": [["VM", "Service", "Code Git"], ["Pause / Start", "Restart", "Logs"], ["Branche choisie", "Deploy", "Résultat"]]}' class="feature-tour" aria-label="Parcours guidé"><header><p>DANS L’APP / PARCOURS GUIDÉ</p><h2>Garde la main après le déploiement</h2></header><nav aria-label="Étapes de la fonctionnalité"><a href="#feature-step-0">01 Retrouve les ressources de ton compte.</a><a href="#feature-step-1">02 Interviens au bon niveau.</a><a href="#feature-step-2">03 Déploie la prochaine branche.</a></nav><div class="feature-tour-grid"><div class="feature-tour-copy"><article class="feature-step" id="feature-step-0"><span class="feature-index">01 / 03</span><h3>Retrouve les ressources de ton compte.</h3><p>L’inventaire distingue les ressources cloud et les simulations. Tu gardes le contexte avant de lancer une opération.</p></article><article class="feature-step" id="feature-step-1"><span class="feature-index">02 / 03</span><h3>Interviens au bon niveau.</h3><p>Pause et démarrage concernent les VM compatibles. Redémarrer un service est une opération distincte du build ou du déploiement.</p></article><article class="feature-step" id="feature-step-2"><span class="feature-index">03 / 03</span><h3>Déploie la prochaine branche.</h3><p>Choisis le code à déployer, puis consulte les logs et le résultat. Le cycle continue sans reconstruire ton architecture à chaque évolution.</p></article></div><div class="feature-motion" role="img" aria-label="Retrouver sa stack"><div class="motion-top"><span>bige-ops</span><span>LE CONCEPT</span></div><div class="motion-field"><div class="motion-zone"><span>INVENTAIRE</span></div><svg viewBox="0 0 600 440" aria-hidden="true"><path class="motion-link" d="M150 200 H300 H450"/></svg><div class="motion-entity entity-0"><span>⌘</span><strong>VM</strong></div><div class="motion-entity entity-1"><span>▤</span><strong>Service</strong></div><div class="motion-entity entity-2"><span>◇</span><strong>Branche Git</strong></div><div class="motion-result"><small>Retrouver sa stack</small><strong>Les ressources de ton compte</strong><div class="motion-meter"><i></i></div></div></div><p class="motion-caption">Les ressources de ton compte</p></div></div></section><details class="feature-reference"><summary>Les détails techniques et les limites</summary><div>
     <p class="lead">
       Ton compte Outscale existe déjà ? bige-ops le <strong>lit</strong>,
       le comprend et l’affiche, avec une estimation de coût. Une partie est
@@ -234,7 +231,7 @@ bige-ops inventory forget --terminated</pre>
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>
     </footer>
-  </main>
+  </div></details></main>
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });

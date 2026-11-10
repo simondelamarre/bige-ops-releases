@@ -1,0 +1,121 @@
+/* Local printed-dark study. One shared seamless tile; no animated noise. */
+body.riso-local-test{
+ --print-paper:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22192%22%20height%3D%22192%22%3E%3Cfilter%20id%3D%22g%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%22.78%22%20numOctaves%3D%223%22%20seed%3D%2217%22%20stitchTiles%3D%22stitch%22%2F%3E%3CfeColorMatrix%20type%3D%22matrix%22%20values%3D%220%200%200%200%201%200%200%200%200%201%200%200%200%200%201%20.035%200%200%200%200%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url%28%23g%29%22%2F%3E%3C%2Fsvg%3E");
+ --print-ink:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22192%22%20height%3D%22192%22%3E%3Cfilter%20id%3D%22g%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%22.78%22%20numOctaves%3D%223%22%20seed%3D%2217%22%20stitchTiles%3D%22stitch%22%2F%3E%3CfeColorMatrix%20type%3D%22matrix%22%20values%3D%220%200%200%200%200%200%200%200%200%200%200%200%200%200%200%20.32%200%200%200%200%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url%28%23g%29%22%2F%3E%3C%2Fsvg%3E");
+ --print-fibre:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22192%22%20height%3D%22192%22%3E%3Cfilter%20id%3D%22g%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%22.78%22%20numOctaves%3D%223%22%20seed%3D%2217%22%20stitchTiles%3D%22stitch%22%2F%3E%3CfeColorMatrix%20type%3D%22matrix%22%20values%3D%220%200%200%200%201%200%200%200%200%201%200%200%200%200%201%201%200%200%200%200%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url%28%23g%29%22%2F%3E%3C%2Fsvg%3E");
+ background-color:#171c1d;background-image:var(--print-paper);background-size:192px 192px;background-repeat:repeat;
+ color:#f1f5f4;
+}
+.riso-local-test .landing-hero::before{background:none}
+.riso-local-test :is(.global-header,.journey){background:transparent}
+.riso-local-test .journey-nav{background-color:#171c1d;background-image:var(--print-paper);background-size:192px 192px;backdrop-filter:none;border-color:#a0bcb650}
+.riso-local-test .landing-kicker span{box-shadow:none}
+/* Dry ink lives inside the lettering, not in a rectangle covering the headline. */
+.riso-local-test .hero-title{
+ color:#f1f5f4;background-image:var(--print-ink),linear-gradient(#ecebe3,#ecebe3);
+ background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.riso-local-test .hero-title span{
+ color:#79cbbd;background-image:var(--print-ink),linear-gradient(#8de0c9,#8de0c9);
+ background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.riso-local-test :is(.global-download,.hero-actions .primary){background-color:#79cbbd;background-image:var(--print-ink);box-shadow:none}
+.riso-local-test .concept-stage{background:#172022;border:0;box-shadow:none}
+.riso-local-test :is(.concept-canvas,.concept-toolbar,.scene-caption){background-color:#172022;background-image:var(--print-paper);background-size:192px 192px}
+.riso-local-test :is(.concept-node,.terraform-panel,.audit-panel,.migration-panel,.live-panel,.github-panel,.build-panel,.operations-panel,.origin-group){
+ isolation:isolate;box-shadow:none;border:0;border-radius:5px;
+ background-color:#233235;background-image:var(--print-paper);background-size:192px 192px;
+}
+.riso-local-test .origin-group{position:relative}
+.riso-local-test :is(.concept-node,.terraform-panel,.audit-panel,.migration-panel,.live-panel,.github-panel,.build-panel,.operations-panel,.origin-group)::before{
+ content:"";position:absolute;inset:7px -8px -8px 7px;z-index:-1;pointer-events:none;border-radius:inherit;
+ background:#9cbdb7;opacity:.4;mask:var(--print-fibre) repeat 0 0/192px 192px;-webkit-mask:var(--print-fibre) repeat 0 0/192px 192px;
+ clip-path:polygon(0 100%,0 calc(100% - 8px),calc(100% - 8px) calc(100% - 8px),calc(100% - 8px) 0,100% 0,100% 100%);
+}
+.riso-local-test :is(.network-zone,.operation-grid>span,.data-end){background-color:#2a4142;background-image:var(--print-paper);background-size:192px 192px}
+.riso-local-test .wire{stroke:#8ed6c8;stroke-width:2.5;stroke-dasharray:3 2}
+.riso-local-test .migration-panel i{background:#162527;border-radius:0}
+.riso-local-test .migration-panel i::after{background-color:#8ed6c8;background-image:var(--print-ink)}
+.riso-local-test .network-zone{border-color:#8ed6c880}
+@media(forced-colors:active){
+ .riso-local-test .hero-title,.riso-local-test .hero-title span{background:none;color:CanvasText;-webkit-text-fill-color:CanvasText}
+ .riso-local-test .concept-node{border:1px solid CanvasText}
+}
+/* The legacy main fill must not hide the printed paper of the whole dark opening. */
+.riso-local-test>main{background:transparent}
+/* Printed shapes: rounded paper frames, softer objects, compact ink capsules. */
+body.riso-local-test{--print-radius-frame:28px;--print-radius-panel:20px;--print-radius-object:13px}
+.riso-local-test .concept-stage{border-radius:var(--print-radius-frame)}
+.riso-local-test :is(.terraform-panel,.audit-panel,.migration-panel,.live-panel,.github-panel,.build-panel,.operations-panel){border-radius:var(--print-radius-panel)}
+.riso-local-test :is(.concept-node,.origin-group,.data-end,.operation-grid>span){border-radius:var(--print-radius-object)}
+.riso-local-test :is(.hero-actions a,.global-download){border-radius:14px}
+.riso-local-test .journey-nav a{border-radius:999px}
+.riso-local-test .journey-nav a[aria-current]{background-color:#79cbbd;background-image:var(--print-ink);color:#102224}
+.riso-local-test .journey-nav a[aria-current] b{color:inherit}
+.riso-local-test .migration-panel i{border-radius:999px;height:6px}
+.riso-local-test .migration-panel i::after{border-radius:inherit}
+.riso-local-test .migration-checkpoints .is-current{border-color:transparent;border-radius:999px;background:#79cbbd;background-image:var(--print-ink);color:#102224}
+.riso-local-test .network-zone{border-radius:28px 28px 40px 28px}
+@media(max-width:560px){body.riso-local-test{--print-radius-frame:20px;--print-radius-panel:16px;--print-radius-object:10px}}
+
+/* Hero study: a single typographic print, with sparse uneven ink reserves. */
+.riso-local-test .landing-hero{padding-top:clamp(3.2rem,7vw,6.5rem);padding-bottom:clamp(3rem,6vw,5rem)}
+.riso-local-test .landing-hero .landing-kicker{font-size:.65rem;letter-spacing:.18em;margin-bottom:1.8rem}
+.riso-local-test .landing-hero .hero-title{
+ --hero-reserves:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22256%22%20height%3D%22256%22%3E%3Cfilter%20id%3D%22ink%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%22.61%22%20numOctaves%3D%223%22%20seed%3D%2231%22%20stitchTiles%3D%22stitch%22%20result%3D%22fine%22%2F%3E%3CfeColorMatrix%20in%3D%22fine%22%20type%3D%22matrix%22%20values%3D%220%200%200%200%200%200%200%200%200%200%200%200%200%200%200%205%200%200%200%20-2.4%22%20result%3D%22pores%22%2F%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%22.035%22%20numOctaves%3D%222%22%20seed%3D%227%22%20stitchTiles%3D%22stitch%22%2F%3E%3CfeComposite%20in%3D%22pores%22%20operator%3D%22in%22%2F%3E%3CfeComponentTransfer%3E%3CfeFuncA%20type%3D%22linear%22%20slope%3D%22.12%22%2F%3E%3C%2FfeComponentTransfer%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url%28%23ink%29%22%2F%3E%3C%2Fsvg%3E");
+ font-size:clamp(2.6rem,6.6vw,6rem);font-weight:700;line-height:1.07;letter-spacing:-.055em;
+ margin:0 auto 1.7rem;background:none;-webkit-text-fill-color:initial;
+}
+.riso-local-test .hero-title .hero-line{
+ display:block;background-image:var(--hero-reserves),linear-gradient(#ecebe3,#ecebe3);
+ background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;color:#f1f5f4;
+}
+.riso-local-test .hero-title .hero-line-accent{background-image:var(--hero-reserves),linear-gradient(#8de0c9,#8de0c9);background-position:61px 37px,0 0;color:#79cbbd}
+.riso-local-test .hero-title strong{font-weight:750;letter-spacing:-.07em}
+.riso-local-test .landing-hero .baseline{font-size:clamp(1rem,1.3vw,1.15rem);font-weight:400;max-width:55ch;line-height:1.65;margin:0 auto 1.7rem;color:#c1cbcd;text-wrap:pretty}
+.riso-local-test .hero-actions{gap:1rem 1.7rem}
+.riso-local-test .hero-actions a{padding:.85rem 1.25rem;font-weight:500}
+.riso-local-test .hero-actions .secondary{border-color:transparent;background:none;text-underline-offset:6px}
+.riso-local-test .hero-actions .secondary:hover{text-decoration:underline}
+.riso-local-test .cloud-status{margin-top:1.8rem;gap:.7rem 1.1rem}
+@media(max-width:560px){
+ .riso-local-test .landing-hero{padding-top:2.5rem;padding-bottom:2.8rem}
+ .riso-local-test .landing-hero .landing-kicker{font-size:.58rem;letter-spacing:.13em;margin-bottom:1.4rem}
+ .riso-local-test .landing-hero .hero-title{font-size:clamp(2rem,9.4vw,3.2rem);line-height:1.12;letter-spacing:-.055em;margin-bottom:1.5rem}
+ .riso-local-test .hero-title .hero-line{max-width:15ch;margin-inline:auto}
+ .riso-local-test .hero-title .hero-line-accent{margin-top:.12em}
+ .riso-local-test .landing-hero .baseline{font-size:.95rem;line-height:1.6;max-width:34ch}
+ .riso-local-test .hero-actions{gap:.4rem;display:flex;flex-direction:column}
+ .riso-local-test .hero-actions a{width:auto;min-height:44px;box-sizing:border-box}
+}
+@media(forced-colors:active){.riso-local-test .hero-title .hero-line{background:none;color:CanvasText;-webkit-text-fill-color:CanvasText}}
+
+/* Header-only type study; bento typography remains the comparison reference. */
+.riso-local-test .landing-hero .hero-title{font-family:"Manrope",var(--font-sans);font-weight:600;font-size:clamp(2.5rem,6vw,5.5rem);letter-spacing:-.045em;line-height:1.14;font-synthesis:none}
+.riso-local-test .hero-title strong{font-weight:600;letter-spacing:inherit}
+.riso-local-test .landing-hero .baseline,.riso-local-test .hero-actions{font-family:"Manrope",var(--font-sans);letter-spacing:0}
+.riso-local-test .landing-hero .baseline{line-height:1.7;max-width:53ch}
+@media(max-width:560px){
+ .riso-local-test .landing-hero .hero-title{font-size:clamp(1.9rem,8.8vw,3rem);letter-spacing:-.035em;line-height:1.18}
+ .riso-local-test .hero-title .hero-line{max-width:16ch;text-wrap:balance}
+ .riso-local-test .landing-hero .baseline{font-size:.94rem;line-height:1.65}
+}
+/* Narrative material transition: crisp departure, printed solution. */
+body.riso-local-test{background-color:#0b1013;background-image:none}
+.riso-local-test .journey{--solution-ink:0;position:relative;isolation:isolate}
+.riso-local-test .journey::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:var(--print-paper);background-size:192px 192px;opacity:var(--solution-ink)}
+.riso-local-test .journey-nav{background-color:#0b1013;background-image:none}
+.riso-local-test .landing-hero .hero-title .hero-line{background-image:linear-gradient(#f1f5f4,#f1f5f4)}
+.riso-local-test .landing-hero .hero-title .hero-line-accent{background-image:linear-gradient(#8de0c9,#8de0c9)}
+.riso-local-test .landing-hero .baseline{color:#d4dedf}
+.riso-local-test :is(.global-download,.hero-actions .primary){background-image:none}
+.riso-local-test .journey:is([data-stage="0"],[data-stage="1"]) :is(.concept-canvas,.concept-toolbar,.scene-caption,.concept-node,.github-panel,.origin-group){background-image:none;background-color:#101b20}
+.riso-local-test .journey:is([data-stage="0"],[data-stage="1"]) :is(.concept-node,.github-panel,.origin-group)::before{opacity:0}
+.riso-local-test .journey[data-stage="0"] .startup-core{background:#8de0c9;color:#102224}
+.riso-local-test .journey[data-stage="0"] .galaxy-service i{background:#f1f5f4}
+.riso-local-test .journey .concept-stage{background:#101b20}
+.riso-local-test .journey .concept-node::before{opacity:calc(var(--solution-ink) * .25)}
+.riso-local-test .journey :is(.github-panel,.terraform-panel,.audit-panel,.migration-panel,.build-panel,.live-panel,.operations-panel)::before{opacity:calc(var(--solution-ink) * .25)}
+@media(prefers-reduced-motion:no-preference){
+ .riso-local-test .concept-canvas,.riso-local-test .concept-toolbar,.riso-local-test .scene-caption{transition:background-color .65s ease}
+}

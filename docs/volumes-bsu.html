@@ -20,14 +20,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-</head>
-<body>
+<link rel="stylesheet" href="navigation.css?v=1"></head>
+<body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="vms.html">VMs</a> · <a href="bases.html">Bases</a> · <a href="oos.html">OOS</a></p>
-    <div class="brand-row">
-      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Gratuit</span>
-    </div>
+
     <h1>Volumes BSU &amp; snapshots</h1>
     <p class="lead"><strong>BSU</strong> (Block Storage Unit) est le stockage bloc d’Outscale : un volume attaché à une VM de la même Subregion, qui survit à la VM si tu le décides. C’est là que vivent tes bases. Voici ce que bige-ops en pilote, et les chiffres Outscale qui comptent pour bien dimensionner.</p>
     <div class="callout">
@@ -92,26 +89,38 @@ flowchart LR
     </p>
     <p>
       Le nom de device se donne au format <code>/dev/xvdX</code>
-      (<code>X</code> de <code>b</code> à <code>z</code>). Dans une VM Linux,
-      le volume apparaît en <code>/dev/sdY</code> selon l’ordre d’attachement ;
-      les paquets Outscale pour Ubuntu et CentOS recréent le lien
-      <code>/dev/xvdX</code>, et c’est ce nom que la doc Outscale demande dans
-      <code>/etc/fstab</code>.
+      (<code>X</code> de <code>b</code> à <code>z</code>), un par volume sur
+      une même VM. Dans une VM Linux, le volume apparaît souvent sous un autre
+      nom (<code>/dev/sdY</code>) : c’est pour ça que bige-ops monte par UUID.
+    </p>
+    <p>
+      Donne au volume un <strong>point de montage</strong> (par exemple
+      <code>/data/app</code>) : au déploiement, bige-ops formate le disque
+      s’il est vierge, l’inscrit dans <code>/etc/fstab</code> par UUID avec
+      <code>nofail</code>, le monte et agrandit son système de fichiers. Un
+      disque qui porte déjà des données est monté tel quel, jamais reformaté ;
+      un point de montage qui contient déjà des fichiers est refusé. Sans point
+      de montage, le disque reste brut.
     </p>
     <p>
       Outscale permet de modifier la taille, le type ou les IOPS d’un volume,
       racine compris, quel que soit son état
       (<a href="https://docs.outscale.com/fr/userguide/Modifier-un-volume.html" target="_blank" rel="noopener noreferrer">Modifier un volume</a>).
-      Avant d’appliquer un tel changement depuis la simulation, lis le plan
-      Terraform : il indique si le volume est modifié sur place ou recréé.
+      Dans bige-ops, agrandir un volume ne le recrée pas : la modification se
+      fait sur place après l’apply, puis le système de fichiers suit. Une
+      taille plus petite est refusée avant le plan : un volume Outscale ne fait
+      que grandir.
     </p>
 
     <h2>Snapshots</h2>
     <ul>
       <li>Un snapshot BSU est rattaché à la <strong>Région</strong> : il sert à recréer le volume dans n’importe quelle Subregion de la Région. Pour une autre Région, on l’exporte vers un bucket OOS puis on l’importe (<a href="https://docs.outscale.com/fr/userguide/À-propos-des-snapshots.html" target="_blank" rel="noopener noreferrer">À propos des snapshots</a>).</li>
       <li>Dans bige-ops, le composant <strong>Snapshot</strong> génère du Terraform et apparaît à l’inventaire.</li>
+      <li>Un volume peut être <strong>restauré</strong> depuis un snapshot de la simulation : sa taille par défaut est celle du volume d’origine. Restaure dans un nouveau volume, vérifie, puis bascule ton application.</li>
+      <li>« Garder un snapshot à la suppression » laisse un snapshot <code>…-final</code> quand le volume est supprimé.</li>
       <li>Un snapshot présent sur ton compte reste une ligne d’inventaire : il n’est pas réécrit en YAML.</li>
-      <li>Il est compté dans l’estimation <em>d’inventaire</em>.</li>
+      <li>Il est compté dans l’estimation, jusqu’à la taille de son volume d’origine.</li>
+      <li><code>bige-ops volume orphans</code> liste les volumes détachés et les snapshots dont le volume a disparu, avec leur estimation mensuelle : rien ne reste facturé sans que tu le voies.</li>
       <li>À ne pas confondre avec les <a href="simulations.html">snapshots de configuration</a>, qui sont des sauvegardes locales de tes fichiers.</li>
     </ul>
 

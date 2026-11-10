@@ -21,14 +21,11 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
   <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "Quarkus sur OKS avec PostgreSQL et Kafka", "description": "Quarkus sur OKS avec PostgreSQL 17 et Kafka : control plane HA, HPA, LBU HTTPS, backups OOS, CVE.", "inLanguage": "fr", "url": "https://bige.dev/stack-quarkus-oks-postgresql-kafka.html", "keywords": "Quarkus, Java, Kafka, SmallRye Reactive Messaging, PostgreSQL, Hibernate, Panache, GraalVM, Kubernetes, OKS, HPA, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "Quarkus sur OKS avec PostgreSQL et Kafka", "item": "https://bige.dev/stack-quarkus-oks-postgresql-kafka.html"}]}]}</script>
-</head>
-<body>
+<link rel="stylesheet" href="navigation.css?v=1"></head>
+<body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="stacks.html">Stacks &amp; langages</a> · <a href="documentation.html">Toute la doc</a></p>
-    <div class="brand-row">
-      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Gratuit</span>
-    </div>
+
     <h1>Quarkus sur OKS + PostgreSQL + Kafka</h1>
     <p class="lead">
       Quarkus démarre en millisecondes et consomme peu de mémoire : sur Kubernetes, ça veut dire plus de pods par nœud et un HPA qui réagit vite. Avec Kafka pour les événements et PostgreSQL pour les données, c’est une base cloud-native solide ; bige-ops la pose sur OKS.

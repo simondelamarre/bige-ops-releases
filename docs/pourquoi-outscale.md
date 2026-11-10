@@ -1,6 +1,6 @@
 # Pourquoi bige-ops a choisi Outscale
 
-bige-ops est construit pour un seul cloud, et ce n’est pas un hasard. Outscale maîtrise ses technologies, de la VM au Kubernetes managé, et publie sa grille tarifaire.
+Outscale est l’un des clouds intégrés en bêta dans bige-ops, aux côtés d’OVHcloud. Outscale maîtrise ses technologies, de la VM au Kubernetes managé, et publie sa grille tarifaire.
 
 ## L’humain d’abord
 

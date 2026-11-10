@@ -20,15 +20,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-</head>
-<body>
+<link rel="stylesheet" href="feature-tour.css?v=3"><script src="feature-tour.js?v=3" defer></script><link rel="stylesheet" href="navigation.css?v=1"></head>
+<body class="feature-page"><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="glossaire.html#g-estimate">Estimation</a> · <a href="savoir.html">Sait / ne sait pas</a></p>
-    <div class="brand-row">
-      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Gratuit</span>
-    </div>
-    <h1>Catalogue de prix &amp; estimation</h1>
+
+    <div class="feature-hero"><p class="feature-eyebrow">BIGE-OPS / FONCTIONNALITÉS</p><h1>Économise.<br>Mois après mois.</h1><p class="feature-summary">Projette ton budget mensuel, analyse les postes de dépenses et consigne tes arbitrages. Prépare les ajustements de ta stack pour la suite.</p><div class="laptop"><div class="laptop-display"><span class="laptop-camera"></span><figure><a href="screens/site-simule.webp" target="_blank" rel="noopener"><img src="screens/site-simule.webp" loading="lazy" alt="Visual · estimation de la simulation"></a><figcaption>Visual · estimation de la simulation · <a href="screens/site-simule.webp" target="_blank" rel="noopener">Agrandir ↗</a></figcaption></figure></div><div class="laptop-base"></div></div></div><section data-motion-copy='{"titles": ["Décrire les ressources", "Comprendre le total", "Ajuster la simulation"], "zones": ["TA SIMULATION", "ESTIMATION / MOIS", "COMPARER AVANT DEPLOY"], "notes": ["Chaque ressource compte", "Compute + stockage + réseau", "Estimation indicative, pas un devis"], "entities": [["Compute", "Stockage", "Réseau"], ["Coût compute", "Coût stockage", "Coût réseau"], ["Taille VM", "Volume / IOPS", "Nouvelle estimation"]]}' class="feature-tour" aria-label="Parcours guidé"><header><p>DANS L’APP / PARCOURS GUIDÉ</p><h2>Comprends le prix avant de déployer</h2></header><nav aria-label="Étapes de la fonctionnalité"><a href="#feature-step-0">01 Pars des ressources prévues.</a><a href="#feature-step-1">02 Ouvre le détail.</a><a href="#feature-step-2">03 Compare avant de décider.</a></nav><div class="feature-tour-grid"><div class="feature-tour-copy"><article class="feature-step" id="feature-step-0"><span class="feature-index">01 / 03</span><h3>Pars des ressources prévues.</h3><p>L’estimation dépend de la topologie et des ressources de ta simulation. Elle évolue lorsque tu modifies la stack.</p></article><article class="feature-step" id="feature-step-1"><span class="feature-index">02 / 03</span><h3>Ouvre le détail.</h3><p>Compute, stockage et réseau sont présentés séparément. Relis les hypothèses et le catalogue utilisé plutôt qu’un total isolé.</p></article><article class="feature-step" id="feature-step-2"><span class="feature-index">03 / 03</span><h3>Compare avant de décider.</h3><p>Ajuste le dimensionnement et compare les estimations. Le résultat reste indicatif : ton fournisseur facture ton usage et applique tes conditions.</p></article></div><div class="feature-motion" role="img" aria-label="Décrire les ressources"><div class="motion-top"><span>bige-ops</span><span>LE CONCEPT</span></div><div class="motion-field"><div class="motion-zone"><span>TA SIMULATION</span></div><svg viewBox="0 0 600 440" aria-hidden="true"><path class="motion-link" d="M150 200 H300 H450"/></svg><div class="motion-entity entity-0"><span>⌘</span><strong>Compute</strong></div><div class="motion-entity entity-1"><span>▤</span><strong>Stockage</strong></div><div class="motion-entity entity-2"><span>◇</span><strong>Réseau</strong></div><div class="motion-result"><small>Décrire les ressources</small><strong>Chaque ressource compte</strong><div class="motion-meter"><i></i></div></div></div><p class="motion-caption">Chaque ressource compte</p></div></div></section><details class="feature-reference"><summary>Les détails techniques et les limites</summary><div>
     <p class="lead">L’estimation est calculée <strong>sur ton poste</strong>, à partir du catalogue public Outscale : celui embarqué dans l’app, ou celui que tu synchronises depuis l’API. Elle te donne, dans l’app, une estimation mensuelle hors taxes de ta simulation, ligne par ligne, avant toute dépense.</p>
 
     <h2>D’où viennent les prix</h2>
@@ -150,7 +147,7 @@
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>
     </footer>
-  </main>
+  </div></details></main>
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark" });

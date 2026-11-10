@@ -20,15 +20,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-</head>
-<body>
+<link rel="stylesheet" href="feature-tour.css?v=3"><script src="feature-tour.js?v=3" defer></script><link rel="stylesheet" href="navigation.css?v=1"></head>
+<body class="feature-page"><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="vms.html">VMs</a> · <a href="github-config.html">GitHub config</a></p>
-    <div class="brand-row">
-      <a class="brand" href="index.html">bige<span class="ops">-ops</span></a>
-      <span class="brand-badge">Gratuit</span>
-    </div>
-    <h1>Repos, VMs &amp; Dockerfiles</h1>
+
+    <div class="feature-hero"><p class="feature-eyebrow">BIGE-OPS / FONCTIONNALITÉS</p><h1>Ton code.<br>Sur ton cloud.</h1><p class="feature-summary">Connecte ton dépôt GitHub, choisis ta branche et prépare le build sur VM ou GitHub Actions avec GHCR. Garde la maîtrise du chemin jusqu’au déploiement.</p><div class="laptop"><div class="laptop-display"><span class="laptop-camera"></span><figure><a href="screens/site-simule.webp" target="_blank" rel="noopener"><img src="screens/site-simule.webp" loading="lazy" alt="Visual · les services applicatifs dans leur architecture"></a><figcaption>Visual · les services applicatifs dans leur architecture · <a href="screens/site-simule.webp" target="_blank" rel="noopener">Agrandir ↗</a></figcaption></figure></div><div class="laptop-base"></div></div></div><section data-motion-copy='{"titles": ["Sélectionner le code", "Construire l’image", "Déployer le service"], "zones": ["DÉPÔT + BRANCHE", "VM / ACTIONS → GHCR", "TON COMPTE CLOUD"], "notes": ["Un contexte par service", "GHCR conserve l’image construite", "La version choisie, sur ta stack"], "entities": [["Dépôt", "Branche", "Service"], ["Build VM / CI", "Image Docker", "GHCR privé"], ["Image choisie", "Deploy", "Service actif"]]}' class="feature-tour" aria-label="Parcours guidé"><header><p>DANS L’APP / PARCOURS GUIDÉ</p><h2>Du dépôt à l’application qui tourne</h2></header><nav aria-label="Étapes de la fonctionnalité"><a href="#feature-step-0">01 Relie le code à son service.</a><a href="#feature-step-1">02 Choisis comment produire l’image.</a><a href="#feature-step-2">03 Déploie la cible choisie.</a></nav><div class="feature-tour-grid"><div class="feature-tour-copy"><article class="feature-step" id="feature-step-0"><span class="feature-index">01 / 03</span><h3>Relie le code à son service.</h3><p>Dans le Visual, chaque service garde son dépôt, sa branche et son contexte de build. Un monorepo peut porter plusieurs workloads.</p></article><article class="feature-step" id="feature-step-1"><span class="feature-index">02 / 03</span><h3>Choisis comment produire l’image.</h3><p>Build Docker sur la VM, ou workflow GitHub Actions proposé par pull request et publication dans GHCR privé. GHCR stocke l’image ; GitHub Actions la construit.</p></article><article class="feature-step" id="feature-step-2"><span class="feature-index">03 / 03</span><h3>Déploie la cible choisie.</h3><p>Teste en local et relis le plan. Les logs permettent ensuite de comprendre un problème de build ou de démarrage.</p></article></div><div class="feature-motion" role="img" aria-label="Sélectionner le code"><div class="motion-top"><span>bige-ops</span><span>LE CONCEPT</span></div><div class="motion-field"><div class="motion-zone"><span>DÉPÔT + BRANCHE</span></div><svg viewBox="0 0 600 440" aria-hidden="true"><path class="motion-link" d="M150 200 H300 H450"/></svg><div class="motion-entity entity-0"><span>⌘</span><strong>GitHub / main</strong></div><div class="motion-entity entity-1"><span>▤</span><strong>Image Docker</strong></div><div class="motion-entity entity-2"><span>◇</span><strong>Application</strong></div><div class="motion-result"><small>Sélectionner le code</small><strong>Un contexte par service</strong><div class="motion-meter"><i></i></div></div></div><p class="motion-caption">Un contexte par service</p></div></div></section><details class="feature-reference"><summary>Les détails techniques et les limites</summary><div>
     <p class="lead">
       Trois pièces à bien distinguer : le <strong>repo qui versionne la
       stack</strong> (config-history), les <strong>repos applicatifs</strong>
@@ -136,6 +133,22 @@ flowchart TB
       dockerfile: Dockerfile  # dans le repo, ou chemin imposé
 </pre>
 
+    <h2 id="pr">bige-ops ouvre une pull request, il ne pousse pas sur ta branche</h2>
+    <p>
+      Quand ton repo app a besoin d’un Dockerfile, d’un preset de deploy ou des
+      workflows de build, bige-ops prépare les fichiers puis ouvre une
+      <em>pull request</em> :
+    </p>
+    <ul>
+      <li>sur une branche <code>bige-ops/…</code> ; il refuse de commiter sur ta branche de base ;</li>
+      <li>avec seulement <code>Dockerfile</code>, <code>.dockerignore</code>, <code>.bige-ops/</code> et <code>.github/workflows/bige-ops-*.yml</code> : le reste de ton code n’est jamais touché ;</li>
+      <li>les workflows proposés construisent et scannent chaque pull request, puis publient après le merge des images épinglées par commit dans ton GHCR privé.</li>
+    </ul>
+    <p>
+      Tu relis, tu merges. En ligne de commande :
+      <code>bige-ops app open-pr --stack &lt;stack&gt; --title "…"</code>.
+    </p>
+
     <h2>Si le deploy échoue</h2>
     <p>
       Les causes fréquentes : <code>path</code> ou <code>dockerfile</code>
@@ -214,7 +227,7 @@ flowchart TB
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>
     </footer>
-  </main>
+  </div></details></main>
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });

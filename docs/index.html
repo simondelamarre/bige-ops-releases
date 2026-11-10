@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <title>bige-ops — simple comme un PaaS, flexible comme un IaaS</title>
-  <meta name="description" content="Application gratuite, installée sur ton poste : tu simules ta stack, tu la testes en local, tu la déploies sur ton compte cloud, tu migres tes données et tu suis tes failles. Sans DevOps." />
+  <meta name="description" content="Du PaaS à l’IaaS, sans DevOps. Simuler une stack, estimer ses dépenses, migrer les données et déployer sur son propre cloud français avec bige-ops, une app desktop gratuite." />
   <link rel="canonical" href="https://bige.dev/" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -15,839 +15,140 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content="https://bige.dev/" />
   <meta property="og:title" content="bige-ops — simple comme un PaaS, flexible comme un IaaS" />
-  <meta property="og:description" content="Gratuit, sur ton poste. Simule ta stack, teste-la en local, déploie-la sur ton compte cloud, migre tes données, suis tes failles." />
+  <meta property="og:description" content="Du PaaS à l’IaaS, sans DevOps. Simuler, migrer et déployer sur son propre cloud français avec une app desktop gratuite." />
   <meta property="og:image" content="https://bige.dev/screens/site-simule.png" />
   <meta property="og:image:alt" content="Capture de bige-ops : le Visual d’une stack, l’app sur une VM publique, PostgreSQL et Redis sur des VMs privées." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="bige-ops — simple comme un PaaS, flexible comme un IaaS" />
-  <meta name="twitter:description" content="Gratuit, sur ton poste. Simule, teste en local, déploie sur ton compte, migre tes données, suis tes failles." />
+  <meta name="twitter:description" content="Du PaaS à l’IaaS, sans DevOps. Simuler, migrer et déployer sur son propre cloud français avec une app desktop gratuite." />
   <meta name="twitter:image" content="https://bige.dev/screens/site-simule.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   />
-  <style>
-    :root {
-      --ink-950: #0b0d10;
-      --ink-900: #12151a;
-      --ink-700: #252b36;
-      --ink-600: #3a4354;
-      --accent: #3d9e8f;
-      --accent-bright: #5ec4b4;
-      --mist: #9aa3b2;
-      --white: #ffffff;
-      --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-      --font-display: "Space Grotesk", ui-sans-serif, sans-serif;
-      --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-    }
 
-    * { box-sizing: border-box; }
-    html { color-scheme: dark; }
+  <link rel="stylesheet" href="home.css?v=sequence-1">
+  <script src="cloud-story.js?v=restored-bf1a4b55" defer></script>
+<link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="cloud-story.css?v=restored-bf1a4b55"></head>
+<body class="home">
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs><filter id="suture-ink"><feComponentTransfer><feFuncA type="linear" slope="3" intercept="-0.5"/></feComponentTransfer></filter></defs></svg><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir le parcours</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: var(--font-sans);
-      font-weight: 400;
-      background: #0b0d10;
-      color: #f3f5f8;
-      line-height: 1.55;
-      -webkit-font-smoothing: antialiased;
-      padding-bottom: 4.5rem;
-    }
-
-    main {
-      position: relative;
-      z-index: 1;
-      max-width: 820px;
-      margin: 0 auto;
-      padding: clamp(2rem, 5vw, 3.5rem) 1.35rem 3rem;
-    }
-
-    .brand-row {
-      display: flex;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 0.65rem 0.85rem;
-      margin: 0 0 0.55rem;
-    }
-
-    .brand {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 6vw, 2.75rem);
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      line-height: 1;
-      margin: 0;
-      color: var(--white);
-    }
-
-    .brand .ops { color: var(--accent-bright); }
-
-    .brand-badge {
-      font-family: var(--font-display);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #5ec4b4;
-      border: 1px solid rgba(94, 196, 180, 0.28);
-      background: rgba(94, 196, 180, 0.06);
-      padding: 0.2rem 0.45rem;
-      line-height: 1.2;
-      align-self: center;
-    }
-
-    .baseline {
-      margin: 0 0 1.1rem;
-      max-width: 36rem;
-      font-size: clamp(1.05rem, 2.4vw, 1.2rem);
-      font-weight: 500;
-      color: var(--mist);
-      line-height: 1.4;
-    }
-
-    .pitch {
-      margin: 0 0 1.35rem;
-      padding: 0;
-      list-style: none;
-      color: var(--mist);
-      font-size: 1.02rem;
-      max-width: 40rem;
-    }
-
-    .pitch li {
-      margin: 0 0 0.4rem;
-      padding-left: 0.9rem;
-      position: relative;
-    }
-
-    .pitch li::before {
-      content: "→";
-      position: absolute;
-      left: 0;
-      color: var(--accent-bright);
-      font-size: 0.85rem;
-    }
-
-    .pitch strong { color: var(--white); font-weight: 600; }
-
-    .shot {
-      margin: 0 0 1.5rem;
-      padding: 0;
-    }
-
-    .shot img {
-      display: block;
-      width: 100%;
-      height: auto;
-      border: 1px solid var(--ink-700);
-      border-radius: 10px;
-      background: var(--ink-900);
-    }
-
-    .shot figcaption {
-      margin: 0.45rem 0 0;
-      font-size: 0.85rem;
-      color: var(--mist);
-      line-height: 1.35;
-    }
-
-    .shot-secondary {
-      margin: 0.85rem 0 0;
-    }
-
-    .shot-secondary img {
-      border-radius: 8px;
-    }
-
-    .download-inline {
-      margin: 0 0 2.25rem;
-      padding-bottom: 1.75rem;
-      border-bottom: 1px solid var(--ink-700);
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.65rem;
-      margin: 0 0 0.85rem;
-    }
-
-    .actions a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      font-weight: 600;
-      padding: 0.8rem 1.25rem;
-      text-decoration: none;
-      font-size: 1rem;
-      letter-spacing: -0.01em;
-      transition: background 0.15s ease, border-color 0.15s ease;
-    }
-
-    .actions a.primary {
-      background: var(--accent);
-      color: var(--ink-950);
-    }
-
-    .actions a.primary:visited { color: var(--ink-950); }
-    .actions a.primary:hover { background: var(--accent-bright); }
-
-    .actions a.secondary {
-      color: var(--white);
-      border: 1px solid var(--ink-600);
-    }
-
-    .actions a.secondary:visited { color: #c5cad3; }
-    .actions a.secondary:hover { border-color: var(--mist); }
-
-    .brew {
-      display: flex;
-      align-items: stretch;
-      gap: 0.5rem;
-      margin: 0;
-      font-size: 0.875rem;
-      color: var(--mist);
-      max-width: 34rem;
-    }
-
-    .brew code {
-      flex: 1 1 auto;
-      min-width: 0;
-      display: block;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      padding: 0.55rem 0.7rem;
-      line-height: 1.5;
-    }
-
-    .copy-btn {
-      flex: 0 0 auto;
-      font-family: var(--font-display);
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--white);
-      background: var(--ink-900);
-      border: 1px solid var(--ink-600);
-      padding: 0 0.85rem;
-      cursor: pointer;
-      transition: border-color 0.15s ease, color 0.15s ease;
-    }
-
-    .copy-btn:hover { border-color: var(--mist); }
-
-    .copy-btn:focus-visible {
-      outline: 2px solid var(--accent-bright);
-      outline-offset: 2px;
-    }
-
-    .copy-btn[data-copied="true"] {
-      color: var(--accent-bright);
-      border-color: var(--accent-bright);
-    }
-
-    code {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: #d5dae3;
-      background: var(--ink-900);
-      padding: 0.2rem 0.45rem;
-      border: 1px solid var(--ink-700);
-    }
-
-    .block {
-      margin: 0 0 2rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid var(--ink-700);
-    }
-
-    .block:last-of-type {
-      border-bottom: 0;
-      padding-bottom: 0;
-      margin-bottom: 0;
-    }
-
-    .block h2 {
-      font-family: var(--font-display);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent-bright);
-      margin: 0 0 0.75rem;
-    }
-
-    .block p {
-      margin: 0 0 0.75rem;
-      color: var(--mist);
-      font-size: 1.02rem;
-      max-width: 42rem;
-    }
-
-    .block p:last-child { margin-bottom: 0; }
-    .block strong { color: var(--white); font-weight: 600; }
-
-    .link-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.65rem;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .link-grid a {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-      min-height: 4.25rem;
-      padding: 0.9rem 1rem;
-      text-decoration: none;
-      border: 1px solid var(--ink-700);
-      border-radius: 8px;
-      background: rgba(18, 21, 26, 0.55);
-      color: var(--white);
-      transition: border-color 0.15s ease, background 0.15s ease;
-    }
-
-    .link-grid a:visited { color: #c5cad3; }
-
-    .link-grid a:hover {
-      border-color: var(--accent);
-      background: rgba(61, 158, 143, 0.08);
-      color: var(--white);
-    }
-
-    .link-grid a:focus-visible {
-      outline: 2px solid var(--accent-bright);
-      outline-offset: 2px;
-    }
-
-    .link-grid .lg-title {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 1.02rem;
-      letter-spacing: -0.01em;
-      color: inherit;
-    }
-
-    .link-grid .lg-sub {
-      font-size: 0.88rem;
-      color: var(--mist);
-      line-height: 1.35;
-    }
-
-    .feat-group { margin: 0 0 1rem; }
-    .feat-group:last-of-type { margin-bottom: 0; }
-
-    .feat-group h3 {
-      font-family: var(--font-display);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin: 0 0 0.45rem;
-      color: var(--mist);
-    }
-
-    .feat-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .feat-list li {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 0.45rem 0.65rem;
-      align-items: center;
-      padding: 0.45rem 0.6rem;
-      border: 1px solid var(--ink-700);
-      border-radius: 6px;
-      background: rgba(18, 21, 26, 0.45);
-      font-size: 0.95rem;
-      color: var(--mist);
-      line-height: 1.35;
-    }
-
-    .feat-list strong { color: var(--white); }
-
-    .badge {
-      display: inline-block;
-      font-family: var(--font-display);
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0.18rem 0.4rem;
-      border-radius: 4px;
-      line-height: 1.2;
-      white-space: nowrap;
-    }
-
-    .badge-stable {
-      color: #0b0d10;
-      background: #5ec4b4;
-    }
-
-    .badge-wip {
-      color: #f5d78a;
-      background: rgba(245, 215, 138, 0.12);
-      border: 1px solid rgba(245, 215, 138, 0.35);
-    }
-
-    .badge-backlog {
-      color: #9aa3b2;
-      background: rgba(154, 163, 178, 0.1);
-      border: 1px solid rgba(154, 163, 178, 0.28);
-    }
-
-    .provider-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin: 0.75rem 0 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .provider-row li {
-      font-family: var(--font-display);
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 0.35rem 0.55rem;
-      border-radius: 6px;
-      border: 1px solid var(--ink-600);
-      color: var(--mist);
-    }
-
-    .provider-row li.is-live {
-      color: #0b0d10;
-      background: #5ec4b4;
-      border-color: #5ec4b4;
-    }
-
-    .provider-row li.is-wip {
-      color: #f5d78a;
-      border-color: rgba(245, 215, 138, 0.4);
-      background: rgba(245, 215, 138, 0.08);
-    }
-
-    .faq {
-      margin: 0;
-      padding: 0;
-    }
-
-    .faq dt {
-      font-family: var(--font-display);
-      font-weight: 600;
-      color: var(--white);
-      margin: 0.85rem 0 0.25rem;
-      font-size: 1rem;
-    }
-
-    .faq dt:first-child { margin-top: 0; }
-
-    .faq dd {
-      margin: 0;
-      color: var(--mist);
-      font-size: 0.98rem;
-      max-width: 42rem;
-    }
-
-    .pourquoi-list {
-      margin: 1rem 0 0;
-      padding-left: 1.25rem;
-      color: var(--mist);
-      line-height: 1.65;
-      max-width: 44rem;
-    }
-
-    .pourquoi-list li { margin: 0.55rem 0; }
-
-    .pourquoi-list strong { color: var(--white); }
-
-    .why-card {
-      margin: 1.35rem 0 0;
-      max-width: 44rem;
-    }
-
-    .why-card h3 {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--white);
-      margin: 0 0 0.35rem;
-    }
-
-    .why-card .why-sub {
-      color: #5ec4b4;
-      font-family: var(--font-display);
-      font-weight: 500;
-      margin: 0 0 0.5rem;
-    }
-
-    .why-card p { margin: 0.4rem 0; color: var(--mist); }
-
-    a { color: #5ec4b4; }
-    a:visited { color: #9bb8d4; }
-    a:hover { color: #7ed4c6; }
-    a:focus-visible {
-      outline: 2px solid #5ec4b4;
-      outline-offset: 2px;
-    }
-
-    .skip-link {
-      position: absolute;
-      left: -9999px;
-      top: 0;
-      z-index: 100;
-      padding: 0.6rem 1rem;
-      background: var(--accent);
-      color: var(--ink-950);
-      font-family: var(--font-display);
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .skip-link:focus {
-      left: 1rem;
-      top: 1rem;
-      color: var(--ink-950);
-    }
-
-    .site-footer {
-      margin-top: 2.5rem;
-      padding-top: 1.35rem;
-      border-top: 1px solid var(--ink-700);
-      font-size: 0.9rem;
-      color: var(--ink-600);
-    }
-
-    .site-footer .meta {
-      color: var(--mist);
-      font-size: 0.9rem;
-      margin: 0;
-      line-height: 1.6;
-    }
-
-    .site-footer a {
-      color: #5ec4b4;
-      text-decoration: underline;
-      text-underline-offset: 0.15em;
-    }
-
-    .site-footer a:visited { color: #9bb8d4; }
-    .site-footer a:hover { color: #7ed4c6; }
-
-    .download-sticky {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 50;
-      display: flex;
-      justify-content: center;
-      gap: 0.65rem;
-      flex-wrap: wrap;
-      padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
-      background: var(--ink-950);
-      border-top: 1px solid var(--ink-700);
-    }
-
-    .download-sticky[hidden] { display: none !important; }
-
-    .download-sticky a {
-      display: inline-flex;
-      font-family: var(--font-display);
-      font-weight: 600;
-      padding: 0.7rem 1.15rem;
-      text-decoration: none;
-      font-size: 0.95rem;
-    }
-
-    .download-sticky a.primary {
-      background: var(--accent);
-      color: var(--ink-950);
-    }
-
-    .download-sticky a.primary:visited { color: var(--ink-950); }
-    .download-sticky a.primary:hover { background: var(--accent-bright); }
-
-    .download-sticky a.secondary {
-      color: var(--white);
-      border: 1px solid var(--ink-600);
-    }
-
-    .download-sticky a.secondary:visited { color: #c5cad3; }
-
-    @media (max-width: 640px) {
-      body { padding-bottom: 5.5rem; }
-      main { padding: 1.75rem 1.1rem 2rem; }
-      .baseline { font-size: 1.05rem; }
-      .actions a { flex: 1 1 100%; padding: 0.85rem 1rem; }
-      .brew { flex-direction: column; gap: 0.4rem; max-width: none; }
-      .brew code { font-size: 0.78rem; }
-      .copy-btn { padding: 0.6rem 1rem; width: 100%; }
-      .link-grid { grid-template-columns: 1fr; }
-      .block { margin-bottom: 1.65rem; padding-bottom: 1.65rem; }
-      .download-sticky { gap: 0.5rem; padding: 0.65rem 0.9rem calc(0.65rem + env(safe-area-inset-bottom)); }
-      .download-sticky a { flex: 1 1 0; justify-content: center; font-size: 0.9rem; padding: 0.7rem 0.5rem; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { transition: none !important; scroll-behavior: auto !important; }
-    }
-
-    /* 2026-10-19 home: hero, chips, slider, facts */
-    .hero-title { font-family: var(--font-display); font-size: clamp(2.4rem, 7vw, 3.6rem); line-height: 1.02; letter-spacing: -0.03em; margin: 1.2rem 0 1rem; color: var(--white); }
-    .hero-title span { color: var(--accent-bright); }
-    .baseline a { color: var(--accent-bright); }
-    .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.6rem 0 0; font-size: 0.9rem; }
-    .chips span { border: 1px solid var(--ink-700); border-radius: 999px; padding: 0.25rem 0.75rem; color: #c9d3d8; }
-    .chips a { padding: 0.25rem 0.2rem; color: var(--accent-bright); }
-    .slider { margin: 2rem 0 0.5rem; }
-    .slides { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; gap: 1rem; scrollbar-width: none; border-radius: 14px; }
-    .slides::-webkit-scrollbar { display: none; }
-    .slides:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 4px; }
-    .slide { flex: 0 0 100%; scroll-snap-align: center; margin: 0; }
-    .slide img { width: 100%; height: auto; aspect-ratio: 1.6 / 1; object-fit: cover; object-position: left top; display: block; border: 1px solid var(--ink-700); border-radius: 14px; }
-    .slide figcaption { margin-top: 0.6rem; font-size: 0.92rem; color: var(--mist); text-align: center; }
-    .slide figcaption a { color: var(--accent-bright); }
-    .slider-nav { display: flex; align-items: center; justify-content: center; gap: 0.9rem; margin-top: 0.6rem; }
-    .slider-btn { background: var(--ink-900); color: var(--white); border: 1px solid var(--ink-700); border-radius: 999px; width: 2.2rem; height: 2.2rem; font-size: 1.2rem; cursor: pointer; }
-    .slider-btn:hover, .slider-btn:focus-visible { border-color: var(--accent-bright); }
-    .dots { display: flex; gap: 0.45rem; }
-    .dots button { width: 0.6rem; height: 0.6rem; border-radius: 999px; border: 0; padding: 0; background: var(--ink-600); cursor: pointer; }
-    .dots button[aria-current="true"] { background: var(--accent-bright); }
-    .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-top: 1rem; }
-    .fact { border: 1px solid var(--ink-700); background: var(--ink-900); border-radius: 14px; padding: 1.1rem 1.2rem; }
-    .fact h3 { margin: 0 0 0.4rem; font-family: var(--font-display); font-size: 1.35rem; color: var(--accent-bright); }
-    .fact p { margin: 0.3rem 0; color: #d7dde2; }
-    @media (prefers-reduced-motion: reduce) { .slides { scroll-behavior: auto; } }
-    .panel { border: 1px solid rgba(94,196,180,.45); background: linear-gradient(135deg, rgba(61,158,143,.18), rgba(18,21,26,.9)); border-radius: 18px; padding: 2rem 1.6rem; margin-top: 2.5rem; }
-    .panel-kicker { margin: 0; font-family: var(--font-mono); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-bright); }
-    .panel-title { margin: .6rem 0 .8rem; font-family: var(--font-display); font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.05; letter-spacing: -0.02em; color: var(--white); text-transform: none; }
-    .panel-text { color: #d7dde2; font-size: 1.05rem; max-width: 40rem; }
-    .panel-clouds { display: flex; flex-wrap: wrap; gap: .6rem; }
-    .panel-clouds a { border: 1px solid var(--ink-600); border-radius: 999px; padding: .35rem .9rem; color: var(--white); text-decoration: none; }
-    .panel-clouds a:hover, .panel-clouds a:focus-visible { border-color: var(--accent-bright); }
-    .panel-cta { display: inline-block; margin-top: .4rem; }
-  </style>
-</head>
-<body>
-  <a class="skip-link" href="#contenu">Aller au contenu</a>
-  <!-- landing build: 2026-11-02-paas-iaas -->
   <main id="contenu">
-    <div class="brand-row">
-      <p class="brand">bige<span class="ops">-ops</span></p>
-      <span class="brand-badge">Gratuit</span>
-    </div>
-    <span id="why-outscale"></span><span id="outscale"></span><span id="clouds"></span>
-    <h1 class="hero-title">Simple comme un PaaS.<br><span>Flexible comme un IaaS.</span></h1>
-    <p class="baseline">bige-ops est une application gratuite, installée sur ton poste. Tu relies ton dépôt, tu simules ta stack, tu la testes en local et tu la déploies sur ton propre compte cloud, aujourd’hui chez <a href="pourquoi-outscale.html">Outscale</a>. Sans DevOps.</p>
 
-    <div id="download" class="download-inline">
-      <p class="brew">
-        <code id="brew-cmd" title="brew install --cask simondelamarre/bige-ops/bige-ops">brew install --cask simondelamarre/bige-ops/bige-ops</code>
-        <button type="button" class="copy-btn" id="brew-copy"
-                data-target="brew-cmd" aria-label="Copier la commande Homebrew">Copier</button>
-      </p>
-      <p class="chips">
-        <span>Gratuit</span><span>Sans carte bancaire</span><span>Sans compte cloud pour commencer</span>
-        <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Linux : AppImage / .deb</a>
-      </p>
-      <!-- macOS DMG download hidden until the app is notarized:
-      <a class="primary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger macOS</a> -->
-    </div>
-
-    <section class="slider" aria-roledescription="carousel" aria-label="Aperçus de bige-ops">
-      <div class="slides" id="slides" tabindex="0">
-        <figure class="slide" aria-roledescription="slide" aria-label="1 sur 6">
-          <img src="screens/site-simule.webp" width="2000" height="1250" alt="Capture de bige-ops : le Visual d’une stack. L’API, le front et le worker sur une VM publique, PostgreSQL et Redis chacun sur une VM privée, sauvegardes vers l’Object Storage, bouton Déployer en production." />
-          <figcaption>Ta stack telle qu’elle tournera&nbsp;: l’app sur une VM, chaque base sur sa VM privée, les sauvegardes vers l’Object Storage.</figcaption>
-        </figure>
-        <figure class="slide" aria-roledescription="slide" aria-label="2 sur 6">
-          <img src="screens/site-kubernetes.webp" width="2000" height="1250" loading="lazy" alt="Capture de bige-ops : la même stack sur Kubernetes, un cluster OKS, un node pool de trois nœuds, les pods api, worker et web, MongoDB et Redis, avec les boutons Tester Kubernetes et Déployer en production." />
-          <figcaption>La même stack sur Kubernetes&nbsp;: ton cluster, ton node pool, tes pods. Testée en local avant le cloud.</figcaption>
-        </figure>
-        <figure class="slide" aria-roledescription="slide" aria-label="3 sur 6">
-          <img src="screens/site-migration.webp" width="2000" height="1250" loading="lazy" alt="Capture de bige-ops : migration de trois buckets AWS S3 vers Outscale OOS, mêmes noms, deux buckets à créer, seize transferts en parallèle." />
-          <figcaption>Tes buckets S3 reproduits sur OOS&nbsp;: mêmes noms, copie reprenable, la source reste intacte.</figcaption>
-        </figure>
-        <figure class="slide" aria-roledescription="slide" aria-label="4 sur 6">
-          <img src="screens/site-donnees.webp" width="2000" height="1250" loading="lazy" alt="Capture de bige-ops : le panneau Données d’une base MongoDB, dump créé, envoi vers l’Object Storage en cours, boutons Créer un dump, Restaurer et Migrer depuis une base." />
-          <figcaption>Chaque base a son panneau Données&nbsp;: dump, envoi vers l’Object Storage, restauration, migration.</figcaption>
-        </figure>
-        <figure class="slide" aria-roledescription="slide" aria-label="5 sur 6">
-          <img src="screens/site-failles.webp" width="2000" height="1250" loading="lazy" alt="Capture de bige-ops : une injection SQL dans OWASP Juice Shop, ligne 34 de routes/login.ts surlignée, exposée à Internet, priorité 1, avec le bouton Proposer une issue GitHub." />
-          <figcaption>Une faille réelle, la ligne de code, l’issue GitHub en un clic. Trouvée sur ton poste, sans clé ni IA (<a href="https://owasp.org/projects/juice-shop" target="_blank" rel="noopener">OWASP Juice Shop</a>).</figcaption>
-        </figure>
-        <figure class="slide" aria-roledescription="slide" aria-label="6 sur 6">
-          <img src="screens/site-cve.webp" width="2000" height="1250" loading="lazy" alt="Capture de bige-ops : la fiche CVE-2022-25887 sur sanitize-html 1.4.2, plage affectée, version corrigée 2.7.1, lien OpenCVE et action recommandée." />
-          <figcaption>Les failles connues de tes bibliothèques, avec la version corrigée (<a href="https://www.opencve.io/" target="_blank" rel="noopener">OpenCVE</a>).</figcaption>
-        </figure>
+    <section class="home-hero" aria-labelledby="landing-title">
+      <p class="landing-kicker"><span></span> DU PAAS AU CLOUD FRANÇAIS</p>
+      <h1 id="landing-title" class="hero-title"><span class="hero-line">Simple comme un <strong>PaaS.</strong></span><span class="hero-line hero-line-accent">Flexible comme un <strong>IaaS.</strong></span></h1>
+      <p class="baseline">Retrouver le confort du PaaS sur son propre cloud français. bige-ops exécute les déploiements, les migrations et les sauvegardes depuis une app desktop gratuite.</p>
+      <div class="hero-actions">
+        <a class="primary" href="#download">Télécharger la bêta <span aria-hidden="true">↗</span></a>
+        <a class="secondary" href="#parcours">Voir le parcours <span aria-hidden="true">↓</span></a>
       </div>
-      <div class="slider-nav">
-        <button type="button" class="slider-btn" id="slide-prev" aria-label="Aperçu précédent">‹</button>
-        <span class="dots" id="slide-dots"></span>
-        <button type="button" class="slider-btn" id="slide-next" aria-label="Aperçu suivant">›</button>
+      <p class="hero-install-note">App gratuite · macOS et Linux · Sans IA obligatoire</p>
+      <ul class="cloud-status" aria-label="Clouds pris en charge et à venir">
+        <li><a href="pourquoi-outscale.html"><img class="cloud-wordmark" src="assets/brands/outscale.webp" alt="Outscale" width="88" height="24"><span class="cloud-beta">Bêta</span></a></li>
+        <li><a href="#ovhcloud"><img src="assets/brands/ovh.svg" alt="" width="24" height="24"><strong>OVHcloud</strong><span class="cloud-beta">Bêta</span></a></li>
+        <li><a href="#scaleway"><img src="assets/brands/scaleway.svg" alt="" width="24" height="24"><strong>Scaleway</strong><span>À venir</span></a></li>
+      </ul>
+    </section>
+
+<section class="journey" id="parcours" aria-labelledby="journey-title"><header class="journey-heading"><h2 id="journey-title">De tes plateformes à ton propre cloud.</h2><p>Un projet. Tout le parcours. Fais défiler ↓</p></header><nav class="journey-nav" aria-label="Étapes du parcours"><a href="#concept-source" aria-label="Étape 1 : Tu as déjà une app. Pas encore ton infra."><b>01</b><span>Le point de départ</span></a>
+<a href="#concept-github" aria-label="Étape 2 : Connecte GitHub. Choisis ce qui part."><b>02</b><span>Connecter</span></a>
+<a href="#concept-visual" aria-label="Étape 3 : Dessine ce que les plateformes te cachaient."><b>03</b><span>Composer</span></a>
+<a href="#concept-network" aria-label="Étape 4 : Ouvre ton app. Protège le reste."><b>04</b><span>Isoler</span></a>
+<a href="#concept-audit" aria-label="Étape 5 : Avant de partir, regarde les risques."><b>05</b><span>Scanner</span></a>
+<a href="#concept-migration" aria-label="Étape 6 : Tes données deviennent souveraines."><b>06</b><span>Migrer</span></a>
+<a href="#concept-build" aria-label="Étape 7 : Ton code devient une image prête à tourner."><b>07</b><span>Construire</span></a>
+<a href="#concept-deploy" aria-label="Étape 8 : Du test local au vrai déploiement."><b>08</b><span>Déployer</span></a>
+<a href="#concept-operate" aria-label="Étape 9 : Et demain, tu gardes la main."><b>09</b><span>Maintenir</span></a></nav><div class="journey-layout"><div class="concept-stage" aria-label="Illustration du parcours d’une application vers ton cloud">
+<div class="concept-toolbar"><span><i></i> bige-ops <b>/ mon-app</b></span><span>PARCOURS ILLUSTRÉ</span></div>
+<div class="concept-canvas">
+<div class="origins-panel"><span class="scene-eyebrow">AUJOURD’HUI / TES PLATEFORMES</span><div class="origin-group"><small>APPLICATION · PAAS</small><span><img src="assets/brands/vercel.svg" width="22" height="22" alt="">Vercel</span><span><img src="assets/brands/heroku.svg" width="22" height="22" alt="">Heroku</span></div><div class="origin-group"><small>DONNÉES · BAAS</small><span><img src="assets/brands/supabase.svg" width="22" height="22" alt="">Supabase</span><span><img src="assets/brands/mongodb.svg" width="22" height="22" alt="">MongoDB Atlas</span></div><small class="origin-note">Exemples de départ · migration selon les services utilisés</small></div>
+<div class="github-panel"><img src="assets/brands/github.svg" width="32" height="32" alt="GitHub"><strong>Ton GitHub, connecté.</strong><dl><dt>Dépôt</dt><dd>mon-org / mon-app</dd><dt>Branche</dt><dd>main</dd><dt>Services</dt><dd>web · api · worker</dd></dl><small>Tu choisis le code à emmener.</small></div>
+<div class="build-panel"><span class="scene-eyebrow">UNE SOURCE / DEUX CHEMINS</span><strong>mon-app / main</strong><div class="build-route"><b>01</b><span>Build sur la VM<small>Dockerfile → image → service</small></span></div><div class="build-route"><b>02</b><span>GitHub Actions → GHCR<small>PR relue → build CI → image privée</small></span></div><p>Une image liée à ton code.</p></div>
+<div class="operations-panel"><span class="scene-eyebrow">OPÉRER DEPUIS BIGE-OPS</span><strong>La suite, au même endroit.</strong><div class="operation-grid"><span>Ⅱ Pause<small>VM compatibles</small></span><span>▷ Start<small>Relancer les VM</small></span><span>↻ Restart<small>Redémarrer le service</small></span><span>↗ Deploy<small>Branche sélectionnée</small></span></div><div class="branch-demo">branche <b>release/next</b> → déployer</div><small>Logs · état des ressources · opérations</small></div>
+<div class="network-zone"><span>RÉSEAU PRIVÉ · TON COMPTE CLOUD</span></div>
+<svg class="concept-wires" viewBox="0 0 800 540" aria-hidden="true"><path class="wire source-wire" d="M400 120 V190 M400 190 H180 V250 M400 190 H620 V250"/><path class="wire infra-wire" d="M180 290 H400 H620"/><path class="wire network-wire" d="M160 130 V220 H400 V290 H620"/><path class="wire transfer-wire" d="M400 330 V430 H620 V330"/></svg>
+<div class="concept-node repo-node"><span class="node-icon"><img src="assets/brands/github.svg" width="22" height="22" alt=""></span><div><small>GITHUB / MAIN</small><strong>mon-app</strong></div><span class="node-check">✓</span></div>
+<div class="concept-node app-node"><span class="node-icon">&lt;/&gt;</span><div><small class="app-label">APPLICATION · PAAS</small><strong>Web + API</strong></div></div>
+<div class="concept-node db-node"><span class="node-icon">▤</span><div><small class="db-label">DONNÉES · BAAS</small><strong>PostgreSQL</strong></div></div>
+<div class="concept-node storage-node"><span class="node-icon">◇</span><div><small>OBJECT STORAGE</small><strong>assets / uploads</strong></div></div>
+<div class="concept-node public-node"><span class="node-icon">↗</span><div><small>ENTRÉE PUBLIQUE</small><strong>HTTPS · 443</strong></div></div>
+<div class="terraform-panel"><span>main.tf <b>GÉNÉRÉ DEPUIS LE VISUAL</b></span><code>resource <em>"compute"</em> "app" {<br>  network = <em>"private"</em><br>}<br><br>resource <em>"database"</em> "postgres" {<br>  public_access = <em>false</em><br>}</code><small>Extrait conceptuel · syntaxe simplifiée</small></div>
+<div class="audit-panel"><span class="scene-eyebrow">AUDIT / EXEMPLE ILLUSTRATIF</span><strong>Une faille. Son contexte.</strong><div><b>CWE-89</b><span>Injection SQL<small>routes/login.ts · ligne 42</small></span></div><div><b>CVE</b><span>Dépendance vulnérable<small>Version affectée → version corrigée</small></span></div><p>Préparer une issue GitHub ↗</p></div>
+<div class="migration-panel"><span class="scene-eyebrow">SOURCE → TON CLOUD</span><div><span>PostgreSQL</span><b>Copie des données</b></div><i></i><div><span>Objets S3</span><b>Copie des objets</b></div><i></i><small>Copier → vérifier → basculer</small></div>
+<div class="live-panel"><span class="scene-eyebrow">TON COMPTE / OUTSCALE · BÊTA</span><strong>Ta stack, en vue.</strong><div><span>Plan relu</span><span>Déploiement</span><span>Live</span></div><svg viewBox="0 0 560 80" aria-hidden="true"><path d="M0 65 L40 60 L80 65 L120 28 L160 45 L200 35 L240 42 L280 20 L320 35 L360 18 L400 24 L440 12 L480 18 L520 10 L560 14"/></svg><small>Illustration · pas de connexion à un compte réel</small></div>
+<div class="scene-caption"><span>01 / CONNECTER</span><b>Tout commence par ton projet.</b></div>
+</div></div><div class="journey-copy"><article class="journey-step" id="concept-source"><p class="landing-kicker">01 / PaaS + BaaS → IaaS</p><h3>Tu as déjà une app. Pas encore ton infra.</h3><p>Un front sur Vercel ou Heroku, une base sur Supabase ou MongoDB Atlas, des fichiers ailleurs. bige-ops t’aide à préparer leur nouvelle maison, sur ton propre compte cloud.</p><a href="comprendre-bige-ops.html">Comprendre cette étape ↗</a></article>
+<article class="journey-step" id="concept-github"><p class="landing-kicker">02 / Compte → dépôt → branche</p><h3>Connecte GitHub. Choisis ce qui part.</h3><p>Relie ton compte, sélectionne le dépôt et la branche. Identifie le front, l’API et les workers à déployer : ton code reste dans ton GitHub.</p><a href="repos-vms-docker.html">Comprendre cette étape ↗</a></article>
+<article class="journey-step" id="concept-visual"><p class="landing-kicker">03 / Visual → Terraform</p><h3>Dessine ce que les plateformes te cachaient.</h3><p>Place ton application, tes bases et leur stockage. bige-ops traduit cette architecture en Terraform lisible et versionné. Tu pilotes le résultat sans écrire toute la plomberie DevOps.</p><a href="layouts.html">Comprendre cette étape ↗</a></article>
+<article class="journey-step" id="concept-network"><p class="landing-kicker">04 / HTTPS → app → base privée</p><h3>Ouvre ton app. Protège le reste.</h3><p>Une entrée HTTPS pour tes utilisateurs. L’application et la base communiquent en privé. Tu choisis les connexions, les machines et la région qui héberge ta stack.</p><a href="reseau.html">Comprendre cette étape ↗</a></article>
+<article class="journey-step" id="concept-audit"><p class="landing-kicker">05 / Scanner → comprendre → corriger</p><h3>Avant de partir, regarde les risques.</h3><p>Le scan relie les failles du code et des dépendances à leur contexte. CWE, CVE, route exposée, version corrigée : prépare une issue GitHub pour agir.</p><a href="migration-securite.html#failles">Comprendre cette étape ↗</a></article>
+<article class="journey-step" id="concept-migration"><p class="landing-kicker">06 / Copier → vérifier → basculer</p><h3>Tes données deviennent souveraines.</h3><p>Choisis un cloud souverain et une région adaptée. Migre ta base, copie tes objets, puis vérifie avant de basculer : tes données rejoignent une infrastructure sous ton contrôle.</p><a href="migration-securite.html">Comprendre cette étape ↗</a></article>
+<article class="journey-step" id="concept-build"><p class="landing-kicker">07 / Build sur VM / GitHub Actions → GHCR</p><h3>Ton code devient une image prête à tourner.</h3><p>Construis sur la VM, ou prépare une CI GitHub Actions qui construit et publie dans ton GHCR privé. Tu relis la pull request proposée avant de l’intégrer.</p><a href="repos-vms-docker.html#pr">Comprendre cette étape ↗</a></article>
+<article class="journey-step" id="concept-deploy"><p class="landing-kicker">08 / Test local → plan → déploiement</p><h3>Du test local au vrai déploiement.</h3><p>Teste ta stack sur ton poste. Relis le plan des ressources, confirme la cible, puis déploie le code choisi sur ton compte. L’infrastructure reste à toi.</p><a href="simulations.html">Comprendre cette étape ↗</a></article>
+<article class="journey-step" id="concept-operate"><p class="landing-kicker">09 / Pause · Start · Restart · Deploy</p><h3>Et demain, tu gardes la main.</h3><p>Mets en pause ou démarre les VM compatibles, redémarre un service, consulte ses logs. Choisis une branche à déployer et suis les opérations depuis la même app gratuite.</p><a href="inventory.html">Voir les opérations ↗</a></article></div></div></section>
+<div class="light-page">
+<span id="a-venir"></span><span id="aussi"></span><span id="demarrer"></span><span id="ecoute"></span><span id="failles"></span><span id="faq"></span><span id="gratuit"></span><span id="iaas"></span><span id="object-storage"></span><span id="pourquoi"></span><span id="pricing"></span><span id="prix"></span><span id="why-byok"></span><span id="why-deploy"></span><span id="why-ecoute"></span><span id="why-less"></span><span id="why-projection"></span><span id="why-storage"></span><span id="why-vulns"></span><section class="feature-bento" id="features"><header><p class="landing-kicker">EXPLORE À TON RYTHME</p><h2>À chaque opération,<br>son outil.</h2><p>Explore les fonctions de l’app, du premier scénario au suivi de tes services.</p></header><div class="bento-grid">
+<a class="bento-card bento-wide bento-architecture riso-pilot" id="simulation-card" href="layouts.html"><div class="signature-art" aria-hidden="true"><img src="assets/illustrations/simulations-riso-v1.webp" alt="" width="480" height="240"></div><div class="riso-copy"><p>SIMULER AVANT DE CHOISIR</p><h3>Simule. Compare.<br>Déploie la bonne stack.</h3><span>Compare les coûts estimés, les performances visées et la résilience de tes scénarios avant de déployer. ↗</span></div></a>
+<a class="bento-card bento-security bento-tall riso-pilot riso-security" id="security-card" href="migration-securite.html#failles"><div class="signature-art" aria-hidden="true"><img src="assets/illustrations/security-riso-v1.webp" alt="" width="480" height="240"></div><div class="riso-copy"><p>COMPRENDRE POUR CORRIGER</p><h3><span class="security-fault-title">Identifie les failles.</span><br>Priorise les corrections.</h3><span>bige-ops analyse le code, les dépendances et l’exposition de ta stack. Retrouve les CWE, les CVE et leur contexte pour prioriser les corrections. ↗</span></div></a>
+<a class="bento-card riso-pilot riso-price" id="price-card" href="catalogue-prix.html"><div class="signature-art" aria-hidden="true"><img src="assets/illustrations/price-riso-v2.webp" alt="" width="800" height="533" loading="lazy" decoding="async"></div><div class="riso-copy"><p>PILOTER DANS LA DURÉE</p><h3>Économise.<br>Mois après mois.</h3><span>Estime tes dépenses mensuelles, analyse les ressources qui les composent et consigne tes choix pour optimiser la suite. ↗</span></div></a>
+<a class="bento-card riso-pilot riso-migration bento-wide bento-data" href="migration-securite.html"><div class="signature-art" aria-hidden="true"><img src="assets/illustrations/migration-riso-v1.webp" alt="" width="800" height="533" loading="lazy" decoding="async"></div><div class="riso-copy"><p>CHOISIR OÙ VIVENT TES DONNÉES</p><h3>Change de maison,<br>garde les clés.</h3><span>Bases de données, objets S3 ou R2 : retrouve les sources prises en charge et le suivi des transferts. ↗</span></div></a>
+<a class="bento-card riso-pilot riso-operations bento-wide" href="inventory.html"><div class="signature-art" aria-hidden="true"><img src="assets/illustrations/operations-riso-v1.webp" alt="" width="800" height="533" loading="lazy" decoding="async"></div><div class="riso-copy"><p>GARDER LA MAIN AU QUOTIDIEN</p><h3>Tu progresses.<br>Ton infra suit.</h3><span>Démarre ou mets en pause tes VM compatibles, redémarre un service, déploie une branche et consulte les logs depuis la même app. ↗</span></div></a>
+<a class="bento-card riso-pilot riso-build" href="repos-vms-docker.html"><div class="signature-art" aria-hidden="true"><img src="assets/illustrations/build-riso-v1.webp" alt="" width="800" height="533" loading="lazy" decoding="async"></div><div class="riso-copy"><p>DU CODE À LA PRODUCTION</p><h3>Ton code.<br>Sur ton cloud.</h3><span>Connecte GitHub, choisis ta branche et ton mode de build. Build sur VM ou workflows GitHub Actions préparés par bige-ops, avec tes images dans GHCR. ↗</span></div></a>
+<a class="bento-card riso-pilot riso-notes riso-negative bento-notes bento-tall" href="notes-rapports.html"><div class="signature-art" aria-hidden="true"><img src="assets/illustrations/notes-riso-v1.webp" alt="" width="800" height="533" loading="lazy" decoding="async"></div><div class="riso-copy"><p>CONSTRUIRE UNE MÉMOIRE COMMUNE</p><h3>Évolue. Décide.<br>Garde tes acquis.</h3><span>Relie notes Markdown, canvas, slides et tableurs à ta stack. Documente les choix, prépare tes dossiers crédits cloud et transmets le contexte à ton équipe. ↗</span></div></a>
+<a class="bento-card riso-pilot riso-report riso-negative bento-wide bento-report" href="notes-rapports.html#feature-step-2"><div class="signature-art" aria-hidden="true"><img src="assets/illustrations/report-riso-v1.webp" alt="" width="800" height="533" loading="lazy" decoding="async"></div><div class="riso-copy"><p>DES NOTES AUX RAPPORTS</p><h3>Tes observations.<br>Les prochaines décisions.</h3><span>Transforme tes notes de stack en bilans d’équipe : état des services, RAM, coûts et actions à prévoir. Partage les faits pour décider quoi optimiser. ↗</span></div></a><article id="standby-project" class="bento-card riso-pilot riso-standby bento-wide project-standby"><div class="signature-art" aria-hidden="true"><img src="assets/illustrations/standby-riso-v1.webp" alt="" width="800" height="533" loading="lazy" decoding="async"></div><div class="riso-copy"><p>STANDBY-BIGE-OPS</p><h3>Une stack au repos.<br>Des ressources libérées.</h3><span>Mets les VM compatibles en veille après inactivité et réveille-les à la visite. Explore la gardienne open source, adapte-la à ton usage.</span><div class="card-links"><a href="https://github.com/simondelamarre/standby-bige-ops">Explorer standby-bige-ops ↗</a></div></div></article>
+<article class="bento-card riso-pilot riso-sliders riso-negative project-sliders"><div class="signature-art" aria-hidden="true"><img src="assets/illustrations/sliders-riso-v1.webp" alt="" width="800" height="533" loading="lazy" decoding="async"></div><div class="riso-copy"><p>BIGE-SLIDERS</p><h3>Transforme tes idées<br>en décisions partagées.</h3><span>Compose tes présentations avec l’éditeur utilisé par bige-ops. Un composant Vue 3 ouvert à intégrer dans tes propres apps.</span><div class="card-links"><a href="https://simondelamarre.github.io/bige-sliders/">Essayer la démo ↗</a><a href="https://github.com/simondelamarre/bige-sliders">Voir le projet ↗</a></div></div></article>
+<article class="bento-card riso-pilot riso-install bento-wide install-card"><div class="signature-art" aria-hidden="true"><img src="assets/illustrations/install-riso-v1.webp" alt="" width="800" height="533" loading="lazy" decoding="async"></div><div class="riso-copy"><p>APP GRATUITE · BÊTA</p><h3>Sur ton bureau.<br>Prêt à installer.</h3><span>Une application desktop gratuite. Choisis le format adapté à ton ordinateur.</span><div class="install-options"><a href="install.html#macos"><img src="assets/brands/homebrew.svg" alt="" width="32" height="32"><span><b>macOS · Homebrew</b><small>Apple Silicon · installation et mises à jour</small></span></a><a href="install.html#linux"><img src="assets/brands/debian.svg" alt="" width="32" height="32"><span><b>Linux · .deb ou AppImage</b><small>x86_64 · paquet Debian/Ubuntu ou AppImage</small></span></a></div><a class="install-jump" href="#download">Commandes et téléchargements ↓</a></div></article></div><p class="bento-more"><a href="comprendre-bige-ops.html">Comprendre le concept ↗</a><a href="questions.html">Questions fréquentes ↗</a><a href="documentation.html">Toute la documentation ↗</a></p></section>
+<section class="brand-directory compact-clouds" id="clouds" aria-labelledby="brand-directory-title">
+<header><p class="landing-kicker">HÉBERGÉ EN FRANCE. SUR TON COMPTE.</p><h2 id="brand-directory-title">Le choix du cloud<br>reste le tien.</h2><p class="brand-intro">bige-ops pilote tes ressources. Ton fournisseur te les facture directement.</p></header>
+<div class="provider-line brand-logos">
+<a id="outscale" class="logo-link" href="pourquoi-outscale.html"><span id="why-outscale"></span><img src="assets/brands/outscale.webp" alt="OUTSCALE" loading="lazy"><span>Bêta · VM, OKS, Object Storage</span></a>
+<a id="ovhcloud" class="logo-link" href="simulations.html"><img src="assets/brands/ovh.svg" alt="OVHcloud" loading="lazy"><span>Bêta · Public Cloud</span></a>
+<a id="scaleway" class="logo-link" href="simulations.html"><img src="assets/brands/scaleway.svg" alt="Scaleway" loading="lazy"><span>À venir</span></a>
+</div>
+<p class="cloud-perimeter"><a href="perimetre.html">Services disponibles dans la bêta ↗</a></p>
+<details class="ecosystem-details"><summary>Les outils et les acteurs à découvrir</summary><div class="reference-lines"><p><a href="https://www.opencve.io/">OpenCVE</a> enrichit les CVE. <a href="https://owasp.org/projects/juice-shop">OWASP Juice Shop</a> sert de référence aux démonstrations.</p><p>Dans les Hauts-de-France : <a href="https://hdf.campuscyber.fr/">Campus Cyber</a> et <a href="https://www.euratechnologies.com/">EuraTechnologies</a>.</p></div></details>
+</section>
+
+    <section id="download" class="download-inline" aria-labelledby="download-title">
+      <div class="download-heading">
+        <p class="landing-kicker">GRATUIT · APPLICATION DESKTOP</p>
+        <h2 id="download-title">Simule ta première stack.<br>Avant de payer le cloud.</h2>
+        <p>Installe la bêta gratuite. Compose un scénario, examine son coût estimé et ajuste ta cible avant de déployer.</p>
+      </div>
+      <div class="platform-grid">
+        <article class="platform">
+          <h3><img src="assets/brands/homebrew.svg" alt="" width="30" height="36" loading="lazy">macOS</h3><p>Apple Silicon · installation avec Homebrew</p>
+          <p class="brew">
+            <code id="brew-cmd" title="brew install --cask simondelamarre/bige-ops/bige-ops">brew install --cask simondelamarre/bige-ops/bige-ops</code>
+            <button type="button" class="copy-btn" id="brew-copy"
+                    data-target="brew-cmd" aria-label="Copier la commande Homebrew">Copier</button><span id="copy-status" role="status" class="sr-status"></span>
+          </p>
+          <a href="install.html#macos">Guide macOS →</a>
+        </article>
+        <article class="platform">
+          <h3><img src="assets/brands/linux.svg" alt="" width="30" height="36" loading="lazy">Linux</h3><p>x86_64 · AppImage ou paquet .deb</p>
+          <a class="platform-download" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger pour Linux ↗</a>
+        </article>
       </div>
     </section>
 
-    <section class="block" id="pourquoi">
-      <span id="features"></span>
-      <h2>Simple comme un PaaS</h2>
-      <p>Tu veux mettre ton produit en ligne, pas devenir DevOps. bige-ops fait le travail d’une plateforme managée, sur ton poste.</p>
-      <div class="facts">
-        <article class="fact" id="why-less">
-          <h3>Simule</h3>
-          <p>Pars d’une stack prête ou dessine la tienne. Le Visual et la configuration restent la même chose&nbsp;: un seul Appliquer, local et vérifié.</p>
-          <p><a href="layouts.html">Par où commencer →</a></p>
-        </article>
-        <article class="fact" id="why-projection">
-          <h3>Teste en local</h3>
-          <p>Tes conteneurs, ou ton Kubernetes en local, avant de toucher au cloud. Pas besoin de compte cloud pour ça.</p>
-          <p><a href="repos-vms-docker.html">Repos, VMs et Docker →</a></p>
-        </article>
-        <article class="fact" id="why-deploy">
-          <h3>Déploie</h3>
-          <p>Tu relies ton dépôt et tu cliques sur Déployer. bige-ops écrit le Terraform et les manifests, te montre le plan, puis déploie sur ton compte.</p>
-          <p><a href="stacks.html">Stacks et langages →</a></p>
-        </article>
-        <article class="fact" id="why-vulns">
-          <h3>Sécurise</h3>
-          <p>Tes failles, les plus exposées d’abord&nbsp;: la ligne de code, la version corrigée, l’issue GitHub en un clic.</p>
-          <p><a href="#failles">Comment ça marche →</a></p>
-        </article>
-      </div>
-    </section>
 
-    <section class="block" id="iaas">
-      <h2>Flexible comme un IaaS</h2>
-      <p>Ce que tu gagnes à quitter un PaaS, sans perdre sa simplicité.</p>
-      <ul>
-        <li><strong>Ton compte, tes machines.</strong> VMs, cluster Kubernetes dédié, réseau privé, load balancer&nbsp;: tout est créé sur ton compte, rien ne passe par nous.</li>
-        <li><strong>Tes versions, tes licences.</strong> PostgreSQL, MongoDB, Redis&nbsp;: tu choisis l’image et la version. Pas d’image revendue, pas de base captive.</li>
-        <li><strong>Ton infra en clair.</strong> Terraform et manifests générés, lisibles, versionnés dans ton Git&nbsp;: chaque simulation est une branche. <a href="github-config.html">Voir</a></li>
-        <li><strong>Une seule facture cloud.</strong> Tes services et tes données rejoignent ton compte, au lieu d’un abonnement par PaaS, BaaS et SaaS.</li>
-        <li><strong>Tu grandis sans tout réécrire.</strong> Une machine, puis l’app et ses données séparées, puis Kubernetes&nbsp;: la même stack, décrite une fois. <a href="layouts.html">Voir</a></li>
-      </ul>
-      <p>Ne perds pas ton temps sur Heroku, Fly.io, Render, Railway, Vercel, Netlify, Clever Cloud, Koyeb, Northflank, DigitalOcean, Linode, Vultr, Hetzner, Contabo, Hostinger…</p>
-      <p><strong>Si tu cherches un vrai cloud provider pour avancer&nbsp;: <a href="pourquoi-outscale.html">Outscale</a>.</strong></p>
-      <ul>
-        <li><strong>Premier cloud qualifié SecNumCloud&nbsp;3.2</strong>, le visa de l’ANSSI (<a href="https://www.3ds.com/newsroom/press-releases/outscale-first-cloud-qualified-secnumcloud-32" target="_blank" rel="noopener">source</a>).</li>
-        <li><strong>Kubernetes dédié</strong>&nbsp;: ton cluster, ton control plane, rien de partagé.</li>
-        <li><strong>13&nbsp;000 IOPS garanties</strong> par volume pour tes bases.</li>
-        <li><strong>Prêt pour les clients exigeants</strong>&nbsp;: HDS pour la santé, ISO&nbsp;27001, 27017 et 27018.</li>
-      </ul>
-    </section>
-
-    <section class="block" id="object-storage">
-      <span id="why-storage"></span>
-      <h2>Migre sans peur</h2>
-      <p>Quitter un PaaS, c’est d’abord déplacer des données. bige-ops le fait en copie contrôlée&nbsp;: la source n’est jamais supprimée, rien n’est écrasé.</p>
-      <ul>
-        <li><strong>Object Storage.</strong> Connecte AWS S3, Cloudflare R2, Outscale OOS ou un endpoint compatible S3. Explore, prévisualise tes fichiers, puis reproduis un bucket ou tous sur OOS&nbsp;: mêmes noms, copie parallèle, reprise après une coupure. <a href="oos.html">Voir</a></li>
-        <li><strong>Bases de données.</strong> Chaque base a son panneau Données&nbsp;: dump, envoi vers l’Object Storage, restauration, migration depuis une autre base. <a href="bases.html">Voir</a></li>
-      </ul>
-    </section>
-
-    <section class="block" id="failles">
-      <h2>Comment bige-ops trouve tes failles</h2>
-      <ol>
-        <li>Il lit sur ton poste la branche sélectionnée de chaque dépôt et oublie les résultats devenus obsolètes quand tu changes de branche.</li>
-        <li>Il groupe les pages et API par dépôt, stack et service, puis les relie à leur exposition réelle&nbsp;: publique, interne ou source uniquement.</li>
-        <li>Il cherche les erreurs classiques&nbsp;: mots de passe écrits en clair, requêtes à la base construites avec ce que tape l’utilisateur, API ouverte à n’importe quel site.</li>
-        <li>Il compare les versions réellement installées aux bases publiques (<a href="https://osv.dev/" target="_blank" rel="noopener">OSV</a>) et, avec ta clé <a href="https://www.opencve.io/" target="_blank" rel="noopener">OpenCVE</a>, enrichit les CVE avec leur statut et leurs correctifs connus.</li>
-        <li>Il écarte le bruit historique non applicable et classe les actions&nbsp;: exposition Internet, sévérité, exploitabilité puis version corrigée.</li>
-      </ol>
-      <p><strong>Pourquoi le refaire toi-même&nbsp;?</strong> C’est chez toi, et c’est gratuit.</p>
-    </section>
-
-    <section class="block" id="gratuit">
-      <span id="prix"></span><span id="pricing"></span>
-      <h2>Gratuit, sans intermédiaire</h2>
-      <p><strong>bige-ops est gratuit.</strong> Ton cloud, tu le paies à ton fournisseur, sur ton compte. Personne ne se place entre les deux.</p>
-      <p>Avant de déployer, la simulation t’en donne une estimation dans l’app, sur les tarifs publics du fournisseur&nbsp;: le catalogue se synchronise par la CLI, et la remise que tu négocies vient en plus. <a href="catalogue-prix.html">Comment l’estimation est faite</a></p>
-    </section>
-
-    <section class="block" id="demarrer">
-      <h2>Démarrer en trois étapes</h2>
-      <ol>
-        <li><strong>Installe</strong>&nbsp;: la commande ci-dessus sur macOS, l’AppImage ou le .deb sur Linux.</li>
-        <li><strong>Simule et teste</strong>&nbsp;: connecte-toi avec GitHub, choisis un dossier, pars d’une stack prête et lance-la en local.</li>
-        <li><strong>Déploie</strong>&nbsp;: tu connectes ton compte cloud quand tu es prêt, tu relis le plan, tu déploies.</li>
-      </ol>
-    </section>
-
-    <section class="block" id="aussi">
-      <h2>Et aussi</h2>
-      <ul>
-        <li><strong>Un dépôt, plusieurs workloads</strong>&nbsp;: front, API et workers d’un monorepo restent identifiés séparément pour préparer VM, pod ou node pool. <a href="repos-vms-docker.html">Voir</a></li>
-        <li><strong>Une seule réalité</strong>&nbsp;: Config et Visual sont réconciliés, validés et régénérés en une opération atomique avant plan ou déploiement. <a href="expert-config.html">Voir</a></li>
-        <li><strong>Des bases réglées pour leur usage</strong>&nbsp;: disque, IOPS, sauvegardes planifiées. <a href="bases.html">Voir</a></li>
-        <li><strong>Tes secrets chez toi</strong>&nbsp;: coffre local, jamais dans tes fichiers. <a href="secrets.html">Voir</a></li>
-        <li><strong>Un assistant DevOps intégré</strong>&nbsp;: il lit ta configuration et t’aide à la corriger, avec ta propre clé d’IA. <a href="agent.html">Voir</a></li>
-        <li id="why-byok"><strong>L’audit profond en option</strong>&nbsp;: bige-ops advanced lit ton code plus en profondeur avec ta propre clé d’IA, et classe chaque faille par type. <a href="agent.html">Voir</a></li>
-      </ul>
-    </section>
-
-    <section class="block" id="faq">
-      <h2>FAQ</h2>
-      <dl class="faq">
-        <dt>Faut-il un compte cloud&nbsp;?</dt>
-        <dd>Pas pour commencer&nbsp;: simulation et tests locaux fonctionnent sans. Ton compte sert au moment de déployer.</dd>
-        <dt>C’est vraiment gratuit&nbsp;?</dt>
-        <dd>Oui. Tu paies ton cloud à ton fournisseur, rien à bige-ops.</dd>
-        <dt>Et l’estimation des coûts&nbsp;?</dt>
-        <dd>Elle est dans l’app, après l’install&nbsp;: ligne par ligne, sur les tarifs publics du fournisseur, recalculée à chaque modification. Ce n’est pas un devis&nbsp;; ta remise négociée vient en plus.</dd>
-        <dt>Où sont mes secrets&nbsp;?</dt>
-        <dd>Sur ton poste, dans un coffre local. <a href="secrets.html">Détail</a>.</dd>
-        <dt>C’est prêt pour la prod&nbsp;?</dt>
-        <dd>bige-ops est jeune (0.10) et avance vite. Avant chaque déploiement, tu relis le plan de ce qui va changer, et ta stack reste un fichier versionné dans ton Git. Pour une infra critique, garde un expert dans la boucle.</dd>
-        <dt>Et le HTTPS&nbsp;?</dt>
-        <dd>Il passe par le load balancer, avec ton certificat chargé dans le cloud&nbsp;: bige-ops le branche pour toi. <a href="lbu.html">Détail</a>.</dd>
-        <dt>Pourquoi brew sur macOS&nbsp;?</dt>
-        <dd>Une commande installe l’app et la prépare pour macOS. Sur Linux&nbsp;: AppImage ou .deb.</dd>
-        <dt>Un seul cloud aujourd’hui&nbsp;?</dt>
-        <dd>Oui, le premier qualifié SecNumCloud&nbsp;3.2. D’autres providers SecNumCloud et français arrivent, et ta stack les suivra.</dd>
-        <dt id="why-ecoute">Une idée, un bug&nbsp;?</dt>
-        <dd><span id="ecoute"></span><a href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">Ouvre une issue</a>, on lit tout.</dd>
-      </dl>
-    </section>
-
-    <p class="panel-lead" style="margin-top:2.5rem;font-size:1.15rem;font-weight:600;color:#fff;text-align:center">Où vivent tes données, qui les protège et qui te répond&nbsp;: c’est ça, ton cloud.</p>
-    <section class="block panel" id="a-venir">
-      <p class="panel-kicker">Bientôt d’autres providers SecNumCloud et français</p>
-      <h2 class="panel-title">Installe maintenant.<br>La suite, c’est toi qui choisis.</h2>
-      <p class="panel-text">
-        <strong>bige-ops est indépendant.</strong> Ta stack est décrite une fois, dans un format ouvert, versionné dans ton Git.
-        Quand d’autres clouds français arriveront dans bige-ops, tu déploieras la même stack chez eux
-        et tu migreras si ça vaut le coup. Sans tout réécrire.
-      </p>
-      <p class="panel-clouds">
-        <a href="https://www.ovhcloud.com/fr/" target="_blank" rel="noopener">OVHcloud</a>
-        <a href="https://www.scaleway.com/fr/" target="_blank" rel="noopener">Scaleway</a>
-      </p>
-      <p class="actions"><a class="primary panel-cta" href="#download">Installer gratuitement</a></p>
-    </section>
 
     <footer class="site-footer">
+      <div class="footer-intro">
+        <a class="brand" href="./"><img src="favicon.svg" width="28" height="28" alt=""> bige-ops</a>
+        <p>Simple comme un PaaS. Flexible comme un IaaS.</p>
+      </div>
       <div class="cols">
         <div>
           <h3>Comprendre</h3>
           <ul>
             <li><a href="index.html">Accueil</a></li>
-            <li><a href="documentation.html">Toute la doc</a></li>
+            <li><a href="documentation.html">Toute la doc</a></li><li><a href="notes-rapports.html">Notes &amp; rapports</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/releases">Notes de version</a></li>
             <li><a href="perimetre.html">Périmètre</a></li>
             <li><a href="savoir.html">Sait / ne sait pas</a></li>
             <li><a href="install.html">Installer &amp; mettre à jour</a></li>
@@ -898,10 +199,11 @@
         <a href="https://github.com/simondelamarre/bige-ops-releases/issues">Signaler / suggérer</a>
       </p>
     </footer>
+    </div>
   </main>
 
   <div id="download-sticky" class="download-sticky" role="region" aria-label="Téléchargement rapide" hidden>
-    <a class="primary" href="#download">Installer gratuitement</a>
+    <a class="primary" href="#download">Télécharger la bêta</a>
     <a class="secondary" href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Linux</a>
   </div>
 
@@ -944,8 +246,7 @@
       if (!inline || !sticky || !("IntersectionObserver" in window)) return;
       var observer = new IntersectionObserver(
         function (entries) {
-          var visible = entries[0] && entries[0].isIntersecting;
-          sticky.hidden = visible;
+          sticky.hidden = entries[0].boundingClientRect.bottom > 0;
         },
         { threshold: 0, rootMargin: "0px" }
       );
@@ -953,43 +254,5 @@
     })();
   </script>
 
-  <script>
-    (function () {
-      var track = document.getElementById("slides");
-      if (!track) return;
-      var slides = Array.prototype.slice.call(track.querySelectorAll(".slide"));
-      var dots = document.getElementById("slide-dots");
-      var current = 0, timer = null;
-      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      slides.forEach(function (_, i) {
-        var b = document.createElement("button");
-        b.type = "button";
-        b.setAttribute("aria-label", "Aperçu " + (i + 1));
-        b.addEventListener("click", function () { go(i); stop(); });
-        dots.appendChild(b);
-      });
-      function paint() {
-        Array.prototype.forEach.call(dots.children, function (d, i) { d.setAttribute("aria-current", i === current ? "true" : "false"); });
-      }
-      function go(i) {
-        current = (i + slides.length) % slides.length;
-        track.scrollTo({ left: slides[current].offsetLeft - track.offsetLeft, behavior: reduce ? "auto" : "smooth" });
-        paint();
-      }
-      function stop() { if (timer) { clearInterval(timer); timer = null; } }
-      document.getElementById("slide-prev").addEventListener("click", function () { go(current - 1); stop(); });
-      document.getElementById("slide-next").addEventListener("click", function () { go(current + 1); stop(); });
-      track.addEventListener("keydown", function (e) {
-        if (e.key === "ArrowRight") { go(current + 1); stop(); }
-        if (e.key === "ArrowLeft") { go(current - 1); stop(); }
-      });
-      track.addEventListener("scroll", function () {
-        var i = Math.round(track.scrollLeft / track.clientWidth);
-        if (i !== current) { current = i; paint(); }
-      }, { passive: true });
-      ["mouseenter", "focusin", "touchstart"].forEach(function (ev) { track.addEventListener(ev, stop, { passive: true }); });
-      paint();
-    })();
-  </script>
 </body>
 </html>

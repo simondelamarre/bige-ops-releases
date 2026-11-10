@@ -7,3 +7,7 @@
 - Si le build ou le deploy échoue → vérifier d’abord le setup Dockerfile (path, contexte) du repo app.
 
 HTML : [repos-vms-docker.html](https://bige.dev/repos-vms-docker.html)
+
+## bige-ops ouvre une pull request, il ne pousse pas sur ta branche
+
+Branche `bige-ops/…`, jamais ta branche de base. Fichiers limités à `Dockerfile`, `.dockerignore`, `.bige-ops/` et `.github/workflows/bige-ops-*.yml`. Les workflows construisent et scannent chaque PR, puis publient après le merge des images épinglées par commit dans ton GHCR privé. Tu relis, tu merges : `bige-ops app open-pr --stack <stack> --title "…"`.
