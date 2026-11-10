@@ -105,7 +105,7 @@ Avant de déployer, la simulation t’en donne une estimation dans l’app, sur 
 - **Migrations mieux suivies** : progression, rapports, arrêt et reprise des copies Object Storage.
 - **Rapports d’opérations et notes cloud** : dépenses mensuelles, activité et vulnérabilités pour préparer les décisions ; Markdown, canvas, présentations et tableurs pour les consigner et les partager.
 
-[Lire les changements et les limites de la version 0.11.0 →](https://github.com/simondelamarre/bige-ops-releases/releases/tag/v0.11.0)
+[Lire les changements et les limites de la version 0.11.1 →](https://github.com/simondelamarre/bige-ops-releases/releases/tag/v0.11.1)
 
 Les recettes sur de vrais comptes cloud restent séparées des tests automatisés : avant une infra critique, garde un expert dans la boucle.
 
