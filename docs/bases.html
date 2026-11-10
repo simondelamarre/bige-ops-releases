@@ -20,12 +20,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="navigation.css?v=1"></head>
+<link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="search.css?v=2"><script src="search.js?v=5" defer></script><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Bases de données — bige-ops","description":"Bases de données sur Outscale : coloc, VM dédiée ou pods OKS, volumes BSU, réplicas, sauvegardes vers OOS. Le formulaire met le setup à jour directement.","url":"https://bige.dev/bases.html","isPartOf":{"@type":"WebSite","name":"bige-ops","url":"https://bige.dev/"}}</script></head>
 <body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
 
-    <h1>Bases de données</h1>
+    <h1 id="bases-de-donnees">Bases de données</h1>
     <p class="lead">
       Postgres, MongoDB, Redis (et bases custom) : tu choisis <em>où</em> elles
       tournent (même VM, VM dédiée, ou pods OKS), tu règles réplicas et
@@ -59,7 +59,7 @@ flowchart TB
       <figcaption>Coloc · dédiée · OKS — puis OOS pour les sauvegardes.</figcaption>
     </figure>
 
-    <h2>1 · Coloc ou VM dédiée</h2>
+    <h2 id="1-coloc-ou-vm-dediee">1 · Coloc ou VM dédiée</h2>
     <p>
       En <a href="glossaire.html#g-mono-vm"><strong>mono-VM</strong></a>
       (code <code>single-vm</code>), la base est
@@ -98,7 +98,7 @@ flowchart LR
       </pre>
     </figure>
 
-    <h2>2 · Sur OKS : StatefulSet et volume persistant</h2>
+    <h2 id="2-sur-oks-statefulset-et-volume-persistant">2 · Sur OKS : StatefulSet et volume persistant</h2>
     <p>
       En topologie <strong>oks</strong>, chaque base est un StatefulSet avec
       son volume persistant (PVC, 10 GiB par défaut, dans la classe de
@@ -117,7 +117,7 @@ flowchart LR
   mongodb:
     replicas: 1</pre>
 
-    <h2>3 · Stockage bloc et sauvegardes objet</h2>
+    <h2 id="3-stockage-bloc-et-sauvegardes-objet">3 · Stockage bloc et sauvegardes objet</h2>
     <p>
       Sur une VM, la persistance passe par le <strong><a href="https://docs.outscale.com/fr/userguide/À-propos-des-volumes.html" target="_blank" rel="noopener noreferrer">volume BSU</a></strong>
       attaché à la VM data, et les <strong>snapshots</strong> de volume sont le
@@ -155,7 +155,7 @@ sequenceDiagram
       </pre>
     </figure>
 
-    <h2>Presets par type</h2>
+    <h2 id="presets-par-type">Presets par type</h2>
     <p>
       Chaque type amène une image et des champs utiles dans l’inspector.
       Postgres : volume data, attache à une VM ou à un pod.
@@ -193,7 +193,7 @@ sequenceDiagram
       </tbody>
     </table>
 
-    <h2>Au-delà du démarrage</h2>
+    <h2 id="au-dela-du-demarrage">Au-delà du démarrage</h2>
     <p>
       Tuning SQL, index, sharding, opérateurs Kubernetes spécialisés et haute
       disponibilité du moteur s’ajoutent ensuite, dans ton exploitation —
@@ -202,7 +202,7 @@ sequenceDiagram
     <footer class="site-footer">
       <div class="cols">
         <div>
-          <h3>Comprendre</h3>
+          <h3 id="comprendre">Comprendre</h3>
           <ul>
             <li><a href="index.html">Accueil</a></li>
             <li><a href="documentation.html">Toute la doc</a></li>
@@ -213,7 +213,7 @@ sequenceDiagram
           </ul>
         </div>
         <div>
-          <h3>Composer</h3>
+          <h3 id="composer">Composer</h3>
           <ul>
             <li><a href="layouts.html">Par où commencer</a></li>
             <li><a href="stacks.html">Stacks &amp; langages</a></li>
@@ -226,7 +226,7 @@ sequenceDiagram
           </ul>
         </div>
         <div>
-          <h3>Réseau &amp; région</h3>
+          <h3 id="reseau-region">Réseau &amp; région</h3>
           <ul>
             <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
             <li><a href="reseau-avance.html">Réseau avancé</a></li>
@@ -236,7 +236,7 @@ sequenceDiagram
           </ul>
         </div>
         <div>
-          <h3>Opérer</h3>
+          <h3 id="operer">Opérer</h3>
           <ul>
             <li><a href="simulations.html">Simulations &amp; promote</a></li>
             <li><a href="inventory.html">Inventaire &amp; import</a></li>
@@ -261,5 +261,5 @@ sequenceDiagram
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
   </script>
-</body>
+<!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"832d6ab228b14493977bbfcb74fac155"}'></script><!-- End Cloudflare Web Analytics --></body>
 </html>

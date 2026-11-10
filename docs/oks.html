@@ -20,12 +20,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="navigation.css?v=1"></head>
+<link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="search.css?v=2"><script src="search.js?v=5" defer></script><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"OKS & pods — bige-ops","description":"OKS, le Kubernetes managé d’Outscale : control planes, versions 1.32 à 1.36, nodepools, réplicas et HPA, HTTPS par certificat EIM. Disponible en eu-west-2 et SecNumCloud.","url":"https://bige.dev/oks.html","isPartOf":{"@type":"WebSite","name":"bige-ops","url":"https://bige.dev/"}}</script></head>
 <body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
 
-    <h1>OKS &amp; pods</h1>
+    <h1 id="oks-pods">OKS &amp; pods</h1>
     <p class="lead">
       <strong>OKS</strong> (OUTSCALE Kubernetes as a Service) est le Kubernetes
       managé d’Outscale : Outscale opère le control plane, tu dimensionnes les
@@ -61,7 +61,7 @@ flowchart TB
       <figcaption>Réplicas = nombre de pods d’un Deployment. Un Service LoadBalancer devient un LBU.</figcaption>
     </figure>
 
-    <h2>Ce qu’OKS t’apporte</h2>
+    <h2 id="ce-qu-oks-t-apporte">Ce qu’OKS t’apporte</h2>
     <ul>
       <li><strong>Un control plane managé</strong> : Outscale le met à jour, le patche et le remplace si besoin. Ses nœuds peuvent donc changer d’IP : n’écris pas de règle de pare-feu sur leurs adresses.</li>
       <li><strong>Des versions récentes</strong> : OKS prend en charge Kubernetes 1.32 à 1.36. Un cluster existant ne monte pas de version tout seul : la mise à jour se déclenche quand tu le décides.</li>
@@ -69,7 +69,7 @@ flowchart TB
       <li><strong>Des load balancers natifs</strong> : un Service de type LoadBalancer crée un LBU, et des annotations OKS permettent d’en répartir sur plusieurs Subregions pour la haute disponibilité.</li>
     </ul>
 
-    <h2>Choisir le control plane</h2>
+    <h2 id="choisir-le-control-plane">Choisir le control plane</h2>
     <table>
       <tr><th>Type</th><th>Masters</th><th>HA</th><th>Échelle indicative</th></tr>
       <tr><td><code>cp.mono.master</code></td><td>1 × 4 GiB</td><td>non</td><td>jusqu’à 10 nœuds</td></tr>
@@ -88,7 +88,7 @@ flowchart TB
       control plane plus grand.
     </p>
 
-    <h2>App, CLI bige-ops, oks-cli, kubectl</h2>
+    <h2 id="app-cli-bige-ops-oks-cli-kubectl">App, CLI bige-ops, oks-cli, kubectl</h2>
     <p>
       Chemin nominal : l’<strong>app desktop</strong> (Visual / Workspace).
       Sous le capot, ou en terminal : la CLI <code>bige-ops</code>, même
@@ -105,7 +105,7 @@ flowchart TB
       Détail : <a href="cli.html">CLI · app · OKS</a>.
     </p>
 
-    <h2>Cluster et nœuds</h2>
+    <h2 id="cluster-et-n-uds">Cluster et nœuds</h2>
     <p>
       Une topologie <strong>oks</strong> déclare le cluster, la version
       Kubernetes, le control plane et les <strong>nodepools</strong> (type
@@ -116,7 +116,7 @@ flowchart TB
       <code>OKS_ADMIN_CIDR</code>.
     </p>
 
-    <h2>Pods et réplicas</h2>
+    <h2 id="pods-et-replicas">Pods et réplicas</h2>
     <p>
       Les services applicatifs (api, web, worker) deviennent des Deployments
       sous <code>oks/apps/</code>, les bases des StatefulSets. Le champ <strong>réplicas</strong>
@@ -158,14 +158,14 @@ flowchart TB
       cert-manager à maintenir.
     </p>
 
-    <h2>Le périmètre de bige-ops</h2>
+    <h2 id="le-perimetre-de-bige-ops">Le périmètre de bige-ops</h2>
     <p>
       bige-ops pose le cluster et les workloads. Opérateurs de bases, service
       mesh et politiques réseau avancées s’ajoutent ensuite dans ton
       exploitation — <a href="perimetre.html">périmètre</a>.
     </p>
 
-    <h2>Doc Outscale</h2>
+    <h2 id="doc-outscale">Doc Outscale</h2>
     <ul>
       <li><a href="https://docs.outscale.com/fr/userguide/À-propos-d-OKS.html" target="_blank" rel="noopener noreferrer">À propos d’OKS</a></li>
       <li><a href="https://docs.outscale.com/fr/userguide/Installer-et-configurer-OKS-CLI.html" target="_blank" rel="noopener noreferrer">Installer et configurer OKS CLI</a></li>
@@ -181,7 +181,7 @@ flowchart TB
     <footer class="site-footer">
       <div class="cols">
         <div>
-          <h3>Comprendre</h3>
+          <h3 id="comprendre">Comprendre</h3>
           <ul>
             <li><a href="index.html">Accueil</a></li>
             <li><a href="documentation.html">Toute la doc</a></li>
@@ -192,7 +192,7 @@ flowchart TB
           </ul>
         </div>
         <div>
-          <h3>Composer</h3>
+          <h3 id="composer">Composer</h3>
           <ul>
             <li><a href="layouts.html">Par où commencer</a></li>
             <li><a href="stacks.html">Stacks &amp; langages</a></li>
@@ -205,7 +205,7 @@ flowchart TB
           </ul>
         </div>
         <div>
-          <h3>Réseau &amp; région</h3>
+          <h3 id="reseau-region">Réseau &amp; région</h3>
           <ul>
             <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
             <li><a href="reseau-avance.html">Réseau avancé</a></li>
@@ -215,7 +215,7 @@ flowchart TB
           </ul>
         </div>
         <div>
-          <h3>Opérer</h3>
+          <h3 id="operer">Opérer</h3>
           <ul>
             <li><a href="simulations.html">Simulations &amp; promote</a></li>
             <li><a href="inventory.html">Inventaire &amp; import</a></li>
@@ -240,5 +240,5 @@ flowchart TB
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
   </script>
-</body>
+<!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"832d6ab228b14493977bbfcb74fac155"}'></script><!-- End Cloudflare Web Analytics --></body>
 </html>

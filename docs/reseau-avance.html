@@ -20,12 +20,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="navigation.css?v=1"></head>
+<link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="search.css?v=2"><script src="search.js?v=5" defer></script><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Réseau avancé — bige-ops","description":"Ce que bige-ops crée, règle par défaut ou observe sur le réseau Outscale : Net, subnets, security groups, route tables, NAT, IP publiques, NIC, DHCP, peering, VPN, DirectLink.","url":"https://bige.dev/reseau-avance.html","isPartOf":{"@type":"WebSite","name":"bige-ops","url":"https://bige.dev/"}}</script></head>
 <body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="reseau.html">Réseau</a> · <a href="lbu.html">LBU</a> · <a href="inventory.html">Inventaire</a></p>
 
-    <h1>Réseau avancé</h1>
+    <h1 id="reseau-avance">Réseau avancé</h1>
     <p class="lead"><a href="reseau.html">Réseau · ouvrir ou non</a> dit <em>quoi</em> exposer. Cette page dit ce que bige-ops <strong>matérialise</strong> côté Outscale, ressource par ressource, et ce qu’il se contente de lire.</p>
     <div class="callout">
       <strong>Quatre niveaux, un seul vocabulaire.</strong>
@@ -35,7 +35,7 @@
       <strong>Canvas</strong> : visible sur le canvas et dans le YAML, sans Terraform derrière.
     </div>
 
-    <h2>La matrice</h2>
+    <h2 id="la-matrice">La matrice</h2>
     <table>
       <tr><th>Ressource</th><th>Niveau</th><th>Détail</th></tr>
       <tr><td>Net</td><td>créé</td><td>en neuf (<code>/16</code> par défaut), ou adopté quand il vient d’un import</td></tr>
@@ -52,7 +52,7 @@
       <tr><td>DirectLink</td><td>catalogue de prix</td><td>tarifs disponibles, pas de composant</td></tr>
     </table>
 
-    <h2>Le NAT, à activer pour sortir</h2>
+    <h2 id="le-nat-a-activer-pour-sortir">Le NAT, à activer pour sortir</h2>
     <div class="callout callout-warn">
       <strong>Le NAT est à <code>false</code> par défaut.</strong>
       Une VM data en subnet privé n’a alors <strong>aucune sortie
@@ -69,7 +69,7 @@
       NAT.
     </p>
 
-    <h2>IP publiques : ce qui est facturé</h2>
+    <h2 id="ip-publiques-ce-qui-est-facture">IP publiques : ce qui est facturé</h2>
     <p>
       Le catalogue public Outscale facture à l’heure les IP publiques
       « additionnelles » et celles qui ne sont associées à aucune VM
@@ -84,7 +84,7 @@
       à une VM au démarrage.
     </p>
 
-    <h2>Pourquoi « observé » plutôt que « géré »</h2>
+    <h2 id="pourquoi-observe-plutot-que-gere">Pourquoi « observé » plutôt que « géré »</h2>
     <p>
       Peering, VPN et security groups importés : bige-ops les lit, les écrit en
       composant observé, et les <strong>exclut de la génération
@@ -97,7 +97,7 @@
       affiche pour que ta simulation reste fidèle au compte.
     </p>
 
-    <h2>Doc Outscale</h2>
+    <h2 id="doc-outscale">Doc Outscale</h2>
     <ul>
       <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-Nets.html" target="_blank" rel="noopener noreferrer">À propos des Nets</a></li>
       <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-route-tables.html" target="_blank" rel="noopener noreferrer">À propos des route tables</a></li>
@@ -115,7 +115,7 @@
     <footer class="site-footer">
       <div class="cols">
         <div>
-          <h3>Comprendre</h3>
+          <h3 id="comprendre">Comprendre</h3>
           <ul>
             <li><a href="index.html">Accueil</a></li>
             <li><a href="documentation.html">Toute la doc</a></li>
@@ -126,7 +126,7 @@
           </ul>
         </div>
         <div>
-          <h3>Composer</h3>
+          <h3 id="composer">Composer</h3>
           <ul>
             <li><a href="layouts.html">Par où commencer</a></li>
             <li><a href="stacks.html">Stacks &amp; langages</a></li>
@@ -139,7 +139,7 @@
           </ul>
         </div>
         <div>
-          <h3>Réseau &amp; région</h3>
+          <h3 id="reseau-region">Réseau &amp; région</h3>
           <ul>
             <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
             <li><a href="reseau-avance.html">Réseau avancé</a></li>
@@ -149,7 +149,7 @@
           </ul>
         </div>
         <div>
-          <h3>Opérer</h3>
+          <h3 id="operer">Opérer</h3>
           <ul>
             <li><a href="simulations.html">Simulations &amp; promote</a></li>
             <li><a href="inventory.html">Inventaire &amp; import</a></li>
@@ -174,5 +174,5 @@
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark" });
   </script>
-</body>
+<!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"832d6ab228b14493977bbfcb74fac155"}'></script><!-- End Cloudflare Web Analytics --></body>
 </html>

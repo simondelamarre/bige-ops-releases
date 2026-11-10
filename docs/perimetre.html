@@ -20,12 +20,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="navigation.css?v=1"></head>
+<link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="search.css?v=2"><script src="search.js?v=5" defer></script><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Périmètre — bige-ops","description":"Le périmètre de bige-ops sur Outscale : simuler, tester en local, déployer sur ton compte, migrer tes données, analyser tes failles. Ensuite, tu pilotes l’exploitation.","url":"https://bige.dev/perimetre.html","isPartOf":{"@type":"WebSite","name":"bige-ops","url":"https://bige.dev/"}}</script></head>
 <body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a></p>
 
-    <h1>Le périmètre de bige-ops</h1>
+    <h1 id="le-perimetre-de-bige-ops">Le périmètre de bige-ops</h1>
     <p class="lead">
       Simple comme un PaaS, flexible comme un IaaS : bige-ops simule ta stack,
       la teste en local, la déploie sur <strong>ton</strong> compte Outscale,
@@ -64,7 +64,7 @@ flowchart LR
       Détail : <a href="savoir.html">ce que bige-ops sait</a>.
     </div>
 
-    <h2>Deux couches</h2>
+    <h2 id="deux-couches">Deux couches</h2>
     <p>
       D’un côté la <strong>simulation</strong> (layout, estimation au
       catalogue public, tests en local) : tu explores sans engagement. De l’autre le <strong>compte
@@ -89,7 +89,7 @@ flowchart TB
       </pre>
     </figure>
 
-    <h2>Ce que bige-ops couvre</h2>
+    <h2 id="ce-que-bige-ops-couvre">Ce que bige-ops couvre</h2>
     <p>
       Simulations et layouts (<a href="vms.html">VMs</a>, OKS, services),
       estimation sur le catalogue public, tests en local (Docker Compose ou
@@ -99,7 +99,7 @@ flowchart TB
       migration de tes bases, analyse des failles de tes dépôts.
     </p>
 
-    <h2>Ce qui reste de ton côté</h2>
+    <h2 id="ce-qui-reste-de-ton-cote">Ce qui reste de ton côté</h2>
     <p>
       Les choix d’architecture et de dimensionnement, l’exploitation de la
       montée en charge, la relation commerciale avec Outscale, la gestion de
@@ -107,7 +107,7 @@ flowchart TB
       avancée. Tu relis, tu appliques, tu pilotes le run.
     </p>
 
-    <h2>En pratique</h2>
+    <h2 id="en-pratique">En pratique</h2>
     <p>
       bige-ops pose des <strong>standards opérationnels</strong> pour démarrer
       vite et proprement, sans équipe DevOps dédiée. Le compte, les machines
@@ -117,7 +117,7 @@ flowchart TB
     <footer class="site-footer">
       <div class="cols">
         <div>
-          <h3>Comprendre</h3>
+          <h3 id="comprendre">Comprendre</h3>
           <ul>
             <li><a href="index.html">Accueil</a></li>
             <li><a href="documentation.html">Toute la doc</a></li>
@@ -128,7 +128,7 @@ flowchart TB
           </ul>
         </div>
         <div>
-          <h3>Composer</h3>
+          <h3 id="composer">Composer</h3>
           <ul>
             <li><a href="layouts.html">Par où commencer</a></li>
             <li><a href="stacks.html">Stacks &amp; langages</a></li>
@@ -141,7 +141,7 @@ flowchart TB
           </ul>
         </div>
         <div>
-          <h3>Réseau &amp; région</h3>
+          <h3 id="reseau-region">Réseau &amp; région</h3>
           <ul>
             <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
             <li><a href="reseau-avance.html">Réseau avancé</a></li>
@@ -151,7 +151,7 @@ flowchart TB
           </ul>
         </div>
         <div>
-          <h3>Opérer</h3>
+          <h3 id="operer">Opérer</h3>
           <ul>
             <li><a href="simulations.html">Simulations &amp; promote</a></li>
             <li><a href="inventory.html">Inventaire &amp; import</a></li>
@@ -176,5 +176,5 @@ flowchart TB
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
   </script>
-</body>
+<!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"832d6ab228b14493977bbfcb74fac155"}'></script><!-- End Cloudflare Web Analytics --></body>
 </html>

@@ -20,12 +20,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="navigation.css?v=1"></head>
+<link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="search.css?v=2"><script src="search.js?v=5" defer></script><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Volumes BSU & snapshots — bige-ops","description":"BSU Outscale : types standard, gp2 et io1, IOPS et plafonds, disque racine, volumes de données et snapshots, tels que bige-ops les pilote.","url":"https://bige.dev/volumes-bsu.html","isPartOf":{"@type":"WebSite","name":"bige-ops","url":"https://bige.dev/"}}</script></head>
 <body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="vms.html">VMs</a> · <a href="bases.html">Bases</a> · <a href="oos.html">OOS</a></p>
 
-    <h1>Volumes BSU &amp; snapshots</h1>
+    <h1 id="volumes-bsu-snapshots">Volumes BSU &amp; snapshots</h1>
     <p class="lead"><strong>BSU</strong> (Block Storage Unit) est le stockage bloc d’Outscale : un volume attaché à une VM de la même Subregion, qui survit à la VM si tu le décides. C’est là que vivent tes bases. Voici ce que bige-ops en pilote, et les chiffres Outscale qui comptent pour bien dimensionner.</p>
     <div class="callout">
       <strong>Principe court.</strong>
@@ -45,7 +45,7 @@ flowchart LR
       <figcaption>Racine système, données sur volume, snapshot dans la Région, dumps dans OOS.</figcaption>
     </figure>
 
-    <h2>Les trois types BSU</h2>
+    <h2 id="les-trois-types-bsu">Les trois types BSU</h2>
     <table>
       <tr><th>Type API</th><th>Nom Outscale</th><th>Performance</th><th>Taille</th></tr>
       <tr><td><code>standard</code></td><td>Magnetic</td><td>environ 250 lectures et 150 écritures par seconde, quelle que soit la taille</td><td>1 à 14 901 GiB</td></tr>
@@ -59,7 +59,7 @@ flowchart LR
       <a href="https://docs.outscale.com/fr/userguide/À-propos-des-volumes.html" target="_blank" rel="noopener noreferrer">À propos des volumes</a>.
     </p>
 
-    <h2>Trois calculs qui évitent les surprises</h2>
+    <h2 id="trois-calculs-qui-evitent-les-surprises">Trois calculs qui évitent les surprises</h2>
     <ul>
       <li><strong>Le burst gp2 est un crédit.</strong> Un volume gp2 de moins de 1 TiB démarre avec 5,4 millions d’IOPS de crédit : de quoi tenir 3 000 IOPS une trentaine de minutes, puis il revient à sa base de 3 IOPS par GiB. Parfait pour un démarrage ou un batch court ; pour une base qui écrit en continu, c’est la base qu’il faut dimensionner.</li>
       <li><strong>Les IOPS io1 dépendent de la taille.</strong> 300 IOPS par GiB au maximum : 3 000 IOPS demandent au moins 10 GiB, les 13 000 IOPS du plafond au moins 44 GiB.</li>
@@ -72,7 +72,7 @@ flowchart LR
       compte les deux.
     </p>
 
-    <h2>Le disque racine</h2>
+    <h2 id="le-disque-racine">Le disque racine</h2>
     <ul>
       <li>Sa <strong>taille</strong>, son <strong>type</strong> et ses <strong>IOPS</strong> (en <code>io1</code>) se règlent dans le formulaire de la VM, ou en YAML (<code>volume_size</code>, <code>volume_type</code>, <code>iops</code>).</li>
       <li>Par défaut, le Terraform généré pose un racine <code>io1</code> à 3 000 IOPS pour les rôles base de données (mongo, postgres, mysql, mariadb, neo4j, weaviate), et <code>gp2</code> pour les autres.</li>
@@ -80,7 +80,7 @@ flowchart LR
       <li>À l’import d’un compte existant, le racine d’une VM reste attaché à sa VM : il n’est pas repris comme composant séparé.</li>
     </ul>
 
-    <h2>Les volumes de données</h2>
+    <h2 id="les-volumes-de-donnees">Les volumes de données</h2>
     <p>
       Le composant <strong>Volume</strong> se pose sur le canvas Visual : taille
       en GiB, type, IOPS en <code>io1</code>, VM d’attache, nom de device. Il
@@ -112,7 +112,7 @@ flowchart LR
       que grandir.
     </p>
 
-    <h2>Snapshots</h2>
+    <h2 id="snapshots">Snapshots</h2>
     <ul>
       <li>Un snapshot BSU est rattaché à la <strong>Région</strong> : il sert à recréer le volume dans n’importe quelle Subregion de la Région. Pour une autre Région, on l’exporte vers un bucket OOS puis on l’importe (<a href="https://docs.outscale.com/fr/userguide/À-propos-des-snapshots.html" target="_blank" rel="noopener noreferrer">À propos des snapshots</a>).</li>
       <li>Dans bige-ops, le composant <strong>Snapshot</strong> génère du Terraform et apparaît à l’inventaire.</li>
@@ -124,7 +124,7 @@ flowchart LR
       <li>À ne pas confondre avec les <a href="simulations.html">snapshots de configuration</a>, qui sont des sauvegardes locales de tes fichiers.</li>
     </ul>
 
-    <h2>Sauvegardes</h2>
+    <h2 id="sauvegardes">Sauvegardes</h2>
     <p>
       Le snapshot protège le volume ; la sauvegarde applicative (dump de
       base) part dans <a href="oos.html">OOS</a>. Son planning et sa
@@ -133,7 +133,7 @@ flowchart LR
       restauration et à la migration.
     </p>
 
-    <h2>Doc Outscale</h2>
+    <h2 id="doc-outscale">Doc Outscale</h2>
     <ul>
       <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-volumes.html" target="_blank" rel="noopener noreferrer">À propos des volumes</a></li>
       <li><a href="https://docs.outscale.com/fr/userguide/Attacher-un-volume-à-une-VM.html" target="_blank" rel="noopener noreferrer">Attacher un volume à une VM</a></li>
@@ -145,7 +145,7 @@ flowchart LR
     <footer class="site-footer">
       <div class="cols">
         <div>
-          <h3>Comprendre</h3>
+          <h3 id="comprendre">Comprendre</h3>
           <ul>
             <li><a href="index.html">Accueil</a></li>
             <li><a href="documentation.html">Toute la doc</a></li>
@@ -156,7 +156,7 @@ flowchart LR
           </ul>
         </div>
         <div>
-          <h3>Composer</h3>
+          <h3 id="composer">Composer</h3>
           <ul>
             <li><a href="layouts.html">Par où commencer</a></li>
             <li><a href="stacks.html">Stacks &amp; langages</a></li>
@@ -169,7 +169,7 @@ flowchart LR
           </ul>
         </div>
         <div>
-          <h3>Réseau &amp; région</h3>
+          <h3 id="reseau-region">Réseau &amp; région</h3>
           <ul>
             <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
             <li><a href="reseau-avance.html">Réseau avancé</a></li>
@@ -179,7 +179,7 @@ flowchart LR
           </ul>
         </div>
         <div>
-          <h3>Opérer</h3>
+          <h3 id="operer">Opérer</h3>
           <ul>
             <li><a href="simulations.html">Simulations &amp; promote</a></li>
             <li><a href="inventory.html">Inventaire &amp; import</a></li>
@@ -204,5 +204,5 @@ flowchart LR
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark" });
   </script>
-</body>
+<!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"832d6ab228b14493977bbfcb74fac155"}'></script><!-- End Cloudflare Web Analytics --></body>
 </html>

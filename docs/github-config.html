@@ -20,12 +20,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="navigation.css?v=1"></head>
+<link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="search.css?v=2"><script src="search.js?v=5" defer></script><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"GitHub config-history — bige-ops","description":"Config-history sur GitHub : un repo privé par projet, une branche par simulation, main pour la live, deploy et synchro depuis l’app, retour arrière par snapshot ou par Git.","url":"https://bige.dev/github-config.html","isPartOf":{"@type":"WebSite","name":"bige-ops","url":"https://bige.dev/"}}</script></head>
 <body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
 
-    <h1>GitHub · config-history</h1>
+    <h1 id="github-config-history">GitHub · config-history</h1>
     <p class="lead">
       Un repo Git <strong>privé, à toi</strong>, pour versionner la config
       d’infrastructure (ni les secrets, ni le code applicatif). Projet → repo,
@@ -64,7 +64,7 @@ flowchart TB
       <figcaption>Convention : draft → sim/… · live et deploy → main.</figcaption>
     </figure>
 
-    <h2>La logique en quatre gestes</h2>
+    <h2 id="la-logique-en-quatre-gestes">La logique en quatre gestes</h2>
     <p>
       <strong>1 · Créer un projet, lier le compte</strong> —
       bige-ops peut <strong>créer un repo GitHub privé</strong>
@@ -111,7 +111,7 @@ flowchart TB
       jamais de branche distante.
     </p>
 
-    <h2>Les branches</h2>
+    <h2 id="les-branches">Les branches</h2>
     <p>
       <strong>Ce qu’elles apportent.</strong>
       Une simulation = une branche <code>sim/&lt;id&gt;</code> : tu itères,
@@ -129,7 +129,7 @@ flowchart TB
       plan et apply dans bige-ops.
     </p>
 
-    <h2>Deploy via l’app, sync GitHub</h2>
+    <h2 id="deploy-via-l-app-sync-github">Deploy via l’app, sync GitHub</h2>
     <p>
       Le chemin nominal : tu valides dans l’app (Visual, Workspace, revue des
       changements) → <strong>deploy / apply</strong> côté Outscale, et la
@@ -139,7 +139,7 @@ flowchart TB
       <em>ton</em> compte GitHub, piloté depuis le desktop.
     </p>
 
-    <h2>Simuler le deploy, revenir en arrière</h2>
+    <h2 id="simuler-le-deploy-revenir-en-arriere">Simuler le deploy, revenir en arrière</h2>
     <p>
       Avant d’engager le cloud, tu <strong>simules</strong> : simulation +
       estimation + generate + <code>plan</code>. Le config-history versionne
@@ -176,7 +176,7 @@ sequenceDiagram
       </pre>
     </figure>
 
-    <h2>Ce qui part, ce qui ne part jamais</h2>
+    <h2 id="ce-qui-part-ce-qui-ne-part-jamais">Ce qui part, ce qui ne part jamais</h2>
     <p>
       <strong>Poussé (config-history) :</strong> <code>project.yaml</code>,
       Terraform sans tfvars, specs OKS, scripts app, layout Visual,
@@ -192,7 +192,7 @@ sequenceDiagram
       <a href="repos-vms-docker.html">repos · VMs · Dockerfiles</a>.
     </p>
 
-    <h2>La suite</h2>
+    <h2 id="la-suite">La suite</h2>
     <p>
       Convention <code>main</code> pour la live, <code>sim/…</code> pour les
       drafts, création de repo à la volée, push et
@@ -213,7 +213,7 @@ sequenceDiagram
     <footer class="site-footer">
       <div class="cols">
         <div>
-          <h3>Comprendre</h3>
+          <h3 id="comprendre">Comprendre</h3>
           <ul>
             <li><a href="index.html">Accueil</a></li>
             <li><a href="documentation.html">Toute la doc</a></li>
@@ -224,7 +224,7 @@ sequenceDiagram
           </ul>
         </div>
         <div>
-          <h3>Composer</h3>
+          <h3 id="composer">Composer</h3>
           <ul>
             <li><a href="layouts.html">Par où commencer</a></li>
             <li><a href="stacks.html">Stacks &amp; langages</a></li>
@@ -237,7 +237,7 @@ sequenceDiagram
           </ul>
         </div>
         <div>
-          <h3>Réseau &amp; région</h3>
+          <h3 id="reseau-region">Réseau &amp; région</h3>
           <ul>
             <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
             <li><a href="reseau-avance.html">Réseau avancé</a></li>
@@ -247,7 +247,7 @@ sequenceDiagram
           </ul>
         </div>
         <div>
-          <h3>Opérer</h3>
+          <h3 id="operer">Opérer</h3>
           <ul>
             <li><a href="simulations.html">Simulations &amp; promote</a></li>
             <li><a href="inventory.html">Inventaire &amp; import</a></li>
@@ -272,5 +272,5 @@ sequenceDiagram
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
   </script>
-</body>
+<!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"832d6ab228b14493977bbfcb74fac155"}'></script><!-- End Cloudflare Web Analytics --></body>
 </html>

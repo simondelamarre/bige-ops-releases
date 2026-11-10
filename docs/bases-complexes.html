@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="navigation.css?v=1"></head>
+<link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="search.css?v=2"><script src="search.js?v=5" defer></script><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Bases complexes — bige-ops","description":"MongoDB 8, Postgres pour le RAG, Cassandra, Elasticsearch sur Outscale : ce qui démarre aujourd’hui avec bige-ops, et les prochains presets.","url":"https://bige.dev/bases-complexes.html","isPartOf":{"@type":"WebSite","name":"bige-ops","url":"https://bige.dev/"}}</script></head>
 <body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav">
@@ -29,7 +29,7 @@
       <a href="perimetre.html">Périmètre</a>
     </p>
 
-    <h1>Bases complexes</h1>
+    <h1 id="bases-complexes">Bases complexes</h1>
     <p class="lead">
       MongoDB, Postgres et ses extensions, Cassandra, Elasticsearch : des
       bases qui impressionnent au premier devis DevOps. L’idée de bige-ops :
@@ -63,7 +63,7 @@ flowchart LR
       <figcaption>Matrice vivante : ce qui démarre aujourd’hui · ce qui vient ensuite.</figcaption>
     </figure>
 
-    <h2>La matrice</h2>
+    <h2 id="la-matrice">La matrice</h2>
     <table>
       <thead>
         <tr>
@@ -101,7 +101,7 @@ flowchart LR
       </tbody>
     </table>
 
-    <h2>MongoDB 8</h2>
+    <h2 id="mongodb-8">MongoDB 8</h2>
     <p>
       Image <code>mongo:8</code> par défaut : on démarre sur la version
       courante. Placement : coloc, <strong>VM data dédiée</strong> (disque
@@ -127,7 +127,7 @@ flowchart TB
       </pre>
     </figure>
 
-    <h2>Postgres pour le RAG</h2>
+    <h2 id="postgres-pour-le-rag">Postgres pour le RAG</h2>
     <p>
       Postgres reste la base relationnelle du catalogue (<code>postgres:16</code>
       par défaut). Le cas qui revient partout : le <strong>RAG</strong>,
@@ -140,7 +140,7 @@ flowchart TB
       pour l’obtenir en un prompt.
     </p>
 
-    <h2>Cassandra et les bases distribuées</h2>
+    <h2 id="cassandra-et-les-bases-distribuees">Cassandra et les bases distribuées</h2>
     <p>
       Une base distribuée demande ses seed nodes, son facteur de réplication,
       sa JVM et des disques solides. Beaucoup d’apps n’ont besoin, au départ,
@@ -164,7 +164,7 @@ flowchart LR
       <figcaption>Un cluster minimal pour démarrer · le tuning ensuite.</figcaption>
     </figure>
 
-    <h2>Elasticsearch, gourmand en nœuds</h2>
+    <h2 id="elasticsearch-gourmand-en-n-uds">Elasticsearch, gourmand en nœuds</h2>
     <p>
       Heap, disque, réplicas de shards : Elasticsearch (et OpenSearch)
       consomment de la VM. L’agent sait déjà poser un
@@ -174,7 +174,7 @@ flowchart LR
       alerte d’estimation).
     </p>
 
-    <h2>Les autres bases</h2>
+    <h2 id="les-autres-bases">Les autres bases</h2>
     <p>
       OpenSearch, Meilisearch, Neo4j, ClickHouse… même recette :
       <strong>custom</strong> + placement (VM dédiée ou OKS) + volume +
@@ -191,7 +191,7 @@ flowchart LR
     <footer class="site-footer">
       <div class="cols">
         <div>
-          <h3>Comprendre</h3>
+          <h3 id="comprendre">Comprendre</h3>
           <ul>
             <li><a href="index.html">Accueil</a></li>
             <li><a href="documentation.html">Toute la doc</a></li>
@@ -202,7 +202,7 @@ flowchart LR
           </ul>
         </div>
         <div>
-          <h3>Composer</h3>
+          <h3 id="composer">Composer</h3>
           <ul>
             <li><a href="layouts.html">Par où commencer</a></li>
             <li><a href="stacks.html">Stacks &amp; langages</a></li>
@@ -215,7 +215,7 @@ flowchart LR
           </ul>
         </div>
         <div>
-          <h3>Réseau &amp; région</h3>
+          <h3 id="reseau-region">Réseau &amp; région</h3>
           <ul>
             <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
             <li><a href="reseau-avance.html">Réseau avancé</a></li>
@@ -225,7 +225,7 @@ flowchart LR
           </ul>
         </div>
         <div>
-          <h3>Opérer</h3>
+          <h3 id="operer">Opérer</h3>
           <ul>
             <li><a href="simulations.html">Simulations &amp; promote</a></li>
             <li><a href="inventory.html">Inventaire &amp; import</a></li>
@@ -250,5 +250,5 @@ flowchart LR
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
   </script>
-</body>
+<!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"832d6ab228b14493977bbfcb74fac155"}'></script><!-- End Cloudflare Web Analytics --></body>
 </html>

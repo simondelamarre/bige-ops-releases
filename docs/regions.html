@@ -20,14 +20,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="navigation.css?v=1"></head>
+<link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="search.css?v=2"><script src="search.js?v=5" defer></script><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Régions, zones & SecNumCloud — bige-ops","description":"Les cinq Régions Outscale, leurs Subregions, SecNumCloud 3.2 sur cloudgouv-eu-west-1, et comment s’ouvrent l’accès à une Région et à OKS.","url":"https://bige.dev/regions.html","isPartOf":{"@type":"WebSite","name":"bige-ops","url":"https://bige.dev/"}}</script></head>
 <body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="oks.html">OKS</a> · <a href="catalogue-prix.html">Catalogue de prix</a></p>
 
-    <h1>Régions, zones &amp; SecNumCloud</h1>
+    <h1 id="regions-zones-secnumcloud">Régions, zones &amp; SecNumCloud</h1>
     <p class="lead">Choisir une Région Outscale, c’est choisir où vivent tes données, sous quelle juridiction, avec quelle grille de prix et quels services. Une Région est indépendante des autres : rien n’y entre ni n’en sort sans que tu le demandes.</p>
-    <h2>Les cinq Régions publiques</h2>
+    <h2 id="les-cinq-regions-publiques">Les cinq Régions publiques</h2>
     <table>
       <tr><th>Région</th><th>Où</th><th>Subregions</th><th>Note</th></tr>
       <tr><td><code>eu-west-2</code></td><td>France, Île-de-France</td><td>3</td><td>Région par défaut d’un compte Outscale ; OKS disponible</td></tr>
@@ -44,7 +44,7 @@
       <a href="https://docs.outscale.com/fr/userguide/À-propos-des-Régions-et-Sous-régions.html" target="_blank" rel="noopener noreferrer">Régions et Sous-régions</a>.
     </p>
 
-    <h2>Subregions : ce que le nom ne dit pas</h2>
+    <h2 id="subregions-ce-que-le-nom-ne-dit-pas">Subregions : ce que le nom ne dit pas</h2>
     <p>
       Une Subregion correspond en général à un datacenter physique, relié aux
       autres Subregions de la Région par fibre à faible latence. La
@@ -55,7 +55,7 @@
       site réel, <code>ReadSubregions</code> renvoie son code de localisation.
     </p>
 
-    <h2>Une Subregion par projet</h2>
+    <h2 id="une-subregion-par-projet">Une Subregion par projet</h2>
     <div class="callout">
       <strong>Le choix de bige-ops.</strong>
       Un projet place ses subnets, ses VMs et ses volumes dans une seule
@@ -66,7 +66,7 @@
       balancers sur plusieurs Subregions.
     </div>
 
-    <h2>SecNumCloud</h2>
+    <h2 id="secnumcloud">SecNumCloud</h2>
     <p>
       SecNumCloud est le référentiel de sécurité de l’ANSSI. Outscale est
       <a href="https://fr.outscale.com/secnumcloud/" target="_blank" rel="noopener noreferrer">qualifié SecNumCloud 3.2</a>,
@@ -90,7 +90,7 @@
       <a href="https://docs.outscale.com/fr/userguide/À-propos-de-votre-compte-OUTSCALE.html" target="_blank" rel="noopener noreferrer">À propos de votre compte OUTSCALE</a>.
     </p>
 
-    <h2>Doc Outscale</h2>
+    <h2 id="doc-outscale">Doc Outscale</h2>
     <ul>
       <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-Régions-et-Sous-régions.html" target="_blank" rel="noopener noreferrer">À propos des Régions et Sous-régions</a></li>
       <li><a href="https://docs.outscale.com/fr/userguide/Référence-des-endpoints-d-API.html" target="_blank" rel="noopener noreferrer">Référence des endpoints d’API</a></li>
@@ -103,7 +103,7 @@
     <footer class="site-footer">
       <div class="cols">
         <div>
-          <h3>Comprendre</h3>
+          <h3 id="comprendre">Comprendre</h3>
           <ul>
             <li><a href="index.html">Accueil</a></li>
             <li><a href="documentation.html">Toute la doc</a></li>
@@ -114,7 +114,7 @@
           </ul>
         </div>
         <div>
-          <h3>Composer</h3>
+          <h3 id="composer">Composer</h3>
           <ul>
             <li><a href="layouts.html">Par où commencer</a></li>
             <li><a href="stacks.html">Stacks &amp; langages</a></li>
@@ -127,7 +127,7 @@
           </ul>
         </div>
         <div>
-          <h3>Réseau &amp; région</h3>
+          <h3 id="reseau-region">Réseau &amp; région</h3>
           <ul>
             <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
             <li><a href="reseau-avance.html">Réseau avancé</a></li>
@@ -137,7 +137,7 @@
           </ul>
         </div>
         <div>
-          <h3>Opérer</h3>
+          <h3 id="operer">Opérer</h3>
           <ul>
             <li><a href="simulations.html">Simulations &amp; promote</a></li>
             <li><a href="inventory.html">Inventaire &amp; import</a></li>
@@ -162,5 +162,5 @@
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark" });
   </script>
-</body>
+<!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"832d6ab228b14493977bbfcb74fac155"}'></script><!-- End Cloudflare Web Analytics --></body>
 </html>

@@ -4,6 +4,34 @@
   <url><loc>https://bige.dev/bases-complexes.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/bases.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/billing.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/01-paas-a-iaas-sans-devops.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/02-migrer-les-objets.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/03-estimation-et-consommation.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/04-nodejs-correctifs-securite-novembre-2026.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/05-php-82-fin-support-correctifs.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/06-scaleway-qarnot-chaleur-serveurs.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/07-dataiku-scaleway-ia-europe.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/08-opencve-suivre-les-cve-qui-comptent.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/09-opencve-api-autonomie-licence.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/10-cybedefend-securite-des-agents-code.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/11-cybedefend-mcp-acces-et-donnees.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/12-cve-cwe-cvss-epss-kev.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/13-cve-presence-exposition-risque.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/14-licences-open-source-et-cloud.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/15-mongodb-sspl-paas-version-6.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/16-infra-responsable-cinq-pratiques.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/17-mettre-vm-en-pause.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/18-souverainete-cloud-questions.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/19-compatibilite-s3-portabilite.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/20-migrer-une-base-sans-coupure-magique.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/21-owasp-juice-shop-lab.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/22-bilan-cyber-france-2026-provisoire.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/23-supermarches-controle-froid-cyberattaque-2026.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/24-dgfip-cyberattaques-ete-2026-rapport-anssi.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/25-ficoba-acces-illegitime-2026.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/26-la-poste-ddos-nouvel-an-2026.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/27-csrd-infrastructure-cloud-donnees-ges.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/catalogue-prix.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/cli.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/comprendre-bige-ops.html</loc><priority>0.7</priority></url>

@@ -1,0 +1,5 @@
+Illustration conceptuelle RISO — catalogue
+Générée le 10 novembre 2026 pour la grille bento et le filigrane feature.
+Une encre, fond transparent, monochrome au repos, couleur au hover/focus via CSS.
+Composition abstraite avec trame, réserves et grain. WebP 800 px, compression qualité 85.
+Masque alpha testé dans le navigateur.

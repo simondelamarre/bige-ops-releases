@@ -20,12 +20,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="navigation.css?v=1"></head>
+<link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="search.css?v=2"><script src="search.js?v=5" defer></script><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"LBU · l’entrée publique — bige-ops","description":"LBU, le load balancer Outscale : listeners HTTP et HTTPS avec certificat EIM, health check complet, VMs backend, et le fonctionnement Outscale à connaître (round-robin, listeners, security groups).","url":"https://bige.dev/lbu.html","isPartOf":{"@type":"WebSite","name":"bige-ops","url":"https://bige.dev/"}}</script></head>
 <body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="reseau.html">Réseau</a> · <a href="layouts.html">Layouts</a> · <a href="vms.html">VMs</a></p>
 
-    <h1>LBU · l’entrée publique</h1>
+    <h1 id="lbu-l-entree-publique">LBU · l’entrée publique</h1>
     <p class="lead">Le <strong>LBU</strong> (Load Balancer Unit) est le load balancer d’Outscale : la porte d’entrée HTTP ou HTTPS de tes layouts multi-VM. bige-ops le crée avec ses listeners, son health check et ses VMs backend, et sait y brancher un certificat EIM pour le HTTPS.</p>
     <div class="callout">
       <strong>À retenir.</strong>
@@ -47,7 +47,7 @@ flowchart LR
       <figcaption>TLS terminé sur le LBU, trafic HTTP vers les backends, data jamais exposée.</figcaption>
     </figure>
 
-    <h2>Ce que bige-ops crée</h2>
+    <h2 id="ce-que-bige-ops-cree">Ce que bige-ops crée</h2>
     <ul>
       <li><strong>Sept des huit layouts nommés</strong> posent un LBU. Seul <code>node-lite</code>, en mono-VM, s’en passe : sa VM porte une IP publique.</li>
       <li>Le <strong>scheme</strong> : <code>internet-facing</code> (subnet public) ou <code>internal</code> (subnet privé, joignable depuis le Net seulement).</li>
@@ -70,7 +70,7 @@ flowchart LR
     backend_vms: [app]
     health_check: { protocol: HTTP, port: 3000, path: /health }</pre>
 
-    <h2>Comment un LBU Outscale fonctionne</h2>
+    <h2 id="comment-un-lbu-outscale-fonctionne">Comment un LBU Outscale fonctionne</h2>
     <ul>
       <li><strong>Round-robin.</strong> Les requêtes sont réparties à parts égales entre les backends sains ; les sticky sessions (cookie) s’activent sur les listeners HTTP et HTTPS.</li>
       <li><strong>Protocoles appariés.</strong> Un frontal HTTP ou HTTPS parle HTTP aux backends ; un frontal TCP ou SSL leur parle TCP. Le chiffrement s’arrête au LBU (TLS 1.1 à 1.3) ; entre le LBU et les VMs, ce sont les security groups qui protègent le trafic.</li>
@@ -78,7 +78,7 @@ flowchart LR
       <li><strong>Un health check par LBU.</strong> Intervalle de 5 à 600 s, timeout de 2 à 60 s, seuils de 2 à 10. Outscale recommande donc un LBU par service.</li>
     </ul>
 
-    <h2>Le certificat EIM</h2>
+    <h2 id="le-certificat-eim">Le certificat EIM</h2>
     <p>
       Pour le HTTPS, le certificat serveur se charge dans EIM (Cockpit ou API),
       puis se référence par son ORN. Outscale attend un certificat x509 et sa
@@ -88,7 +88,7 @@ flowchart LR
       Source : <a href="https://docs.outscale.com/fr/userguide/À-propos-des-certificats-serveurs-dans-EIM.html" target="_blank" rel="noopener noreferrer">certificats serveurs dans EIM</a>.
     </p>
 
-    <h2>Security groups et LBU</h2>
+    <h2 id="security-groups-et-lbu">Security groups et LBU</h2>
     <p>
       Dans un Net, Outscale n’associe aucun security group par défaut à un
       LBU : celui du LBU doit laisser entrer Internet et laisser sortir vers
@@ -98,7 +98,7 @@ flowchart LR
       <a href="reseau.html">Réseau · ouvrir ou non</a>.
     </p>
 
-    <h2>Un LBU importé est observé</h2>
+    <h2 id="un-lbu-importe-est-observe">Un LBU importé est observé</h2>
     <p>
       L’inventaire liste tes load balancers existants. L’import en écrit un
       composant <strong>observé</strong> : sans listeners ni backends, et
@@ -111,7 +111,7 @@ flowchart LR
       règlent dans Cockpit ou par l’API Outscale.
     </p>
 
-    <h2>Doc Outscale</h2>
+    <h2 id="doc-outscale">Doc Outscale</h2>
     <ul>
       <li><a href="https://docs.outscale.com/fr/userguide/À-propos-des-load-balancers.html" target="_blank" rel="noopener noreferrer">À propos des load balancers</a></li>
       <li><a href="https://docs.outscale.com/fr/userguide/Configurer-les-health-checks.html" target="_blank" rel="noopener noreferrer">Configurer les health checks</a></li>
@@ -124,7 +124,7 @@ flowchart LR
     <footer class="site-footer">
       <div class="cols">
         <div>
-          <h3>Comprendre</h3>
+          <h3 id="comprendre">Comprendre</h3>
           <ul>
             <li><a href="index.html">Accueil</a></li>
             <li><a href="documentation.html">Toute la doc</a></li>
@@ -135,7 +135,7 @@ flowchart LR
           </ul>
         </div>
         <div>
-          <h3>Composer</h3>
+          <h3 id="composer">Composer</h3>
           <ul>
             <li><a href="layouts.html">Par où commencer</a></li>
             <li><a href="stacks.html">Stacks &amp; langages</a></li>
@@ -148,7 +148,7 @@ flowchart LR
           </ul>
         </div>
         <div>
-          <h3>Réseau &amp; région</h3>
+          <h3 id="reseau-region">Réseau &amp; région</h3>
           <ul>
             <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
             <li><a href="reseau-avance.html">Réseau avancé</a></li>
@@ -158,7 +158,7 @@ flowchart LR
           </ul>
         </div>
         <div>
-          <h3>Opérer</h3>
+          <h3 id="operer">Opérer</h3>
           <ul>
             <li><a href="simulations.html">Simulations &amp; promote</a></li>
             <li><a href="inventory.html">Inventaire &amp; import</a></li>
@@ -183,5 +183,5 @@ flowchart LR
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark" });
   </script>
-</body>
+<!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"832d6ab228b14493977bbfcb74fac155"}'></script><!-- End Cloudflare Web Analytics --></body>
 </html>

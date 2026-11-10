@@ -20,12 +20,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="navigation.css?v=1"></head>
+<link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="search.css?v=2"><script src="search.js?v=5" defer></script><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Ce que bige-ops sait","description":"Ce que fait bige-ops sur Outscale : simulation, tests en local, estimation, déploiement sur ton compte, données et analyse des failles.","url":"https://bige.dev/savoir.html","isPartOf":{"@type":"WebSite","name":"bige-ops","url":"https://bige.dev/"}}</script></head>
 <body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a> · <a href="index.html#features">Fonctions</a></p>
 
-    <h1>Ce que bige-ops sait</h1>
+    <h1 id="ce-que-bige-ops-sait">Ce que bige-ops sait</h1>
     <p class="lead">
       Simple comme un PaaS, flexible comme un IaaS : bige-ops est une app desktop
       gratuite qui simule ta stack, la teste en local, puis la déploie sur
@@ -34,7 +34,7 @@
       puis déployer.
     </p>
 
-    <h2>Dans l’app</h2>
+    <h2 id="dans-l-app">Dans l’app</h2>
     <ul>
       <li><strong>Topologies</strong> : mono-VM, multi-VM, OKS, avec volumes BSU, Object Storage et LBU. Config et Visual restent synchronisés par un seul Apply atomique.</li>
       <li><strong>Estimation</strong> : coût mensuel hors taxes estimé sur le catalogue public Outscale, synchronisable via l’API.</li>
@@ -56,13 +56,13 @@ flowchart LR
       <figcaption>De la simulation à ton compte Outscale.</figcaption>
     </figure>
 
-    <h2>Chez Outscale</h2>
+    <h2 id="chez-outscale">Chez Outscale</h2>
     <ul>
       <li><strong>Ta facture et tes offres commerciales</strong> : l’estimation de l’app repose sur la grille publique, ton interlocuteur Outscale reste la référence pour un devis.</li>
       <li><strong>Les nouveautés de l’offre</strong> : nouvelles régions, nouveaux types de VM ou de stockage. bige-ops les intègre au fil des versions.</li>
     </ul>
 
-    <h2>Une suggestion&nbsp;?</h2>
+    <h2 id="une-suggestion">Une suggestion&nbsp;?</h2>
     <p>
       Un service Outscale à mieux couvrir, un libellé à corriger, une idée :
       ouvre une <a href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">issue</a>
@@ -71,7 +71,7 @@ flowchart LR
     <footer class="site-footer">
       <div class="cols">
         <div>
-          <h3>Comprendre</h3>
+          <h3 id="comprendre">Comprendre</h3>
           <ul>
             <li><a href="index.html">Accueil</a></li>
             <li><a href="documentation.html">Toute la doc</a></li>
@@ -82,7 +82,7 @@ flowchart LR
           </ul>
         </div>
         <div>
-          <h3>Composer</h3>
+          <h3 id="composer">Composer</h3>
           <ul>
             <li><a href="layouts.html">Par où commencer</a></li>
             <li><a href="stacks.html">Stacks &amp; langages</a></li>
@@ -95,7 +95,7 @@ flowchart LR
           </ul>
         </div>
         <div>
-          <h3>Réseau &amp; région</h3>
+          <h3 id="reseau-region">Réseau &amp; région</h3>
           <ul>
             <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
             <li><a href="reseau-avance.html">Réseau avancé</a></li>
@@ -105,7 +105,7 @@ flowchart LR
           </ul>
         </div>
         <div>
-          <h3>Opérer</h3>
+          <h3 id="operer">Opérer</h3>
           <ul>
             <li><a href="simulations.html">Simulations &amp; promote</a></li>
             <li><a href="inventory.html">Inventaire &amp; import</a></li>
@@ -130,5 +130,5 @@ flowchart LR
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
   </script>
-</body>
+<!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"832d6ab228b14493977bbfcb74fac155"}'></script><!-- End Cloudflare Web Analytics --></body>
 </html>

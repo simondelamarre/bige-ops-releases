@@ -21,12 +21,12 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
   <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "ASP.NET Core, PostgreSQL et RabbitMQ sur Outscale", "description": "ASP.NET Core, EF Core, PostgreSQL 17 et RabbitMQ sur Outscale : LBU HTTPS, base et broker privés, backups OOS, CVE.", "inLanguage": "fr", "url": "https://bige.dev/stack-dotnet-postgresql-rabbitmq.html", "keywords": ".NET, ASP.NET Core, Entity Framework Core, Npgsql, PostgreSQL, RabbitMQ, MassTransit, Linux, LBU, OOS, Outscale, OpenCVE", "isPartOf": {"@type": "WebSite", "name": "bige-ops", "url": "https://bige.dev/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bige.dev/"}, {"@type": "ListItem", "position": 2, "name": "Stacks et langages", "item": "https://bige.dev/stacks.html"}, {"@type": "ListItem", "position": 3, "name": "ASP.NET Core, PostgreSQL et RabbitMQ sur Outscale", "item": "https://bige.dev/stack-dotnet-postgresql-rabbitmq.html"}]}]}</script>
-<link rel="stylesheet" href="navigation.css?v=1"></head>
+<link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="search.css?v=2"><script src="search.js?v=5" defer></script></head>
 <body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="stacks.html">Stacks &amp; langages</a> · <a href="documentation.html">Toute la doc</a></p>
 
-    <h1>ASP.NET Core + PostgreSQL + RabbitMQ sur Outscale</h1>
+    <h1 id="asp-net-core-postgresql-rabbitmq-sur-outscale">ASP.NET Core + PostgreSQL + RabbitMQ sur Outscale</h1>
     <p class="lead">
       Une API ASP.NET Core sous Linux, Entity Framework Core sur PostgreSQL, RabbitMQ pour les commandes et les événements : la stack .NET moderne de nombreuses entreprises. bige-ops la pose sur Outscale, base et broker en subnet privé.
     </p>
@@ -208,7 +208,7 @@ components:
     <footer class="site-footer">
       <div class="cols">
         <div>
-          <h3>Comprendre</h3>
+          <h3 id="comprendre">Comprendre</h3>
           <ul>
             <li><a href="index.html">Accueil</a></li>
             <li><a href="documentation.html">Toute la doc</a></li>
@@ -219,7 +219,7 @@ components:
           </ul>
         </div>
         <div>
-          <h3>Composer</h3>
+          <h3 id="composer">Composer</h3>
           <ul>
             <li><a href="layouts.html">Layouts &amp; topologies</a></li>
             <li><a href="vms.html">VMs · VPS</a></li>
@@ -231,7 +231,7 @@ components:
           </ul>
         </div>
         <div>
-          <h3>Réseau &amp; région</h3>
+          <h3 id="reseau-region">Réseau &amp; région</h3>
           <ul>
             <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
             <li><a href="reseau-avance.html">Réseau avancé</a></li>
@@ -241,7 +241,7 @@ components:
           </ul>
         </div>
         <div>
-          <h3>Opérer</h3>
+          <h3 id="operer">Opérer</h3>
           <ul>
             <li><a href="simulations.html">Simulations &amp; promote</a></li>
             <li><a href="inventory.html">Inventaire &amp; import</a></li>
@@ -266,5 +266,5 @@ components:
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
   </script>
-</body>
+<!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"832d6ab228b14493977bbfcb74fac155"}'></script><!-- End Cloudflare Web Analytics --></body>
 </html>

@@ -20,12 +20,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="navigation.css?v=1"></head>
+<link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="search.css?v=2"><script src="search.js?v=5" defer></script><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"VMs & VPS — bige-ops","description":"VM Outscale : lire un type Tina (génération, vCPU, RAM, performance), mono-VM ou multi-VM, ce que le formulaire pilote jusqu’à l’apply sur ton compte.","url":"https://bige.dev/vms.html","isPartOf":{"@type":"WebSite","name":"bige-ops","url":"https://bige.dev/"}}</script></head>
 <body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a> · <a href="glossaire.html#g-vm">Glossaire</a></p>
 
-    <h1>VMs Outscale</h1>
+    <h1 id="vms-outscale">VMs Outscale</h1>
     <p class="lead">
       Compose une topologie compute (type Tina, disques, réseau), estime-la,
       génère le Terraform, puis <strong>apply</strong> sur <em>ton</em> compte.
@@ -42,7 +42,7 @@
       <a href="https://fr.outscale.com/machines-virtuelles-sur-mesure/" target="_blank" rel="noopener noreferrer">compose sur mesure</a>.
     </div>
 
-    <h2>Lire un type Tina</h2>
+    <h2 id="lire-un-type-tina">Lire un type Tina</h2>
     <p>
       Un type s’écrit <code>tinavW.cXrYpZ</code>. Exemple :
       <code>tinav6.c4r8p2</code> = génération de CPU v6, 4 vCPU, 8 GiB de RAM,
@@ -77,7 +77,7 @@ flowchart TB
       <figcaption>Le formulaire met à jour le setup tout de suite, sans questionnaire.</figcaption>
     </figure>
 
-    <h2>Mono-VM ou multi-VM</h2>
+    <h2 id="mono-vm-ou-multi-vm">Mono-VM ou multi-VM</h2>
     <p>
       En <a href="glossaire.html#g-mono-vm"><strong>mono-VM</strong></a>
       (code <code>single-vm</code>), les apps et souvent la data partagent
@@ -103,7 +103,7 @@ flowchart LR
       <figcaption>Prose : mono-VM / multi-VM · identifiants dans le code : single-vm / multi-vm.</figcaption>
     </figure>
 
-    <h2>Ce que le formulaire pilote</h2>
+    <h2 id="ce-que-le-formulaire-pilote">Ce que le formulaire pilote</h2>
     <p>
       Type Tina (génération, vCPU, RAM, performance), taille et type du disque
       racine, volumes attachés, subnet public ou privé, IP publique et LBU
@@ -116,7 +116,7 @@ flowchart LR
       <a href="reseau.html">réseau · ouvrir ou non</a>.
     </p>
 
-    <h2>Le périmètre de bige-ops</h2>
+    <h2 id="le-perimetre-de-bige-ops">Le périmètre de bige-ops</h2>
     <p>
       bige-ops pose une base saine : image officielle, keypair, réseau,
       disques, apps déployées. Le durcissement, la supervision avancée et
@@ -139,7 +139,7 @@ flowchart LR
     <footer class="site-footer">
       <div class="cols">
         <div>
-          <h3>Comprendre</h3>
+          <h3 id="comprendre">Comprendre</h3>
           <ul>
             <li><a href="index.html">Accueil</a></li>
             <li><a href="documentation.html">Toute la doc</a></li>
@@ -150,7 +150,7 @@ flowchart LR
           </ul>
         </div>
         <div>
-          <h3>Composer</h3>
+          <h3 id="composer">Composer</h3>
           <ul>
             <li><a href="layouts.html">Par où commencer</a></li>
             <li><a href="stacks.html">Stacks &amp; langages</a></li>
@@ -163,7 +163,7 @@ flowchart LR
           </ul>
         </div>
         <div>
-          <h3>Réseau &amp; région</h3>
+          <h3 id="reseau-region">Réseau &amp; région</h3>
           <ul>
             <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
             <li><a href="reseau-avance.html">Réseau avancé</a></li>
@@ -173,7 +173,7 @@ flowchart LR
           </ul>
         </div>
         <div>
-          <h3>Opérer</h3>
+          <h3 id="operer">Opérer</h3>
           <ul>
             <li><a href="simulations.html">Simulations &amp; promote</a></li>
             <li><a href="inventory.html">Inventaire &amp; import</a></li>
@@ -198,5 +198,5 @@ flowchart LR
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
   </script>
-</body>
+<!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"832d6ab228b14493977bbfcb74fac155"}'></script><!-- End Cloudflare Web Analytics --></body>
 </html>

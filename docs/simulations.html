@@ -12,12 +12,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css" />
-<link rel="stylesheet" href="navigation.css?v=1"></head>
+<link rel="stylesheet" href="navigation.css?v=1"><link rel="stylesheet" href="search.css?v=2"><script src="search.js?v=5" defer></script><meta property="og:title" content="Projets, simulations &amp; promote — bige-ops"><meta property="og:description" content="Workspace, compte Outscale, simulations live et draft : promote, snapshot, rollback, diff config, et test en local d’un brouillon."><meta property="og:url" content="https://bige.dev/simulations.html"><meta property="og:type" content="website"><meta property="og:image" content="https://bige.dev/screens/site-simule.png"><meta name="twitter:card" content="summary_large_image"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Projets, simulations & promote — bige-ops","description":"Workspace, compte Outscale, simulations live et draft : promote, snapshot, rollback, diff config, et test en local d’un brouillon.","url":"https://bige.dev/simulations.html","isPartOf":{"@type":"WebSite","name":"bige-ops","url":"https://bige.dev/"}}</script></head>
 <body><header class="global-header"><a class="global-brand" href="index.html"><img src="favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="index.html#parcours">Voir l’app</a><a href="index.html#features">Fonctionnalités</a><a href="index.html#clouds">Les clouds</a><a href="documentation.html">Documentation</a></nav><a class="global-download" href="index.html#download">Télécharger la bêta ↗</a></header>
   <main>
     <p class="doc-nav"><a href="index.html">← Accueil</a> · <a href="perimetre.html">Périmètre</a></p>
 
-    <h1>Projets, simulations &amp; promote</h1>
+    <h1 id="projets-simulations-promote">Projets, simulations &amp; promote</h1>
     <p class="lead">
       Tout est local et hiérarchique : un <strong>workspace</strong> sur
       ton poste, des <strong>comptes</strong> Outscale dedans, des
@@ -25,7 +25,7 @@
       live, les autres sont des brouillons — jusqu’au <code>promote</code>.
     </p>
 
-    <h2>Le modèle</h2>
+    <h2 id="le-modele">Le modèle</h2>
     <figure class="diagram">
       <pre class="mermaid">
 flowchart TB
@@ -62,7 +62,7 @@ flowchart TB
       </tbody>
     </table>
 
-    <h2>Live et draft</h2>
+    <h2 id="live-et-draft">Live et draft</h2>
     <ul>
       <li>
         <strong>Simulation live</strong> — <code>existing/</code>, ou celle
@@ -86,7 +86,7 @@ flowchart TB
       <a href="github-config.html">GitHub config</a>.
     </div>
 
-    <h2>Les commandes</h2>
+    <h2 id="les-commandes">Les commandes</h2>
 <pre>bige-ops account list
 bige-ops account add
 bige-ops account show
@@ -107,7 +107,7 @@ bige-ops simulation rollback --snapshot &lt;id&gt; --dry-run
 bige-ops diff config
 bige-ops workspace migrate</pre>
 
-    <h2>Promote</h2>
+    <h2 id="promote">Promote</h2>
     <p>
       <code>promote</code> marque la simulation courante comme live et
       <strong>archive la précédente</strong>. Par défaut, un
@@ -120,7 +120,7 @@ bige-ops workspace migrate</pre>
 bige-ops simulation promote            # snapshot auto + archive de l’ancienne live
 bige-ops simulation promote --push-main</pre>
 
-    <h2>Snapshots, rollback, diff</h2>
+    <h2 id="snapshots-rollback-diff">Snapshots, rollback, diff</h2>
     <p>
       <code>snapshot</code> capture l’état de la configuration,
       <code>snapshots</code> les liste, <code>rollback --snapshot &lt;id&gt;</code>
@@ -139,7 +139,7 @@ bige-ops simulation promote --push-main</pre>
       côté GitHub, lui, reste manuel.
     </div>
 
-    <h2>Bon à savoir</h2>
+    <h2 id="bon-a-savoir">Bon à savoir</h2>
     <ul>
       <li>
         L’état de vérité du cloud, c’est le compte Outscale et le state
@@ -170,7 +170,7 @@ bige-ops simulation promote --push-main</pre>
     <footer class="site-footer">
       <div class="cols">
         <div>
-          <h3>Comprendre</h3>
+          <h3 id="comprendre">Comprendre</h3>
           <ul>
             <li><a href="index.html">Accueil</a></li>
             <li><a href="documentation.html">Toute la doc</a></li>
@@ -181,7 +181,7 @@ bige-ops simulation promote --push-main</pre>
           </ul>
         </div>
         <div>
-          <h3>Composer</h3>
+          <h3 id="composer">Composer</h3>
           <ul>
             <li><a href="layouts.html">Par où commencer</a></li>
             <li><a href="stacks.html">Stacks &amp; langages</a></li>
@@ -194,7 +194,7 @@ bige-ops simulation promote --push-main</pre>
           </ul>
         </div>
         <div>
-          <h3>Réseau &amp; région</h3>
+          <h3 id="reseau-region">Réseau &amp; région</h3>
           <ul>
             <li><a href="reseau.html">Réseau · ouvrir ou non</a></li>
             <li><a href="reseau-avance.html">Réseau avancé</a></li>
@@ -204,7 +204,7 @@ bige-ops simulation promote --push-main</pre>
           </ul>
         </div>
         <div>
-          <h3>Opérer</h3>
+          <h3 id="operer">Opérer</h3>
           <ul>
             <li><a href="simulations.html">Simulations &amp; promote</a></li>
             <li><a href="inventory.html">Inventaire &amp; import</a></li>
@@ -229,5 +229,5 @@ bige-ops simulation promote --push-main</pre>
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
   </script>
-</body>
+<!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"832d6ab228b14493977bbfcb74fac155"}'></script><!-- End Cloudflare Web Analytics --></body>
 </html>
