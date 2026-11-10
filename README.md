@@ -24,6 +24,12 @@ brew install --cask simondelamarre/bige-ops/bige-ops
 
 ---
 
+## Ton compte cloud
+
+- **Outscale** est intégré en bêta pour simuler, tester et déployer des stacks VM ou Kubernetes OKS.
+- **OVHcloud** est intégré en bêta pour les stacks Public Cloud compatibles.
+- **Scaleway** est à venir.
+
 ## Simple comme un PaaS
 
 Tu veux mettre ton produit en ligne, pas devenir DevOps. bige-ops fait le travail d’une plateforme managée, sur ton poste.
@@ -92,29 +98,31 @@ Avant de déployer, la simulation t’en donne une estimation dans l’app, sur 
 2. **Simule et teste** : connecte-toi avec GitHub, choisis un dossier, pars d’une stack prête et lance-la en local.
 3. **Déploie** : tu connectes ton compte cloud quand tu es prêt, tu relis le plan, tu déploies.
 
-## Nouveautés 0.9 et 0.10
+## Nouveautés 0.11
 
-- **Un panneau Données par base.** Dump, restauration et migration ; les dumps locaux sont listés, pesés et supprimables ; l’envoi vers l’Object Storage tourne en arrière-plan et se reprend.
-- **Kubernetes en local.** Teste une stack OKS sur ton poste, depuis un brouillon, avant le cloud.
-- **Images et Dockerfiles guidés.** Registre GitHub (GHCR) proposé pour OKS, revue du Dockerfile avant le build, monorepos compris.
-- **Dépôts de travail propres.** Les fichiers locaux, dumps et données de test ne partent jamais dans ton Git.
+- **OVHcloud en bêta**, aux côtés d’Outscale : simulation, estimation et infrastructure Public Cloud. La recette sur un compte OVHcloud réel reste à réaliser ; l’import d’une infrastructure existante n’est pas pris en charge.
+- **Mise en veille des stacks multi-VM compatibles**, avec réveil à la visite et suivi de la remise en route.
+- **Migrations mieux suivies** : progression, rapports, arrêt et reprise des copies Object Storage.
+- **Rapports d’opérations et notes cloud** : dépenses mensuelles, activité et vulnérabilités pour préparer les décisions ; Markdown, canvas, présentations et tableurs pour les consigner et les partager.
+
+[Lire les changements et les limites de la version 0.11.0 →](https://github.com/simondelamarre/bige-ops-releases/releases/tag/v0.11.0)
 
 Les recettes sur de vrais comptes cloud restent séparées des tests automatisés : avant une infra critique, garde un expert dans la boucle.
 
 ## Questions franches
 
-- **C’est prêt pour la prod ?** bige-ops est jeune (0.10) et avance vite. Avant chaque déploiement, tu relis le plan de ce qui va changer, et ta stack reste un fichier versionné dans ton Git.
+- **C’est prêt pour la prod ?** Avant chaque déploiement, tu relis le plan de ce qui va changer, et ta stack reste un fichier versionné dans ton Git.
 - **Et le HTTPS ?** Il passe par le load balancer, avec ton certificat chargé dans le cloud : bige-ops le branche pour toi.
 - **Où sont mes secrets ?** Sur ton poste, dans un coffre local, jamais dans tes fichiers.
 - **Pourquoi brew sur macOS ?** Une commande installe l’app et la prépare pour macOS. Sur Linux : AppImage ou .deb.
 
 ---
 
-<h3 align="center">Bientôt d’autres providers SecNumCloud et français</h3>
+<h3 align="center">Outscale et OVHcloud en bêta · Scaleway à venir</h3>
 
 <p align="center">
-  <strong>bige-ops est indépendant.</strong> Ta stack est décrite une fois. Quand d’autres clouds français arriveront dans bige-ops,<br/>
-  tu déploieras la même stack chez eux. <strong>Installe maintenant, tu choisiras ensuite.</strong><br/>
+  <strong>bige-ops est indépendant.</strong> Ta configuration reste versionnée dans ton Git.<br/>
+  <strong>Installe maintenant, choisis ton cloud quand tu veux déployer.</strong><br/>
   <a href="https://www.ovhcloud.com/fr/">OVHcloud</a> · <a href="https://www.scaleway.com/fr/">Scaleway</a>
 </p>
 
@@ -123,9 +131,3 @@ Les recettes sur de vrais comptes cloud restent séparées des tests automatisé
   <a href="https://bige.dev/stacks.html">Stacks et langages</a> ·
   <a href="https://github.com/simondelamarre/bige-ops-releases/issues/new/choose">Une idée, un bug ?</a>
 </p>
-
-<!-- Other clouds hidden for now (see ENABLED_PROVIDER_IDS in desktop/src/lib/providers.ts).
-Previous copy, to restore with them:
-<em>Outscale live · Scaleway, OVH, AWS, Azure, GCP, Fly… bientôt</em>
-| Bientôt | Scaleway · OVH · AWS · Azure · GCP · Fly |
--->
