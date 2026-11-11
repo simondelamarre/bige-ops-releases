@@ -10,11 +10,50 @@
     trigger.setAttribute('aria-label', 'Rechercher sur bige.dev'); trigger.setAttribute('aria-haspopup', 'dialog'); trigger.setAttribute('aria-keyshortcuts', 'Meta+F Control+F'); trigger.title = 'Rechercher (⌘F / Ctrl F)';
     trigger.innerHTML = searchIcon;
   }
-  const download = header.querySelector('.global-download');
-  if (download) download.after(trigger); else header.append(trigger);
   const nav = header.querySelector('nav[aria-label="Navigation principale"]');
-  if (nav && !nav.querySelector('a[href*="blog"]')) {
-    const link = document.createElement('a'); link.href = location.pathname.startsWith('/blog/') ? '../blog/' : 'blog/'; link.textContent = 'Blog'; nav.append(link);
+  if (nav) {
+    if (!nav.id) nav.id = 'site-primary-nav';
+    if (!nav.querySelector('a[href*="blog"]')) {
+      const link = document.createElement('a'); link.href = location.pathname.startsWith('/blog/') ? '../blog/' : 'blog/'; link.textContent = 'Blog'; nav.append(link);
+    }
+  }
+
+  const download = header.querySelector('.global-download');
+  let actions = header.querySelector('.global-actions');
+  if (!actions) {
+    actions = document.createElement('div');
+    actions.className = 'global-actions';
+    header.append(actions);
+  }
+  if (download && download.parentElement !== actions) actions.append(download);
+  if (trigger.parentElement !== actions) actions.append(trigger);
+
+  if (nav) {
+    let menuToggle = actions.querySelector('.global-menu-toggle');
+    if (!menuToggle) {
+      menuToggle = document.createElement('button');
+      menuToggle.type = 'button';
+      menuToggle.className = 'global-menu-toggle';
+      menuToggle.setAttribute('aria-controls', nav.id);
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Ouvrir le menu');
+      menuToggle.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>';
+      actions.append(menuToggle);
+    }
+
+    const setMenuOpen = (open) => {
+      header.classList.toggle('mobile-nav-open', open);
+      menuToggle.setAttribute('aria-expanded', String(open));
+      menuToggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    };
+    menuToggle.addEventListener('click', () => setMenuOpen(menuToggle.getAttribute('aria-expanded') !== 'true'));
+    nav.addEventListener('click', (event) => {
+      if (event.target.closest('a')) setMenuOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && header.classList.contains('mobile-nav-open')) setMenuOpen(false);
+    });
+    header.classList.add('mobile-nav-ready');
   }
 
   const dialog = document.createElement('dialog');

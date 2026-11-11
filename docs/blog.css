@@ -65,6 +65,12 @@
 .blog-page .global-header nav a:hover{color:#14675b}
 .blog-page .global-header .search-open{border-color:#c6d4ce;background:#e5ebe6;color:#203130}
 .blog-page .global-header .search-open:hover,.blog-page .global-header .search-open:focus-visible{border-color:#368c7e;background:#d5e6dd}
+.blog-page .global-menu-toggle{border-color:#c6d4ce;background:#e5ebe6;color:#203130}
+.blog-page .global-menu-toggle:hover{border-color:#368c7e;background:#d5e6dd}
+.blog-page .global-header nav{border-color:#d7dfda}
+.blog-page .global-header nav a{color:#52645e}
+.blog-page .global-header nav a:hover{color:#14675b}
+.blog-page .global-header nav a+a{border-color:#d7dfda}
 
 /* Editorial bento: variable card scale, one clear lead story, compact reading rhythm. */
 .blog-index>header{max-width:840px;margin-bottom:clamp(30px,5vw,52px)}

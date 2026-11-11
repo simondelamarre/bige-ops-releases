@@ -1,0 +1,35 @@
+# bige-ops
+
+> Application desktop gratuite pour macOS et Linux. Elle compose une stack dans le Visual, écrit le Terraform dans le projet, puis crée les ressources sur le compte cloud de l’utilisateur après relecture du plan. Outscale et OVHcloud sont en bêta. Le fournisseur facture les machines ; bige-ops ne les vend pas.
+
+Simon Delamarre édite bige-ops. Les binaires publics sont sur github.com/simondelamarre/bige-ops-releases. Le site est https://bige.dev/.
+
+## Démarrer
+
+- [Accueil](https://bige.dev/): parcours, du dépôt GitHub au déploiement sur le compte
+- [Installer](https://bige.dev/install.html): Homebrew sur macOS, paquet .deb ou AppImage sur Linux
+- [Questions](https://bige.dev/questions.html): compte cloud, prix, secrets, HTTPS, clouds pris en charge
+- [Périmètre de la bêta](https://bige.dev/perimetre.html): ce qui est livré aujourd’hui
+- [Documentation](https://bige.dev/documentation.html): index des pages
+
+## Produit
+
+- [Comprendre bige-ops](https://bige.dev/comprendre-bige-ops.html): du PaaS et du BaaS vers un compte IaaS
+- [Simulations](https://bige.dev/layouts.html): comparer des variantes avant de déployer
+- [Réseau](https://bige.dev/reseau.html): entrée HTTPS, application et base sur le réseau privé
+- [Migration](https://bige.dev/migration.html): copie d’une base et d’objets, puis vérification
+- [Object Storage](https://bige.dev/oos.html): explorateur et copie d’objets
+- [Vulnérabilités](https://bige.dev/vulnerabilites.html): CWE, CVE, route et version corrigée
+- [Configuration](https://bige.dev/config.html): fichiers générés et plan à relire
+- [Terminal et CLI](https://bige.dev/cli.html): terminal dans le contexte de la stack
+- [Glossaire](https://bige.dev/glossaire.html): VM, OMI, BSU, OOS, LBU, OKS, SecNumCloud
+
+## Clouds
+
+- [Pourquoi Outscale](https://bige.dev/pourquoi-outscale.html): VM, OKS et Object Storage en bêta
+- [Régions Outscale](https://bige.dev/regions.html): cinq Régions, SecNumCloud 3.2 sur cloudgouv-eu-west-1
+
+## À lire
+
+- [Blog](https://bige.dev/blog/): notes sur les CVE, les migrations et les clouds français
+- [Notes de version](https://github.com/simondelamarre/bige-ops-releases/releases): binaires publiés

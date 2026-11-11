@@ -66,6 +66,11 @@
 .founder-note{display:grid;grid-template-columns:clamp(190px,23vw,250px) minmax(0,620px);gap:clamp(28px,5vw,72px);align-items:center;max-width:1000px;margin:70px auto;padding:0 clamp(20px,4vw,48px)}
 .founder-note>img{display:block;width:100%;height:auto;filter:grayscale(1)}
 .founder-note h2{font:600 clamp(29px,3.3vw,42px)/1.1 var(--font-display);letter-spacing:-.04em;margin:0 0 20px}.founder-note p{font-size:17px;line-height:1.7}.founder-note .landing-kicker{font-size:11px}.founder-note a{display:inline-block;padding:14px 0;color:inherit}
+.home-questions{max-width:720px;margin:48px auto 0;padding:0 clamp(20px,4vw,48px)}
+.home-questions h2{font:600 clamp(29px,3.3vw,42px)/1.1 var(--font-display);letter-spacing:-.04em;margin:0 0 28px}
+.home-questions h3{font:600 18px/1.35 var(--font-display);margin:22px 0 8px}
+.home-questions p{font-size:16px;line-height:1.65;margin:0}
+.home-questions a{color:inherit}
 @media(max-width:600px){.founder-note{grid-template-columns:1fr;gap:24px;margin:48px auto}.founder-note>img{width:min(220px,100%)}.founder-note p{font-size:16px}}
 
 /* The additional features belong to the same four-column composition. */
