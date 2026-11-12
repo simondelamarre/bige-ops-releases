@@ -31,6 +31,8 @@
   <url><loc>https://bige.dev/blog/25-ficoba-acces-illegitime-2026.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/blog/26-la-poste-ddos-nouvel-an-2026.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/blog/27-csrd-infrastructure-cloud-donnees-ges.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/28-git-correctifs-securite-clones-ci.html</loc><priority>0.7</priority></url>
+  <url><loc>https://bige.dev/blog/29-secrets-logs-github-actions.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/blog/</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/catalogue-prix.html</loc><priority>0.7</priority></url>
   <url><loc>https://bige.dev/cli.html</loc><priority>0.7</priority></url>
