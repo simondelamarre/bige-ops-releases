@@ -1,0 +1,75 @@
+{
+  "accessibleLabel": "Simple comme un PaaS. Simple comme un BaaS. Flexible pour migrer ton IaaS. Tes migrations, tes tests, tes failles, tes optimisations. 100% gratuit. 100% local.",
+  "staticLines": [
+    { "text": "Simple comme un PaaS ou un BaaS." },
+    { "text": "Flexible pour migrer ton IaaS.", "accentText": "ton IaaS" },
+    { "text": "Tes migrations, tes tests, tes failles, tes optimisations €." },
+    { "text": "100% gratuit, 100% local." }
+  ],
+  "typography": {
+    "typingWeight": 700,
+    "restWeight": 700,
+    "selectionWeight": 700,
+    "commitWeight": 700,
+    "typingTrackingEm": -0.065,
+    "restTrackingEm": -0.065,
+    "commitTrackingEm": -0.065
+  },
+  "intro": {
+    "prefix": "Simple comme un ",
+    "from": "PaaS",
+    "to": "BaaS",
+    "punctuation": "."
+  },
+  "messages": [
+    {
+      "id": "migration",
+      "lines": [
+        { "text": "Flexible pour migrer", "weight": 700 },
+        { "text": "ton IaaS.", "accentText": "ton IaaS", "weight": 700 }
+      ],
+      "holdMs": 4700
+    },
+    {
+      "id": "control",
+      "mode": "rewrite",
+      "prefix": "Tes ",
+      "keywords": ["migrations", "tests", "failles", "optimisations €"],
+      "punctuation": ".",
+      "weight": 700,
+      "keywordHoldMs": 1150
+    },
+    {
+      "id": "promise",
+      "mode": "rewrite",
+      "prefix": "100% ",
+      "keywords": ["gratuit", "local"],
+      "punctuation": ".",
+      "weight": 700,
+      "keywordHoldMs": 1600,
+      "lastKeywordHoldMs": 3200
+    }
+  ],
+  "timings": {
+    "typeMs": 43,
+    "messageTypeMs": 44,
+    "lineGapMs": 260,
+    "deleteMs": 28,
+    "spacePauseMs": 18,
+    "punctuationPauseMs": 150,
+    "commitMs": 0,
+    "introHoldMs": 1800,
+    "selectAllLatencyMs": 180,
+    "selectAllHoldMs": 260,
+    "selectionStepMs": 72,
+    "selectionHoldMs": 220,
+    "replacementGapMs": 420,
+    "replacementTypeMs": 62,
+    "formatDelayMs": 0,
+    "formatSelectionHoldMs": 0,
+    "boldMs": 0,
+    "replacementHoldMs": 1500,
+    "messageGapMs": 460,
+    "loopGapMs": 900
+  }
+}

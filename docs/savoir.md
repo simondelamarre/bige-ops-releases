@@ -1,6 +1,6 @@
 # Ce que bige-ops sait
 
-Simple comme un PaaS, flexible comme un IaaS : bige-ops est une app desktop gratuite qui simule ta stack, la teste en local, puis la déploie sur **ton** compte Outscale. Elle embarque le catalogue public Outscale, les topologies de référence et tout ce qu’il faut pour générer puis déployer.
+Simple comme un PaaS ou un BaaS, flexible pour ton IaaS : bige-ops est une app desktop gratuite qui simule ta stack, la teste en local, puis la déploie sur **ton** compte Outscale. Elle embarque le catalogue public Outscale, les topologies de référence et tout ce qu’il faut pour générer puis déployer.
 
 - **Topologies** : mono-VM, multi-VM, OKS, avec volumes BSU, Object Storage et LBU. Config et Visual synchronisés par un seul Apply atomique.
 - **Estimation** : coût mensuel hors taxes estimé sur le catalogue public Outscale, synchronisable via l’API.

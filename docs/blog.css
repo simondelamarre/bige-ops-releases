@@ -72,6 +72,11 @@
 .blog-page .global-header nav a:hover{color:#14675b}
 .blog-page .global-header nav a+a{border-color:#d7dfda}
 
+/* Mermaid diagrams are rendered only for articles that contain a mermaid fence. */
+.article-body .mermaid{box-sizing:border-box;width:calc(100% + min(8vw,80px));margin:2.2rem max(-4vw,-40px);padding:clamp(18px,3vw,30px);overflow-x:auto;border:1px solid #bfd0c8;border-radius:20px;background:#e8ede7;color:#172322;text-align:center}
+.article-body .mermaid svg{display:block;max-width:100%;height:auto;margin:0 auto}
+@media(max-width:850px){.article-body .mermaid{width:100%;margin:2rem 0;padding:16px 10px;border-radius:15px}}
+
 /* Editorial bento: variable card scale, one clear lead story, compact reading rhythm. */
 .blog-index>header{max-width:840px;margin-bottom:clamp(30px,5vw,52px)}
 .blog-index>header>p:last-of-type{max-width:670px}

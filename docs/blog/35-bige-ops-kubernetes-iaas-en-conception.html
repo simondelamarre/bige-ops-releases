@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="max-image-preview:large"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bige Ops prépare Kubernetes sur votre IaaS — bige-ops</title><meta name="description" content="Bige Ops part de la stack, compare VM, Kubernetes managé et Kubernetes sur IaaS, puis explique le coût, les responsabilités et le placement des données."><link rel="canonical" href="https://bige.dev/blog/35-bige-ops-kubernetes-iaas-en-conception.html"><meta property="og:type" content="article"><meta property="og:title" content="Bige Ops prépare Kubernetes sur votre IaaS"><meta property="og:description" content="Bige Ops part de la stack, compare VM, Kubernetes managé et Kubernetes sur IaaS, puis explique le coût, les responsabilités et le placement des données."><meta property="og:image" content="https://bige.dev/blog/assets/simulations-riso.webp"><meta property="og:url" content="https://bige.dev/blog/35-bige-ops-kubernetes-iaas-en-conception.html"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Bige Ops prépare Kubernetes sur votre IaaS"><meta name="twitter:description" content="Bige Ops part de la stack, compare VM, Kubernetes managé et Kubernetes sur IaaS, puis explique le coût, les responsabilités et le placement des données."><meta name="twitter:image" content="https://bige.dev/blog/assets/simulations-riso.webp"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Bige Ops prépare Kubernetes sur votre IaaS","description":"Bige Ops part de la stack, compare VM, Kubernetes managé et Kubernetes sur IaaS, puis explique le coût, les responsabilités et le placement des données.","datePublished":"2026-11-17","articleSection":"Produit & infrastructure","keywords":"Bige Ops, Kubernetes, IaaS, Interface, Agent IA","image":"https://bige.dev/blog/assets/simulations-riso.webp","mainEntityOfPage":"https://bige.dev/blog/35-bige-ops-kubernetes-iaas-en-conception.html","author":{"@type":"Organization","name":"bige-ops","url":"https://bige.dev/"},"publisher":{"@type":"Organization","name":"bige-ops","url":"https://bige.dev/"}}</script><link rel="icon" href="../favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../navigation.css?v=search-blog-2"><link rel="stylesheet" href="../blog.css?v=7"><link rel="stylesheet" href="../search.css?v=2"><script src="../search.js?v=6" defer></script></head><body class="blog-page"><a class="skip-link" href="#contenu">Aller au contenu</a><header class="global-header"><a class="global-brand" href="../index.html"><img src="../favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="../index.html#parcours">Voir le parcours</a><a href="../index.html#features">Fonctionnalités</a><a href="../index.html#clouds">Les clouds</a><a href="../documentation.html">Documentation</a></nav><a class="global-download" href="../index.html#download">Télécharger la bêta ↗</a></header><main id="contenu" class="article-shell"><p class="article-breadcrumb"><a href="./">Blog</a><span aria-hidden="true">/</span><time datetime="2026-11-17">17 novembre 2026</time></p><header class="article-heading"><div><p class="blog-theme">Produit &amp; infrastructure</p><p class="feature-eyebrow"><span>Bige Ops</span><span>Kubernetes</span><span>IaaS</span><span>Interface</span><span>Agent IA</span></p><h1>Bige Ops prépare Kubernetes sur votre IaaS</h1><p class="article-description">Bige Ops part de la stack, compare VM, Kubernetes managé et Kubernetes sur IaaS, puis explique le coût, les responsabilités et le placement des données.</p></div><figure class="article-cover"><img src="/blog/assets/simulations-riso.webp" alt="Trame RISO montrant une application comparée sur plusieurs architectures avant son déploiement." width="1200" height="800"><figcaption>Trame RISO montrant une application comparée sur plusieurs architectures avant son déploiement.</figcaption></figure></header><div class="article-reading"><nav class="article-toc" aria-label="Dans cet article"><span>Dans cet article</span><a href="#bige-ops-part-de-la-stack-applicative">Bige Ops part de la stack applicative</a><a href="#la-recommandation-expose-les-compromis">La recommandation expose les compromis</a><a href="#visual-montre-cinq-objets-simples">Visual montre cinq objets simples</a><a href="#chaque-action-garde-une-portee-claire">Chaque action garde une portée claire</a><a href="#l-agent-explique-le-moteur-calcule">L&#39;agent explique, le moteur calcule</a><a href="#la-base-garde-plusieurs-options">La base garde plusieurs options</a><a href="#l-implementation-avance-par-preuves">L&#39;implémentation avance par preuves</a><a href="#la-fonction-reste-en-conception">La fonction reste en conception</a><a href="#a-lire-aussi">À lire aussi</a></nav><article class="article-body"><h2 id="bige-ops-part-de-la-stack-applicative">Bige Ops part de la stack applicative</h2>
+<p>Une personne arrive avec une application, une base, quelques services et un budget. Bige Ops traduit cette stack en options d&#39;infrastructure compréhensibles, avant d&#39;exposer les détails du control plane, des nodepools, du réseau et du stockage.</p>
+<p>Bige Ops part de cette stack et compare trois chemins :</p>
+<ol>
+<li>une VM ou un groupe de VM ;</li>
+<li>le Kubernetes managé du fournisseur ;</li>
+<li>un Kubernetes opéré par Bige Ops sur les VM du compte IaaS.</li>
+</ol>
+<p>Chaque chemin garde sa place. Une petite application stable peut tenir sur une VM. Kubernetes managé convient à une équipe qui souhaite déléguer une partie du control plane. Kubernetes sur IaaS apporte davantage de contrôle lorsque ce bénéfice compense les responsabilités d&#39;exploitation.</p>
+<pre class="mermaid">flowchart TB
+    S[Stack applicative] --&gt; A[Analyser services, données, charge et SLA]
+    A --&gt; O[Options à comparer]
+    O --&gt; V[VM ou groupe de VM]
+    V --&gt;|ou| M[Kubernetes managé]
+    M --&gt;|ou| B[Kubernetes sur IaaS]
+    B --&gt; C[Comparer coût, disponibilité et exploitation]
+    C --&gt; R[Recommandation expliquée]
+    R --&gt; H[Revue humaine]
+    H --&gt; P[Plan d&#39;infrastructure]</pre>
+<h2 id="la-recommandation-expose-les-compromis">La recommandation expose les compromis</h2>
+<p>La carte de décision montre les faits utilisés :</p>
+<ul>
+<li>nombre de services et besoin de les scaler séparément ;</li>
+<li>fréquence des déploiements et besoin de rolling update ;</li>
+<li>disponibilité attendue ;</li>
+<li>charge stable ou saisonnière ;</li>
+<li>CPU, mémoire et GPU ;</li>
+<li>bases et volumes persistants ;</li>
+<li>compétence d&#39;exploitation disponible ;</li>
+<li>coût mensuel minimum, attendu et maximum.</li>
+</ul>
+<p>Plusieurs services stateless, des déploiements fréquents, des pools GPU et un besoin d&#39;auto-healing rendent Kubernetes pertinent. Une seule API, une base et une charge prévisible peuvent rester plus simples sur une VM. Une production hautement disponible avec peu de capacité d&#39;exploitation peut justifier le Kubernetes managé plutôt que le self-managed.</p>
+<p>L&#39;interface explique ce que chaque option prend en charge, ce qu&#39;elle laisse à l&#39;équipe et le niveau de service obtenu. La recommandation choisit une option pour la stack étudiée, avec ses raisons et ses limites.</p>
+<h2 id="visual-montre-cinq-objets-simples">Visual montre cinq objets simples</h2>
+<p>La configuration reste lisible en regroupant les pods sous un workload et son nombre de replicas. Les pods réels apparaissent ensuite dans Live, les logs et le diagnostic.</p>
+<p>Le canvas s&#39;organise autour de cinq groupes :</p>
+<ul>
+<li><strong>Cluster</strong> : mode managé ou Bige Ops, version, disponibilité et coût fixe ;</li>
+<li><strong>Nodepool</strong> : type de VM, zones, minimum, cible, maximum, prix et workloads ;</li>
+<li><strong>Workload</strong> : image, replicas, requests/limits, placement et exposition ;</li>
+<li><strong>Données</strong> : service managé, VM privée ou StatefulSet ;</li>
+<li><strong>Accès</strong> : API Kubernetes, ingress public et flux privés.</li>
+</ul>
+<p>Les notions plus techniques restent disponibles dans une section avancée. L&#39;interface principale répond d&#39;abord à des questions concrètes : combien de machines, quels services tournent dessus, qu&#39;est-ce qui est public, où sont les données et combien coûte le prochain palier ?</p>
+<h2 id="chaque-action-garde-une-portee-claire">Chaque action garde une portée claire</h2>
+<p>Une action simple affiche sa cible, son effet et ses dépendances.</p>
+<ul>
+<li><strong>Appliquer</strong> crée ou modifie l&#39;infrastructure après revue du plan.</li>
+<li><strong>Ajuster la capacité</strong> agit sur un nodepool précis.</li>
+<li><strong>Déployer</strong> agit sur un workload et une image identifiés.</li>
+<li><strong>Mettre à niveau</strong> ordonne control plane, workers et add-ons.</li>
+<li><strong>Réparer</strong> part d&#39;un diagnostic et propose une mutation ciblée.</li>
+<li><strong>Sauvegarder</strong> distingue etcd des données applicatives.</li>
+<li><strong>Détruire</strong> inventorie d&#39;abord volumes, IP, load balancers et sauvegardes.</li>
+</ul>
+<p>Avant confirmation, chaque action doit montrer les dépendances, l&#39;interruption possible, la variation de coût, les commandes prévues et la manière de reprendre un échec.</p>
+<h2 id="l-agent-explique-le-moteur-calcule">L'agent explique, le moteur calcule</h2>
+<p>Un modèle de langage lit un dépôt, reformule un besoin et explique un compromis. Les tarifs, les CIDR et la capacité des nodepools restent calculés et validés par les moteurs déterministes de Bige Ops.</p>
+<p>Le parcours Bige Ops sépare plusieurs capacités :</p>
+<table>
+<thead>
+<tr>
+<th>Capacité</th>
+<th>Rôle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Conseiller d&#39;architecture</td>
+<td>Comparer VM, managed et Bige Ops, puis demander les informations manquantes</td>
+</tr>
+<tr>
+<td>Analyseur de capacité</td>
+<td>Calculer placement, nodes requis, marge et prochain seuil de coût</td>
+</tr>
+<tr>
+<td>Planificateur Kubernetes</td>
+<td>Produire les étapes ordonnancées, leurs risques et leurs reprises</td>
+</tr>
+<tr>
+<td>Conseiller données</td>
+<td>Comparer base managée, VM privée et base dans Kubernetes</td>
+</tr>
+<tr>
+<td>Conseiller coût</td>
+<td>Relier catalogue provider, durée et capacité minimum/attendue/maximum</td>
+</tr>
+<tr>
+<td>Opérateur jour 2</td>
+<td>Diagnostiquer puis proposer scale, upgrade, remplacement ou restauration</td>
+</tr>
+</tbody></table>
+<p>Ces skills utilisent des outils Bige Ops structurés. Les formules, validations provider et mutations restent dans le CLI et les moteurs du produit. L&#39;agent ouvert depuis l&#39;interface reçoit le contexte courant, propose, puis laisse la confirmation humaine déclencher l&#39;action.</p>
+<h2 id="la-base-garde-plusieurs-options">La base garde plusieurs options</h2>
+<p>PostgreSQL, MongoDB ou Redis peuvent rester sur une VM privée de la même infrastructure. Cette option sépare le cycle de vie des données de celui du cluster.</p>
+<p>Dans ce cas, les workers et la VM de données partagent un réseau routable ou un peering. Le security group de la base autorise uniquement son port depuis les workers. Le CNI détermine si la base voit l&#39;IP du pod ou celle du node après SNAT. Une NetworkPolicy limite aussi les workloads autorisés à sortir vers la base. Un DNS privé stable évite d&#39;inscrire une adresse physique dans l&#39;application.</p>
+<pre class="mermaid">flowchart TB
+    I[Ingress public] --&gt; W[Workload Kubernetes]
+    subgraph K[Cluster sur réseau privé]
+      W --&gt; N[Workers du nodepool]
+    end
+    N --&gt;|Port DB autorisé| D[(Base sur VM privée)]
+    X[Autre workload] -. Refus NetworkPolicy .-&gt; D
+    D --&gt; O[Sauvegarde objet hors cluster]</pre>
+<p>Une base placée dans Kubernetes exige davantage : StatefulSet ou opérateur mature, CSI, volumes persistants, anti-affinité, budget de disruption et sauvegarde hors du cluster. Elle utilise en général un nodepool data dédié au lieu de partager par défaut les workers stateless.</p>
+<p>Le choix doit apparaître dans Visual en langage utilisateur : <strong>service managé</strong>, <strong>VM privée</strong> ou <strong>dans le cluster</strong>, avec la raison, le niveau de résilience, le coût et la sauvegarde attendue.</p>
+<h2 id="l-implementation-avance-par-preuves">L'implémentation avance par preuves</h2>
+<p>L&#39;implémentation avance par lots :</p>
+<ol>
+<li>modèle canonique et frontière de responsabilité ;</li>
+<li>conseiller en lecture seule capable de refuser Kubernetes ;</li>
+<li>calcul de capacité et estimation par paliers ;</li>
+<li>parcours Visual et actions scopées ;</li>
+<li>premier provider et cluster de démonstration ;</li>
+<li>base privée puis profil stateful dans Kubernetes ;</li>
+<li>upgrades, certificats, sauvegarde etcd et remplacement de nœuds ;</li>
+<li>validation réelle et comparaison de facture.</li>
+</ol>
+<p>Le premier prototype couvre un cluster, un provider et les opérations essentielles. Le multi-cluster, le multi-région actif-actif, Windows, le service mesh et l&#39;air-gap complet restent hors de ce premier périmètre.</p>
+<h2 id="la-fonction-reste-en-conception">La fonction reste en conception</h2>
+<p>Bige Ops dispose déjà de briques concrètes : simulations, Terraform, test Kubernetes local, déploiement de workloads, nodepools OKS, logs, métriques et estimation de VM. Le nouveau sujet consiste à les relier dans une expérience cohérente et à assumer le cycle de vie du cluster.</p>
+<p>Plusieurs choix structurent encore le produit : distribution Kubernetes, moteur de bootstrap, contrôleurs provider, stockage, source de vérité et composant permanent lorsque l&#39;app est fermée. Nous les prototypons avant de fixer le contrat public.</p>
+<p>Le mode Kubernetes sur IaaS reste donc <strong>en conception</strong> dans Bige Ops. La création du cluster constitue la première preuve. La disponibilité passe aussi par le scale, la mise à niveau, la panne d&#39;un master, la restauration, la sécurité du réseau privé et le nettoyage des ressources facturables.</p>
+<h2 id="a-lire-aussi">À lire aussi</h2>
+<ul>
+<li><a href="33-kubernetes-self-managed-responsabilites.html">Kubernetes self-managed : vos responsabilités d&#39;exploitation →</a></li>
+<li><a href="34-prix-pods-nodes-nodepools.html">Pods, nodes et nodepools : comprendre le coût →</a></li>
+<li><a href="../layouts.html">Simulations et topologies dans Bige Ops →</a></li>
+</ul>
+</article></div><nav class="article-end"><a href="./">← Tous les articles</a><a href="../index.html#download">Télécharger bige-ops ↗</a></nav></main><footer class="site-footer"><div class="footer-intro"><a class="brand" href="../index.html"><img src="../favicon.svg" width="28" height="28" alt=""> bige-ops</a><p>Simple comme un PaaS ou un BaaS. Flexible pour migrer vers ton IaaS.</p></div><div class="cols"><div><h3 id="decouvrir">Découvrir</h3><ul><li><a href="../index.html">Accueil</a></li><li><a href="../features.html">Toutes les fonctionnalités</a></li><li><a href="../hub.html">Hub &amp; espaces de travail</a></li><li><a href="../layouts.html">Simulations</a></li><li><a href="../install.html">Installer &amp; mettre à jour</a></li><li><a href="../documentation.html">Documentation</a></li><li><a href="../glossaire.html">Glossaire</a></li></ul></div><div><h3 id="construire-deployer">Construire & déployer</h3><ul><li><a href="../catalogue-prix.html">Catalogue &amp; estimations</a></li><li><a href="../repos-vms-docker.html">Build &amp; déploiement</a></li><li><a href="../reseau.html">Réseaux &amp; exposition</a></li><li><a href="../migration.html">Migration</a></li><li><a href="../oos.html">Object Storage</a></li><li><a href="../config.html">Configuration</a></li><li><a href="../cli.html">Terminal &amp; CLI</a></li></ul></div><div><h3 id="observer-decider">Observer & décider</h3><ul><li><a href="../inventory.html">Inventaire cloud</a></li><li><a href="../live.html">Live analytics</a></li><li><a href="../billing.html">Consommation réelle</a></li><li><a href="../optimisation.html">Optimisation · en développement</a></li><li><a href="../vulnerabilites.html">Vulnérabilités</a></li><li><a href="../secrets.html">Coffre &amp; secrets</a></li></ul></div><div><h3 id="documenter-partager">Documenter & partager</h3><ul><li><a href="../notes-rapports.html">Notes &amp; documentation</a></li><li><a href="../rapports.html">Rapports &amp; slides</a></li><li><a href="../agent.html">Agent IA</a></li><li><a href="../perimetre.html">Périmètre de la bêta</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/releases">Notes de version</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/issues">Retours &amp; suggestions</a></li></ul></div></div><p class="meta">Application gratuite · macOS & Linux · <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger la bêta</a></p></footer><script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";mermaid.initialize({startOnLoad:true,theme:"base",securityLevel:"strict",themeVariables:{background:"#f3f4ed",primaryColor:"#dce9e2",primaryTextColor:"#172322",primaryBorderColor:"#267c70",lineColor:"#267c70",secondaryColor:"#e8ede7",tertiaryColor:"#f3f4ed",fontFamily:"IBM Plex Sans, system-ui, sans-serif"}});</script><!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"832d6ab228b14493977bbfcb74fac155"}'></script><!-- End Cloudflare Web Analytics --></body></html>

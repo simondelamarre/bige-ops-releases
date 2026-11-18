@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="max-image-preview:large"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kubernetes self-managed : vos responsabilités d&#39;exploitation — bige-ops</title><meta name="description" content="Sur Kubernetes self-managed, l&#39;équipe opère les VM, le control plane, etcd, le réseau, le stockage et les reprises. Voici le contrat complet."><link rel="canonical" href="https://bige.dev/blog/33-kubernetes-self-managed-responsabilites.html"><meta property="og:type" content="article"><meta property="og:title" content="Kubernetes self-managed : vos responsabilités d&#39;exploitation"><meta property="og:description" content="Sur Kubernetes self-managed, l&#39;équipe opère les VM, le control plane, etcd, le réseau, le stockage et les reprises. Voici le contrat complet."><meta property="og:image" content="https://bige.dev/blog/assets/security-riso.webp"><meta property="og:url" content="https://bige.dev/blog/33-kubernetes-self-managed-responsabilites.html"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Kubernetes self-managed : vos responsabilités d&#39;exploitation"><meta name="twitter:description" content="Sur Kubernetes self-managed, l&#39;équipe opère les VM, le control plane, etcd, le réseau, le stockage et les reprises. Voici le contrat complet."><meta name="twitter:image" content="https://bige.dev/blog/assets/security-riso.webp"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Kubernetes self-managed : vos responsabilités d'exploitation","description":"Sur Kubernetes self-managed, l'équipe opère les VM, le control plane, etcd, le réseau, le stockage et les reprises. Voici le contrat complet.","datePublished":"2026-11-17","articleSection":"Kubernetes & opérations","keywords":"Kubernetes, Self-managed, Control plane, etcd, Nodepools","image":"https://bige.dev/blog/assets/security-riso.webp","mainEntityOfPage":"https://bige.dev/blog/33-kubernetes-self-managed-responsabilites.html","author":{"@type":"Organization","name":"bige-ops","url":"https://bige.dev/"},"publisher":{"@type":"Organization","name":"bige-ops","url":"https://bige.dev/"}}</script><link rel="icon" href="../favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../navigation.css?v=search-blog-2"><link rel="stylesheet" href="../blog.css?v=7"><link rel="stylesheet" href="../search.css?v=2"><script src="../search.js?v=6" defer></script></head><body class="blog-page"><a class="skip-link" href="#contenu">Aller au contenu</a><header class="global-header"><a class="global-brand" href="../index.html"><img src="../favicon.svg" width="30" height="30" alt="">bige<span>-ops</span></a><nav aria-label="Navigation principale"><a href="../index.html#parcours">Voir le parcours</a><a href="../index.html#features">Fonctionnalités</a><a href="../index.html#clouds">Les clouds</a><a href="../documentation.html">Documentation</a></nav><a class="global-download" href="../index.html#download">Télécharger la bêta ↗</a></header><main id="contenu" class="article-shell"><p class="article-breadcrumb"><a href="./">Blog</a><span aria-hidden="true">/</span><time datetime="2026-11-17">17 novembre 2026</time></p><header class="article-heading"><div><p class="blog-theme">Kubernetes &amp; opérations</p><p class="feature-eyebrow"><span>Kubernetes</span><span>Self-managed</span><span>Control plane</span><span>etcd</span><span>Nodepools</span></p><h1>Kubernetes self-managed : vos responsabilités d&#39;exploitation</h1><p class="article-description">Sur Kubernetes self-managed, l&#39;équipe opère les VM, le control plane, etcd, le réseau, le stockage et les reprises. Voici le contrat complet.</p></div><figure class="article-cover"><img src="/blog/assets/security-riso.webp" alt="Trame RISO reliant un control plane Kubernetes, ses nodepools et les pods exécutés sur plusieurs groupes de machines." width="1200" height="800"><figcaption>Trame RISO reliant un control plane Kubernetes, ses nodepools et les pods exécutés sur plusieurs groupes de machines.</figcaption></figure></header><div class="article-reading"><nav class="article-toc" aria-label="Dans cet article"><span>Dans cet article</span><a href="#kubernetes-repose-sur-des-machines-et-des-commandes">Kubernetes repose sur des machines et des commandes</a><a href="#le-contrat-continue-apres-l-installation">Le contrat continue après l&#39;installation</a><a href="#le-control-plane-porte-la-disponibilite">Le control plane porte la disponibilité</a><a href="#les-nodepools-demandent-un-controleur-actif">Les nodepools demandent un contrôleur actif</a><a href="#le-cout-depend-du-niveau-de-service">Le coût dépend du niveau de service</a><a href="#la-piste-bige-ops-reste-en-conception">La piste Bige Ops reste en conception</a><a href="#a-lire-aussi">À lire aussi</a></nav><article class="article-body"><h2 id="kubernetes-repose-sur-des-machines-et-des-commandes">Kubernetes repose sur des machines et des commandes</h2>
+<p>Un cluster Kubernetes assemble des machines, un réseau, des certificats et des logiciels connus. Un plan bien ordonné crée les VM, installe le runtime de conteneurs, initialise le premier master, joint les autres nœuds, installe le réseau du cluster puis déploie les applications.</p>
+<p>Cette installation s&#39;automatise très bien. Des commandes CLI et shell forment un moteur fiable quand chaque étape possède des préconditions, un résultat contrôlable, un délai maximal et une stratégie de reprise.</p>
+<p>Le cycle de vie continue ensuite. Un service Kubernetes managé prend en charge une partie du control plane et de son exploitation. Avec un cluster self-managed, l&#39;équipe récupère cette responsabilité. Le choix porte donc autant sur le niveau de service attendu que sur la création des VM.</p>
+<pre class="mermaid">flowchart TB
+    U[Utilisateur] --&gt; B[Bige Ops ou équipe plateforme]
+    B --&gt; CP[Control plane&lt;br/&gt;API, scheduler et etcd]
+    CP --&gt; N[Nodepools workers]
+    N --&gt; P[Pods applicatifs et spécialisés]
+    C[API du cloud] --&gt; N
+    C --&gt; R[Load balancers et volumes]</pre>
+<h2 id="le-contrat-continue-apres-l-installation">Le contrat continue après l'installation</h2>
+<p>Le <strong>jour 0</strong> couvre la création : machines, réseau, paquets, cluster, nodepools et premier déploiement. Le <strong>jour 2</strong> couvre la vie du cluster : correctifs, certificats, changements de version, saturation, panne d&#39;un master, perte d&#39;un disque et restauration.</p>
+<table>
+<thead>
+<tr>
+<th>Domaine</th>
+<th>Service managé</th>
+<th>Kubernetes self-managed</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Control plane</td>
+<td>Exploité au moins en partie par le fournisseur</td>
+<td>Masters, API, load balancer et quorum à opérer</td>
+</tr>
+<tr>
+<td>etcd</td>
+<td>Sauvegarde et maintenance selon le contrat du fournisseur</td>
+<td>Sauvegarde, chiffrement et restauration à prouver</td>
+</tr>
+<tr>
+<td>Nœuds workers</td>
+<td>Taille et nombre choisis par l&#39;utilisateur</td>
+<td>OS, runtime, join, drain et remplacement à automatiser</td>
+</tr>
+<tr>
+<td>Réseau</td>
+<td>Intégration cloud prévue par l&#39;offre</td>
+<td>CNI, routes, DNS, SNAT, ingress et firewall à assembler</td>
+</tr>
+<tr>
+<td>Stockage</td>
+<td>CSI et classes fournis selon l&#39;offre</td>
+<td>CSI, volumes, snapshots et suppression à valider</td>
+</tr>
+<tr>
+<td>Versions</td>
+<td>Chemin de mise à niveau encadré par le fournisseur</td>
+<td>Compatibilité du control plane, des workers et des add-ons à maintenir</td>
+</tr>
+<tr>
+<td>Support</td>
+<td>Périmètre contractuel du fournisseur</td>
+<td>Diagnostic et reprise sous la responsabilité de l&#39;opérateur</td>
+</tr>
+</tbody></table>
+<p>La <a href="https://kubernetes.io/docs/concepts/overview/components/">documentation Kubernetes sur les composants d&#39;un cluster</a> distingue clairement le control plane des nœuds qui exécutent les applications. La <a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/">documentation de haute disponibilité avec kubeadm</a> ajoute notamment le load balancer de l&#39;API et plusieurs nœuds de contrôle.</p>
+<h2 id="le-control-plane-porte-la-disponibilite">Le control plane porte la disponibilité</h2>
+<p>Un master unique convient à l&#39;apprentissage et aux environnements éphémères. Une production hautement disponible utilise généralement plusieurs masters. L&#39;exploitation couvre alors le quorum etcd, la distribution de l&#39;accès API et le remplacement progressif d&#39;un membre défaillant.</p>
+<p>Une sauvegarde etcd devient utile quand sa restauration est testée. La <a href="https://etcd.io/docs/v3.5/op-guide/recovery/">documentation etcd</a> décrit une opération explicite qui recrée un cluster logique à partir d&#39;un snapshot. Le test vérifie ensuite les objets, les secrets, les volumes et le redémarrage des workloads.</p>
+<p>Les certificats suivent le même principe. Leur renouvellement, l&#39;ajout d&#39;un master et la révocation d&#39;un accès administrateur font partie du contrat d&#39;exploitation.</p>
+<h2 id="les-nodepools-demandent-un-controleur-actif">Les nodepools demandent un contrôleur actif</h2>
+<p>Un nodepool regroupe des nœuds comparables : même type de VM, mêmes labels, contraintes de zones et politique de scaling. Bige Ops peut ajouter des VM pendant une opération demandée par l&#39;utilisateur. Le scaling automatique demande en plus un composant actif lorsque l&#39;application desktop est fermée.</p>
+<p>Le cluster autoscaler, ou un contrôleur équivalent, observe les pods en attente, appelle l&#39;API IaaS, attend le nouveau nœud puis le retire avec les précautions de disponibilité. Ses credentials cloud restent limités, rotatifs et auditables.</p>
+<p>La même frontière existe pour les autres ressources :</p>
+<ul>
+<li>un <code>Service</code> de type <code>LoadBalancer</code> suppose un cloud-controller compatible ou une opération Bige Ops qui crée et maintient le load balancer ;</li>
+<li>un volume dynamique s&#39;appuie sur un pilote CSI compatible ;</li>
+<li>le DNS privé, l&#39;ingress et les certificats possèdent chacun leur contrôleur ou leur plan d&#39;exécution ;</li>
+<li>l&#39;auto-healing des nœuds a besoin d&#39;un contrôleur disponible en continu.</li>
+</ul>
+<h2 id="le-cout-depend-du-niveau-de-service">Le coût dépend du niveau de service</h2>
+<p>Un control plane managé peut apparaître comme une ligne dédiée dans la facture. Le coût self-managed regroupe de son côté les masters, leurs disques, le load balancer de l&#39;API, les sauvegardes et le temps d&#39;exploitation.</p>
+<p>Le self-managed devient pertinent quand il apporte un bénéfice identifié : contrôle de la distribution, portabilité, intégration particulière, absence d&#39;offre managée adaptée ou compétence plateforme déjà disponible. Une petite application stable peut rester sur une ou quelques VM. Une équipe qui souhaite une haute disponibilité avec moins d&#39;exploitation du control plane peut retenir le service managé.</p>
+<p>Bige Ops compare ces options avec les mêmes axes : prix, disponibilité, compétences, données et responsabilités. Le choix dépend de la stack et du niveau de service attendu.</p>
+<h2 id="la-piste-bige-ops-reste-en-conception">La piste Bige Ops reste en conception</h2>
+<p>Bige Ops sait déjà modéliser des clusters et des nodepools, générer des workloads Kubernetes, tester une stack localement, déployer des services ciblés et piloter le parcours OKS d&#39;Outscale. Ces briques valident une partie de l&#39;ordonnancement.</p>
+<p>Le mode Kubernetes opéré avec Bige Ops sur des VM IaaS reste <strong>en conception</strong>. La distribution, le moteur de cycle de vie, les contrôleurs permanents, le premier provider et le niveau de support restent à prototyper puis à valider.</p>
+<p>Le travail avance dans cet ordre : comparer VM, Kubernetes managé et self-managed ; rendre le coût et les responsabilités visibles ; prototyper sur un provider ; puis prouver la mise à niveau, la panne, la restauration et le nettoyage. L&#39;interface proposera ce mode après validation de ce contrat d&#39;exploitation.</p>
+<h2 id="a-lire-aussi">À lire aussi</h2>
+<ul>
+<li><a href="34-prix-pods-nodes-nodepools.html">Pods, nodes et nodepools : comprendre le coût →</a></li>
+<li><a href="35-bige-ops-kubernetes-iaas-en-conception.html">Bige Ops prépare Kubernetes sur votre IaaS →</a></li>
+<li><a href="../layouts.html">Simuler plusieurs architectures dans Bige Ops →</a></li>
+</ul>
+</article></div><nav class="article-end"><a href="./">← Tous les articles</a><a href="../index.html#download">Télécharger bige-ops ↗</a></nav></main><footer class="site-footer"><div class="footer-intro"><a class="brand" href="../index.html"><img src="../favicon.svg" width="28" height="28" alt=""> bige-ops</a><p>Simple comme un PaaS ou un BaaS. Flexible pour migrer vers ton IaaS.</p></div><div class="cols"><div><h3 id="decouvrir">Découvrir</h3><ul><li><a href="../index.html">Accueil</a></li><li><a href="../features.html">Toutes les fonctionnalités</a></li><li><a href="../hub.html">Hub &amp; espaces de travail</a></li><li><a href="../layouts.html">Simulations</a></li><li><a href="../install.html">Installer &amp; mettre à jour</a></li><li><a href="../documentation.html">Documentation</a></li><li><a href="../glossaire.html">Glossaire</a></li></ul></div><div><h3 id="construire-deployer">Construire & déployer</h3><ul><li><a href="../catalogue-prix.html">Catalogue &amp; estimations</a></li><li><a href="../repos-vms-docker.html">Build &amp; déploiement</a></li><li><a href="../reseau.html">Réseaux &amp; exposition</a></li><li><a href="../migration.html">Migration</a></li><li><a href="../oos.html">Object Storage</a></li><li><a href="../config.html">Configuration</a></li><li><a href="../cli.html">Terminal &amp; CLI</a></li></ul></div><div><h3 id="observer-decider">Observer & décider</h3><ul><li><a href="../inventory.html">Inventaire cloud</a></li><li><a href="../live.html">Live analytics</a></li><li><a href="../billing.html">Consommation réelle</a></li><li><a href="../optimisation.html">Optimisation · en développement</a></li><li><a href="../vulnerabilites.html">Vulnérabilités</a></li><li><a href="../secrets.html">Coffre &amp; secrets</a></li></ul></div><div><h3 id="documenter-partager">Documenter & partager</h3><ul><li><a href="../notes-rapports.html">Notes &amp; documentation</a></li><li><a href="../rapports.html">Rapports &amp; slides</a></li><li><a href="../agent.html">Agent IA</a></li><li><a href="../perimetre.html">Périmètre de la bêta</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/releases">Notes de version</a></li><li><a href="https://github.com/simondelamarre/bige-ops-releases/issues">Retours &amp; suggestions</a></li></ul></div></div><p class="meta">Application gratuite · macOS & Linux · <a href="https://github.com/simondelamarre/bige-ops-releases/releases/latest">Télécharger la bêta</a></p></footer><script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";mermaid.initialize({startOnLoad:true,theme:"base",securityLevel:"strict",themeVariables:{background:"#f3f4ed",primaryColor:"#dce9e2",primaryTextColor:"#172322",primaryBorderColor:"#267c70",lineColor:"#267c70",secondaryColor:"#e8ede7",tertiaryColor:"#f3f4ed",fontFamily:"IBM Plex Sans, system-ui, sans-serif"}});</script><!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"832d6ab228b14493977bbfcb74fac155"}'></script><!-- End Cloudflare Web Analytics --></body></html>
