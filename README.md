@@ -2,7 +2,7 @@
   <img src="docs/screens/site-simule.webp" alt="Capture de bige-ops : le Visual d’une stack. L’API, le front et le worker sur une VM publique, PostgreSQL et Redis chacun sur une VM privée, sauvegardes vers l’Object Storage, bouton Déployer en production." width="920" />
 </p>
 
-<h1 align="center">Simple comme un PaaS.<br/>Flexible comme un IaaS.</h1>
+<h1 align="center">Simple comme un PaaS ou un BaaS.<br/>Flexible pour migrer vers ton IaaS.</h1>
 
 <p align="center">
   <strong>bige-ops</strong> est une application gratuite, installée sur ton poste.<br/>
@@ -30,7 +30,7 @@ brew install --cask simondelamarre/bige-ops/bige-ops
 - **OVHcloud** est intégré en bêta pour les stacks Public Cloud compatibles.
 - **Scaleway** est à venir.
 
-## Simple comme un PaaS
+## Simple comme un PaaS ou un BaaS
 
 Tu veux mettre ton produit en ligne, pas devenir DevOps. bige-ops fait le travail d’une plateforme managée, sur ton poste.
 
@@ -42,7 +42,7 @@ Tu veux mettre ton produit en ligne, pas devenir DevOps. bige-ops fait le travai
 <p align="center"><img src="docs/screens/site-kubernetes.webp" alt="Capture de bige-ops : la même stack sur Kubernetes, un cluster OKS, un node pool de trois nœuds, les pods api, worker et web, MongoDB et Redis, avec les boutons Tester Kubernetes et Déployer en production." width="880" /></p>
 <p align="center"><em>La même stack sur Kubernetes : ton cluster, ton node pool, tes pods. Testée en local avant le cloud.</em></p>
 
-## Flexible comme un IaaS
+## Flexible pour migrer vers ton IaaS
 
 Ce que tu gagnes à quitter un PaaS, sans perdre sa simplicité.
 
