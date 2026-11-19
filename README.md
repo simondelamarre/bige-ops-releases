@@ -20,6 +20,15 @@
 brew install --cask simondelamarre/bige-ops/bige-ops
 ```
 
+Déjà installé ? La commande de mise à jour utilise le même cask :
+
+```bash
+brew update
+brew upgrade --cask simondelamarre/bige-ops/bige-ops
+```
+
+Dans l’application, **Settings → Application → Installer la mise à jour** lance ce parcours Homebrew sur macOS.
+
 <p align="center"><strong>Gratuit · sans carte bancaire · sans compte cloud pour commencer</strong> · <a href="https://bige.dev/">bige.dev</a></p>
 
 ---
